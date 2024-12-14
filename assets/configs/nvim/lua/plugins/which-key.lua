@@ -47,9 +47,6 @@ return {
 
       -- Leader mappings
       { "<leader>b", group = "[b]uffer" },
-      { "<leader>bn", cmd("bnext"), desc = "[n]ext" },
-      { "<leader>bp", cmd("bprevious"), desc = "[p]revious" },
-      -- { "<leader>bd", cmd("bd"), desc = "[d]elete" },
       { "<leader>bi", "gg=G", desc = "[i]ndent" },
 
       { "<leader>c", group = "[c]omment", mode = { "n", "v" } },
@@ -76,18 +73,18 @@ return {
       { "<leader>s", group = "[s]urround", mode = { "n", "v" } },
       { "<leader>S", group = "[S]urround (line)", mode = { "n", "v" } },
 
-      { "<leader>t", group = "[t]odo" },
+      { "<leader>t", group = "[t]oggle" },
+      {
+        "<leader>td",
+        function()
+          vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+        end,
+        desc = "[d]iagnostics",
+      },
 
       { "<leader>w", group = "s[w]ap" },
 
       { "<leader>x", group = "trouble [x]0" },
-      {
-        "<leader>xd",
-        function()
-          vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-        end,
-        desc = "[d]iagnostic toggle",
-      },
 
       { "<leader>z", group = "[z]en mode" },
     },
