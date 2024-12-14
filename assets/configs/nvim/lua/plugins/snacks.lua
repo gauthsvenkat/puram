@@ -68,5 +68,12 @@ return {
       end,
       desc = "[i]ndent",
     },
+    {
+      "<C-\\>",
+      function()
+        Snacks.terminal()
+      end,
+      mode = { "n", "t" },
+    },
   },
 }
