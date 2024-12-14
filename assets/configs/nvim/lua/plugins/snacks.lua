@@ -7,6 +7,12 @@ return {
     dashboard = { example = "doom" },
     quickfile = { enabled = true },
     statuscolumn = { enabled = true },
+    indent = {
+      enabled = true,
+      chunk = {
+        enabled = true,
+      },
+    },
   },
   keys = {
     {
@@ -50,6 +56,17 @@ return {
         Snacks.lazygit.log_file()
       end,
       desc = "file [L]og",
+    },
+    {
+      "<leader>ti",
+      function()
+        if Snacks.indent.enabled then
+          Snacks.indent.disable()
+        else
+          Snacks.indent.enable()
+        end
+      end,
+      desc = "[i]ndent",
     },
   },
 }
