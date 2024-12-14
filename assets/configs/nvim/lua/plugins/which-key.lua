@@ -11,10 +11,10 @@ return {
       { "<Esc>", "<Esc>" .. cmd("nohlsearch"), desc = "Disable search highlight" },
 
       -- Window navigation
-      { "<C-h>", cmd("wincmd h"), desc = "Move to window left" },
-      { "<C-j>", cmd("wincmd j"), desc = "Move to window down" },
-      { "<C-k>", cmd("wincmd k"), desc = "Move to window up" },
-      { "<C-l>", cmd("wincmd l"), desc = "Move to window right" },
+      { "<C-h>", cmd("wincmd h"), mode = { "n", "t" }, desc = "Move to window left" },
+      { "<C-j>", cmd("wincmd j"), mode = { "n", "t" }, desc = "Move to window down" },
+      { "<C-k>", cmd("wincmd k"), mode = { "n", "t" }, desc = "Move to window up" },
+      { "<C-l>", cmd("wincmd l"), mode = { "n", "t" }, desc = "Move to window right" },
 
       -- Window moving
       -- FIX: This isn't working on the desktop, but works on the mac.
