@@ -56,6 +56,9 @@
       "networkmanager"
       "wheel"
     ];
+    packages = with pkgs; [
+      wezterm
+    ];
     shell = pkgs.zsh;
   };
 

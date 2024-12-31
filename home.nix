@@ -37,7 +37,6 @@ in
     yazi.enable = true;
     nh.enable = true;
     firefox.enable = true;
-    wezterm.enable = true;
 
     zoxide = {
       enable = true;
