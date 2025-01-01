@@ -15,7 +15,11 @@ in
     inherit homeDirectory;
     packages = with pkgs; [
       meslo-lgs-nf
+      # needed for neovim (and friends) among other things
+      gcc
       cmake
+      gnumake
+      python3
       nodejs
       rustup
       cargo-generate
