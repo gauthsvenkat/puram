@@ -6,7 +6,10 @@
   ];
 
   boot.loader = {
-    systemd-boot.enable = true;
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 5;
+    };
     efi.canTouchEfiVariables = true;
   };
 
@@ -21,7 +24,19 @@
   security.rtkit.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  nix = {
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+    optimise.automatic = true;
+  };
 
   environment = {
     systemPackages = with pkgs; [
@@ -55,9 +70,6 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-    ];
-    packages = with pkgs; [
-      wezterm
     ];
     shell = pkgs.zsh;
   };
