@@ -11,7 +11,6 @@
   environment = {
     systemPackages = with pkgs; [
       neovim
-      usbutils
     ];
     variables = {
       EDITOR = "nvim";
