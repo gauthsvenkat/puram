@@ -18,12 +18,9 @@
     {
       nixosConfigurations.thinkpad = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {
-          inherit home-manager;
-        };
         modules = [
           home-manager.nixosModules.home-manager
-          ./configuration.nix
+          ./configuration
         ];
       };
     };
