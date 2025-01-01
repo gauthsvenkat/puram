@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, home-manager, ... }:
 
 {
   imports = [
@@ -72,6 +72,12 @@
       "wheel"
     ];
     shell = pkgs.zsh;
+  };
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.ando = import ./home.nix;
   };
 
   i18n = {
