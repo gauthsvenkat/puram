@@ -46,6 +46,7 @@
         "git"
         "fzf"
         "zoxide"
+        "vi-mode"
       ];
     };
     shellAliases = {
