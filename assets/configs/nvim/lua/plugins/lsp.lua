@@ -58,6 +58,7 @@ return {
     -- setup keybinds for LSPs.
     "folke/which-key.nvim",
     "nvim-telescope/telescope.nvim",
+    "saghen/blink.cmp",
   },
   opts = {
     ensure_installed = {
@@ -78,6 +79,7 @@ return {
 
       ["basedpyright"] = function()
         require("lspconfig").basedpyright.setup({
+          capabilities = require("blink.cmp").get_lsp_capabilities(),
           settings = {
             basedpyright = {
               analysis = {
@@ -95,10 +97,14 @@ return {
         })
       end,
       ["lua_ls"] = function()
-        require("lspconfig").lua_ls.setup({})
+        require("lspconfig").lua_ls.setup({
+          -- TODO: Move nvim specific settings to here.
+          capabilities = require("blink.cmp").get_lsp_capabilities(),
+        })
       end,
       ["nil_ls"] = function()
         require("lspconfig").nil_ls.setup({
+          capabilities = require("blink.cmp").get_lsp_capabilities(),
           settings = {
             ["nil"] = {
               formatting = {
@@ -111,6 +117,7 @@ return {
       end,
       ["rust_analyzer"] = function()
         require("lspconfig").rust_analyzer.setup({
+          capabilities = require("blink.cmp").get_lsp_capabilities(),
           settings = {
             ["rust-analyzer"] = {
               checkOnSave = {
