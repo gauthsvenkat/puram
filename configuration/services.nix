@@ -6,6 +6,11 @@
     displayManager.sddm.enable = true;
     desktopManager.plasma6.enable = true;
     openssh.enable = true;
+    syncthing = {
+      enable = true;
+      user = "ando";
+      dataDir = "/home/ando";
+    };
     mullvad-vpn = {
       enable = true;
       # pkgs.mullvad only contains the cli
