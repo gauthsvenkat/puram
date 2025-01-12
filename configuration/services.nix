@@ -6,6 +6,10 @@
     displayManager.sddm.enable = true;
     desktopManager.plasma6.enable = true;
     openssh.enable = true;
+    # Need to disable the following as it
+    # conflicts with tlp
+    power-profiles-daemon.enable = false;
+    tlp.enable = true;
     syncthing = {
       enable = true;
       user = "ando";
