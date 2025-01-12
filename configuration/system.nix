@@ -11,6 +11,7 @@
   environment = {
     systemPackages = with pkgs; [
       neovim
+      wl-clipboard
     ];
     variables = {
       EDITOR = "nvim";
