@@ -19,4 +19,6 @@ with pkgs;
   # because it'll try to create a config in ~/.config/wezterm
   wezterm
   spotify
+  jellyfin-media-player
+  neovide
 ]

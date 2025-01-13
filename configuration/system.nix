@@ -12,10 +12,18 @@
     systemPackages = with pkgs; [
       neovim
       wl-clipboard
+      wireguard-tools
     ];
     variables = {
       EDITOR = "nvim";
     };
+  };
+
+  programs = {
+    # needed for setting user's shell
+    zsh.enable = true;
+    # needed to run dynamically linked executables
+    nix-ld.enable = true;
   };
 
   time.timeZone = "Asia/Kolkata";
