@@ -23,6 +23,7 @@
     zsh.enable = true;
     # needed to run dynamically linked executables
     nix-ld.enable = true;
+    kdeconnect.enable = true;
   };
 
   time.timeZone = "Asia/Kolkata";

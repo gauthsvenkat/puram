@@ -21,4 +21,7 @@ with pkgs;
   spotify
   jellyfin-media-player
   neovide
+  mpv
+  rustdesk
+  kdePackages.krdc
 ]
