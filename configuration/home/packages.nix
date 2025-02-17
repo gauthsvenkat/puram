@@ -24,4 +24,5 @@ with pkgs;
   mpv
   rustdesk
   kdePackages.krdc
+  localsend
 ]
