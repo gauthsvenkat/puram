@@ -5,7 +5,10 @@
   ...
 }:
 {
-  imports = [ inputs.home-manager.nixosModules.home-manager ];
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+    ./programs
+  ];
 
   home-manager = {
     users.${username} = {
@@ -23,8 +26,6 @@
 
       targets.genericLinux.enable = true;
       fonts.fontconfig.enable = true;
-
-      programs = import ./programs { inherit pkgs; };
     };
 
     useGlobalPkgs = true;
