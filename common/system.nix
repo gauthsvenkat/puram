@@ -1,32 +1,29 @@
-{ pkgs, ... }:
+{ pkgs, hostname, ... }:
 {
   networking = {
-    hostName = "thinkpad";
+    hostName = hostname;
     networkmanager.enable = true;
   };
 
-  security.rtkit.enable = true;
+  virtualisation.docker.enable = true;
+
+  programs = {
+    # needed for setting user's shell
+    zsh.enable = true;
+    # to run dynamically linked executables
+    nix-ld.enable = true;
+  };
 
   environment = {
     systemPackages = with pkgs; [
       neovim
-      wl-clipboard
-      wireguard-tools
     ];
     variables = {
       EDITOR = "nvim";
     };
   };
 
-  programs = {
-    # needed for setting user's shell
-    zsh.enable = true;
-    # needed to run dynamically linked executables
-    nix-ld.enable = true;
-    kdeconnect.enable = true;
-  };
-
-  time.timeZone = "Asia/Kolkata";
+  time.timeZone = "Europe/Amsterdam";
 
   i18n = {
     defaultLocale = "en_US.UTF-8";
