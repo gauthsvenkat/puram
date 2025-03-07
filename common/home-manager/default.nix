@@ -24,7 +24,7 @@
       targets.genericLinux.enable = true;
       fonts.fontconfig.enable = true;
 
-      programs = import ./programs.nix { inherit pkgs; };
+      programs = import ./programs { inherit pkgs; };
     };
 
     useGlobalPkgs = true;
