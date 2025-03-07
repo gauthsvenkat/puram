@@ -1,4 +1,8 @@
 {
+  imports = [
+    ./home-manager/programs/wezterm.nix
+  ];
+
   services = {
     # Uncomment following to enable Xorg (beside wayland)
     # xserver.enable = true;
