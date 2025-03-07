@@ -14,7 +14,6 @@
     ../../common/gui.nix
     ../../common/kanata.nix
     ../../common/laptop.nix
-    ../../common/ssh.nix
     ../../common/home-manager/personal.nix
     ../../common/home-manager/development.nix
   ];

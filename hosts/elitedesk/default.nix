@@ -8,7 +8,6 @@
     ../../common/system.nix
     ../../common/users.nix
     ../../common/home-manager
-    ../../common/ssh.nix
   ];
 
   services.openssh.enable = true;
