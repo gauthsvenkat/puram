@@ -1,15 +1,12 @@
-{ pkgs, ... }:
+{ pkgs }:
 {
   fastfetch.enable = true;
   eza.enable = true;
   fzf.enable = true;
   bat.enable = true;
-  ripgrep.enable = true;
   lazygit.enable = true;
   direnv.enable = true;
-  yazi.enable = true;
   nh.enable = true;
-  firefox.enable = true;
 
   zoxide = {
     enable = true;
@@ -21,7 +18,6 @@
   git = {
     enable = true;
     lfs.enable = true;
-    userEmail = "gauthsvenkat@gmail.com";
     userName = "Gautham Venkataraman";
   };
 
@@ -54,13 +50,11 @@
       lt = "${pkgs.eza}/bin/eza --tree --icons --git --level=3";
       v = "${pkgs.neovim}/bin/nvim";
       b = "${pkgs.bat}/bin/bat";
-      y = "${pkgs.yazi}/bin/yazi";
       lg = "${pkgs.lazygit}/bin/lazygit";
     };
     initExtra = ''
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       test -f ~/.p10k.zsh && source ~/.p10k.zsh
-      ${pkgs.fastfetch}/bin/fastfetch
     '';
   };
 }
