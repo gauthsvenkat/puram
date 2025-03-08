@@ -24,12 +24,6 @@ return {
       { "<C-S-k>", cmd("wincmd K"), desc = "Move window up" },
       { "<C-S-l>", cmd("wincmd L"), desc = "Move window right" },
 
-      -- Window resizing
-      { "<C-Left>", cmd("vertical resize -2"), desc = "Decrease window width" },
-      { "<C-Down>", cmd("resize -2"), desc = "Decrease window height" },
-      { "<C-Up>", cmd("resize +2"), desc = "Increase window height" },
-      { "<C-Right>", cmd("vertical resize +2"), desc = "Increase window width" },
-
       -- Window splitting
       { "<C-s>=", cmd("wincmd ="), desc = "Make splits equal size" },
       { "<C-s>h", cmd("aboveleft vsplit"), desc = "Split vertical (left)" },
@@ -38,12 +32,8 @@ return {
       { "<C-s>l", cmd("belowright vsplit"), desc = "Split vertical (right)" },
 
       -- Buffer navigation
-      { "<Tab>", cmd("bnext"), desc = "Buffer next" },
-      { "<S-Tab>", cmd("bprevious"), desc = "Buffer previous" },
-
-      -- Tab navigation
-      { "<C-n>", cmd("tabnext"), desc = "Tab next" },
-      { "<C-b>", cmd("tabprevious"), desc = "Tab previous" },
+      { "<C-n>", cmd("bnext"), desc = "Buffer next" },
+      { "<C-b>", cmd("bprevious"), desc = "Buffer previous" },
 
       -- Leader mappings
       { "<leader>b", group = "[b]uffer" },
