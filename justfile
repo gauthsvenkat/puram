@@ -1,10 +1,10 @@
-doit action='switch':
+build action='switch':
   nh os {{action}} .
 
 update:
   nix flake update
 
-upgrade: update doit
+upgrade: update build
 
 test:
   nix flake check
