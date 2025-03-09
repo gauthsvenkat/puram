@@ -1,0 +1,8 @@
+# NOTE: Don't forget to copy .env secrets right next this file.
+include:
+  - dozzle.yaml
+  - homarr.yaml
+  - immich.yaml
+  - jellyfin.yaml
+  - paperless-ngx.yaml
+  - stirling-pdf.yaml

@@ -18,6 +18,7 @@
         homeDirectory = "/home/${username}";
 
         packages = with pkgs; [
+          lazydocker
           just
           pre-commit
           nixfmt-rfc-style
