@@ -1,4 +1,13 @@
 {
+  networking.firewall =
+    let
+      dns_port = 53;
+    in
+    {
+      allowedTCPPorts = [ dns_port ];
+      allowedUDPPorts = [ dns_port ];
+    };
+
   services.adguardhome = {
     enable = true;
     openFirewall = true;
