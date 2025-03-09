@@ -1,0 +1,15 @@
+services:
+  sabnzbd:
+    container_name: sabnzbd
+    image: lscr.io/linuxserver/sabnzbd:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - ${CONFIG_DIR}/sabnzbd:/config
+      - ${ENTERTAINMENT_DIR}/usenet:/data/usenet
+    network_mode: service:gluetun

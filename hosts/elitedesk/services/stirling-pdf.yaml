@@ -1,0 +1,9 @@
+services:
+  stirling-:
+    container_name: stirling-pdf
+    image: frooodle/s-pdf
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - ${STIRLING_PDF_PORT}:8080

@@ -32,9 +32,9 @@
     in
     {
       nixosConfigurations = {
+        elitedesk = mkNixosSystem "elitedesk" "x86_64-linux" "ando";
         thinkpad = mkNixosSystem "thinkpad" "x86_64-linux" "ando";
         xps = mkNixosSystem "xps" "x86_64-linux" "gautham";
-        elitedesk = mkNixosSystem "elitedesk" "x86_64-linux" "ando";
         nixpi = mkNixosSystem "nixpi" "aarch64-linux" "ando";
       };
     };

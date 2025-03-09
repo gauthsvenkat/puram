@@ -1,0 +1,18 @@
+services:
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - ${HOMARR_PORT}:7575
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${CONFIG_DIR}/homarr/configs:/app/data/configs
+      - ${CONFIG_DIR}/homarr/icons:/app/public/icons
+      - ${CONFIG_DIR}/homarr/data:/data

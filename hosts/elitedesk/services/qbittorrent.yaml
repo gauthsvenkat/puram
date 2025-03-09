@@ -1,0 +1,16 @@
+services:
+  qbittorrent:
+    container_name: qbittorrent
+    image: lscr.io/linuxserver/qbittorrent:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      WEBUI_PORT: 8082
+      TZ: ${TZ}
+    volumes:
+      - ${CONFIG_DIR}/qbittorrent:/config
+      - ${ENTERTAINMENT_DIR}/torrents:/data/torrents
+    network_mode: service:gluetun

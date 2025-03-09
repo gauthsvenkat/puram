@@ -1,0 +1,8 @@
+services:
+  flaresolverr:
+    container_name: flaresolverr
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    network_mode: service:gluetun
