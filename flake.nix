@@ -18,7 +18,7 @@
   };
 
   outputs =
-    { nixpkgs, ... }@inputs:
+    { nixpkgs, home-manager, ... }@inputs:
     let
       mkNixosSystem =
         hostname: system: username:
