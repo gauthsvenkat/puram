@@ -18,15 +18,15 @@
     userEmail = "gauthsvenkat@gmail.com";
   };
 
-  boot = {
-    supportedFilesystems = [ "zfs" ];
-    zfs = {
-      # By default, following option is true for legacy reasons.
-      forceImportRoot = false;
-      extraPools = [ "dontdie" ];
-    };
-  };
+  # boot = {
+  #   supportedFilesystems = [ "zfs" ];
+  #   zfs = {
+  #     # By default, following option is true for legacy reasons.
+  #     forceImportRoot = false;
+  #     extraPools = [ "dontdie" ];
+  #   };
+  # };
 
   # ZFS requires networking.hostId to be set
-  networking.hostId = "0c0ffee0";
+  # networking.hostId = "0c0ffee0";
 }
