@@ -3,6 +3,11 @@
     ./home-manager/programs/wezterm.nix
   ];
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+
   services = {
     # Uncomment following to enable Xorg (beside wayland)
     # xserver.enable = true;

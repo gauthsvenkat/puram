@@ -12,7 +12,8 @@
         ripgrep.enable = true;
       };
       home.packages = with pkgs; [
-        # meslo-lgs-nf
+        # needed for non-wezterm terminals
+        meslo-lgs-nf
         # needed for neovim (and friends) among other things
         gcc
         cmake
@@ -22,6 +23,9 @@
         rustup
         wl-clipboard-rs
         # other useful tools
+        vscode
+        uv
+        yakuake
         cargo-generate
         spotify
         neovide

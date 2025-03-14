@@ -1,4 +1,4 @@
-{ username, ... }:
+{ pkgs, username, ... }:
 {
   imports = [
     ./disko-config.nix
@@ -13,7 +13,28 @@
     ../../common/home-manager/development.nix
   ];
 
-  home-manager.users.${username}.programs.git = {
-    userEmail = "user@work.example";
+  services.fprintd.tod = {
+    enable = true;
+    driver = pkgs.libfprint-2-tod1-goodix;
+  };
+
+  programs._1password-gui = {
+    enable = true;
+    polkitPolicyOwners = [ username ];
+  };
+
+  home-manager.users.${username} = {
+    home.packages = with pkgs; [
+      slack
+      (google-cloud-sdk.withExtraComponents [
+        google-cloud-sdk.components.gke-gcloud-auth-plugin
+        google-cloud-sdk.components.kubectl
+      ])
+      k9s
+      kubernetes-helm
+      thunderbird
+      libreoffice-still
+    ];
+    programs.git.userEmail = "user@work.example";
   };
 }
