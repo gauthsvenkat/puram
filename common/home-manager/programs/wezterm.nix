@@ -20,6 +20,8 @@
       return {
         audible_bell = "Disabled",
 
+        font_size = 12,
+
         enable_wayland = false,
         front_end = "WebGpu", -- Doesn't work on thinkpad without this
         hide_tab_bar_if_only_one_tab = true,
