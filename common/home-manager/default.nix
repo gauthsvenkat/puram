@@ -18,6 +18,7 @@
         homeDirectory = "/home/${username}";
 
         packages = with pkgs; [
+          unzip
           lazydocker
           just
           pre-commit

@@ -1,6 +1,6 @@
 {
   services.kanata = {
-    enable = true;
+    enable = false;
     keyboards.laptop = {
       # NOTE: Highly recommended to set the devices in the host.
       # Otherwise, all keyboards will be intercepted.
