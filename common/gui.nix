@@ -1,6 +1,6 @@
 {
   imports = [
-    ./home-manager/programs/wezterm.nix
+    ./home-manager/programs/wezterm
   ];
 
   hardware.bluetooth = {
