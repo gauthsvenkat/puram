@@ -11,6 +11,7 @@
     ../../common/kanata.nix
     ../../common/laptop.nix
     ../../common/home-manager/development.nix
+    ../../common/home-manager/programs/espanso.nix
   ];
 
   services.fprintd.tod = {
