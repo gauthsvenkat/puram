@@ -11,6 +11,7 @@ end)
 
 return {
   audible_bell = "Disabled",
+  warn_about_missing_glyphs=false,
 
   font_size = 12,
 
