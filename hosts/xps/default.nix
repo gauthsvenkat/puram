@@ -35,6 +35,8 @@
       kubernetes-helm
       thunderbird
       libreoffice-still
+      hurl
+      jq
     ];
     programs.git.userEmail = "gautham@dexterenergy.ai";
   };
