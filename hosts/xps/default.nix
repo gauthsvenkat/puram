@@ -39,6 +39,12 @@
       hurl
       jq
     ];
+
     programs.git.userEmail = "user@work.example";
+
+    xdg.autostart.entries = [
+      "${pkgs.slack}/share/applications/slack.desktop"
+      "${pkgs.thunderbird}/share/applications/thunderbird.desktop"
+    ];
   };
 }
