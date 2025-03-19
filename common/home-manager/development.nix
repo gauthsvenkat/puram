@@ -25,7 +25,7 @@
         # other useful tools
         vscode
         uv
-        yakuake
+        kdePackages.yakuake
         cargo-generate
         spotify
         neovide
