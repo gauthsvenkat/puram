@@ -30,6 +30,14 @@
         spotify
         neovide
       ];
+
+      xdg.autostart = {
+        enable = true;
+        entries = [
+          "${pkgs.kdePackages.yakuake}/share/applications/org.kde.yakuake.desktop"
+          "${pkgs.spotify}/share/applications/spotify.desktop"
+        ];
+      };
     };
   };
 }

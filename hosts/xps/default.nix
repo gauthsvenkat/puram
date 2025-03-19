@@ -39,6 +39,12 @@
       hurl
       jq
     ];
+
     programs.git.userEmail = "gautham@dexterenergy.ai";
+
+    xdg.autostart.entries = [
+      "${pkgs.slack}/share/applications/slack.desktop"
+      "${pkgs.thunderbird}/share/applications/thunderbird.desktop"
+    ];
   };
 }
