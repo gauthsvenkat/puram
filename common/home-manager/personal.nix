@@ -11,7 +11,6 @@
       home.packages = with pkgs; [
         jellyfin-media-player
         mpv
-        rustdesk
         localsend
       ];
     };
