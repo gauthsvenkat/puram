@@ -14,10 +14,11 @@
     ../../common/home-manager/programs/espanso.nix
   ];
 
-  services.fprintd.tod = {
-    enable = true;
-    driver = pkgs.libfprint-2-tod1-goodix;
-  };
+  # NOTE: Fingerprint disabled since it is very annoying
+  # services.fprintd.tod = {
+  #   enable = true;
+  #   driver = pkgs.libfprint-2-tod1-goodix;
+  # };
 
   programs._1password-gui = {
     enable = true;
