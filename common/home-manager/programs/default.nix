@@ -25,6 +25,7 @@
       enable = true;
       lfs.enable = true;
       userName = "Gautham Venkataraman";
+      ignores = [".envrc" ".env"];
     };
 
     btop = {
