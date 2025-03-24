@@ -15,8 +15,6 @@ return {
 
   font_size = 12,
 
-  enable_wayland = false,
-  front_end = "WebGpu", -- Doesn't work on thinkpad without this
   hide_tab_bar_if_only_one_tab = true,
   use_fancy_tab_bar = false,
   tab_and_split_indices_are_zero_based = true,
