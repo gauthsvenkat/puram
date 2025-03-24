@@ -4,6 +4,10 @@
     enable = true;
     matches.base.matches = [
       {
+        trigger = ":eur";
+        replace = "€";
+      }
+      {
         trigger = ":s-yday";
         replace = "{{start_yesterday}}";
         vars = [
