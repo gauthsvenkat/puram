@@ -1,10 +1,13 @@
-build action='switch':
+apply action='switch':
   nh os {{action}} .
 
-update:
+upgrade:
   nix flake update
+  just apply boot
 
-upgrade: update build
+upgrade-reboot:
+  just upgrade
+  reboot
 
 test:
   nix flake check
