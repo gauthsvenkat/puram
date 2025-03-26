@@ -25,6 +25,7 @@
     initExtra = ''
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       test -f ~/.p10k.zsh && source ~/.p10k.zsh
+      ${pkgs.fastfetch}/bin/fastfetch
     '';
   };
 }
