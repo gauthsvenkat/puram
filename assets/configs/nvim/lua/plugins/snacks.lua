@@ -37,7 +37,7 @@ return {
       desc = "[o]pen in browser",
     },
     {
-      "<leader>gg",
+      "<Del>",
       function()
         Snacks.lazygit()
       end,
