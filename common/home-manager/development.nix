@@ -23,6 +23,7 @@
         rustup
         wl-clipboard-rs
         # other useful tools
+        wezterm
         vscode
         uv
         kdePackages.yakuake

@@ -1,8 +1,4 @@
 {
-  imports = [
-    ./home-manager/programs/wezterm
-  ];
-
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
