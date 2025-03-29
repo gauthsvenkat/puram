@@ -19,4 +19,5 @@ include:
   - sabnzbd.yaml
   - sonarr.yaml
   # END-PRIVATE
+  - speedtest-tracker.yaml
   - stirling-pdf.yaml
