@@ -5,4 +5,5 @@ include:
   - immich.yaml
   - jellyfin.yaml
   - paperless-ngx.yaml
+  - speedtest-tracker.yaml
   - stirling-pdf.yaml
