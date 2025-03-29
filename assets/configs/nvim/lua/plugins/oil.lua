@@ -14,16 +14,15 @@ return {
         return name == ".."
       end,
     },
+    use_default_keymaps = false,
     keymaps = {
-      ["h"] = "actions.parent",
-      ["l"] = "actions.select",
-      ["H"] = "actions.toggle_hidden",
-      ["<CR>"] = "actions.close",
-      ["<C-j>"] = { "actions.select", opts = { horizontal = true }, desc = "Open entry in horizontal window" },
-      ["<C-l>"] = { "actions.select", opts = { vertical = true }, desc = "Open entry in vertical window" },
+      ["<Bs>"] = "actions.parent",
+      [" "] = "actions.select",
+      ["q"] = "actions.close",
+      ["g."] = "actions.toggle_hidden",
     },
   },
   keys = {
-    { "<CR>", cmd("Oil --float"), desc = "Open Oil" },
+    { "<Bs>", cmd("Oil --float"), desc = "Open Oil" },
   },
 }
