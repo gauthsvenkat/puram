@@ -1,3 +1,5 @@
+#NOTE: By default espanso package only works with x11 apps.
+# Couldn't figure out how to make espanso-wayland work. Maybe try later.
 { username, ... }:
 {
   home-manager.users.${username}.services.espanso = {
