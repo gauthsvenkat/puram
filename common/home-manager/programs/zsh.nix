@@ -17,7 +17,7 @@
     };
     shellAliases = {
       l = "${pkgs.eza}/bin/eza -l --icons -a";
-      lt = "${pkgs.eza}/bin/eza --tree --icons --git --level=3";
+      lt = "${pkgs.eza}/bin/eza --tree --icons --git --level=4";
       v = "${pkgs.neovim}/bin/nvim";
       b = "${pkgs.bat}/bin/bat";
       lg = "${pkgs.lazygit}/bin/lazygit";
