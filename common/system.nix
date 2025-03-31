@@ -24,6 +24,8 @@
       # the following to make non-nix programs work as well.
       SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
     };
+    # to install own binarie
+    localBinInPath = true;
   };
 
   time.timeZone = "Europe/Amsterdam";
