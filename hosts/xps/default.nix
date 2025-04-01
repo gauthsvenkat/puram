@@ -11,7 +11,6 @@
     ../../common/kanata.nix
     ../../common/laptop.nix
     ../../common/home-manager/development.nix
-    ../../common/home-manager/programs/espanso.nix
   ];
 
   # NOTE: Fingerprint disabled since it is very annoying
