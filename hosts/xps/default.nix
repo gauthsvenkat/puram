@@ -20,9 +20,12 @@
   #   driver = pkgs.libfprint-2-tod1-goodix;
   # };
 
-  programs._1password-gui = {
-    enable = true;
-    polkitPolicyOwners = [ username ];
+  programs = {
+    _1password.enable = true;
+    _1password-gui = {
+      enable = true;
+      polkitPolicyOwners = [ username ];
+    };
   };
 
   home-manager.users.${username} = {
