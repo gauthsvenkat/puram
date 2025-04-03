@@ -16,6 +16,9 @@
       ];
     };
     shellAliases = {
+      c = "clear";
+      o = "xdg-open";
+      open = "xdg-open";
       l = "${pkgs.eza}/bin/eza -l --icons -a";
       lt = "${pkgs.eza}/bin/eza --tree --icons --git --level=4";
       v = "${pkgs.neovim}/bin/nvim";
