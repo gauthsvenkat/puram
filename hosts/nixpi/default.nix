@@ -11,8 +11,8 @@
     ../../common/users.nix
     ../../common/home-manager
     ../../common/ssh.nix
+    ../../common/adguardhome.nix
     ./wg-easy.nix
-    ./adguardhome.nix
   ];
 
   fileSystems."/" = {

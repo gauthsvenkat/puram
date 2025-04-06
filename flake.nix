@@ -36,6 +36,7 @@
         thinkpad = mkNixosSystem "thinkpad" "x86_64-linux" "ando";
         xps = mkNixosSystem "xps" "x86_64-linux" "gautham";
         nixpi = mkNixosSystem "nixpi" "aarch64-linux" "ando";
+        toshiba = mkNixosSystem "toshiba" "x86_64-linux" "ando";
       };
     };
 }
