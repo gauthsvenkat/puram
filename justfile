@@ -15,7 +15,7 @@ test:
 nixos-install hostname ip:
   nix run github:nix-community/nixos-anywhere -- \
     --generate-hardware-config nixos-generate-config \
-    .hosts/{{hostname}}/hardware-configuration.nix \
+    ./hosts/{{hostname}}/hardware-configuration.nix \
     --flake .#{{hostname}} \
     --target-host root@{{ip}}
 
