@@ -11,8 +11,14 @@
     fzf.enable = true;
     bat.enable = true;
     lazygit.enable = true;
-    direnv.enable = true;
     nh.enable = true;
+
+    direnv = {
+      enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
 
     zoxide = {
       enable = true;
@@ -25,7 +31,10 @@
       enable = true;
       lfs.enable = true;
       userName = "Gautham Venkataraman";
-      ignores = [".envrc" ".env"];
+      ignores = [
+        ".envrc"
+        ".env"
+      ];
     };
 
     btop = {
