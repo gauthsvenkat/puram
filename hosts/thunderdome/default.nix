@@ -1,4 +1,5 @@
 {
+  pkgs,
   username,
   ...
 }:
@@ -15,13 +16,13 @@
     ../../common/home-manager/development.nix
   ];
 
-  # services.xserver = {
-  #   enable = true;
-  #   videoDrivers = [ "nvidia" ];
-  # };
-
-  home-manager.users.${username}.programs.git = {
-    userEmail = "gauthsvenkat@gmail.com";
-    userName = "Gautham Venkataraman";
+  home-manager.users.${username} = {
+    programs.git = {
+      userEmail = "gauthsvenkat@gmail.com";
+      userName = "Gautham Venkataraman";
+    };
+    xdg.autostart.entries = [
+      "${pkgs.mullvad-vpn}/share/applications/mullvad-vpn.desktop"
+    ];
   };
 }
