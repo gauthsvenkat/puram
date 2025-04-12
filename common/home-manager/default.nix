@@ -19,7 +19,6 @@
 
         packages = with pkgs; [
           unzip
-          lazydocker
           just
           pre-commit
           nixfmt-rfc-style

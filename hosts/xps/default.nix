@@ -37,7 +37,6 @@
       k9s
       kubernetes-helm
       thunderbird
-      libreoffice-still
       hurl
       jq
     ];

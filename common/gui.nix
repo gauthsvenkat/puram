@@ -1,4 +1,14 @@
 {
+  pkgs,
+  username,
+  inputs,
+  ...
+}:
+{
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
@@ -23,5 +33,10 @@
   programs = {
     firefox.enable = true;
     kdeconnect.enable = true;
+  };
+
+  home-manager.users.${username} = {
+    home.packages = with pkgs; [ libreoffice-still ];
+    xdg.autostart.enable = true;
   };
 }
