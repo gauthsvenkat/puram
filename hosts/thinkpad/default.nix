@@ -1,5 +1,4 @@
 {
-  pkgs,
   username,
   ...
 }:
@@ -14,18 +13,10 @@
     ../../common/gui.nix
     ../../common/kanata.nix
     ../../common/laptop.nix
+    ../../common/mullvad-vpn.nix
     ../../common/home-manager/personal.nix
     ../../common/home-manager/development.nix
   ];
-
-  services = {
-    mullvad-vpn = {
-      enable = true;
-      # pkgs.mullvad only contains the cli
-      # while pkgs.mullvad-vpn comes with the gui as well
-      package = pkgs.mullvad-vpn;
-    };
-  };
 
   home-manager.users.${username}.programs.git = {
     userEmail = "gauthsvenkat@gmail.com";
