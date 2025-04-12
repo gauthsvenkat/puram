@@ -13,6 +13,9 @@
         mpv
         localsend
       ];
+      xdg.autostart.entries = [
+        "${pkgs.mullvad-vpn}/share/applications/mullvad-vpn.desktop"
+      ];
     };
   };
 }
