@@ -1,5 +1,4 @@
 {
-  pkgs,
   username,
   ...
 }:
@@ -21,8 +20,5 @@
       userEmail = "gauthsvenkat@gmail.com";
       userName = "Gautham Venkataraman";
     };
-    xdg.autostart.entries = [
-      "${pkgs.mullvad-vpn}/share/applications/mullvad-vpn.desktop"
-    ];
   };
 }
