@@ -14,6 +14,7 @@
     ../../common/kanata.nix
     ../../common/laptop.nix
     ../../common/mullvad-vpn.nix
+    ../../common/syncthing.nix
     ../../common/home-manager/personal.nix
     ../../common/home-manager/development.nix
   ];
