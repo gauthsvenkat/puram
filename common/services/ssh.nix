@@ -4,8 +4,8 @@
 
   users.users =
     let
-      _all_keys = (import ./public_keys.nix);
-      keys = _all_keys.ando ++ _all_keys.nixpi;
+      _all_keys = (import ../../public_keys.nix);
+      keys = _all_keys.ando;
     in
     {
       ${username}.openssh.authorizedKeys.keys = keys;

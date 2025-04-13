@@ -3,21 +3,24 @@
   imports = [
     ./disko-config.nix
     ./hardware-configuration.nix
+
     ../../common/boot.nix
-    ../../common/nix-settings.nix
     ../../common/system.nix
     ../../common/users.nix
+    ../../common/nix-settings.nix
     ../../common/gui.nix
-    ../../common/kanata.nix
+
+    ../../common/development.nix
     ../../common/laptop.nix
-    ../../common/home-manager/development.nix
+
+    ../../common/services/kanata.nix
   ];
 
-  # NOTE: Fingerprint disabled since it is very annoying
-  # services.fprintd.tod = {
-  #   enable = true;
-  #   driver = pkgs.libfprint-2-tod1-goodix;
-  # };
+  services.fprintd.tod = {
+    # NOTE: Fingerprint disabled since it is very annoying
+    enable = false;
+    driver = pkgs.libfprint-2-tod1-goodix;
+  };
 
   programs = {
     _1password.enable = true;

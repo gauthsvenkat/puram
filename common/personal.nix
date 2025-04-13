@@ -4,7 +4,11 @@
   ...
 }:
 {
-  imports = [ ./default.nix ];
+  imports = [
+    ./home-manager.nix
+    ./gui.nix
+    ./services/mullvad-vpn.nix
+  ];
 
   home-manager = {
     users.${username} = {
@@ -12,6 +16,7 @@
         jellyfin-media-player
         mpv
         localsend
+        rpi-imager
       ];
       xdg.autostart.entries = [
         "${pkgs.mullvad-vpn}/share/applications/mullvad-vpn.desktop"

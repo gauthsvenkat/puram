@@ -5,12 +5,15 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../common/nix-settings.nix
+
     ../../common/system.nix
     ../../common/users.nix
-    ../../common/home-manager
-    ../../common/ssh.nix
-    ../../common/adguardhome.nix
+    ../../common/nix-settings.nix
+
+    ../../common/home-manager.nix
+
+    ../../common/services/ssh.nix
+    ../../common/services/adguardhome.nix
   ];
 
   boot.loader.grub = {

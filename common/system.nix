@@ -24,7 +24,7 @@
       # the following to make non-nix programs work as well.
       SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
     };
-    # to install own binarie
+    # following adds `~/.local/bin` to PATH
     localBinInPath = true;
   };
 
