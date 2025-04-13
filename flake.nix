@@ -21,7 +21,11 @@
     { nixpkgs, home-manager, ... }@inputs:
     let
       mkNixosSystem =
-        hostname: system: username:
+        {
+          hostname,
+          system ? "x86_64-linux",
+          username ? "ando",
+        }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
@@ -32,12 +36,21 @@
     in
     {
       nixosConfigurations = {
-        elitedesk = mkNixosSystem "elitedesk" "x86_64-linux" "ando";
-        thinkpad = mkNixosSystem "thinkpad" "x86_64-linux" "ando";
-        xps = mkNixosSystem "xps" "x86_64-linux" "gautham";
-        nixpi = mkNixosSystem "nixpi" "aarch64-linux" "ando";
-        toshiba = mkNixosSystem "toshiba" "x86_64-linux" "ando";
-        thunderdome = mkNixosSystem "thunderdome" "x86_64-linux" "ando";
+        # work
+        xps = mkNixosSystem {
+          hostname = "xps";
+          username = "gautham";
+        };
+        # personal
+        thinkpad = mkNixosSystem { hostname = "thinkpad"; };
+        thunderdome = mkNixosSystem { hostname = "thunderdome"; };
+        # servers
+        elitedesk = mkNixosSystem { hostname = "elitedesk"; };
+        toshiba = mkNixosSystem { hostname = "toshiba"; };
+        nixpi = mkNixosSystem {
+          hostname = "nixpi";
+          system = "aarch64-linux";
+        };
       };
     };
 }

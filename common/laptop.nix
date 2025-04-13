@@ -1,7 +1,7 @@
 {
   services = {
     # NOTE: Fingerprint disabled since it is very annoying
-    # fprintd.enable = true;
+    fprintd.enable = false;
 
     # Disable power-profiles-daemon in favor of TLP
     power-profiles-daemon.enable = false;
