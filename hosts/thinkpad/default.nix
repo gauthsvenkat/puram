@@ -20,8 +20,5 @@
     ../../common/services/kanata.nix
   ];
 
-  home-manager.users.${username}.programs.git = {
-    userEmail = "gauthsvenkat@gmail.com";
-    userName = "Gautham Venkataraman";
-  };
+  home-manager.users.${username}.programs.git.userEmail = "gauthsvenkat@gmail.com";
 }

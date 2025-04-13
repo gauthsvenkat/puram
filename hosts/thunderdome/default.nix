@@ -21,10 +21,14 @@
 
   boot.zfs.extraPools = [ "wombocombo" ];
 
-  home-manager.users.${username} = {
-    programs.git = {
-      userEmail = "gauthsvenkat@gmail.com";
-      userName = "Gautham Venkataraman";
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware = {
+    graphics.enable = true;
+    nvidia = {
+      open = false;
+      modesetting.enable = true;
     };
   };
+
+  home-manager.users.${username}.programs.git.userEmail = "gauthsvenkat@gmail.com";
 }
