@@ -1,6 +1,7 @@
 apply action='switch':
   nh os {{action}} .
 
+[confirm]
 update:
   nix flake update
 
@@ -10,6 +11,7 @@ upgrade:
 test:
   nix flake check
 
+[confirm]
 nixos-install hostname ip:
   nix run github:nix-community/nixos-anywhere -- \
     --generate-hardware-config nixos-generate-config \
@@ -27,3 +29,7 @@ secret-rekey:
 
 secret-edit path:
   nix run github:ryantm/agenix -- -e {{path}}
+
+[confirm]
+clean-branches:
+  git checkout main && git branch | grep -v "main" | xargs git branch -D
