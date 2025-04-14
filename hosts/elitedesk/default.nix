@@ -1,4 +1,7 @@
 { inputs, username, ... }:
+let
+  zpool = "dontdie";
+in
 {
   imports = [
     inputs.agenix.nixosModules.default
@@ -17,28 +20,17 @@
     ../../common/services/ssh.nix
   ];
 
-  boot.zfs.extraPools = [ "dontdie" ];
+  boot.zfs.extraPools = [ zpool ];
 
   age.secrets.".env" = {
     owner = username;
     file = ./.env;
   };
 
-  services.sanoid = {
-    enable = true;
-    templates."default" = {
-      autosnap = true;
-      autoprune = true;
-      hourly = 4;
-      daily = 7;
-      monthly = 1;
-      yearly = 0;
-    };
-    datasets."dontdie" = {
-      recursive = true;
-      process_children_only = true;
-      use_template = [ "default" ];
-    };
+  services.sanoid.datasets."${zpool}" = {
+    recursive = true;
+    process_children_only = true;
+    use_template = [ "default" ];
   };
 
   home-manager.users.${username}.programs.git = {
