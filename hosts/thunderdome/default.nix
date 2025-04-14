@@ -2,6 +2,9 @@
   username,
   ...
 }:
+let
+  zpool = "wombocombo";
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -19,7 +22,8 @@
     ../../common/services/zfs.nix
   ];
 
-  boot.zfs.extraPools = [ "wombocombo" ];
+  boot.zfs.extraPools = [ zpool ];
+  services.sanoid.datasets."${zpool}".use_template = [ "default" ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware = {
