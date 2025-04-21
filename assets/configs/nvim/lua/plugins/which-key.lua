@@ -17,19 +17,18 @@ return {
       { "<C-l>", cmd("wincmd l"), mode = { "n", "t" }, desc = "Move to window right" },
 
       -- Window moving
-      -- FIX: This isn't working on the desktop, but works on the mac.
-      -- Likely an issue with terminal processing and not neovim.
-      { "<C-S-h>", cmd("wincmd H"), desc = "Move window left" },
-      { "<C-S-j>", cmd("wincmd J"), desc = "Move window down" },
-      { "<C-S-k>", cmd("wincmd K"), desc = "Move window up" },
-      { "<C-S-l>", cmd("wincmd L"), desc = "Move window right" },
+      -- TODO: Inc / dec split sizes
+      { "<C-s>h", cmd("wincmd H"), desc = "Move window left" },
+      { "<C-s>j", cmd("wincmd J"), desc = "Move window down" },
+      { "<C-s>k", cmd("wincmd K"), desc = "Move window up" },
+      { "<C-s>l", cmd("wincmd L"), desc = "Move window right" },
 
       -- Window splitting
-      { "<C-s>=", cmd("wincmd ="), desc = "Make splits equal size" },
-      { "<C-s>h", cmd("aboveleft vsplit"), desc = "Split vertical (left)" },
-      { "<C-s>j", cmd("belowright split"), desc = "Split horizontal (below)" },
-      { "<C-s>k", cmd("aboveleft split"), desc = "Split horizontal (above)" },
-      { "<C-s>l", cmd("belowright vsplit"), desc = "Split vertical (right)" },
+      { "<C-p>=", cmd("wincmd ="), desc = "Make splits equal size" },
+      { "<C-p>h", cmd("aboveleft vsplit"), desc = "Split vertical (left)" },
+      { "<C-p>j", cmd("belowright split"), desc = "Split horizontal (below)" },
+      { "<C-p>k", cmd("aboveleft split"), desc = "Split horizontal (above)" },
+      { "<C-p>l", cmd("belowright vsplit"), desc = "Split vertical (right)" },
 
       -- Buffer navigation
       { "<C-n>", cmd("bnext"), desc = "Buffer next" },
@@ -38,6 +37,7 @@ return {
       -- Leader mappings
       { "<leader>b", group = "[b]uffer" },
       { "<leader>bi", "gg=G", desc = "[i]ndent" },
+      { "<leader>by", "ggyG", desc = "[y]ank" },
 
       { "<leader>c", group = "[c]omment", mode = { "n", "v" } },
       { "<leader>C", group = "[C]omment (block)", mode = { "n", "v" } },
@@ -73,8 +73,6 @@ return {
       { "<leader>w", group = "s[w]ap" },
 
       { "<leader>x", group = "trouble [x]0" },
-
-      { "<leader>z", group = "[z]en mode" },
     },
   },
   keys = {
