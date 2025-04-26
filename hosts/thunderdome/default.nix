@@ -1,5 +1,6 @@
 {
   username,
+  pkgs,
   ...
 }:
 let
@@ -22,6 +23,10 @@ in
     ../../common/services/zfs.nix
   ];
 
+  # If enabled, the boot process get randomly stuck on "A start job
+  # is running for /dev/tpmrm0".
+  systemd.tpm2.enable = false;
+
   boot.zfs.extraPools = [ zpool ];
   services.sanoid.datasets."${zpool}".use_template = [ "default" ];
 
@@ -31,10 +36,26 @@ in
     nvidia = {
       open = false;
       modesetting.enable = true;
+      powerManagement.enable = true;
     };
   };
 
-  programs.steam.enable = true;
+  programs = {
+    steam.enable = true;
+    gamemode.enable = true;
+  };
 
-  home-manager.users.${username}.programs.git.userEmail = "gauthsvenkat@gmail.com";
+  users.users.${username}.extraGroups = [ "gamemode" ];
+
+  home-manager.users.${username} = {
+    home.packages = with pkgs; [
+      heroic
+      bottles
+    ];
+    programs.git.userEmail = "gauthsvenkat@gmail.com";
+
+    xdg.autostart.entries = [
+      "${pkgs.steam}/share/applications/steam.desktop"
+    ];
+  };
 }
