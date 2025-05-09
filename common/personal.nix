@@ -14,7 +14,6 @@
     users.${username} = {
       home.packages = with pkgs; [
         jellyfin-media-player
-        mpv
         localsend
         rpi-imager
       ];
