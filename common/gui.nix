@@ -36,7 +36,10 @@
   };
 
   home-manager.users.${username} = {
-    home.packages = with pkgs; [ libreoffice-still ];
+    home.packages = with pkgs; [
+      libreoffice-still
+      mpv
+    ];
     xdg.autostart.enable = true;
   };
 }
