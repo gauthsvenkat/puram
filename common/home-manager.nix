@@ -60,6 +60,14 @@
           };
         };
 
+        mcfly = {
+          enable = true;
+          enableBashIntegration = true;
+          enableZshIntegration = true;
+          fzf.enable = true;
+          keyScheme = "vim";
+        };
+
         zsh = {
           enable = true;
           autosuggestion.enable = true;
