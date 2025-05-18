@@ -15,17 +15,28 @@
         (defsrc
         )
 
+        (defvar
+          tap-timeout 200
+          hold-timeout 300
+          key-recency 3
+          key-recency-time 250
+          caps-word-timeout 1000
+        )
+
         (deftemplate charmod (char mod)
           (switch
-            ((key-timing 3 less-than 250)) $char break
-            () (tap-hold-release-timeout 200 500 $char $mod $char) break
+            ((key-timing $key-recency lt $key-recency-time)) $char break
+            () (tap-hold-release $tap-timeout $hold-timeout $char $mod) break
           )
         )
 
         (deflayermap (main)
           caps esc
           esc caps
-          lsft (tap-hold-press 200 200 (caps-word-toggle 1000) lsft)
+
+          lsft (tap-hold-press $tap-timeout $hold-timeout (caps-word-toggle $caps-word-timeout) lsft)
+          rsft (tap-hold-press $tap-timeout $hold-timeout f12 rsft)
+
           a (t! charmod a lmet)
           s (t! charmod s lalt)
           d (t! charmod d lctl)
