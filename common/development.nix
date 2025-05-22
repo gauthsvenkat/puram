@@ -36,7 +36,6 @@
         vscode
         kdePackages.yakuake
         spotify
-        neovide
       ];
 
       home.file."/home/${username}/.config/yakuakerc".text = ''
