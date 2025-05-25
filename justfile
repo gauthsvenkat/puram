@@ -3,6 +3,7 @@ apply action='switch':
 
 [confirm]
 upgrade:
+  git checkout upgrade
   nix flake update
   just apply boot
 
