@@ -11,10 +11,6 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -44,13 +40,8 @@
         # personal
         thinkpad = mkNixosSystem { hostname = "thinkpad"; };
         thunderdome = mkNixosSystem { hostname = "thunderdome"; };
-        # servers
+        # homeserver
         elitedesk = mkNixosSystem { hostname = "elitedesk"; };
-        toshiba = mkNixosSystem { hostname = "toshiba"; };
-        nixpi = mkNixosSystem {
-          hostname = "nixpi";
-          system = "aarch64-linux";
-        };
       };
     };
 }
