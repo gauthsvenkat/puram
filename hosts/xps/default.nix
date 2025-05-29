@@ -14,6 +14,7 @@
     ../../common/laptop.nix
 
     ../../common/services/kanata.nix
+    ../../common/services/tailscale.nix
   ];
 
   services.fprintd.tod = {
