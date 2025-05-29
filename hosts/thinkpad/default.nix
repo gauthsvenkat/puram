@@ -18,6 +18,7 @@
 
     ../../common/services/syncthing.nix
     ../../common/services/kanata.nix
+    ../../common/services/tailscale.nix
   ];
 
   home-manager.users.${username}.programs.git.userEmail = "gauthsvenkat@gmail.com";

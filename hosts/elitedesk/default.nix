@@ -17,6 +17,7 @@ in
 
     ../../common/services/zfs.nix
     ../../common/services/ssh.nix
+    ../../common/services/tailscale.nix
   ];
 
   boot.zfs.extraPools = [ zpool ];
