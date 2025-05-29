@@ -1,8 +1,0 @@
-services:
-  bazarr:
-    container_name: bazarr
-    image: lscr.io/linuxserver/bazarr:latest
-    restart: unless-stopped
-    env_file:
-      - .env
-    network_mode: service:gluetun
