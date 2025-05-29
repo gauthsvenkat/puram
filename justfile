@@ -3,18 +3,11 @@ apply action='switch':
 
 [confirm]
 upgrade:
-  git checkout upgrade
   nix flake update
   just apply boot
 
 check:
   nix flake check
-
-secret-rekey:
-  nix run github:ryantm/agenix -- -r
-
-secret-edit path:
-  nix run github:ryantm/agenix -- -e {{ path }}
 
 [confirm]
 nixos-install hostname ip:
