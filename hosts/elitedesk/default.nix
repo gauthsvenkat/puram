@@ -1,10 +1,9 @@
-{ inputs, username, ... }:
+{ username, ... }:
 let
   zpool = "dontdie";
 in
 {
   imports = [
-    inputs.agenix.nixosModules.default
 
     ./disko-config.nix
     ./hardware-configuration.nix
@@ -21,11 +20,6 @@ in
   ];
 
   boot.zfs.extraPools = [ zpool ];
-
-  age.secrets.".env" = {
-    owner = username;
-    file = ./.env;
-  };
 
   services.sanoid.datasets."${zpool}" = {
     recursive = true;
