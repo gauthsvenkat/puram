@@ -7,6 +7,11 @@
 
   virtualisation.docker.enable = true;
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+
   programs = {
     # needed for setting user's shell
     zsh.enable = true;
@@ -16,12 +21,7 @@
 
   environment = {
     systemPackages = [ pkgs.neovim ];
-    variables = {
-      EDITOR = "nvim";
-      #NOTE: By default only NIX_SSL_CERT_FILE is set. Better to set
-      # the following to make non-nix programs work as well.
-      SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-    };
+    variables.EDITOR = "nvim";
     # following adds `~/.local/bin` to PATH
     localBinInPath = true;
   };

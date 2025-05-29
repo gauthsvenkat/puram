@@ -15,7 +15,14 @@
         stateVersion = "24.11"; # Don't change this
         inherit username;
         homeDirectory = "/home/${username}";
-        packages = with pkgs; [ just age ];
+        packages = with pkgs; [
+          just
+          age
+        ];
+
+        #NOTE: By default only NIX_SSL_CERT_FILE is set. Better to set
+        # the following to make non-nix programs work as well.
+        sessionVariables.SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
       };
 
       programs = {
@@ -56,7 +63,6 @@
           settings = {
             color_theme = "gruvbox_dark";
             update_ms = 1000;
-            proc_tree = true;
           };
         };
 
@@ -101,7 +107,6 @@
         };
       };
 
-      targets.genericLinux.enable = true;
       fonts.fontconfig.enable = true;
     };
 
