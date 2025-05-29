@@ -44,7 +44,7 @@
           enable = true;
           lfs.enable = true;
           userName = "Gautham Venkataraman";
-          #TODO: Figure out how to add a default email
+          userEmail = "gauthsvenkat@gmail.com";
           ignores = [
             ".envrc"
             ".env"

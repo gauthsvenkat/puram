@@ -1,8 +1,4 @@
 {
-  username,
-  ...
-}:
-{
   imports = [
     ./hardware-configuration.nix
 
@@ -21,5 +17,4 @@
   ];
 
   services.tailscale.enable = true;
-  home-manager.users.${username}.programs.git.userEmail = "gauthsvenkat@gmail.com";
 }
