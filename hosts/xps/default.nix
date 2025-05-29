@@ -1,4 +1,9 @@
-{ pkgs, username, ... }:
+{
+  lib,
+  pkgs,
+  username,
+  ...
+}:
 {
   imports = [
     ./disko-config.nix
@@ -40,7 +45,7 @@
       jq
     ];
 
-    programs.git.userEmail = "gautham@dexterenergy.ai";
+    programs.git.userEmail = lib.mkForce "gautham@dexterenergy.ai";
 
     xdg.autostart.entries = [
       "${pkgs.slack}/share/applications/slack.desktop"

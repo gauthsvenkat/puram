@@ -46,14 +46,4 @@ in
   };
 
   users.users.${username}.extraGroups = [ "gamemode" ];
-
-  home-manager.users.${username} = {
-    # home.packages = with pkgs; [];
-    programs.git.userEmail = "gauthsvenkat@gmail.com";
-
-    xdg.autostart.entries = [
-      # NOTE: Disabled cause steam keeps opening randomly
-      # "${pkgs.steam}/share/applications/steam.desktop"
-    ];
-  };
 }
