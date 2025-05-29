@@ -16,9 +16,12 @@ in
     ../../common/home-manager.nix
 
     ../../common/services/zfs.nix
-    ../../common/services/ssh.nix
-    ../../common/services/tailscale.nix
   ];
+
+  services = {
+    openssh.enable = true;
+    tailscale.enable = true;
+  };
 
   boot.zfs.extraPools = [ zpool ];
 

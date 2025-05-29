@@ -14,14 +14,9 @@
     ../../common/laptop.nix
 
     ../../common/services/kanata.nix
-    ../../common/services/tailscale.nix
   ];
 
-  services.fprintd.tod = {
-    # NOTE: Fingerprint disabled since it is very annoying
-    enable = false;
-    driver = pkgs.libfprint-2-tod1-goodix;
-  };
+  services.tailscale.enable = true;
 
   programs = {
     _1password.enable = true;
