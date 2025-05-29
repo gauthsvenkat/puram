@@ -15,7 +15,7 @@
         stateVersion = "24.11"; # Don't change this
         inherit username;
         homeDirectory = "/home/${username}";
-        packages = [ pkgs.just ];
+        packages = with pkgs; [ just age ];
       };
 
       programs = {

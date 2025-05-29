@@ -18,8 +18,8 @@
 
     ../../common/services/syncthing.nix
     ../../common/services/kanata.nix
-    ../../common/services/tailscale.nix
   ];
 
+  services.tailscale.enable = true;
   home-manager.users.${username}.programs.git.userEmail = "gauthsvenkat@gmail.com";
 }

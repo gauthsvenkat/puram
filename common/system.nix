@@ -15,10 +15,7 @@
   };
 
   environment = {
-    systemPackages = with pkgs; [
-      neovim
-      age
-    ];
+    systemPackages = [ pkgs.neovim ];
     variables = {
       EDITOR = "nvim";
       #NOTE: By default only NIX_SSL_CERT_FILE is set. Better to set
