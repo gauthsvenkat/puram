@@ -7,9 +7,9 @@ in
 
     ../../bases/personal.nix
 
-    ../../components/core/services/kde.nix
-    ../../components/core/services/nvidia.nix
-    ../../components/core/services/zfs.nix
+    ../../components/core/kde.nix
+    ../../components/core/nvidia.nix
+    ../../components/core/zfs.nix
 
     ../../components/optional/gaming.nix
 

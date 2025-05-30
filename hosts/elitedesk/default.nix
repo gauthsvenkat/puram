@@ -9,7 +9,7 @@ in
 
     ../../bases/server.nix
 
-    ../../components/core/services/zfs.nix
+    ../../components/core/zfs.nix
     ../../components/optional/services/sanoid.nix
   ];
 

@@ -8,8 +8,7 @@
   imports = [
     ./system.nix
 
-    ../components/core/services/pipewire.nix
-
+    ../components/core/pipewire.nix
     ../components/core/home-manager.nix
 
     ../components/optional/bluetooth.nix
@@ -41,6 +40,7 @@
       vscode
       libreoffice-still
       mpv
+      firefox
     ];
 
     programs.zsh.shellAliases = {

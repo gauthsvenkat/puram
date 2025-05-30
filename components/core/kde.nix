@@ -4,8 +4,5 @@
     desktopManager.plasma6.enable = true;
   };
 
-  programs = {
-    firefox.enable = true;
-    kdeconnect.enable = true;
-  };
+  programs.kdeconnect.enable = true;
 }

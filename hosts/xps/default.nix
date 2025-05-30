@@ -11,7 +11,7 @@
 
     ../../bases/laptop.nix
 
-    ../../components/core/services/kde.nix
+    ../../components/core/kde.nix
     ../../components/optional/terminal/yakuake.nix
   ];
 
