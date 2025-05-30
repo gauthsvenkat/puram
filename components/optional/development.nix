@@ -10,7 +10,7 @@
     sessionVariables.SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
 
     packages = with pkgs; [
-      meslo-lgs-nf
+      nerd-fonts.jetbrains-mono
       gnumake
       ripgrep
       fd
