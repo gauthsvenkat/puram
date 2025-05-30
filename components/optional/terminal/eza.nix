@@ -2,9 +2,13 @@
 {
   home-manager.users.${username}.programs = {
     eza.enable = true;
-    zsh.shellAliases = {
-      l = "${pkgs.eza}/bin/eza -l --icons -a";
-      lt = "${pkgs.eza}/bin/eza --tree --icons --git --level=4";
-    };
+    zsh.shellAliases =
+      let
+        base_command = "${pkgs.eza}/bin/eza --group-directories-last --icons";
+      in
+      {
+        l = "${base_command} -l -a";
+        lt = "${base_command} --tree --git --level=4";
+      };
   };
 }
