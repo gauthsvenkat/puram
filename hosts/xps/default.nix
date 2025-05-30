@@ -9,19 +9,11 @@
     ./disko-config.nix
     ./hardware-configuration.nix
 
-    ../../common/boot.nix
-    ../../common/system.nix
-    ../../common/users.nix
-    ../../common/nix-settings.nix
-    ../../common/gui.nix
+    ../../bases/laptop.nix
 
-    ../../common/development.nix
-    ../../common/laptop.nix
-
-    ../../common/services/kanata.nix
+    ../../components/core/services/kde.nix
+    ../../components/optional/terminal/yakuake.nix
   ];
-
-  services.tailscale.enable = true;
 
   programs = {
     _1password.enable = true;
