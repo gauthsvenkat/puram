@@ -7,6 +7,7 @@ check:
 [confirm]
 upgrade:
   nix flake update
+  git add flake.lock
   git commit -m "system upgrade {{ datetime('%Y-%m-%d') }}"
   just apply boot
 
