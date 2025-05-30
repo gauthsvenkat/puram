@@ -1,10 +1,10 @@
 # NixOS configurations
-This repository holds the configurations of all my [machines](./hosts/) running [NixOS](https://nixos.org/).
+This repository holds the configurations of all my machines running [NixOS](https://nixos.org/).
 
 ## Organization
 The organization philosophy of this repository is inspired by the [polylith](https://polylith.gitbook.io/polylith) software architecture, with a focus on composability.
 
-In essence, I declare basic [components](./components/), that can be composed into different [bases](./bases/), which themselves can be composed (along with additional components) to build fully functioning NixOS [hosts](./hosts/).
+In essence, I declare basic `components/` that can be composed into different `bases/`, which themselves can be composed (along with additional components) to build fully functioning NixOS `hosts/`.
 
 ### [Components](./components/)
 These are the building blocks of my machines. I make a distinction between [core](./components/core/) and [optional](./components/optional/) components; The former contains modules that are required for some of my hosts to work, while the latter contains settings and toolings that are, while very important to me, are not required for the hosts to run (you can argue otherwise, but it is my code and it makes sense to me ¯\_(ツ)_/¯).
@@ -31,5 +31,5 @@ This configuration does a lot of the heavy lifting for me but some steps need to
   - Install the rust toolchain (`cargo` required for neovim) (`rustup default stable`).
   - Clone neovim configuration: `git clone git@github.com:gauthsvenkat/nvim.git ~/.config/nvim/`
 
-## Maintainnance
+## Maintenance
 This repository comes equipped with a very handy [justfile](./justfile) for basic tasks like switching config, upgrading the system and checking the flake.
