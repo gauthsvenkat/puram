@@ -1,27 +1,16 @@
-{ username, ... }:
 let
   zpool = "dontdie";
 in
 {
   imports = [
-
     ./disko-config.nix
     ./hardware-configuration.nix
 
-    ../../common/boot.nix
-    ../../common/system.nix
-    ../../common/users.nix
-    ../../common/nix-settings.nix
+    ../../bases/server.nix
 
-    ../../common/home-manager.nix
-
-    ../../common/services/zfs.nix
+    ../../components/core/services/zfs.nix
+    ../../components/optional/services/sanoid.nix
   ];
-
-  services = {
-    openssh.enable = true;
-    tailscale.enable = true;
-  };
 
   boot.zfs.extraPools = [ zpool ];
 
@@ -31,7 +20,5 @@ in
     use_template = [ "default" ];
   };
 
-  home-manager.users.${username}.programs.git = {
-    userEmail = "gauthsvenkat@gmail.com";
-  };
+  services.tailscale.enable = true;
 }

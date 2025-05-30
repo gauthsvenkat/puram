@@ -2,8 +2,7 @@
   services.kanata = {
     enable = true;
     keyboards.laptop = {
-      # NOTE: Highly recommended to set the devices in the host.
-      # Otherwise, all keyboards will be intercepted.
+      # NOTE: Make sure that the devices are present in the host
       devices = [
         "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
       ];

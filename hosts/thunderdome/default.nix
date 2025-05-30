@@ -1,8 +1,3 @@
-{
-  username,
-  pkgs,
-  ...
-}:
 let
   zpool = "wombocombo";
 in
@@ -10,40 +5,22 @@ in
   imports = [
     ./hardware-configuration.nix
 
-    ../../common/boot.nix
-    ../../common/system.nix
-    ../../common/users.nix
-    ../../common/nix-settings.nix
-    ../../common/gui.nix
+    ../../bases/personal.nix
 
-    ../../common/personal.nix
-    ../../common/development.nix
+    ../../components/core/services/kde.nix
+    ../../components/core/services/nvidia.nix
+    ../../components/core/services/zfs.nix
 
-    ../../common/services/syncthing.nix
-    ../../common/services/zfs.nix
+    ../../components/optional/gaming.nix
+
+    ../../components/optional/terminal/yakuake.nix
+    ../../components/optional/services/sanoid.nix
   ];
 
-  # If enabled, the boot process get randomly stuck on "A start job
-  # is running for /dev/tpmrm0".
+  # NOTE: Without the following disabling of tpm, the boot process
+  # gets stuck on "A start job is running for /dev/tpmrm0".
   systemd.tpm2.enable = false;
 
   boot.zfs.extraPools = [ zpool ];
   services.sanoid.datasets."${zpool}".use_template = [ "default" ];
-
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware = {
-    graphics.enable = true;
-    nvidia = {
-      open = false;
-      modesetting.enable = true;
-      powerManagement.enable = true;
-    };
-  };
-
-  programs = {
-    steam.enable = true;
-    gamemode.enable = true;
-  };
-
-  users.users.${username}.extraGroups = [ "gamemode" ];
 }

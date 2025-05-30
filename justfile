@@ -1,13 +1,14 @@
 apply action='switch':
   nh os {{ action }} .
 
+check:
+  nix flake check
+
 [confirm]
 upgrade:
   nix flake update
+  git commit -m "system upgrade {{ datetime('%Y-%m-%d') }}"
   just apply boot
-
-check:
-  nix flake check
 
 [confirm]
 nixos-install hostname ip:
@@ -17,12 +18,8 @@ nixos-install hostname ip:
     --flake .#{{ hostname }} \
     --target-host root@{{ ip }}
 
+[confirm]
 nixos-test hostname:
   nix run github:nix-community/nixos-anywhere -- \
     --flake .#{{ hostname }} \
     --vm-test
-
-[confirm]
-clean-branches:
-  git checkout main
-  git branch | grep -v "main" | xargs git branch -D
