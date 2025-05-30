@@ -2,8 +2,8 @@
   imports = [
     ./workstation.nix
 
-    ../components/optional/services/tlp.nix
-    ../components/optional/services/kanata.nix
+    ../components/services/tlp.nix
+    ../components/services/kanata.nix
   ];
 
   services.tailscale.enable = true;

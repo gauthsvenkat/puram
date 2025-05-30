@@ -9,8 +9,8 @@ in
 
     ../../bases/server.nix
 
-    ../../components/core/zfs.nix
-    ../../components/optional/services/sanoid.nix
+    ../../components/other/zfs.nix
+    ../../components/services/sanoid.nix
   ];
 
   boot.zfs.extraPools = [ zpool ];

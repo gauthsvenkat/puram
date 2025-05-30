@@ -8,27 +8,28 @@
   imports = [
     ./system.nix
 
-    ../components/core/pipewire.nix
-    ../components/core/home-manager.nix
+    ../components/home-manager.nix
 
-    ../components/optional/bluetooth.nix
-    ../components/optional/development.nix
-    ../components/optional/spotify.nix
+    ../components/gui/pipewire.nix
 
-    ../components/optional/services/docker.nix
+    ../components/services/docker.nix
 
-    ../components/optional/terminal/bat.nix
-    ../components/optional/terminal/btop.nix
-    ../components/optional/terminal/direnv.nix
-    ../components/optional/terminal/eza.nix
-    ../components/optional/terminal/fzf.nix
-    ../components/optional/terminal/git.nix
-    ../components/optional/terminal/lazygit.nix
-    ../components/optional/terminal/mcfly.nix
-    ../components/optional/terminal/neovim.nix
-    ../components/optional/terminal/wezterm.nix
-    ../components/optional/terminal/zoxide.nix
-    ../components/optional/terminal/zsh.nix
+    ../components/other/bluetooth.nix
+    ../components/other/development.nix
+    ../components/other/spotify.nix
+
+    ../components/cli/bat.nix
+    ../components/cli/btop.nix
+    ../components/cli/direnv.nix
+    ../components/cli/eza.nix
+    ../components/cli/fzf.nix
+    ../components/cli/git.nix
+    ../components/cli/lazygit.nix
+    ../components/cli/mcfly.nix
+    ../components/cli/neovim.nix
+    ../components/cli/wezterm.nix
+    ../components/cli/zoxide.nix
+    ../components/cli/zsh.nix
   ];
 
   home-manager.users.${username} = {
