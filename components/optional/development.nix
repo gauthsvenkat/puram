@@ -18,6 +18,7 @@
       cargo-generate
       uv
       pre-commit
+      numbat
     ];
   };
 }
