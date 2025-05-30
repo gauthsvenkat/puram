@@ -3,8 +3,8 @@
   imports = [
     ./workstation.nix
 
-    ../components/optional/services/syncthing.nix
-    ../components/optional/services/mullvad-vpn.nix
+    ../components/services/syncthing.nix
+    ../components/services/mullvad-vpn.nix
   ];
 
   home-manager.users.${username}.home.packages = with pkgs; [

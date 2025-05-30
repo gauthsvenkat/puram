@@ -3,10 +3,11 @@
 # more specific systems, like servers or workstations.
 {
   imports = [
-    ../components/core/boot.nix
-    ../components/core/networking.nix
-    ../components/core/nix-settings.nix
-    ../components/core/misc.nix
-    ../components/core/user.nix
+    ../components/boot.nix
+    ../components/misc.nix
+    ../components/networking.nix
+    ../components/user.nix
+
+    ../components/other/nix-settings.nix
   ];
 }
