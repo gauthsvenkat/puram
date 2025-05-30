@@ -1,3 +1,4 @@
+{ pkgs, username, ... }:
 let
   zpool = "dontdie";
 in
@@ -21,4 +22,6 @@ in
   };
 
   services.tailscale.enable = true;
+
+  home-manager.users.${username}.home.packages = [ pkgs.age ];
 }
