@@ -42,6 +42,8 @@
         thunderdome = mkNixosSystem { hostname = "thunderdome"; };
         # homeserver
         elitedesk = mkNixosSystem { hostname = "elitedesk"; };
+        # server
+        toshiba = mkNixosSystem { hostname = "toshiba"; };
       };
     };
 }
