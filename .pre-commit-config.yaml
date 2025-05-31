@@ -9,3 +9,10 @@ repos:
   rev: v1.32.0
   hooks:
     - id: typos
+- repo: local
+  hooks:
+    - id: nixfmt
+      name: nixfmt
+      language: system
+      entry: nix run github:NixOS/nixfmt
+      files: \.nix$
