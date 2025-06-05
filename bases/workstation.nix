@@ -11,6 +11,7 @@
     ../components/home-manager.nix
 
     ../components/gui/pipewire.nix
+    ../components/gui/wezterm.nix
 
     ../components/services/docker.nix
 
@@ -27,7 +28,6 @@
     ../components/cli/lazygit.nix
     ../components/cli/mcfly.nix
     ../components/cli/neovim.nix
-    ../components/cli/wezterm.nix
     ../components/cli/zoxide.nix
     ../components/cli/zsh.nix
   ];

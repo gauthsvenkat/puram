@@ -11,8 +11,8 @@
 
     ../../bases/laptop.nix
 
-    ../../components/gui/kde.nix
-    ../../components/cli/yakuake.nix
+    ../../components/gui/kde/kde.nix
+    ../../components/gui/kde/yakuake.nix
   ];
 
   programs = {
