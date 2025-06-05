@@ -7,14 +7,13 @@ in
 
     ../../bases/personal.nix
 
-    ../../components/gui/kde.nix
+    ../../components/gui/kde/kde.nix
+    ../../components/gui/kde/yakuake.nix
     ../../components/gui/nvidia.nix
 
     ../../components/other/zfs.nix
     ../../components/services/sanoid.nix
     ../../components/other/gaming.nix
-
-    ../../components/cli/yakuake.nix
   ];
 
   # NOTE: Without the following disabling of tpm, the boot process
