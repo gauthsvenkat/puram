@@ -1,7 +1,6 @@
 let
   zpool = "wombocombo";
-in
-{
+in {
   imports = [
     ./hardware-configuration.nix
 
@@ -20,6 +19,6 @@ in
   # gets stuck on "A start job is running for /dev/tpmrm0".
   systemd.tpm2.enable = false;
 
-  boot.zfs.extraPools = [ zpool ];
-  services.sanoid.datasets."${zpool}".use_template = [ "default" ];
+  boot.zfs.extraPools = [zpool];
+  services.sanoid.datasets."${zpool}".use_template = ["default"];
 }

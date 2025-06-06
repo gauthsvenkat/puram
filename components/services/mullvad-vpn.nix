@@ -1,5 +1,8 @@
-{ pkgs, username, ... }:
 {
+  pkgs,
+  username,
+  ...
+}: {
   services.mullvad-vpn = {
     enable = true;
     # NOTE: pkgs.mullvad only contains the cli while

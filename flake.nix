@@ -13,37 +13,37 @@
     };
   };
 
-  outputs =
-    { nixpkgs, home-manager, ... }@inputs:
-    let
-      mkNixosSystem =
-        {
-          hostname,
-          system ? "x86_64-linux",
-          username ? "ando",
-        }:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit username hostname inputs;
-          };
-          modules = [ ./hosts/${hostname} ];
+  outputs = {
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
+    mkNixosSystem = {
+      hostname,
+      system ? "x86_64-linux",
+      username ? "ando",
+    }:
+      nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          inherit username hostname inputs;
         };
-    in
-    {
-      nixosConfigurations = {
-        # work
-        xps = mkNixosSystem {
-          hostname = "xps";
-          username = "gautham";
-        };
-        # personal
-        thinkpad = mkNixosSystem { hostname = "thinkpad"; };
-        thunderdome = mkNixosSystem { hostname = "thunderdome"; };
-        # homeserver
-        elitedesk = mkNixosSystem { hostname = "elitedesk"; };
-        # server
-        toshiba = mkNixosSystem { hostname = "toshiba"; };
+        modules = [./hosts/${hostname}];
       };
+  in {
+    nixosConfigurations = {
+      # work
+      xps = mkNixosSystem {
+        hostname = "xps";
+        username = "gautham";
+      };
+      # personal
+      thinkpad = mkNixosSystem {hostname = "thinkpad";};
+      thunderdome = mkNixosSystem {hostname = "thunderdome";};
+      # homeserver
+      elitedesk = mkNixosSystem {hostname = "elitedesk";};
+      # server
+      toshiba = mkNixosSystem {hostname = "toshiba";};
     };
+  };
 }

@@ -1,10 +1,11 @@
 # This config will put together a very basic workstation
 # with tools and services that I prefer on all workstations.
-
 # NOTE: Desktop environment is chosen in the host.
-
-{ pkgs, username, ... }:
 {
+  pkgs,
+  username,
+  ...
+}: {
   imports = [
     ./system.nix
 

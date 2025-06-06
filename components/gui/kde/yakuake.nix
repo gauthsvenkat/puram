@@ -1,9 +1,11 @@
-{ pkgs, username, ... }:
 {
+  pkgs,
+  username,
+  ...
+}: {
   home-manager.users.${username} = {
-
     home = {
-      packages = [ pkgs.kdePackages.yakuake ];
+      packages = [pkgs.kdePackages.yakuake];
 
       file."/home/${username}/.config/yakuakerc".text = ''
         [Desktop Entry]

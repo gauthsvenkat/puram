@@ -1,5 +1,4 @@
-{ username, ... }:
-{
+{username, ...}: {
   home-manager.users.${username}.programs = {
     zoxide = {
       enable = true;
@@ -7,6 +6,6 @@
         "--cmd j"
       ];
     };
-    zsh.oh-my-zsh.plugins = [ "zoxide" ];
+    zsh.oh-my-zsh.plugins = ["zoxide"];
   };
 }

@@ -1,5 +1,4 @@
-{ username, ... }:
-{
+{username, ...}: {
   home-manager.users.${username}.programs = {
     git = {
       enable = true;
@@ -21,6 +20,6 @@
         ".env"
       ];
     };
-    zsh.oh-my-zsh.plugins = [ "git" ];
+    zsh.oh-my-zsh.plugins = ["git"];
   };
 }

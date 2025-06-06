@@ -1,9 +1,8 @@
-{ username, ... }:
-{
+{username, ...}: {
   programs = {
     steam.enable = true;
     gamemode.enable = true;
   };
 
-  users.users.${username}.extraGroups = [ "gamemode" ];
+  users.users.${username}.extraGroups = ["gamemode"];
 }

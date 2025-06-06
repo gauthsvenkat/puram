@@ -1,5 +1,8 @@
-{ pkgs, username, ... }:
 {
+  pkgs,
+  username,
+  ...
+}: {
   # to add `~/.local/bin` to PATH
   environment.localBinInPath = true;
 
