@@ -1,8 +1,10 @@
-{ pkgs, username, ... }:
-let
-  zpool = "dontdie";
-in
 {
+  pkgs,
+  username,
+  ...
+}: let
+  zpool = "dontdie";
+in {
   imports = [
     ./disko-config.nix
     ./hardware-configuration.nix
@@ -13,15 +15,15 @@ in
     ../../components/services/sanoid.nix
   ];
 
-  boot.zfs.extraPools = [ zpool ];
+  boot.zfs.extraPools = [zpool];
 
   services.sanoid.datasets."${zpool}" = {
     recursive = true;
     process_children_only = true;
-    use_template = [ "default" ];
+    use_template = ["default"];
   };
 
   services.tailscale.enable = true;
 
-  home-manager.users.${username}.home.packages = [ pkgs.age ];
+  home-manager.users.${username}.home.packages = [pkgs.age];
 }

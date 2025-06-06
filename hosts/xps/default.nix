@@ -3,8 +3,7 @@
   pkgs,
   username,
   ...
-}:
-{
+}: {
   imports = [
     ./disko-config.nix
     ./hardware-configuration.nix
@@ -19,7 +18,7 @@
     _1password.enable = true;
     _1password-gui = {
       enable = true;
-      polkitPolicyOwners = [ username ];
+      polkitPolicyOwners = [username];
     };
   };
 

@@ -3,8 +3,7 @@
   username,
   pkgs,
   ...
-}:
-{
+}: {
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
@@ -20,7 +19,7 @@
         inherit username;
         homeDirectory = "/home/${username}";
 
-        packages = [ pkgs.just ];
+        packages = [pkgs.just];
       };
 
       programs.nh.enable = true;

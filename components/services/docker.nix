@@ -1,8 +1,7 @@
-{ username, ... }:
-{
+{username, ...}: {
   virtualisation.docker.enable = true;
 
-  users.users.${username}.extraGroups = [ "docker" ];
+  users.users.${username}.extraGroups = ["docker"];
 
   home-manager.users.${username}.programs.zsh.oh-my-zsh.plugins = [
     "docker"

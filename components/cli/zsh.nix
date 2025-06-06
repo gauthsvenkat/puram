@@ -1,5 +1,8 @@
-{ pkgs, username, ... }:
 {
+  pkgs,
+  username,
+  ...
+}: {
   # needed for setting user's shell
   programs.zsh.enable = true;
 
@@ -11,7 +14,7 @@
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
       enable = true;
-      plugins = [ "vi-mode" ];
+      plugins = ["vi-mode"];
     };
     shellAliases = {
       c = "clear";
