@@ -6,8 +6,6 @@ return {
     event = "VeryLazy",
     opts = {},
     keys = {
-      { "<leader>tb", cmd("Gitsigns toggle_current_line_blame"), desc = "[b]lame" },
-      { "<leader>td", cmd("Gitsigns toggle_deleted"), desc = "[d]eleted" },
       { "<leader>gr", cmd("Gitsigns reset_hunk"), desc = "[r]eset hunk" },
       { "<leader>gR", cmd("Gitsigns reset_buffer"), desc = "[R]eset buffer" },
       { "<leader>gs", cmd("Gitsigns stage_hunk"), desc = "(un)[s]tage hunk" },

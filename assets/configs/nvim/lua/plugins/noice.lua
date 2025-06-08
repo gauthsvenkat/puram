@@ -1,5 +1,3 @@
-local cmd = require("utils").cmd
-
 return {
   "folke/noice.nvim",
   event = "VeryLazy",
@@ -22,8 +20,5 @@ return {
         ["vim.lsp.util.stylize_markdown"] = true,
       },
     },
-  },
-  keys = {
-    { "<leader>tn", cmd("Noice dismiss"), desc = "[n]oice" },
   },
 }
