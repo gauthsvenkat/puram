@@ -1,3 +1,4 @@
+-- TODO: Bunch more toggle options that probably need to be defined here
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -7,27 +8,16 @@ return {
     dashboard = { example = "doom" },
     quickfile = { enabled = true },
     statuscolumn = { enabled = true },
-    indent = {
-      enabled = true,
-      chunk = {
-        enabled = true,
-      },
-    },
+    indent = { enabled = true, chunk = { enabled = true } },
+    words = { enabled = true },
   },
   keys = {
     {
-      "<leader>bd",
+      "<Del>",
       function()
-        Snacks.bufdelete()
+        Snacks.lazygit()
       end,
-      desc = "[d]elete",
-    },
-    {
-      "<leader>bD",
-      function()
-        Snacks.bufdelete.other()
-      end,
-      desc = "[D]elete other",
+      desc = "lazy[g]it",
     },
     {
       "<leader>go",
@@ -37,43 +27,53 @@ return {
       desc = "[o]pen in browser",
     },
     {
-      "<Del>",
-      function()
-        Snacks.lazygit()
-      end,
-      desc = "lazy[g]it",
-    },
-    {
-      "<leader>gl",
-      function()
-        Snacks.lazygit.log()
-      end,
-      desc = "[l]og",
-    },
-    {
-      "<leader>gL",
-      function()
-        Snacks.lazygit.log_file()
-      end,
-      desc = "file [L]og",
-    },
-    {
-      "<leader>ti",
-      function()
-        if Snacks.indent.enabled then
-          Snacks.indent.disable()
-        else
-          Snacks.indent.enable()
-        end
-      end,
-      desc = "[i]ndent",
-    },
-    {
       "<C-\\>",
       function()
         Snacks.terminal()
       end,
       mode = { "n", "t" },
+    },
+    {
+      "<leader>tr",
+      function()
+        Snacks.toggle.words():toggle()
+      end,
+      desc = "[r]eferences",
+    },
+    {
+      "<leader>ti",
+      function()
+        Snacks.toggle.indent():toggle()
+      end,
+      desc = "[i]ndent",
+    },
+    {
+      "<leader>th",
+      function()
+        Snacks.toggle.inlay_hints():toggle()
+      end,
+      desc = "inlay [h]ints",
+    },
+    {
+      "<leader>tx",
+      function()
+        Snacks.toggle.diagnostics({ name = "diagnostics" }):toggle()
+      end,
+      desc = "diagnosti[x]",
+    },
+    {
+      "]]",
+      function()
+        Snacks.words.jump(vim.v.count1, true)
+      end,
+      desc = "next reference",
+    },
+    {
+      "[[",
+      function()
+        Snacks.words.jump(-vim.v.count1, true)
+      end,
+      desc = "prev reference",
     },
   },
 }

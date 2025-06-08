@@ -1,132 +1,81 @@
--- All LSP related garbage go here.
-
--- TODO: Undo everything on LSP detach
-
--- Autocommand to register LSP keybinds with whichkey
--- and telescope. This itself contains another autocommand
--- to highlight references on cursorhold events.
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    local buffer = args.buf
-    local wk = require("which-key")
-    local telescope = require("telescope.builtin")
-
-    ---@param method string
-    ---@param keys string
-    ---@param callback function
-    ---@param desc string
-    ---@param mode? string | string[]
-    local function bind_if(method, keys, callback, desc, mode)
-      if client.supports_method(method) then
-        wk.add({ keys, callback, desc = desc, buffer = buffer, mode = mode or "n" })
-      end
-    end
-
-    bind_if("textDocument/codeAction", "<leader>la", vim.lsp.buf.code_action, "code [a]ction")
-
-    bind_if(
-      "textDocument/formatting",
-      "<leader>lf",
-      vim.lsp.buf.format,
-      "[f]ormat",
-      client.supports_method("textDocument/rangeFormatting") and { "n", "v" } or "n"
-    )
-
-    bind_if("textDocument/hover", "<leader>lh", vim.lsp.buf.hover, "[h]over")
-    bind_if("callHierarchy/incomingCalls", "<leader>li", telescope.lsp_incoming_calls, "[i]ncoming calls")
-    bind_if("callHierarchy/outgoingCalls", "<leader>lo", telescope.lsp_outgoing_calls, "[o]utgoing calls")
-    bind_if("textDocument/rename", "<leader>lr", vim.lsp.buf.rename, "[r]ename")
-    bind_if("textDocument/documentSymbol", "<leader>ls", telescope.lsp_document_symbols, "document [s]ymbols")
-
-    bind_if("textDocument/inlayHint", "<leader>ly", function()
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buffer }))
-    end, "inla[y] hints")
-
-    bind_if("textDocument/references", "gr", telescope.lsp_references, "Goto or show references")
-    bind_if("textDocument/definition", "gd", telescope.lsp_definitions, "Goto or show definition")
-  end,
-})
-
 return {
-  "williamboman/mason-lspconfig.nvim",
+  "neovim/nvim-lspconfig",
   dependencies = {
-    "neovim/nvim-lspconfig",
-    "williamboman/mason.nvim",
-    -- Which key and telescope are not strictly
-    -- required for this, but they are used to
-    -- setup keybinds for LSPs.
-    "folke/which-key.nvim",
-    "nvim-telescope/telescope.nvim",
+    "mason-org/mason-lspconfig.nvim",
+    -- to ensure lsps are installed
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    -- for the sweet statuses
+    { "j-hui/fidget.nvim", opts = {} },
+    -- to setup keybinds
+    "ibhagwan/fzf-lua",
+    -- to register capabilities
     "saghen/blink.cmp",
   },
-  opts = {
-    ensure_installed = {
-      "lua_ls",
-      "basedpyright",
-      "nil_ls",
-      "rust_analyzer",
-    },
-    handlers = {
-      -- NOTE: Default handler is disabled since
-      -- some linter can also be run as LSPs
-      -- which will cause multiple LSPs with
-      -- overlapping functionality. Eg. basedpyright
-      -- and ruff.
-      -- function(server_name)
-      --   require("lspconfig")[server_name].setup({})
-      -- end,
+  config = function()
+    -- start custom-lsp-attach autocommand
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = vim.api.nvim_create_augroup("custom-lsp-attach", { clear = true }),
 
-      ["basedpyright"] = function()
-        require("lspconfig").basedpyright.setup({
-          capabilities = require("blink.cmp").get_lsp_capabilities(),
-          settings = {
-            basedpyright = {
-              analysis = {
-                typeCheckingMode = "off",
-                diagnosticSeverityOverrides = {
-                  reportUnusedImport = "unused",
-                  reportUnusedClass = "unused",
-                  reportUnusedFunction = "unused",
-                  reportUnusedVariable = "unused",
-                  reportUnusedParameter = "unused",
-                },
-              },
-            },
-          },
-        })
+      -- start custom-lsp-attach callback
+      callback = function(aevent)
+        local client = vim.lsp.get_client_by_id(aevent.data.client_id)
+        local fzf = require("fzf-lua")
+
+        ---@param method string
+        ---@param keys string
+        ---@param fn function
+        ---@param desc string
+        ---@param mode? string | string[]
+        local function map_if(method, keys, fn, desc, mode)
+          if client and client:supports_method(method, aevent.buf) then
+            vim.keymap.set(mode or "n", keys, fn, { buffer = aevent.buf, desc = desc })
+          end
+        end
+
+        -- start of keymapping block
+        map_if("textDocument/references", "gr", fzf.lsp_references, "[r]eferences")
+        map_if("textDocument/definition", "gd", fzf.lsp_definitions, "[d]efinitions")
+        map_if("textDocument/declaration", "gD", fzf.lsp_declarations, "[D]eclarations")
+        map_if("textDocument/typeDefinition", "gt", fzf.lsp_typedefs, "[t]ype definitions")
+        map_if("textDocument/implementation", "gI", fzf.lsp_implementations, "[I]mplementations")
+
+        map_if("callHierarchy/incomingCalls", "gi", fzf.lsp_incoming_calls, "[i]ncoming calls")
+        map_if("callHierarchy/outgoingCalls", "go", fzf.lsp_outgoing_calls, "[o]utgoing calls")
+
+        map_if("textDocument/documentSymbol", "<leader>ls", fzf.lsp_document_symbols, "[s]ymbols")
+        map_if("textDocument/hover", "<leader>lh", vim.lsp.buf.hover, "[h]over documentation")
+        map_if("workspace/symbol", "<leader>lS", fzf.lsp_workspace_symbols, "(workspace) [S]ymbols")
+        map_if("textDocument/rename", "<leader>lr", vim.lsp.buf.rename, "[r]ename")
+        map_if("textDocument/codeAction", "<leader>la", vim.lsp.buf.code_action, "code [a]ction")
+        map_if(
+          "textDocument/formatting",
+          "<leader>lf",
+          vim.lsp.buf.format,
+          "[f]ormat",
+          client and client:supports_method("textDocument/rangeFormatting", aevent.buf) and { "n", "v" } or "n"
+        )
+        -- end of keymapping block
+
+        -- NOTE: Not gonna bother unbinding the keymaps when LspDetach.
       end,
-      ["lua_ls"] = function()
-        require("lspconfig").lua_ls.setup({
-          -- TODO: Move nvim specific settings to here.
-          capabilities = require("blink.cmp").get_lsp_capabilities(),
-        })
-      end,
-      ["nil_ls"] = function()
-        require("lspconfig").nil_ls.setup({
-          capabilities = require("blink.cmp").get_lsp_capabilities(),
-          settings = {
-            ["nil"] = {
-              formatting = {
-                -- NOTE: nixfmt is expected to be installed (not through mason)
-                command = { "nixfmt" },
-              },
-            },
-          },
-        })
-      end,
-      ["rust_analyzer"] = function()
-        require("lspconfig").rust_analyzer.setup({
-          capabilities = require("blink.cmp").get_lsp_capabilities(),
-          settings = {
-            ["rust-analyzer"] = {
-              checkOnSave = {
-                command = "clippy",
-              },
-            },
-          },
-        })
-      end,
-    },
-  },
+      -- end custom-lsp-attach callback
+    })
+    -- end custom-lsp-attach autocommand
+
+    -- start of lsp setup
+    local capabilities = require("blink.cmp").get_lsp_capabilities()
+
+    require("mason-lspconfig").setup({
+      automatic_enable = true,
+      -- NOTE: Following set to empty so mason-tool-installer will take care of it
+      ensure_installed = {},
+      automatic_installation = false,
+      handlers = {
+        function(server_name)
+          require("lspconfig")[server_name].setup({ capabilities = capabilities })
+        end,
+      },
+    })
+    -- end of lsp setup
+  end,
 }

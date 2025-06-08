@@ -6,19 +6,20 @@ return {
       -- ss -> Same line surround | Whole line
       -- S -> Multi line surround | Enter operator pending mode
       -- SS -> Multi line surround | Whole line
-      normal = "<leader>s",
-      normal_cur = "<leader>ss",
-      normal_line = "<leader>S",
-      normal_cur_line = "<leader>SS",
-      visual = "<leader>s",
-      visual_line = "<leader>S",
-      delete = "<leader>sd",
-      change = "<leader>sc",
-      change_line = "<leader>Sc",
+      normal = "gs",
+      normal_cur = "gss",
+      normal_line = "gS",
+      normal_cur_line = "gSS",
+      visual = "gs",
+      visual_line = "gS",
+      delete = "ds",
+      change = "cs",
     },
   },
   keys = {
-    { "<leader>s", mode = { "n", "v" } },
-    { "<leader>S", mode = { "n", "v" } },
+    { "gs", mode = { "n", "v" } },
+    { "gS", mode = { "n", "v" } },
+    { "ds", mode = { "n", "v" } },
+    { "cs", mode = { "n", "v" } },
   },
 }
