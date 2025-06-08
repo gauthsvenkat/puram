@@ -25,14 +25,6 @@
 
         window_background_opacity = 0.9,
 
-        key_tables = {
-          split_pane = {
-            { key = "h", action = act.SplitPane({ direction = "Left" }) },
-            { key = "j", action = act.SplitPane({ direction = "Down", size = { Percent = 25 } }) },
-            { key = "k", action = act.SplitPane({ direction = "Up" }) },
-            { key = "l", action = act.SplitPane({ direction = "Right" }) },
-          },
-        },
         keys = {
           -- Spawning new tabs
           {
@@ -42,11 +34,14 @@
           },
           -- Split panes
           {
-            key = "p",
+            key = "s",
             mods = "ALT",
-            action = act.ActivateKeyTable({
-              name = "split_pane",
-            }),
+            action = act.SplitPane({ direction = "Down", size = { Percent = 25 } }),
+          },
+          {
+            key = "v",
+            mods = "ALT",
+            action = act.SplitPane({ direction = "Right" }),
           },
           -- Navigating tabs
           {
