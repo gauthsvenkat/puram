@@ -21,6 +21,7 @@ return {
     Snacks.toggle.treesitter({ name = "[t]reesitter" }):map("<leader>tt")
     Snacks.toggle.indent():map("<leader>ti")
     Snacks.toggle.words():map("<leader>tr")
+    Snacks.toggle.dim():map("<leader>td")
 
     Snacks.toggle
       .new({
