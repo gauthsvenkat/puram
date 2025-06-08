@@ -5,6 +5,7 @@ return {
   event = "VeryLazy",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = {
+    preset = "helix",
     spec = {
       { "<Esc>", cmd("nohlsearch"), desc = "Disable search highlight" },
 
@@ -56,6 +57,15 @@ return {
       -- bindings defined in treesitter.lua
       { "gw", group = "s[w]ap next" },
       { "gW", group = "s[W]ap prev" },
+    },
+  },
+  keys = {
+    {
+      "<leader>?",
+      function()
+        require("which-key").show({ global = false })
+      end,
+      desc = "buffer local keymaps",
     },
   },
 }
