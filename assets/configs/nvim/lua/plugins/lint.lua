@@ -1,12 +1,9 @@
-local ensure_installed = require("utils").ensure_installed
-
 return {
   "mfussenegger/nvim-lint",
-  dependencies = { "williamboman/mason.nvim" },
+  dependencies = { "WhoIsSethDaniel/mason-tool-installer.nvim" },
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    ensure_installed({ "ruff", "mypy" })
-
+    -- NOTE: Ensure linters are installed by adding them to mason.lua
     local lint = require("lint")
 
     lint.linters_by_ft = {
@@ -17,17 +14,10 @@ return {
     vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
       group = vim.api.nvim_create_augroup("lint", { clear = true }),
       callback = function()
-        lint.try_lint()
+        if vim.bo.modifiable then
+          lint.try_lint()
+        end
       end,
     })
   end,
-  keys = {
-    {
-      "<leader>bl",
-      function()
-        require("lint").try_lint()
-      end,
-      desc = "[l]int",
-    },
-  },
 }
