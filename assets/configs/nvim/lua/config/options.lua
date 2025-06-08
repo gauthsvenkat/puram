@@ -1,6 +1,7 @@
 -- NOTE: Make sure to setup `mapleader` before
 -- loading lazy.nvim so that mappings are correct.
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- use common clipboard
 vim.opt.clipboard = "unnamedplus"
