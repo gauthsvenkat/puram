@@ -42,14 +42,14 @@ return {
       {
         "]x",
         function()
-          vim.diagnostic.jump({ count = vim.v.count1, float = false })
+          vim.diagnostic.jump({ count = vim.v.count1, float = true })
         end,
         desc = "next diagnostic",
       },
       {
         "[x",
         function()
-          vim.diagnostic.jump({ count = -vim.v.count1, float = false })
+          vim.diagnostic.jump({ count = -vim.v.count1, float = true })
         end,
         desc = "prev diagnostic",
       },
