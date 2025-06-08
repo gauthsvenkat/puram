@@ -26,14 +26,15 @@ return {
       { "<C-b>", cmd("bprevious"), desc = "Buffer previous" },
 
       -- Leader mappings
+      -- bindings defined in ./snacks.lua
       { "<leader>t", group = "[t]oggle" },
 
       { "<leader>s", group = "[s]earch" },
 
-      -- bindings defined in gitsigns.lua
+      -- bindings defined in ./gitsigns.lua
       { "<leader>g", group = "[g]it" },
 
-      -- bindings defined in lsp.lua
+      -- bindings defined in ./lsp.lua
       { "<leader>l", group = "[l]sp" },
 
       { "<leader>x", group = "diagnosti[x]" },
