@@ -6,22 +6,13 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = {
     spec = {
-      -- NOTE: this is not a recursive map since the
-      -- <Esc> in rhs is not remapped
-      { "<Esc>", "<Esc>" .. cmd("nohlsearch"), desc = "Disable search highlight" },
+      { "<Esc>", cmd("nohlsearch"), desc = "Disable search highlight" },
 
       -- Window navigation
       { "<C-h>", cmd("wincmd h"), mode = { "n", "t" }, desc = "Move to window left" },
       { "<C-j>", cmd("wincmd j"), mode = { "n", "t" }, desc = "Move to window down" },
       { "<C-k>", cmd("wincmd k"), mode = { "n", "t" }, desc = "Move to window up" },
       { "<C-l>", cmd("wincmd l"), mode = { "n", "t" }, desc = "Move to window right" },
-
-      -- Window moving
-      -- TODO: Inc / dec split sizes
-      { "<C-s>h", cmd("wincmd H"), desc = "Move window left" },
-      { "<C-s>j", cmd("wincmd J"), desc = "Move window down" },
-      { "<C-s>k", cmd("wincmd K"), desc = "Move window up" },
-      { "<C-s>l", cmd("wincmd L"), desc = "Move window right" },
 
       -- Window splitting
       { "<C-p>=", cmd("wincmd ="), desc = "Make splits equal size" },
@@ -35,53 +26,35 @@ return {
       { "<C-b>", cmd("bprevious"), desc = "Buffer previous" },
 
       -- Leader mappings
-      { "<leader>b", group = "[b]uffer" },
-      { "<leader>bi", "gg=G", desc = "[i]ndent" },
-      { "<leader>by", "ggyG", desc = "[y]ank" },
+      { "<leader>t", group = "[t]oggle" },
 
-      { "<leader>c", group = "[c]omment", mode = { "n", "v" } },
-      { "<leader>C", group = "[C]omment (block)", mode = { "n", "v" } },
+      { "<leader>s", group = "[s]earch" },
 
-      { "<leader>d", group = "[d]ebugger" },
-
-      { "<leader>f", group = "[f]ind (telescope)" },
-
+      -- bindings defined in gitsigns.lua
       { "<leader>g", group = "[g]it" },
 
+      -- bindings defined in lsp.lua
       { "<leader>l", group = "[l]sp" },
 
-      { "<leader>n", group = "[n]oice" },
-
-      { "<leader>o", "o<Esc>k", desc = "Insert newline below" },
-      { "<leader>O", "O<Esc>j", desc = "Insert newline above" },
-
-      { "<leader>p", group = "[p]lugins" },
-      { "<leader>pl", cmd("Lazy"), desc = "[l]azy" },
-
-      { "<leader>s", group = "[s]urround", mode = { "n", "v" } },
-      { "<leader>S", group = "[S]urround (line)", mode = { "n", "v" } },
-
-      { "<leader>t", group = "[t]oggle" },
+      { "<leader>x", group = "diagnosti[x]" },
       {
-        "<leader>td",
+        "]x",
         function()
-          vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+          vim.diagnostic.jump({ count = vim.v.count1, float = false })
         end,
-        desc = "[d]iagnostics",
+        desc = "next diagnostic",
+      },
+      {
+        "[x",
+        function()
+          vim.diagnostic.jump({ count = -vim.v.count1, float = false })
+        end,
+        desc = "prev diagnostic",
       },
 
-      { "<leader>w", group = "s[w]ap" },
-
-      { "<leader>x", group = "trouble [x]0" },
-    },
-  },
-  keys = {
-    {
-      "<leader>?",
-      function()
-        require("which-key").show()
-      end,
-      desc = "Buffer local keymaps (which-key)",
+      -- bindings defined in treesitter.lua
+      { "gw", group = "s[w]ap next" },
+      { "gW", group = "s[W]ap prev" },
     },
   },
 }

@@ -1,6 +1,6 @@
 return {
   "folke/flash.nvim",
-  opts = {},
+  opts = { jump = { autojump = true } },
   keys = {
     { "f", "F", "t", "T" },
     {

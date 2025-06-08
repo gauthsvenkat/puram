@@ -1,10 +1,6 @@
--- Make sure to setup `mapleader` and `maplocalleader` before
+-- NOTE: Make sure to setup `mapleader` before
 -- loading lazy.nvim so that mappings are correct.
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
--- time between keypresses
-vim.opt.timeoutlen = 300
 
 -- use common clipboard
 vim.opt.clipboard = "unnamedplus"
@@ -54,11 +50,13 @@ vim.opt.listchars = {
   nbsp = "␣",
 }
 
--- Diagnostic configuration
 vim.diagnostic.config({
-  virtual_text = false,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
   severity_sort = true,
+  float = { border = "rounded", source = "if_many" },
+  underline = { severity = vim.diagnostic.severity.ERROR },
+  signs = true,
+  virtual_text = {
+    source = "if_many",
+    spacing = 2,
+  },
 })
