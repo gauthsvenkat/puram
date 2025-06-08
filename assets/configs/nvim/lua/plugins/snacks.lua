@@ -10,7 +10,36 @@ return {
     statuscolumn = { enabled = true },
     indent = { enabled = true, chunk = { enabled = true } },
     words = { enabled = true },
+    toggle = { color = { disabled = "red" }, wk_desc = { enabled = "", disabled = "" } },
   },
+  config = function(_, opts)
+    require("snacks").setup(opts)
+
+    -- start toggle keymaps
+    Snacks.toggle.inlay_hints({ name = "inlay [h]ints" }):map("<leader>th")
+    Snacks.toggle.diagnostics({ name = "diagnostic[x]" }):map("<leader>tx")
+    Snacks.toggle.indent():map("<leader>ti")
+    Snacks.toggle.words():map("<leader>tr")
+
+    Snacks.toggle
+      .new({
+        id = "diagnostic_virtual_text",
+        name = "[v]irtual text",
+        get = function()
+          return (vim.diagnostic.config().virtual_text or false) and true
+        end,
+        set = function(enabled)
+          if enabled then
+            -- NOTE: Keep following and ../config/options.lua in sync.
+            vim.diagnostic.config({ virtual_text = { source = "if_many", spacing = 2 } })
+          else
+            vim.diagnostic.config({ virtual_text = false })
+          end
+        end,
+      })
+      :map("<leader>tv")
+    -- end toggle keymaps
+  end,
   keys = {
     {
       "<Del>",
@@ -32,34 +61,6 @@ return {
         Snacks.terminal()
       end,
       mode = { "n", "t" },
-    },
-    {
-      "<leader>tr",
-      function()
-        Snacks.toggle.words():toggle()
-      end,
-      desc = "[r]eferences",
-    },
-    {
-      "<leader>ti",
-      function()
-        Snacks.toggle.indent():toggle()
-      end,
-      desc = "[i]ndent",
-    },
-    {
-      "<leader>th",
-      function()
-        Snacks.toggle.inlay_hints():toggle()
-      end,
-      desc = "inlay [h]ints",
-    },
-    {
-      "<leader>tx",
-      function()
-        Snacks.toggle.diagnostics({ name = "diagnostics" }):toggle()
-      end,
-      desc = "diagnosti[x]",
     },
     {
       "]]",
