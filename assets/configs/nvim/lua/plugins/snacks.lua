@@ -18,6 +18,7 @@ return {
     -- start toggle keymaps
     Snacks.toggle.inlay_hints({ name = "inlay [h]ints" }):map("<leader>th")
     Snacks.toggle.diagnostics({ name = "diagnostic[x]" }):map("<leader>tx")
+    Snacks.toggle.treesitter({ name = "[t]reesitter" }):map("<leader>tt")
     Snacks.toggle.indent():map("<leader>ti")
     Snacks.toggle.words():map("<leader>tr")
 
@@ -28,8 +29,8 @@ return {
         get = function()
           return (vim.diagnostic.config().virtual_text or false) and true
         end,
-        set = function(enabled)
-          if enabled then
+        set = function(enable)
+          if enable then
             -- NOTE: Keep following and ../config/options.lua in sync.
             vim.diagnostic.config({ virtual_text = { source = "if_many", spacing = 2 } })
           else
