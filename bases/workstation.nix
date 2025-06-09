@@ -43,6 +43,7 @@
       libreoffice-still
       mpv
       firefox
+      jq
     ];
 
     programs.zsh.shellAliases = {
