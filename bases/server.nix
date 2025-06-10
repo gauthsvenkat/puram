@@ -2,17 +2,15 @@
   imports = [
     ./system.nix
 
-    ../components/home-manager.nix
-
     ../components/services/docker.nix
 
-    ../components/cli/bat.nix
-    ../components/cli/btop.nix
-    ../components/cli/eza.nix
-    ../components/cli/git.nix
-    ../components/cli/mcfly.nix
-    ../components/cli/zoxide.nix
-    ../components/cli/zsh.nix
+    ../components/terminal/bat.nix
+    ../components/terminal/btop.nix
+    ../components/terminal/eza.nix
+    ../components/terminal/git.nix
+    ../components/terminal/mcfly.nix
+    ../components/terminal/zoxide.nix
+    ../components/terminal/zsh.nix
   ];
 
   services.openssh.enable = true;

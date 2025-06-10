@@ -11,8 +11,8 @@ in {
 
     ../../bases/server.nix
 
-    ../../components/other/zfs.nix
     ../../components/services/sanoid.nix
+    ../../components/services/zfs.nix
   ];
 
   boot.zfs.extraPools = [zpool];

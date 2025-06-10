@@ -15,7 +15,6 @@
 
   outputs = {
     nixpkgs,
-    home-manager,
     ...
   } @ inputs: let
     mkNixosSystem = {

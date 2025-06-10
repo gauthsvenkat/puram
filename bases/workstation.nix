@@ -9,28 +9,27 @@
   imports = [
     ./system.nix
 
-    ../components/home-manager.nix
-
     ../components/gui/pipewire.nix
-    ../components/gui/wezterm.nix
+
+    ../components/hardware/bluetooth.nix
 
     ../components/services/docker.nix
 
-    ../components/other/bluetooth.nix
-    ../components/other/development.nix
-    ../components/other/spotify.nix
+    ../components/extra/development.nix
+    ../components/extra/spotify.nix
 
-    ../components/cli/bat.nix
-    ../components/cli/btop.nix
-    ../components/cli/direnv.nix
-    ../components/cli/eza.nix
-    ../components/cli/fzf.nix
-    ../components/cli/git.nix
-    ../components/cli/lazygit.nix
-    ../components/cli/mcfly.nix
-    ../components/cli/neovim.nix
-    ../components/cli/zoxide.nix
-    ../components/cli/zsh.nix
+    ../components/terminal/bat.nix
+    ../components/terminal/btop.nix
+    ../components/terminal/direnv.nix
+    ../components/terminal/eza.nix
+    ../components/terminal/fzf.nix
+    ../components/terminal/git.nix
+    ../components/terminal/lazygit.nix
+    ../components/terminal/mcfly.nix
+    ../components/terminal/neovim.nix
+    ../components/terminal/wezterm.nix
+    ../components/terminal/zoxide.nix
+    ../components/terminal/zsh.nix
   ];
 
   home-manager.users.${username} = {
@@ -39,11 +38,11 @@
     xdg.autostart.enable = true;
 
     home.packages = with pkgs; [
-      vscode
-      libreoffice-still
-      mpv
       firefox
       jq
+      libreoffice-still
+      mpv
+      vscode
     ];
 
     programs.zsh.shellAliases = {
