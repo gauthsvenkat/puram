@@ -20,7 +20,7 @@
         next-terminal=Alt+L
         previous-session=Alt+B
         previous-terminal=Alt+H
-        split-left-right=Alt+P
+        split-left-right=Alt+V
 
         [Window]
         KeepOpen=false
