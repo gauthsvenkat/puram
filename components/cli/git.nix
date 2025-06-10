@@ -18,6 +18,8 @@
       ignores = [
         ".envrc"
         ".env"
+        "codecompanion-workspace.json"
+        "private_key"
       ];
     };
     zsh.oh-my-zsh.plugins = ["git"];
