@@ -10,8 +10,8 @@
 
     ../../bases/laptop.nix
 
-    ../../components/gui/kde/kde.nix
-    ../../components/gui/kde/yakuake.nix
+    ../../components/gui/kde.nix
+    ../../components/terminal/yakuake.nix
   ];
 
   programs = {
@@ -24,16 +24,17 @@
 
   home-manager.users.${username} = {
     home.packages = with pkgs; [
+      hurl
+      jq
+      k9s
+      kubernetes-helm
       slack
+      thunderbird
+
       (google-cloud-sdk.withExtraComponents [
         google-cloud-sdk.components.gke-gcloud-auth-plugin
         google-cloud-sdk.components.kubectl
       ])
-      k9s
-      kubernetes-helm
-      thunderbird
-      hurl
-      jq
     ];
 
     programs.git.userEmail = lib.mkForce "gautham@dexterenergy.ai";

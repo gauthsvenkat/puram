@@ -6,13 +6,16 @@ in {
 
     ../../bases/personal.nix
 
-    ../../components/gui/kde/kde.nix
-    ../../components/gui/kde/yakuake.nix
-    ../../components/gui/nvidia.nix
+    ../../components/hardware/nvidia.nix
 
-    ../../components/other/zfs.nix
+    ../../components/gui/kde.nix
+
     ../../components/services/sanoid.nix
-    ../../components/other/gaming.nix
+    ../../components/services/zfs.nix
+
+    ../../components/terminal/yakuake.nix
+
+    ../../components/extra/gaming.nix
   ];
 
   # NOTE: Without the following disabling of tpm, the boot process
