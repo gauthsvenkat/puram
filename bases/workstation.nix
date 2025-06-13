@@ -27,6 +27,7 @@
     ../components/terminal/lazygit.nix
     ../components/terminal/mcfly.nix
     ../components/terminal/neovim.nix
+    ../components/terminal/spotify-player.nix
     ../components/terminal/wezterm.nix
     ../components/terminal/zoxide.nix
     ../components/terminal/zsh.nix
