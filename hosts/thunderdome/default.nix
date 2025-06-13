@@ -1,4 +1,4 @@
-let
+{username, ...}: let
   zpool = "wombocombo";
 in {
   imports = [
@@ -24,4 +24,10 @@ in {
 
   boot.zfs.extraPools = [zpool];
   services.sanoid.datasets."${zpool}".use_template = ["default"];
+
+  #NOTE: This doesn't (auto)unlock kwallet :-(
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = username;
+  };
 }
