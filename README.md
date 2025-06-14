@@ -7,7 +7,7 @@ The organization philosophy of this repository is inspired by the [polylith](htt
 In essence, I declare basic `components/` that can be composed into different `bases/`, which themselves can be composed (along with additional components) to build fully functioning NixOS `hosts/`.
 
 ### [Components](./components/)
-These are the building blocks of my machines. They are organized as best as possible into sensible sub-directories based on their use, rather than their nature. For example, [pipewire](./components/gui/pipewire.nix) is put into `gui/` even though it is technically a `service`.
+These are the building blocks of my machines. They are organized as best as possible into sensible sub-directories based on their use.
 
 ### [Bases](./bases/)
 These contain abstract hosts declarations that can (coupled with some `hardware-configuration.nix`) be a fully functioning NixOS host. They put together several components and contains minimal configuration that are applicable for more than one of my host machines.

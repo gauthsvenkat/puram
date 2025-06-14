@@ -22,7 +22,7 @@
       gcc
       ripgrep
       fd
-      wl-clipboard-rs
+      wl-clipboard
     ];
 
     programs = {

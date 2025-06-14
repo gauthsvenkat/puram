@@ -1,6 +1,6 @@
 # This config will put together a very basic workstation
 # with tools and services that I prefer on all workstations.
-# NOTE: Desktop environment is chosen in the host.
+# NOTE: Desktop environment is chosen downstream.
 {
   pkgs,
   username,
@@ -9,11 +9,10 @@
   imports = [
     ./system.nix
 
-    ../components/gui/pipewire.nix
-
     ../components/hardware/bluetooth.nix
 
     ../components/services/docker.nix
+    ../components/services/pipewire.nix
 
     ../components/extra/development.nix
     ../components/extra/spotify.nix

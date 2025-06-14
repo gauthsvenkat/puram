@@ -5,15 +5,12 @@ in {
     ./hardware-configuration.nix
 
     ../../bases/personal.nix
+    ../../bases/workstation-kde.nix
 
     ../../components/hardware/nvidia.nix
 
-    ../../components/gui/kde.nix
-
     ../../components/services/sanoid.nix
     ../../components/services/zfs.nix
-
-    ../../components/terminal/yakuake.nix
 
     ../../components/extra/gaming.nix
   ];
