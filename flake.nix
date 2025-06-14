@@ -13,10 +13,7 @@
     };
   };
 
-  outputs = {
-    nixpkgs,
-    ...
-  } @ inputs: let
+  outputs = {nixpkgs, ...} @ inputs: let
     mkNixosSystem = {
       hostname,
       system ? "x86_64-linux",
@@ -26,6 +23,7 @@
         inherit system;
         specialArgs = {
           inherit username hostname inputs;
+          homeDirectory = "/home/${username}";
         };
         modules = [./hosts/${hostname}];
       };
