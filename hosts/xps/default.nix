@@ -9,9 +9,7 @@
     ./hardware-configuration.nix
 
     ../../bases/laptop.nix
-
-    ../../components/gui/kde.nix
-    ../../components/terminal/yakuake.nix
+    ../../bases/workstation-kde.nix
   ];
 
   programs = {
