@@ -1,4 +1,5 @@
 {
+  homeDirectory,
   pkgs,
   username,
   ...
@@ -7,7 +8,7 @@
     home = {
       packages = [pkgs.kdePackages.yakuake];
 
-      file."/home/${username}/.config/yakuakerc".text = ''
+      file."${homeDirectory}/.config/yakuakerc".text = ''
         [Desktop Entry]
         DefaultProfile=default.profile
 

@@ -1,4 +1,5 @@
 {
+  homeDirectory,
   inputs,
   username,
   pkgs,
@@ -16,8 +17,7 @@
       home = {
         stateVersion = "24.11"; # Don't change this
 
-        inherit username;
-        homeDirectory = "/home/${username}";
+        inherit username homeDirectory;
 
         packages = [pkgs.just];
       };
