@@ -24,5 +24,7 @@
 
       programs.nh.enable = true;
     };
+
+    backupFileExtension = "backup";
   };
 }
