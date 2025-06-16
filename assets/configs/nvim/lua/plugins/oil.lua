@@ -9,8 +9,8 @@ return {
     keymaps = {
       ["<Bs>"] = "actions.parent",
       ["q"] = "actions.close",
-      ["<C-l>"] = { "actions.select", opts = { vertical = true } },
-      ["<C-j>"] = { "actions.select", opts = { horizontal = true } },
+      ["<C-s>"] = { "actions.select", opts = { horizontal = true } },
+      ["<C-v>"] = { "actions.select", opts = { vertical = true } },
     },
   },
   keys = {
