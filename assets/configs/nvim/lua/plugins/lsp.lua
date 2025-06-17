@@ -74,6 +74,11 @@ return {
         function(server_name)
           require("lspconfig")[server_name].setup({ capabilities = capabilities })
         end,
+        ["nil_ls"] = function()
+          require("lspconfig").nil_ls.setup({
+            settings = { ["nil"] = { nix = { flake = { autoArchive = true } } } },
+          })
+        end,
       },
     })
     -- end of lsp setup
