@@ -110,7 +110,7 @@
           },
           {
             event = { Up = { streak = 1, button = "Left" } },
-            mods = "ALT",
+            mods = "CTRL",
             action = act.OpenLinkAtMouseCursor,
           },
         },
