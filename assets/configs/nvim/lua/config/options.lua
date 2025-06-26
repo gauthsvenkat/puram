@@ -33,8 +33,14 @@ vim.opt.updatetime = 50
 vim.opt.termguicolors = true
 
 -- undo options
-vim.opt.undodir = os.getenv("HOME") .. "/.undodir"
 vim.opt.undofile = true
+vim.opt.undodir = os.getenv("HOME") .. "/.undodir"
+
+-- some reading and writing options
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.autoread = true
+vim.opt.autowrite = false
 
 -- fold options
 vim.opt.foldenable = true
