@@ -62,8 +62,5 @@ vim.diagnostic.config({
   float = { border = "rounded", source = "if_many" },
   underline = { severity = vim.diagnostic.severity.ERROR },
   signs = true,
-  virtual_text = {
-    source = "if_many",
-    spacing = 2,
-  },
+  virtual_text = false,
 })
