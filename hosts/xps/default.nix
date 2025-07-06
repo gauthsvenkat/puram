@@ -5,12 +5,16 @@
   ...
 }: {
   imports = [
-    ./disko-config.nix
     ./hardware-configuration.nix
 
     ../../bases/laptop.nix
     ../../bases/workstation-kde.nix
   ];
+
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = username;
+  };
 
   programs = {
     _1password.enable = true;
