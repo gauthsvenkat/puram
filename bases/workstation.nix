@@ -44,6 +44,7 @@
       libreoffice-still
       mpv
       vscode
+      claude-code
     ];
 
     programs.zsh.shellAliases = {
