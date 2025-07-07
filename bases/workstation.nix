@@ -20,6 +20,7 @@
     ../components/terminal/aider.nix
     ../components/terminal/bat.nix
     ../components/terminal/btop.nix
+    ../components/terminal/claude-code.nix
     ../components/terminal/direnv.nix
     ../components/terminal/eza.nix
     ../components/terminal/fzf.nix
@@ -44,7 +45,6 @@
       libreoffice-still
       mpv
       vscode
-      claude-code
     ];
 
     programs.zsh.shellAliases = {
