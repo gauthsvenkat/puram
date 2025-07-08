@@ -65,6 +65,12 @@ return {
     -- start of lsp setup
     local capabilities = require("blink.cmp").get_lsp_capabilities()
 
+    local servers = {
+      nil_ls = {
+        settings = { ["nil"] = { nix = { flake = { autoArchive = true } } } },
+      },
+    }
+
     require("mason-lspconfig").setup({
       automatic_enable = true,
       -- NOTE: Following set to empty so mason-tool-installer will take care of it
@@ -72,12 +78,10 @@ return {
       automatic_installation = false,
       handlers = {
         function(server_name)
-          require("lspconfig")[server_name].setup({ capabilities = capabilities })
-        end,
-        ["nil_ls"] = function()
-          require("lspconfig").nil_ls.setup({
-            settings = { ["nil"] = { nix = { flake = { autoArchive = true } } } },
-          })
+          local server_opts = servers[server_name] or {}
+          server_opts.capabilities = vim.tbl_deep_extend("force", capabilities, server_opts.capabilities or {})
+
+          require("lspconfig")[server_name].setup(server_opts)
         end,
       },
     })
