@@ -66,6 +66,22 @@ return {
     local capabilities = require("blink.cmp").get_lsp_capabilities()
 
     local servers = {
+      basedpyright = {
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "off",
+              diagnosticSeverityOverrides = {
+                reportUnusedImport = "unused",
+                reportUnusedClass = "unused",
+                reportUnusedFunction = "unused",
+                reportUnusedVariable = "unused",
+                reportUnusedParameter = "unused",
+              },
+            },
+          },
+        },
+      },
       nil_ls = {
         settings = { ["nil"] = { nix = { flake = { autoArchive = true } } } },
       },
