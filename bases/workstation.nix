@@ -23,6 +23,7 @@
     ../components/terminal/claude-code.nix
     ../components/terminal/direnv.nix
     ../components/terminal/eza.nix
+    ../components/terminal/fastfetch.nix
     ../components/terminal/fzf.nix
     ../components/terminal/git.nix
     ../components/terminal/lazygit.nix
