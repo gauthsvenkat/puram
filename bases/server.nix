@@ -7,6 +7,7 @@
     ../components/terminal/bat.nix
     ../components/terminal/btop.nix
     ../components/terminal/eza.nix
+    ../components/terminal/fastfetch.nix
     ../components/terminal/git.nix
     ../components/terminal/mcfly.nix
     ../components/terminal/zoxide.nix
