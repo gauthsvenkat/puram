@@ -1,8 +1,9 @@
 {
+  config,
   pkgs,
-  username,
   ...
 }: let
+  inherit (config.hostCfg) username;
   zpool = "dontdie";
 in {
   imports = [
@@ -11,9 +12,12 @@ in {
 
     ../../bases/server.nix
 
+    ../../components/config.nix
     ../../components/services/sanoid.nix
     ../../components/services/zfs.nix
   ];
+
+  hostCfg.hostname = "elitedesk";
 
   boot.zfs.extraPools = [zpool];
 

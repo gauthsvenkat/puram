@@ -1,4 +1,6 @@
-{username, ...}: {
+{config, ...}: let
+  inherit (config.hostCfg) username;
+in {
   virtualisation.docker.enable = true;
 
   users.users.${username}.extraGroups = ["docker"];

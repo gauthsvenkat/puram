@@ -2,10 +2,12 @@
 # with tools and services that I prefer on all workstations.
 # NOTE: Desktop environment is chosen downstream.
 {
+  config,
   pkgs,
-  username,
   ...
-}: {
+}: let
+  inherit (config.hostCfg) username;
+in {
   imports = [
     ./system.nix
 

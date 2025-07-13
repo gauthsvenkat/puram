@@ -1,8 +1,10 @@
 {
+  config,
   pkgs,
-  username,
   ...
-}: {
+}: let
+  inherit (config.hostCfg) username;
+in {
   # needed for setting user's shell
   programs.zsh.enable = true;
 
@@ -16,9 +18,7 @@
       enable = true;
       plugins = ["vi-mode"];
     };
-    shellAliases = {
-      c = "clear";
-    };
+    shellAliases."c" = "clear";
     initContent = ''
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       test -f ~/.p10k.zsh && source ~/.p10k.zsh

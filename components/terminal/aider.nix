@@ -1,8 +1,10 @@
 {
+  config,
   pkgs,
-  username,
   ...
-}: {
+}: let
+  inherit (config.hostCfg) username;
+in {
   home-manager.users.${username} = let
     pkg = pkgs.aider-chat-with-playwright;
   in {

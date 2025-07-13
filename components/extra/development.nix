@@ -1,8 +1,10 @@
 {
+  config,
   pkgs,
-  username,
   ...
-}: {
+}: let
+  inherit (config.hostCfg) username;
+in {
   # to add `~/.local/bin` to PATH
   environment.localBinInPath = true;
 

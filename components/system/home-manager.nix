@@ -1,10 +1,11 @@
 {
-  homeDirectory,
+  config,
   inputs,
-  username,
   pkgs,
   ...
-}: {
+}: let
+  inherit (config.hostCfg) username homeDirectory;
+in {
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];

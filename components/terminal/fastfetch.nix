@@ -1,8 +1,9 @@
 {
+  config,
   pkgs,
-  username,
   ...
 }: let
+  inherit (config.hostCfg) username;
   mkSeparator = {
     type = "separator";
     string = "─────────────────────────";

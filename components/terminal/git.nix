@@ -1,4 +1,6 @@
-{username, ...}: {
+{config, ...}: let
+  inherit (config.hostCfg) username gitEmail;
+in {
   home-manager.users.${username}.programs = {
     git = {
       enable = true;
@@ -11,7 +13,7 @@
       lfs.enable = true;
 
       userName = "Gautham Venkataraman";
-      userEmail = "gauthsvenkat@gmail.com";
+      userEmail = gitEmail;
 
       extraConfig.init.DefaultBranch = "main";
 

@@ -1,4 +1,5 @@
-{username, ...}: let
+{config, ...}: let
+  inherit (config.hostCfg) username;
   zpool = "wombocombo";
 in {
   imports = [
@@ -7,6 +8,8 @@ in {
     ../../bases/personal.nix
     ../../bases/workstation-kde.nix
 
+    ../../components/config.nix
+
     ../../components/hardware/nvidia.nix
 
     ../../components/services/sanoid.nix
@@ -14,6 +17,8 @@ in {
 
     ../../components/extra/gaming.nix
   ];
+
+  hostCfg.hostname = "thunderdome";
 
   # NOTE: Without the following disabling of tpm, the boot process
   # gets stuck on "A start job is running for /dev/tpmrm0".
