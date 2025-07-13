@@ -1,15 +1,24 @@
 {
-  lib,
+  config,
   pkgs,
-  username,
   ...
-}: {
+}: let
+  inherit (config.hostCfg) username;
+in {
   imports = [
     ./hardware-configuration.nix
 
     ../../bases/laptop.nix
     ../../bases/workstation-kde.nix
+
+    ../../components/config.nix
   ];
+
+  hostCfg = {
+    hostname = "xps";
+    username = "gautham";
+    gitEmail = "gautham@dexterenergy.ai";
+  };
 
   services.displayManager.autoLogin = {
     enable = true;
@@ -39,8 +48,6 @@
         google-cloud-sdk.components.kubectl
       ])
     ];
-
-    programs.git.userEmail = lib.mkForce "gautham@dexterenergy.ai";
 
     xdg.autostart.entries = [
       "${pkgs.slack}/share/applications/slack.desktop"

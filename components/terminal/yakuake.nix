@@ -1,9 +1,10 @@
 {
-  homeDirectory,
+  config,
   pkgs,
-  username,
   ...
-}: {
+}: let
+  inherit (config.hostCfg) username homeDirectory;
+in {
   home-manager.users.${username} = {
     home = {
       packages = [pkgs.kdePackages.yakuake];

@@ -17,23 +17,16 @@
     mkNixosSystem = {
       hostname,
       system ? "x86_64-linux",
-      username ? "ando",
     }:
       nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = {
-          inherit username hostname inputs;
-          homeDirectory = "/home/${username}";
-        };
+        specialArgs = {inherit inputs;};
         modules = [./hosts/${hostname}];
       };
   in {
     nixosConfigurations = {
       # work
-      xps = mkNixosSystem {
-        hostname = "xps";
-        username = "gautham";
-      };
+      xps = mkNixosSystem {hostname = "xps";};
       # personal
       thinkpad = mkNixosSystem {hostname = "thinkpad";};
       thunderdome = mkNixosSystem {hostname = "thunderdome";};

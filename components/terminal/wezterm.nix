@@ -1,4 +1,6 @@
-{username, ...}: {
+{config, ...}: let
+  inherit (config.hostCfg) username;
+in {
   home-manager.users.${username}.programs.wezterm = {
     enable = true;
     extraConfig = ''
