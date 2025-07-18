@@ -11,6 +11,6 @@ in {
       sessionVariables.DISABLE_TELEMETRY = 1;
     };
 
-    programs.git.ignores = [".claude/" "CLAUDE.md"];
+    programs.git.ignores = [".claude/" "CLAUDE.local.md"];
   };
 }
