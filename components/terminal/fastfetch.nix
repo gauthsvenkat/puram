@@ -135,14 +135,6 @@ in {
               keyColor = "bright_cyan";
             }
           )
-
-          mkSeparator
-
-          {
-            type = "weather";
-            key = " Weather";
-            keyColor = "bright_yellow";
-          }
         ];
       };
     };
