@@ -30,6 +30,7 @@ in {
     ../components/terminal/git.nix
     ../components/terminal/lazygit.nix
     ../components/terminal/mcfly.nix
+    ../components/terminal/utils.nix
     ../components/terminal/neovim.nix
     ../components/terminal/spotify-player.nix
     ../components/terminal/wezterm.nix
@@ -44,7 +45,6 @@ in {
 
     home.packages = with pkgs; [
       firefox
-      jq
       libreoffice-still
       mpv
       nerd-fonts.jetbrains-mono

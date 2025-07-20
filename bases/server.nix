@@ -10,6 +10,7 @@
     ../components/terminal/fastfetch.nix
     ../components/terminal/git.nix
     ../components/terminal/mcfly.nix
+    ../components/terminal/utils.nix
     ../components/terminal/zoxide.nix
     ../components/terminal/zsh.nix
   ];
