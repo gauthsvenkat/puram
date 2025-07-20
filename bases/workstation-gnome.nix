@@ -2,7 +2,7 @@
   imports = [
     ./workstation.nix
 
-    ../components/gui/gnome.nix
+    ../components/de/gnome.nix
     ../components/terminal/guake.nix
   ];
 }
