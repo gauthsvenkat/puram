@@ -11,7 +11,10 @@ in {
     ../../components/config.nix
   ];
 
-  hostCfg.hostname = "thinkpad";
+  hostCfg = {
+    hostname = "thinkpad";
+    isLaptop = true;
+  };
 
   services.displayManager.autoLogin = {
     enable = true;

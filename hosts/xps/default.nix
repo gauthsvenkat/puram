@@ -18,6 +18,7 @@ in {
     hostname = "xps";
     username = "gautham";
     gitEmail = "user@work.example";
+    isLaptop = true;
   };
 
   services.displayManager.autoLogin = {
