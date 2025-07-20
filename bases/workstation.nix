@@ -40,8 +40,6 @@ in {
   ];
 
   home-manager.users.${username} = {
-    fonts.fontconfig.enable = true;
-
     xdg.autostart.enable = true;
 
     home.packages = with pkgs; [
@@ -49,8 +47,14 @@ in {
       jq
       libreoffice-still
       mpv
+      nerd-fonts.jetbrains-mono
       vscode
     ];
+
+    fonts.fontconfig = {
+      enable = true;
+      defaultFonts.monospace = ["JetBrainsMono Nerd Font Mono"];
+    };
 
     programs.zsh.shellAliases = {
       "o" = "xdg-open";
