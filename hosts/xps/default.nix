@@ -19,6 +19,7 @@ in {
     username = "gautham";
     gitEmail = "user@work.example";
     isLaptop = true;
+    wallpaper = "neon_shallows.png";
   };
 
   services.displayManager.autoLogin = {
