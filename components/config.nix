@@ -35,5 +35,11 @@ in {
       default = false;
       description = "Whether the host is a laptop";
     };
+
+    wallpaper = mkOption {
+      type = types.str;
+      default = "astronaut.jpg";
+      description = "Name of the wallpaper file, relative to ~/Pictures/wallpapers/";
+    };
   };
 }

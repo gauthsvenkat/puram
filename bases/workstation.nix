@@ -35,6 +35,8 @@ in {
     ../components/terminal/wezterm.nix
     ../components/terminal/zoxide.nix
     ../components/terminal/zsh.nix
+
+    ../components/wallpaper
   ];
 
   home-manager.users.${username} = {

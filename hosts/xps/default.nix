@@ -19,6 +19,7 @@ in {
     username = "gautham";
     gitEmail = "gautham@dexterenergy.ai";
     isLaptop = true;
+    wallpaper = "neon_shallows.png";
   };
 
   services.displayManager.autoLogin = {
