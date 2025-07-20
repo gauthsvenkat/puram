@@ -18,6 +18,7 @@ in {
     hostname = "xps";
     username = "gautham";
     gitEmail = "gautham@dexterenergy.ai";
+    isLaptop = true;
   };
 
   services.displayManager.autoLogin = {

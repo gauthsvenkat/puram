@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.hostCfg) username;
+  inherit (config.hostCfg) username isLaptop;
   mkSeparator = {
     type = "separator";
     string = "─────────────────────────";
@@ -78,6 +78,7 @@ in {
             type = "cpu";
             key = " CPU";
             keyColor = "bright_green";
+            temp = true;
           }
 
           mkSeparator
@@ -116,17 +117,31 @@ in {
             keyColor = "bright_cyan";
           }
           {
-            type = "wifi";
-            key = " WiFi";
+            type = "dns";
+            key = " DNS";
             keyColor = "bright_cyan";
           }
+
+          (
+            if isLaptop
+            then {
+              type = "wifi";
+              key = " WiFi";
+              keyColor = "bright_cyan";
+            }
+            else {
+              type = "netio";
+              key = " NetIO";
+              keyColor = "bright_cyan";
+            }
+          )
 
           mkSeparator
 
           {
-            type = "battery";
-            key = " Battery";
-            keyColor = "bright_magenta";
+            type = "weather";
+            key = " Weather";
+            keyColor = "bright_yellow";
           }
         ];
       };

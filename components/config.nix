@@ -29,5 +29,11 @@ in {
       default = "gauthsvenkat@gmail.com";
       description = "Git user email";
     };
+
+    isLaptop = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Whether the host is a laptop";
+    };
   };
 }
