@@ -30,9 +30,10 @@ in {
     ../components/terminal/git.nix
     ../components/terminal/lazygit.nix
     ../components/terminal/mcfly.nix
-    ../components/terminal/utils.nix
     ../components/terminal/neovim.nix
+    ../components/terminal/nh.nix
     ../components/terminal/spotify-player.nix
+    ../components/terminal/utils.nix
     ../components/terminal/wezterm.nix
     ../components/terminal/zoxide.nix
     ../components/terminal/zsh.nix
