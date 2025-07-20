@@ -15,9 +15,6 @@ in {
     sessionVariables.SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
 
     packages = with pkgs; [
-      gnumake
-      ripgrep
-      fd
       rustup
       cargo-generate
       uv

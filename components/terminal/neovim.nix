@@ -16,14 +16,8 @@ in {
 
   home-manager.users.${username} = {
     home.packages = with pkgs; [
-      unzip
-      wget
-      python3
       nodejs
-      git
-      gcc
-      ripgrep
-      fd
+      python3
       wl-clipboard
     ];
 
