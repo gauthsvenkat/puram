@@ -82,24 +82,26 @@ return {
           },
         },
       },
+
       nil_ls = {
         settings = { ["nil"] = { nix = { flake = { autoArchive = true } } } },
       },
     }
 
+    -- Setup global LSP configuration
+    vim.lsp.config("*", {
+      capabilities = capabilities,
+    })
+
+    -- Configure specific servers using vim.lsp.config
+    for server_name, server_opts in pairs(servers) do
+      vim.lsp.config(server_name, server_opts)
+    end
+
     require("mason-lspconfig").setup({
-      automatic_enable = true,
       -- NOTE: Following set to empty so mason-tool-installer will take care of it
       ensure_installed = {},
       automatic_installation = false,
-      handlers = {
-        function(server_name)
-          local server_opts = servers[server_name] or {}
-          server_opts.capabilities = vim.tbl_deep_extend("force", capabilities, server_opts.capabilities or {})
-
-          require("lspconfig")[server_name].setup(server_opts)
-        end,
-      },
     })
     -- end of lsp setup
   end,
