@@ -18,6 +18,7 @@ in {
 
     ../components/extra/development.nix
     ../components/extra/spotify.nix
+    ../components/extra/vial.nix
 
     ../components/terminal/aider.nix
     ../components/terminal/bat.nix
