@@ -139,11 +139,6 @@ in {
       };
     };
 
-    zsh = let
-      fastfetch = "${pkgs.fastfetch}/bin/fastfetch";
-    in {
-      initContent = fastfetch;
-      shellAliases."ff" = fastfetch;
-    };
+    zsh.shellAliases."ff" = "${pkgs.fastfetch}/bin/fastfetch";
   };
 }
