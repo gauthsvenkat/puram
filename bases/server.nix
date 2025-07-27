@@ -9,6 +9,7 @@
     ../components/terminal/eza.nix
     ../components/terminal/fastfetch.nix
     ../components/terminal/git.nix
+    ../components/terminal/just.nix
     ../components/terminal/mcfly.nix
     ../components/terminal/nh.nix
     ../components/terminal/utils.nix

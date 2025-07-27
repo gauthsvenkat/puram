@@ -10,7 +10,6 @@ in {
     fd
     gnumake
     jq
-    just
     ripgrep
     unzip
     wget

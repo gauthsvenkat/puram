@@ -29,6 +29,7 @@ in {
     ../components/terminal/fastfetch.nix
     ../components/terminal/fzf.nix
     ../components/terminal/git.nix
+    ../components/terminal/just.nix
     ../components/terminal/lazygit.nix
     ../components/terminal/mcfly.nix
     ../components/terminal/neovim.nix
