@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit (config) hostCfg;
@@ -40,6 +41,18 @@ in {
       type = types.str;
       default = "astronaut.jpg";
       description = "Name of the wallpaper file, relative to ~/Pictures/wallpapers/";
+    };
+
+    terminal = mkOption {
+      type = types.str;
+      default = "${pkgs.wezterm}/bin/wezterm";
+      description = "terminal emulator";
+    };
+
+    fileManager = mkOption {
+      type = types.str;
+      default = "${pkgs.kdePackages.dolphin}/bin/dolphin";
+      description = "file manager";
     };
   };
 }
