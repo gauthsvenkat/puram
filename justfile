@@ -1,3 +1,6 @@
+alias a := apply
+alias c := check
+
 apply action='switch':
   nh os {{ action }} .
 
