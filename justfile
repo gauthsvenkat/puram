@@ -4,7 +4,6 @@ apply action='switch':
 check:
   nix flake check
 
-[confirm]
 upgrade:
   nix flake update
   git add flake.lock
