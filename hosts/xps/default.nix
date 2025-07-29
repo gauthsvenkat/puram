@@ -12,6 +12,7 @@ in {
     ../../bases/workstation-kde.nix
 
     ../../components/config.nix
+    ../../components/extra/autologin.nix
   ];
 
   hostCfg = {
@@ -20,11 +21,6 @@ in {
     gitEmail = "user@work.example";
     isLaptop = true;
     wallpaper = "neon_shallows.png";
-  };
-
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = username;
   };
 
   programs = {
