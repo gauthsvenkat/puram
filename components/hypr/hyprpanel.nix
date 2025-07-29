@@ -23,7 +23,7 @@ in {
         launcher.autoDetectIcon = true;
         media.show_active_only = true;
         battery.hideLabelWhenFull = true;
-        clock.format = "%a %b %d  %R";
+        clock.format = "%a %b %d  %H:%M:%S";
         notifications = {
           show_total = true;
           hideCountWhenZero = true;

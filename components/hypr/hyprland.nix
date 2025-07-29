@@ -1,9 +1,6 @@
-{
-  config,
-  ...
-}: let
+{config, ...}: let
   inherit (config.hostCfg) username terminal fileManager;
-  inherit (config.hyprCfg) launcher;
+  inherit (config.hyprCfg) launcher lockScreen;
 in {
   programs.hyprland.enable = true;
 
@@ -109,6 +106,7 @@ in {
           "${mainMod}, return, exec, ${terminal}"
           "${mainMod}, e, exec, ${fileManager}"
           "${mainMod}, space, exec, ${launcher}"
+          "${mainMod}, o, exec, ${lockScreen}"
 
           "${mainMod}, escape, killactive"
           "${mainMod} shift, escape, exit"

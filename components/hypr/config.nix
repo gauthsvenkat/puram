@@ -11,5 +11,11 @@ in {
       default = "${pkgs.tofi}/bin/tofi-drun --drun-launch=true";
       description = "application launcher";
     };
+
+    lockScreen = mkOption {
+      type = types.str;
+      default = "${pkgs.hyprlock}/bin/hyprlock";
+      description = "lock screen command";
+    };
   };
 }
