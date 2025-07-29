@@ -1,4 +1,8 @@
-{config, pkgs, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   inherit (config.hostCfg) username terminal fileManager;
 in {
   programs.hyprland.enable = true;
