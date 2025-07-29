@@ -3,8 +3,8 @@
 - tofi for kde?
 
 ### Hyprland tasks
-- idle daemon
 - screenshotting
 - clipboard manager
 - blue light filter
+- figure out brightnessctl. Mainly for hypridle.
 - (nice to have) media control in hypr lock screen
