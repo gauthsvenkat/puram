@@ -1,5 +1,4 @@
-{config, ...}: let
-  inherit (config.hostCfg) username;
+let
   zpool = "wombocombo";
 in {
   imports = [
@@ -16,6 +15,7 @@ in {
     ../../components/services/sanoid.nix
     ../../components/services/zfs.nix
 
+    ../../components/extra/autologin.nix
     ../../components/extra/gaming.nix
   ];
 
@@ -27,10 +27,4 @@ in {
 
   boot.zfs.extraPools = [zpool];
   services.sanoid.datasets."${zpool}".use_template = ["default"];
-
-  #NOTE: This doesn't (auto)unlock kwallet :-(
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = username;
-  };
 }

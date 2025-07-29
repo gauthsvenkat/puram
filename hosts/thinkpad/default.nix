@@ -1,6 +1,4 @@
-{config, ...}: let
-  inherit (config.hostCfg) username;
-in {
+{
   imports = [
     ./hardware-configuration.nix
 
@@ -10,15 +8,11 @@ in {
     ../../bases/workstation-hyprland.nix
 
     ../../components/config.nix
+    ../../components/extra/autologin.nix
   ];
 
   hostCfg = {
     hostname = "thinkpad";
     isLaptop = true;
-  };
-
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = username;
   };
 }
