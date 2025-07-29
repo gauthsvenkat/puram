@@ -1,5 +1,6 @@
 alias a := apply
 alias c := check
+alias u := update
 
 apply action='switch':
   nh os {{ action }} .
@@ -7,8 +8,11 @@ apply action='switch':
 check:
   nix flake check
 
+update input="":
+  nix flake update {{ input }}
+
 upgrade:
-  nix flake update
+  just update
   git add flake.lock
   git commit -m "system upgrade {{ datetime('%Y-%m-%d') }}"
   just apply boot
