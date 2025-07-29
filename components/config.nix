@@ -54,5 +54,11 @@ in {
       default = "${pkgs.kdePackages.dolphin}/bin/dolphin";
       description = "file manager";
     };
+
+    browser = mkOption {
+      type = types.str;
+      default = "${pkgs.firefox}/bin/firefox";
+      description = "web browser";
+    };
   };
 }

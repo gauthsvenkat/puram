@@ -1,9 +1,9 @@
 {
   config,
-  pkgs,
   ...
 }: let
   inherit (config.hostCfg) username terminal fileManager;
+  inherit (config.hyprCfg) launcher;
 in {
   programs.hyprland.enable = true;
 
@@ -15,7 +15,6 @@ in {
 
       settings = let
         mainMod = "super";
-        launcher = "${pkgs.tofi}/bin/tofi-drun --drun-launch=true";
       in {
         env = [
           "XCURSOR_SIZE,24"
