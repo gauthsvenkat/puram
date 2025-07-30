@@ -8,7 +8,6 @@
     ../../bases/workstation-hyprland.nix
 
     ../../components/config.nix
-    ../../components/extra/autologin.nix
   ];
 
   hostCfg = {
