@@ -17,5 +17,11 @@ in {
       default = "${pkgs.hyprlock}/bin/hyprlock";
       description = "lock screen command";
     };
+
+    playerctl = mkOption {
+      type = types.str;
+      default = "${pkgs.playerctl}/bin/playerctl";
+      description = "media player";
+    };
   };
 }
