@@ -15,7 +15,6 @@ in {
     ../../components/services/sanoid.nix
     ../../components/services/zfs.nix
 
-    ../../components/extra/autologin.nix
     ../../components/extra/gaming.nix
   ];
 
