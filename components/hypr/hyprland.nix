@@ -1,6 +1,9 @@
-{config, ...}: let
+{
+  config,
+  ...
+}: let
   inherit (config.hostCfg) username terminal fileManager;
-  inherit (config.hyprCfg) launcher lockScreen;
+  inherit (config.hyprCfg) launcher lockScreen playerctl;
 in {
   programs.hyprland.enable = true;
 
@@ -162,10 +165,10 @@ in {
         ];
 
         bindl = [
-          ", XF86AudioNext, exec, playerctl next"
-          ", XF86AudioPause, exec, playerctl play-pause"
-          ", XF86AudioPlay, exec, playerctl play-pause"
-          ", XF86AudioPrev, exec, playerctl previous"
+          ", XF86AudioNext, exec, ${playerctl} next"
+          ", XF86AudioPause, exec, ${playerctl} play-pause"
+          ", XF86AudioPlay, exec, ${playerctl} play-pause"
+          ", XF86AudioPrev, exec, ${playerctl} previous"
         ];
 
         windowrule = [
