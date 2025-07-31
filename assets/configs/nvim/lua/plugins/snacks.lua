@@ -44,6 +44,20 @@ return {
   end,
   keys = {
     {
+      "]w",
+      function()
+        Snacks.words.jump(vim.v.count1, true)
+      end,
+      desc = "next [w]ord reference",
+    },
+    {
+      "[w",
+      function()
+        Snacks.words.jump(-vim.v.count1, true)
+      end,
+      desc = "prev [w]ord reference",
+    },
+    {
       "<Del>",
       function()
         Snacks.lazygit()
@@ -63,20 +77,6 @@ return {
         Snacks.terminal()
       end,
       mode = { "n", "t" },
-    },
-    {
-      "]]",
-      function()
-        Snacks.words.jump(vim.v.count1, true)
-      end,
-      desc = "next reference",
-    },
-    {
-      "[[",
-      function()
-        Snacks.words.jump(-vim.v.count1, true)
-      end,
-      desc = "prev reference",
     },
   },
 }
