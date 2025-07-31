@@ -7,8 +7,10 @@ return {
     delete_to_trash = true,
     skip_confirm_for_simple_edits = true,
     keymaps = {
-      ["<Bs>"] = "actions.parent",
+      ["h"] = "actions.parent",
+      ["l"] = "actions.select",
       ["q"] = "actions.close",
+      ["<Bs>"] = "actions.close",
       ["<C-s>"] = { "actions.select", opts = { horizontal = true } },
       ["<C-v>"] = { "actions.select", opts = { vertical = true } },
     },
