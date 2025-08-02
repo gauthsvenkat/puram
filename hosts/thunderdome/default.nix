@@ -1,4 +1,9 @@
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
+  inherit (config.hostCfg) username;
   zpool = "wombocombo";
 in {
   imports = [
@@ -26,4 +31,6 @@ in {
 
   boot.zfs.extraPools = [zpool];
   services.sanoid.datasets."${zpool}".use_template = ["default"];
+
+  home-manager.users.${username}.home.packages = [pkgs.discord];
 }
