@@ -18,10 +18,8 @@ in {
       extraConfig.init.DefaultBranch = "main";
 
       ignores = [
-        ".envrc"
-        ".env"
-        "codecompanion-workspace.json"
-        "private_key"
+        "*.envrc"
+        "*.env"
       ];
     };
     zsh.oh-my-zsh.plugins = ["git"];
