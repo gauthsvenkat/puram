@@ -11,7 +11,6 @@ in {
 
     ../../bases/personal.nix
     ../../bases/workstation-kde.nix
-    ../../bases/workstation-hyprland.nix
 
     ../../components/config.nix
 
@@ -20,6 +19,7 @@ in {
     ../../components/services/sanoid.nix
     ../../components/services/zfs.nix
 
+    ../../components/extra/autologin.nix
     ../../components/extra/gaming.nix
   ];
 
