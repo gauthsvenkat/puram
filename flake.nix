@@ -23,7 +23,10 @@
       nixpkgs-nixos.lib.nixosSystem {
         inherit system;
         specialArgs = {inherit inputs;};
-        modules = [./hosts/${hostname}];
+        modules = [
+          inputs.home-manager-nixos.nixosModules.home-manager
+          ./hosts/${hostname}
+        ];
       };
   in {
     nixosConfigurations = {
