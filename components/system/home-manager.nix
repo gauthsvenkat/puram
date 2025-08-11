@@ -6,7 +6,7 @@
   inherit (config.hostCfg) username homeDirectory;
 in {
   imports = [
-    inputs.home-manager.nixosModules.home-manager
+    inputs.home-manager-nixos.nixosModules.home-manager
   ];
 
   home-manager = {
