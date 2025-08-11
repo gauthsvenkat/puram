@@ -2,23 +2,25 @@
   description = "Personal nix flake for my various machines";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs-nixos.url = "github:nixos/nixpkgs/nixos-unstable";
+
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-nixos";
+    };
+
+    home-manager-nixos = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-nixos";
     };
   };
 
-  outputs = {nixpkgs, ...} @ inputs: let
+  outputs = {nixpkgs-nixos, ...} @ inputs: let
     mkNixosSystem = {
       hostname,
       system ? "x86_64-linux",
     }:
-      nixpkgs.lib.nixosSystem {
+      nixpkgs-nixos.lib.nixosSystem {
         inherit system;
         specialArgs = {inherit inputs;};
         modules = [./hosts/${hostname}];
