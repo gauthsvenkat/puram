@@ -19,7 +19,6 @@ in {
       gcc
       nodejs
       python3
-      wl-clipboard
     ];
 
     programs = {

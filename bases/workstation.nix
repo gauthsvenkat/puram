@@ -51,6 +51,9 @@ in {
       mpv
       nerd-fonts.jetbrains-mono
       vscode
+
+      #NOTE: This is required for neovim on linux
+      wl-clipboard
     ];
 
     home.file.".p10k.zsh".source = ../notnix/configs/p10k.zsh;
