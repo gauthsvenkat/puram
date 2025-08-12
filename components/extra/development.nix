@@ -5,10 +5,9 @@
 }: let
   inherit (config.hostCfg) username;
 in {
-  # to add `~/.local/bin` to PATH
-  environment.localBinInPath = true;
-
   home-manager.users.${username}.home = {
+    sessionPath = ["$HOME/.local/bin"];
+
     #NOTE: By default only NIX_SSL_CERT_FILE is set. Better to set
     # the following to make non-nix programs work as well. For e.g.
     # compiling with rust.
