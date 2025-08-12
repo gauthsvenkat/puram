@@ -19,10 +19,8 @@ in {
     wallpaper = "neon_shallows.png";
   };
 
-  environment.systemPackages = with pkgs; [
-    _1password-cli
-    _1password-gui
-  ];
+  #NOTE: 1password refuses to open if installed from nixpkgs :(
+  homebrew.casks = ["1password" "1password-cli"];
 
   home-manager.users.${username}.home.packages = with pkgs; [
     glab
