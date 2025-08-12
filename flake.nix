@@ -5,13 +5,13 @@
     nixpkgs-nixos.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    disko = {
-      url = "github:nix-community/disko";
+    home-manager-nixos = {
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-nixos";
     };
 
-    home-manager-nixos = {
-      url = "github:nix-community/home-manager";
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs-nixos";
     };
 
@@ -24,6 +24,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
+
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
+
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
   };
 
   outputs = {
@@ -60,7 +67,16 @@
       specialArgs = {inherit inputs;};
       modules = [
         {nixpkgs.hostPlatform = "aarch64-darwin";}
+        inputs.nix-homebrew.darwinModules.nix-homebrew
+
+        inputs.mac-app-util.darwinModules.default
+
         inputs.home-manager-darwin.darwinModules.home-manager
+        {
+          home-manager.sharedModules = [
+            inputs.mac-app-util.homeManagerModules.default
+          ];
+        }
         ./hosts/macbook-m1-pro
       ];
     };
