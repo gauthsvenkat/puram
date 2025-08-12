@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs-nixos.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     disko = {
       url = "github:nix-community/disko";
@@ -13,9 +14,23 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-nixos";
     };
+
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
+
+    home-manager-darwin = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
   };
 
-  outputs = {nixpkgs-nixos, ...} @ inputs: let
+  outputs = {
+    nixpkgs-nixos,
+    nix-darwin,
+    ...
+  } @ inputs: let
     mkNixosSystem = {
       hostname,
       system ? "x86_64-linux",
@@ -39,6 +54,15 @@
       elitedesk = mkNixosSystem {hostname = "elitedesk";};
       # server
       toshiba = mkNixosSystem {hostname = "toshiba";};
+    };
+
+    darwinConfigurations.macbook-m1-pro = nix-darwin.lib.darwinSystem {
+      specialArgs = {inherit inputs;};
+      modules = [
+        {nixpkgs.hostPlatform = "aarch64-darwin";}
+        inputs.home-manager-darwin.darwinModules.home-manager
+        ./hosts/macbook-m1-pro
+      ];
     };
   };
 }
