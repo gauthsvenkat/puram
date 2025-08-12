@@ -45,10 +45,7 @@
       nixpkgs-nixos.lib.nixosSystem {
         inherit system;
         specialArgs = {inherit inputs;};
-        modules = [
-          inputs.home-manager-nixos.nixosModules.home-manager
-          ./hosts/${hostname}
-        ];
+        modules = [./hosts/${hostname}];
       };
   in {
     nixosConfigurations = {
@@ -67,16 +64,6 @@
       specialArgs = {inherit inputs;};
       modules = [
         {nixpkgs.hostPlatform = "aarch64-darwin";}
-        inputs.nix-homebrew.darwinModules.nix-homebrew
-
-        inputs.mac-app-util.darwinModules.default
-
-        inputs.home-manager-darwin.darwinModules.home-manager
-        {
-          home-manager.sharedModules = [
-            inputs.mac-app-util.homeManagerModules.default
-          ];
-        }
         ./hosts/macbook-m1-pro
       ];
     };
