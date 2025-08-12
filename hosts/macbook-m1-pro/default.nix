@@ -19,10 +19,12 @@ in {
     wallpaper = "neon_shallows.png";
   };
 
-  home-manager.users.${username}.home.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     _1password-cli
     _1password-gui
+  ];
 
+  home-manager.users.${username}.home.packages = with pkgs; [
     glab
     hurl
     k9s
