@@ -8,6 +8,7 @@
 in {
   imports = [
     ../components/darwin/homebrew.nix
+    ../components/darwin/kanata.nix
     ../components/darwin/misc.nix
     ../components/darwin/wezterm.nix
 

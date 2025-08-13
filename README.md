@@ -31,5 +31,10 @@ This configuration does a lot of the heavy lifting for me but some steps need to
   - Install the rust toolchain (`cargo` required for neovim) (`rustup default stable`).
   - Clone neovim configuration: `git clone git@github.com:gauthsvenkat/nvim.git ~/.config/nvim/`
 
+### Darwin notes
+- Install nix
+- install xcode (`xcode-select --install`)
+- install karabiner driver kit virtual hiddevice manually for kanata
+
 ## Maintenance
 This repository comes equipped with a very handy [justfile](./justfile) for basic tasks like switching config, upgrading the system and checking the flake.
