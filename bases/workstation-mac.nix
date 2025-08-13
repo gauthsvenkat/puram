@@ -15,6 +15,7 @@ in {
 
     ../components/extra/development.nix
     ../components/extra/nix-settings.nix
+    ../components/extra/wallpaper.nix
 
     ../components/terminal/aider.nix
     ../components/terminal/bat.nix
@@ -35,8 +36,6 @@ in {
     ../components/terminal/wezterm.nix
     ../components/terminal/zoxide.nix
     ../components/terminal/zsh.nix
-
-    ../components/wallpaper
   ];
 
   fonts.packages = [pkgs.nerd-fonts.jetbrains-mono];
