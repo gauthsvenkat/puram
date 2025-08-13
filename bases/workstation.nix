@@ -53,6 +53,8 @@ in {
       vscode
     ];
 
+    home.file.".p10k.zsh".source = ../notnix/configs/p10k.zsh;
+
     fonts.fontconfig = {
       enable = true;
       defaultFonts.monospace = ["JetBrainsMono Nerd Font Mono"];
