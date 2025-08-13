@@ -9,6 +9,7 @@ in {
   imports = [
     ../components/darwin/homebrew.nix
     ../components/darwin/misc.nix
+    ../components/darwin/wezterm.nix
 
     inputs.home-manager-darwin.darwinModules.home-manager
     ../components/system/home-manager.nix
@@ -33,7 +34,6 @@ in {
     ../components/terminal/nh.nix
     ../components/terminal/spotify-player.nix
     ../components/terminal/utils.nix
-    ../components/terminal/wezterm.nix
     ../components/terminal/zoxide.nix
     ../components/terminal/zsh.nix
   ];
