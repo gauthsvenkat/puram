@@ -19,16 +19,18 @@ in {
     wallpaper = "neon_shallows.png";
   };
 
-  #NOTE: 1password refuses to open if installed from nixpkgs :(
-  homebrew.casks = ["1password" "1password-cli"];
+  homebrew.casks = [
+    "1password"
+    "1password-cli"
+    "slack"
+    "thunderbird"
+  ];
 
   home-manager.users.${username}.home.packages = with pkgs; [
     glab
     hurl
     k9s
     kubernetes-helm
-    slack
-    thunderbird
 
     (google-cloud-sdk.withExtraComponents [
       google-cloud-sdk.components.gke-gcloud-auth-plugin

@@ -9,7 +9,6 @@ in {
   imports = [
     ../components/darwin/homebrew.nix
     ../components/darwin/misc.nix
-    ../components/darwin/mac-app-util.nix
 
     inputs.home-manager-darwin.darwinModules.home-manager
     ../components/system/home-manager.nix
@@ -44,15 +43,12 @@ in {
 
   homebrew = {
     brews = ["mpv"];
-    casks = ["libreoffice-still"];
-  };
-
-  home-manager.users.${username} = {
-    home.packages = with pkgs; [
-      firefox
-      vscode
+    casks = [
+      "libreoffice-still"
+      "firefox"
+      "visual-studio-code"
     ];
-
-    programs.zsh.shellAliases."o" = "open";
   };
+
+  home-manager.users.${username}.programs.zsh.shellAliases."o" = "open";
 }

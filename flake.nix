@@ -25,11 +25,6 @@
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
-    };
-
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
   };
 
