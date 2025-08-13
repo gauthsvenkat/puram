@@ -49,5 +49,8 @@ in {
     ];
   };
 
-  home-manager.users.${username}.programs.zsh.shellAliases."o" = "open";
+  home-manager.users.${username} = {
+    programs.zsh.shellAliases."o" = "open";
+    home.file.".p10k.zsh".source = ../notnix/configs/p10k.zsh;
+  };
 }
