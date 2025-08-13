@@ -2,8 +2,11 @@ alias a := apply
 alias c := check
 alias u := update
 
+os := os()
+nh_subcommand := if os == "linux" { "os" } else if os == "macos" { "darwin" } else { error("Unsupported OS!") }
+
 apply action='switch':
-    nh os {{ action }} .
+    nh {{ nh_subcommand }} {{ action }} .
 
 check:
     nix flake check
