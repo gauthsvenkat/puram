@@ -5,7 +5,8 @@
 
 ### General
 - nixify kde plasma (mainly for keybindings)
-- tofi for kde?
+- use pkgs.lib.getExe?
+- pre-commit formatters
 
 ### Hyprland tasks
 - screenshotting
