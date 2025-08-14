@@ -6,13 +6,15 @@
   inherit (config.hostCfg) username;
 in {
   imports = [
-    ./hardware-configuration.nix
+    ../../bases/nixos/desktop-environment/kde.nix
 
-    ../../bases/laptop.nix
-    ../../bases/workstation-kde.nix
+    ../../bases/nixos/flavor/laptop.nix
 
     ../../components/config.nix
-    ../../components/extra/autologin.nix
+
+    ../../components/nixos/extra/autologin.nix
+
+    ./hardware-configuration.nix
   ];
 
   hostCfg = {

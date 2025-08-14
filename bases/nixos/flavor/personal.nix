@@ -6,10 +6,10 @@
   inherit (config.hostCfg) username;
 in {
   imports = [
-    ./workstation.nix
+    ../../../components/nixos/services/mullvad-vpn.nix
+    ../../../components/nixos/services/syncthing.nix
 
-    ../components/services/mullvad-vpn.nix
-    ../components/services/syncthing.nix
+    ../workstation.nix
   ];
 
   home-manager.users.${username}.home.packages = with pkgs; [

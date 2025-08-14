@@ -7,20 +7,21 @@
   zpool = "wombocombo";
 in {
   imports = [
-    ./hardware-configuration.nix
+    ../../bases/nixos/desktop-environment/kde.nix
 
-    ../../bases/personal.nix
-    ../../bases/workstation-kde.nix
+    ../../bases/nixos/flavor/personal.nix
 
     ../../components/config.nix
 
-    ../../components/hardware/nvidia.nix
+    ../../components/nixos/extra/autologin.nix
+    ../../components/nixos/extra/gaming.nix
 
-    ../../components/services/sanoid.nix
-    ../../components/services/zfs.nix
+    ../../components/nixos/hardware/nvidia.nix
 
-    ../../components/extra/autologin.nix
-    ../../components/extra/gaming.nix
+    ../../components/nixos/services/sanoid.nix
+    ../../components/nixos/services/zfs.nix
+
+    ./hardware-configuration.nix
   ];
 
   hostCfg.hostname = "thunderdome";

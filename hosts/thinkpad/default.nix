@@ -1,13 +1,15 @@
 {
   imports = [
-    ./hardware-configuration.nix
+    ../../bases/nixos/desktop-environment/hyprland.nix
 
-    ../../bases/laptop.nix
-    ../../bases/personal.nix
-    ../../bases/workstation-hyprland.nix
+    ../../bases/nixos/flavor/laptop.nix
+    ../../bases/nixos/flavor/personal.nix
 
     ../../components/config.nix
-    ../../components/extra/autologin.nix
+
+    ../../components/nixos/extra/autologin.nix
+
+    ./hardware-configuration.nix
   ];
 
   hostCfg = {
