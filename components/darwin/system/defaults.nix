@@ -9,6 +9,7 @@
       AppleTemperatureUnit = "Celsius";
       AppleShowAllExtensions = false;
       AppleSpacesSwitchOnActivate = false;
+      NSWindowResizeTime = 0.1;
     };
 
     dock = {
