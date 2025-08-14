@@ -7,14 +7,15 @@
   zpool = "dontdie";
 in {
   imports = [
-    ./disko-config.nix
-    ./hardware-configuration.nix
-
-    ../../bases/server.nix
+    ../../bases/nixos/flavor/server.nix
 
     ../../components/config.nix
-    ../../components/services/sanoid.nix
-    ../../components/services/zfs.nix
+
+    ../../components/nixos/services/sanoid.nix
+    ../../components/nixos/services/zfs.nix
+
+    ./disko-config.nix
+    ./hardware-configuration.nix
   ];
 
   hostCfg.hostname = "elitedesk";

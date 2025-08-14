@@ -7,7 +7,8 @@
 in {
   imports = [
     ../../components/config.nix
-    ../../bases/workstation-mac.nix
+
+    ../../bases/darwin/workstation.nix
   ];
 
   hostCfg = {

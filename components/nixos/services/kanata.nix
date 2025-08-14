@@ -10,7 +10,7 @@
         process-unmapped-keys yes
       '';
       # Config stolen from https://github.com/jtroo/kanata/discussions/1455
-      config = builtins.readFile ../../notnix/configs/kanata/kanata.linux.kbd;
+      config = builtins.readFile ../../../notnix/configs/kanata/kanata.linux.kbd;
     };
   };
 }

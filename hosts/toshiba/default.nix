@@ -1,12 +1,12 @@
 {lib, ...}: {
   imports = [
-    ./hardware-configuration.nix
-
-    ../../bases/server.nix
+    ../../bases/nixos/flavor/server.nix
 
     ../../components/config.nix
 
-    ../../components/services/adguardhome.nix
+    ../../components/nixos/services/adguardhome.nix
+
+    ./hardware-configuration.nix
   ];
 
   hostCfg.hostname = "toshiba";
