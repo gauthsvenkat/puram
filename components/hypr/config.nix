@@ -15,13 +15,19 @@ in {
     lockScreen = mkOption {
       type = types.str;
       default = "${pkgs.hyprlock}/bin/hyprlock";
-      description = "lock screen command";
+      description = "lock screen";
     };
 
     playerctl = mkOption {
       type = types.str;
       default = "${pkgs.playerctl}/bin/playerctl";
       description = "media player";
+    };
+
+    statusBar = mkOption {
+      type = types.str;
+      default = "hyprpanel";
+      description = "status bar";
     };
   };
 }

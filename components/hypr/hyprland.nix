@@ -3,7 +3,7 @@
   ...
 }: let
   inherit (config.hostCfg) username terminal fileManager;
-  inherit (config.hyprCfg) launcher lockScreen playerctl;
+  inherit (config.hyprCfg) launcher lockScreen playerctl statusBar;
 in {
   programs.hyprland.enable = true;
 
@@ -95,6 +95,10 @@ in {
           force_default_wallpaper = 0;
           disable_hyprland_logo = true;
         };
+
+        exec-once = [
+          "pidof ${statusBar} || ${statusBar}"
+        ];
 
         input = {
           kb_layout = "us";
