@@ -16,9 +16,14 @@ in {
 
   home-manager.users.${username} = {
     home.packages = with pkgs; [
-      gcc
-      nodejs
+      bat # fzf-lua
+      curl # blink.cmp
+      fd # fzf-lua
+      fzf # fzf-lua
+      gcc # nvim-treesitter
+      git # blink.cmp, fzf-lua, lazy.nvim, nvim-treesitter
       python3
+      ripgrep # fzf-lua
     ];
 
     programs = {
