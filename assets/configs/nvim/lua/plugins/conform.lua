@@ -33,7 +33,7 @@ return {
           "ruff_organize_imports",
         },
         rust = { "rustfmt" },
-        nix = { "alejandra" },
+        nix = { "nixfmt" },
       },
       format_on_save = function()
         if not vim.g.disable_autoformat then
