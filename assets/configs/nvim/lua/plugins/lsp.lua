@@ -1,9 +1,6 @@
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
-    "mason-org/mason-lspconfig.nvim",
-    -- to ensure lsps are installed
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
     -- for the sweet statuses
     { "j-hui/fidget.nvim", opts = {} },
     -- to setup keybinds
@@ -86,6 +83,10 @@ return {
       nil_ls = {
         settings = { ["nil"] = { nix = { flake = { autoArchive = true } } } },
       },
+
+      lua_ls = {},
+      rust_analyzer = {},
+      ruff = {},
     }
 
     -- Setup global LSP configuration
@@ -96,13 +97,9 @@ return {
     -- Configure specific servers using vim.lsp.config
     for server_name, server_opts in pairs(servers) do
       vim.lsp.config(server_name, server_opts)
+      vim.lsp.enable(server_name)
     end
 
-    require("mason-lspconfig").setup({
-      -- NOTE: Following set to empty so mason-tool-installer will take care of it
-      ensure_installed = {},
-      automatic_installation = false,
-    })
     -- end of lsp setup
   end,
 }

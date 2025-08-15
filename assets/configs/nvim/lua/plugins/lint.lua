@@ -1,9 +1,7 @@
 return {
   "mfussenegger/nvim-lint",
-  dependencies = { "WhoIsSethDaniel/mason-tool-installer.nvim" },
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    -- NOTE: Ensure linters are installed by adding them to mason.lua
     local lint = require("lint")
 
     lint.linters_by_ft = {
