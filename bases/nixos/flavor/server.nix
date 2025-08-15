@@ -1,6 +1,7 @@
 {
   imports = [
     ../../../components/nixos/services/docker.nix
+    ../../../components/nixos/services/foldingathome.nix
 
     ../../../components/common/terminal/bat.nix
     ../../../components/common/terminal/btop.nix
