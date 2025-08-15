@@ -47,11 +47,14 @@ in {
   homebrew = {
     brews = ["mpv"];
     casks = [
-      "libreoffice-still"
-      "firefox"
-      "visual-studio-code"
       "alt-tab"
+      "docker-desktop"
+      "firefox"
+      "iterm2"
+      "libreoffice-still"
+      "middleclick"
       "rectangle"
+      "visual-studio-code"
     ];
   };
 
