@@ -13,6 +13,9 @@ These contain abstract hosts declarations, which put together multiple `componen
 ### [Hosts](./hosts/)
 These contain fully realized NixOS, nix-darwin or home-manager configurations, corresponding to my machines. It also contain host specific options / packages.
 
+### [notnix](./notnix/)
+Just a bunch of stuff that aren't nix files. Things like binaries (wallpaper images), configuration files.
+
 ## Setting up
 This configuration does a lot of the heavy lifting for me but some steps need to be run manually, which I'm documenting. You can probably write some advanced nix code that'll eliminate some of these steps, but practicality beats purity.
 
