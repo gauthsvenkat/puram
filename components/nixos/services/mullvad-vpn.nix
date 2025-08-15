@@ -2,9 +2,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   services.mullvad-vpn = {
     enable = true;
     # NOTE: pkgs.mullvad only contains the cli while

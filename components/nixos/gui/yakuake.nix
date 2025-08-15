@@ -2,12 +2,14 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username homeDirectory;
-in {
+in
+{
   home-manager.users.${username} = {
     home = {
-      packages = [pkgs.kdePackages.yakuake];
+      packages = [ pkgs.kdePackages.yakuake ];
 
       file."${homeDirectory}/.config/yakuakerc".text = ''
         [Desktop Entry]

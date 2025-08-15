@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   home-manager.users.${username}.programs = {
     lazygit = {
       enable = true;

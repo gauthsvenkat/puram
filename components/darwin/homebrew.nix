@@ -2,9 +2,11 @@
   inputs,
   config,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
   ];

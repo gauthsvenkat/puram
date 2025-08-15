@@ -2,9 +2,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   imports = [
     ../../../components/nixos/services/mullvad-vpn.nix
     ../../../components/nixos/services/syncthing.nix

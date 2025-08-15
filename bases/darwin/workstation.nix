@@ -2,9 +2,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   imports = [
     ../../components/common/home-manager.nix
 
@@ -22,10 +24,10 @@ in {
     ./system.nix
   ];
 
-  fonts.packages = [pkgs.nerd-fonts.jetbrains-mono];
+  fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
 
   homebrew = {
-    brews = ["mpv"];
+    brews = [ "mpv" ];
     casks = [
       "alt-tab"
       "docker-desktop"

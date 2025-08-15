@@ -2,15 +2,20 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   home-manager.users.${username} = {
     home = {
-      packages = [pkgs.claude-code];
+      packages = [ pkgs.claude-code ];
       sessionVariables.DISABLE_TELEMETRY = 1;
     };
 
-    programs.git.ignores = [".claude/" "CLAUDE.local.md"];
+    programs.git.ignores = [
+      ".claude/"
+      "CLAUDE.local.md"
+    ];
   };
 }

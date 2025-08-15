@@ -3,13 +3,15 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username isLaptop;
   mkSeparator = {
     type = "separator";
     string = "─────────────────────────";
   };
-in {
+in
+{
   home-manager.users.${username}.programs = {
     fastfetch = {
       enable = true;
@@ -124,17 +126,18 @@ in {
           }
 
           (
-            if isLaptop
-            then {
-              type = "wifi";
-              key = " WiFi";
-              keyColor = "bright_cyan";
-            }
-            else {
-              type = "netio";
-              key = " NetIO";
-              keyColor = "bright_cyan";
-            }
+            if isLaptop then
+              {
+                type = "wifi";
+                key = " WiFi";
+                keyColor = "bright_cyan";
+              }
+            else
+              {
+                type = "netio";
+                key = " NetIO";
+                keyColor = "bright_cyan";
+              }
           )
         ];
       };

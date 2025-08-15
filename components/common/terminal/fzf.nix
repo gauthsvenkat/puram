@@ -1,9 +1,11 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   home-manager.users.${username}.programs = {
     fzf.enable = true;
-    zsh.oh-my-zsh.plugins = ["fzf"];
+    zsh.oh-my-zsh.plugins = [ "fzf" ];
     mcfly.fzf.enable = true;
   };
 }

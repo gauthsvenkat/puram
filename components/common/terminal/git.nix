@@ -1,6 +1,8 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.hostCfg) username gitEmail;
-in {
+in
+{
   home-manager.users.${username}.programs = {
     git = {
       enable = true;
@@ -22,6 +24,6 @@ in {
         "*.env"
       ];
     };
-    zsh.oh-my-zsh.plugins = ["git"];
+    zsh.oh-my-zsh.plugins = [ "git" ];
   };
 }

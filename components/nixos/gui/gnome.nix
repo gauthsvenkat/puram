@@ -2,9 +2,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   services = {
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;

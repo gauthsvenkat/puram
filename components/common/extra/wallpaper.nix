@@ -1,6 +1,8 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   home-manager.users.${username}.home.file."Pictures/wallpapers" = {
     source = ../../../notnix/wallpapers;
     recursive = true;

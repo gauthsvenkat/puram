@@ -1,6 +1,6 @@
 {
   boot = {
-    supportedFilesystems = ["zfs"];
+    supportedFilesystems = [ "zfs" ];
     # By default, following option is true for legacy reasons.
     zfs.forceImportRoot = false;
   };

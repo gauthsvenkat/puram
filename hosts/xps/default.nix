@@ -2,9 +2,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   imports = [
     ../../bases/nixos/desktop-environment/kde.nix
 
@@ -29,7 +31,7 @@ in {
     _1password.enable = true;
     _1password-gui = {
       enable = true;
-      polkitPolicyOwners = [username];
+      polkitPolicyOwners = [ username ];
     };
   };
 

@@ -2,9 +2,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   # needed for setting user's shell
   programs.zsh.enable = true;
 
@@ -18,7 +20,7 @@ in {
 
       oh-my-zsh = {
         enable = true;
-        plugins = ["vi-mode"];
+        plugins = [ "vi-mode" ];
       };
 
       shellAliases."c" = "clear";
