@@ -11,7 +11,6 @@ in {
   imports = [
     ../../components/common/extra/wallpaper.nix
 
-    ../../components/nixos/extra/spotify.nix
     ../../components/nixos/extra/vial.nix
 
     ../../components/nixos/gui/wezterm.nix
@@ -34,6 +33,7 @@ in {
       libreoffice-still
       mpv
       nerd-fonts.jetbrains-mono
+      spotify
       vscode
 
       #NOTE: This is required for neovim on linux
