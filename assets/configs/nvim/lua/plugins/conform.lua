@@ -1,6 +1,5 @@
 return {
   "stevearc/conform.nvim",
-  dependencies = { "WhoIsSethDaniel/mason-tool-installer.nvim" },
   event = { "InsertEnter" },
   opts = function()
     -- commands to enable or disable autoformat
@@ -27,7 +26,6 @@ return {
       :map("<leader>tf")
 
     return {
-      -- NOTE: Ensure formatters are installed by adding them to mason.lua
       formatters_by_ft = {
         lua = { "stylua" },
         python = {
