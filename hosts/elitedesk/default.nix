@@ -13,6 +13,7 @@ in
 
     ../../components/config.nix
 
+    ../../components/nixos/services/foldingathome.nix
     ../../components/nixos/services/sanoid.nix
     ../../components/nixos/services/zfs.nix
 

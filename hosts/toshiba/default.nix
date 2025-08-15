@@ -6,6 +6,7 @@
     ../../components/config.nix
 
     ../../components/nixos/services/adguardhome.nix
+    ../../components/nixos/services/foldingathome.nix
 
     ./hardware-configuration.nix
   ];
