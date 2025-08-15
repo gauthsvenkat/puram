@@ -23,6 +23,8 @@ in {
   homebrew.casks = [
     "1password"
     "1password-cli"
+    "claude"
+    "notion"
     "slack"
     "thunderbird"
   ];

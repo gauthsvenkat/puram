@@ -26,6 +26,5 @@ My condolences.
 - Post configuration steps
   - Install the rust toolchain by running `rustup default stable`.
   - Clone neovim configuration: `git clone git@github.com:gauthsvenkat/nvim.git ~/.config/nvim/`.
-  - Install [Docker](https://docs.docker.com/desktop/setup/install/mac-install/).
   - (Optional) For `kanata`, make sure the binary (`/opt/homebrew/bin/kanata`) has the input monitoring permission.
   - (Optional) Setup [iterm2](https://iterm2.com/) for that sweet drop-down terminal. Switch the font while you're at it.
