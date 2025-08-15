@@ -8,11 +8,6 @@ in {
   home-manager.users.${username}.home = {
     sessionPath = ["$HOME/.local/bin"];
 
-    #NOTE: By default only NIX_SSL_CERT_FILE is set. Better to set
-    # the following to make non-nix programs work as well. For e.g.
-    # compiling with rust.
-    sessionVariables.SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-
     packages = with pkgs; [
       rustup
       cargo-generate

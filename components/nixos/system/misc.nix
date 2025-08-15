@@ -1,6 +1,10 @@
-{
+{pkgs, ...}: {
   # to run dynamically linked executables
   programs.nix-ld.enable = true;
+
+  #NOTE: By default only NIX_SSL_CERT_FILE is set. Better to set
+  # the following to make non-nix programs work as well.
+  environment.variables.SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
 
   time.timeZone = "Europe/Amsterdam";
 
