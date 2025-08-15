@@ -2,22 +2,41 @@
   config,
   lib,
   ...
-}: let
-  inherit (config.hostCfg) username isLaptop terminal browser fileManager;
+}:
+let
+  inherit (config.hostCfg)
+    username
+    isLaptop
+    terminal
+    browser
+    fileManager
+    ;
   inherit (config.hyprCfg) launcher;
-in {
+in
+{
   home-manager.users.${username}.programs.hyprpanel = {
     enable = true;
     settings = {
       bar = {
         layouts = {
           "*" = {
-            left = ["dashboard" "windowtitle" "media"];
-            middle = ["workspaces"];
-            right =
-              ["systray" "volume" "network" "bluetooth"]
-              ++ lib.optionals isLaptop ["battery"]
-              ++ ["clock" "notifications"];
+            left = [
+              "dashboard"
+              "windowtitle"
+              "media"
+            ];
+            middle = [ "workspaces" ];
+            right = [
+              "systray"
+              "volume"
+              "network"
+              "bluetooth"
+            ]
+            ++ lib.optionals isLaptop [ "battery" ]
+            ++ [
+              "clock"
+              "notifications"
+            ];
           };
         };
         launcher.autoDetectIcon = true;

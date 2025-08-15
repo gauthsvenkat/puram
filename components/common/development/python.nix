@@ -2,9 +2,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   home-manager.users.${username}.home.packages = with pkgs; [
     basedpyright
     mypy

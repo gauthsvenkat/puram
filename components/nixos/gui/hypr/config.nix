@@ -2,9 +2,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) mkOption types;
-in {
+in
+{
   options.hyprCfg = {
     launcher = mkOption {
       type = types.str;

@@ -11,6 +11,7 @@
 - Use **2-space indentation**
 - **Align attribute assignments** within logical groups for readability
 - **Collapse single-definition attribute sets** using dot notation:
+
   ```nix
   # Prefer this:
   services.openssh.enable = true;
@@ -22,7 +23,9 @@
     };
   };
   ```
+
 - **Group multiple definitions** with common prefixes into a single attribute set:
+
   ```nix
   # Prefer this:
   services = {
@@ -34,12 +37,14 @@
   services.openssh.enable = true;
   services.tailscale.enable = true;
   ```
+
 - Use **lexicographical sorting** where it enhances readability and maintenance, particularly for:
   - Package lists
   - Service configurations
   - Import statements
   - Attribute definitions within logical groups
 - **Use `lib.getExe` and `lib.getExe'` for executable paths** instead of manual `${pkg}/bin/executable` syntax:
+
   ```nix
   # Prefer this:
   lib.getExe pkgs.firefox          # Uses meta.mainProgram

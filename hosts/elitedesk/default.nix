@@ -2,10 +2,12 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
   zpool = "dontdie";
-in {
+in
+{
   imports = [
     ../../bases/nixos/flavor/server.nix
 
@@ -20,15 +22,15 @@ in {
 
   hostCfg.hostname = "elitedesk";
 
-  boot.zfs.extraPools = [zpool];
+  boot.zfs.extraPools = [ zpool ];
 
   services.sanoid.datasets."${zpool}" = {
     recursive = true;
     process_children_only = true;
-    use_template = ["default"];
+    use_template = [ "default" ];
   };
 
   services.tailscale.enable = true;
 
-  home-manager.users.${username}.home.packages = [pkgs.age];
+  home-manager.users.${username}.home.packages = [ pkgs.age ];
 }

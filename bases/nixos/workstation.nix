@@ -5,9 +5,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   imports = [
     ../../components/common/extra/wallpaper.nix
 
@@ -42,7 +44,7 @@ in {
 
     fonts.fontconfig = {
       enable = true;
-      defaultFonts.monospace = ["JetBrainsMono Nerd Font Mono"];
+      defaultFonts.monospace = [ "JetBrainsMono Nerd Font Mono" ];
     };
 
     programs.zsh.shellAliases = {

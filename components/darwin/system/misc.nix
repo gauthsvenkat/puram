@@ -1,6 +1,8 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.hostCfg) username homeDirectory;
-in {
+in
+{
   users.users.${username}.home = homeDirectory;
   system = {
     primaryUser = username;

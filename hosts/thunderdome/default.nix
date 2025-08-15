@@ -2,10 +2,12 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
   zpool = "wombocombo";
-in {
+in
+{
   imports = [
     ../../bases/nixos/desktop-environment/kde.nix
 
@@ -30,8 +32,8 @@ in {
   # gets stuck on "A start job is running for /dev/tpmrm0".
   systemd.tpm2.enable = false;
 
-  boot.zfs.extraPools = [zpool];
-  services.sanoid.datasets."${zpool}".use_template = ["default"];
+  boot.zfs.extraPools = [ zpool ];
+  services.sanoid.datasets."${zpool}".use_template = [ "default" ];
 
-  home-manager.users.${username}.home.packages = [pkgs.discord];
+  home-manager.users.${username}.home.packages = [ pkgs.discord ];
 }

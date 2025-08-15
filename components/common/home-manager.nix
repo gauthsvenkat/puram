@@ -1,12 +1,14 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.hostCfg) username homeDirectory;
-in {
+in
+{
   home-manager = {
     users.${username}.home = {
       stateVersion = "24.11"; # Don't change this
       inherit username homeDirectory;
       # to add ~/.local/bin to $PATH
-      sessionPath = ["$HOME/.local/bin"];
+      sessionPath = [ "$HOME/.local/bin" ];
     };
 
     useGlobalPkgs = true;

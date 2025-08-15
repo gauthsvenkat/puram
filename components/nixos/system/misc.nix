@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   # to run dynamically linked executables
   programs.nix-ld.enable = true;
 

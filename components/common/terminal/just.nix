@@ -3,11 +3,13 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   home-manager.users.${username} = {
-    home.packages = [pkgs.just];
+    home.packages = [ pkgs.just ];
     programs.zsh.shellAliases."ju" = lib.getExe pkgs.just;
   };
 }

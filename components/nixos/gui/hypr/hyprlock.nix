@@ -1,7 +1,9 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.hostCfg) username;
-in {
-  security.pam.services.hyprlock = {};
+in
+{
+  security.pam.services.hyprlock = { };
   home-manager.users.${username}.programs.hyprlock = {
     enable = true;
     # Settings more or less copied from https://github.com/hyprwm/hyprlock/blob/main/assets/example.conf

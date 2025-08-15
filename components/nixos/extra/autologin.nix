@@ -1,6 +1,8 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   services.displayManager.autoLogin = {
     enable = true;
     user = username;

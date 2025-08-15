@@ -1,6 +1,8 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.hostCfg) username;
-in {
+in
+{
   home-manager.users.${username}.programs.direnv = {
     enable = true;
     enableBashIntegration = true;

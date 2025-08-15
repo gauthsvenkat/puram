@@ -1,10 +1,12 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.hostCfg) hostname username;
-in {
+in
+{
   networking = {
     hostName = hostname;
     networkmanager.enable = true;
   };
 
-  users.users.${username}.extraGroups = ["networkmanager"];
+  users.users.${username}.extraGroups = [ "networkmanager" ];
 }

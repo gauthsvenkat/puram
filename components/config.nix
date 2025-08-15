@@ -3,10 +3,12 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config) hostCfg;
   inherit (lib) mkOption types;
-in {
+in
+{
   options.hostCfg = {
     hostname = mkOption {
       type = types.str;

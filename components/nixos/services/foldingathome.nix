@@ -1,6 +1,8 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.hostCfg) username hostname;
-in {
+in
+{
   services.foldingathome = {
     enable = true;
     user = "gauthsvenkat";

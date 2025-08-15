@@ -1,13 +1,17 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.hostCfg) username homeDirectory wallpaper;
-in {
+in
+{
   home-manager.users.${username}.services.hyprpaper = {
     enable = true;
-    settings = let
-      wallpaperPath = "${homeDirectory}/Pictures/wallpapers/${wallpaper}";
-    in {
-      preload = wallpaperPath;
-      wallpaper = ",${wallpaperPath}";
-    };
+    settings =
+      let
+        wallpaperPath = "${homeDirectory}/Pictures/wallpapers/${wallpaper}";
+      in
+      {
+        preload = wallpaperPath;
+        wallpaper = ",${wallpaperPath}";
+      };
   };
 }
