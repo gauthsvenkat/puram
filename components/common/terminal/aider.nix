@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: let
@@ -14,7 +15,7 @@ in {
     };
 
     programs = {
-      zsh.shellAliases."ai" = "${pkg}/bin/aider";
+      zsh.shellAliases."ai" = lib.getExe pkg;
       git.ignores = [".aider*"];
     };
   };

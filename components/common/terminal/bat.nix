@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: let
@@ -7,6 +8,6 @@
 in {
   home-manager.users.${username}.programs = {
     bat.enable = true;
-    zsh.shellAliases."b" = "${pkgs.bat}/bin/bat";
+    zsh.shellAliases."b" = lib.getExe pkgs.bat;
   };
 }

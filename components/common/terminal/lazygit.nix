@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: let
@@ -13,6 +14,6 @@ in {
         quit-alt1 = "<delete>";
       };
     };
-    zsh.shellAliases."lg" = "${pkgs.lazygit}/bin/lazygit";
+    zsh.shellAliases."lg" = lib.getExe pkgs.lazygit;
   };
 }

@@ -45,19 +45,19 @@ in {
 
     terminal = mkOption {
       type = types.str;
-      default = "${pkgs.wezterm}/bin/wezterm";
+      default = lib.getExe pkgs.wezterm;
       description = "terminal emulator";
     };
 
     fileManager = mkOption {
       type = types.str;
-      default = "${pkgs.kdePackages.dolphin}/bin/dolphin";
+      default = lib.getExe' pkgs.kdePackages.dolphin "dolphin";
       description = "file manager";
     };
 
     browser = mkOption {
       type = types.str;
-      default = "${pkgs.firefox}/bin/firefox";
+      default = lib.getExe pkgs.firefox;
       description = "web browser";
     };
   };

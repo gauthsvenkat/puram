@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: let
@@ -28,7 +29,7 @@ in {
 
     programs = {
       neovim.enable = true;
-      zsh.shellAliases."v" = "${pkgs.neovim}/bin/nvim";
+      zsh.shellAliases."v" = lib.getExe pkgs.neovim;
     };
   };
 }

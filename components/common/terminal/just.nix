@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: let
@@ -7,6 +8,6 @@
 in {
   home-manager.users.${username} = {
     home.packages = [pkgs.just];
-    programs.zsh.shellAliases."ju" = "${pkgs.just}/bin/just";
+    programs.zsh.shellAliases."ju" = lib.getExe pkgs.just;
   };
 }

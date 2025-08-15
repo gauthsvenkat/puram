@@ -30,9 +30,7 @@ This configuration does a lot of the heavy lifting for me but some steps need to
 
 ## Todo
 - [feature] nixify kde plasma using [plasma-manager](https://github.com/nix-community/plasma-manager).
-- [refactor] use `pkgs.lib.getExe` when referring to binaries.
 - [feature] setup formatters in pre-commit.
-- [feature] use nix to manage neovim lsps, linters and formatters.
 - [hyprland] setup screenshotting.
 - [hyprland] clipboard manager.
 - [hyprland] blue light filter. It works but is quite jarring.
