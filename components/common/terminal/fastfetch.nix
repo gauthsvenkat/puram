@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: let
@@ -139,6 +140,6 @@ in {
       };
     };
 
-    zsh.shellAliases."ff" = "${pkgs.fastfetch}/bin/fastfetch";
+    zsh.shellAliases."ff" = lib.getExe pkgs.fastfetch;
   };
 }

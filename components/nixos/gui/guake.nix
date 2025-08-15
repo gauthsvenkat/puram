@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: let
@@ -16,7 +17,7 @@ in {
       "${path}" = {
         binding = "F12";
         name = "guake";
-        command = "${pkgs.guake}/bin/guake";
+        command = lib.getExe pkgs.guake;
       };
 
       "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = ["/${path}/"];

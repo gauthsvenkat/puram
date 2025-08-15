@@ -39,3 +39,13 @@
   - Service configurations
   - Import statements
   - Attribute definitions within logical groups
+- **Use `lib.getExe` and `lib.getExe'` for executable paths** instead of manual `${pkg}/bin/executable` syntax:
+  ```nix
+  # Prefer this:
+  lib.getExe pkgs.firefox          # Uses meta.mainProgram
+  lib.getExe' pkgs.tofi "tofi-drun" # Specific executable name
+
+  # Over this:
+  "${pkgs.firefox}/bin/firefox"
+  "${pkgs.tofi}/bin/tofi-drun"
+  ```
