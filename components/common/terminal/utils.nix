@@ -9,6 +9,7 @@ in {
     curl
     fd
     gnumake
+    imagemagick
     jq
     ripgrep
     unzip

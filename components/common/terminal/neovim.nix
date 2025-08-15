@@ -23,6 +23,7 @@ in {
       fzf # fzf-lua
       gcc # nvim-treesitter
       git # blink.cmp, fzf-lua, lazy.nvim, nvim-treesitter
+      imagemagick # snacks.image
       python3
       ripgrep # fzf-lua
     ];
