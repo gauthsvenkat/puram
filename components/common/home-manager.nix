@@ -5,6 +5,8 @@ in {
     users.${username}.home = {
       stateVersion = "24.11"; # Don't change this
       inherit username homeDirectory;
+      # to add ~/.local/bin to $PATH
+      sessionPath = ["$HOME/.local/bin"];
     };
 
     useGlobalPkgs = true;
