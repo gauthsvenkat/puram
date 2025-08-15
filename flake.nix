@@ -57,6 +57,10 @@
         elitedesk = mkNixosSystem { hostname = "elitedesk"; };
         # server
         toshiba = mkNixosSystem { hostname = "toshiba"; };
+        nixpi400 = mkNixosSystem {
+          hostname = "nixpi400";
+          system = "aarch64-linux";
+        };
       };
 
       darwinConfigurations.macbook-m1-pro = nix-darwin.lib.darwinSystem {
