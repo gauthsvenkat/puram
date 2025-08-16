@@ -5,6 +5,7 @@
 {
   imports = [
     inputs.home-manager-darwin.darwinModules.home-manager
+    inputs.sops-nix-darwin.darwinModules.sops
 
     ../common/system.nix
   ];

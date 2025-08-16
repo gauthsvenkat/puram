@@ -10,6 +10,7 @@
     ../../components/nixos/system/user.nix
 
     inputs.home-manager-nixos.nixosModules.home-manager
+    inputs.sops-nix-nixos.nixosModules.sops
 
     ../common/system.nix
   ];

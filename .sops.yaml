@@ -1,0 +1,46 @@
+keys:
+  - &elitedesk age1pdfkkemg3xdyj9cd7shgkl493rhk9sgeddg3u5k572gsmgtuqv4sxdlcv9
+  - &raspi400 age193wrn9e52h2egrwxdqhyg703yqtpnxpec70zkv2gguwqr5ujrg9q873rxg
+  - &raspi5 age1an4wnqaly8fweqfqm5r9cxx23whwrh42pg5fp3rhcr205a0xgudsgme0k0
+  - &thinkpad-t14s age17etuz3nhxz7d7nqxqrdwutr8aatf3de66yf9lptyg2lr47pfvdks2cmsp4
+  - &thinkpad-x1-carbon age133h0ltupa6ffzf5jswzvw0e6m2nue74gld6ftn7s8fzhkvtvsgdqemukdk
+  - &thunderdome age1nvka08nfv4jtwu4yld86n57rqlh8lyf8a47j7s37ruqw2afcts0qf3mvjx
+creation_rules:
+  # every machine
+  - path_regex: secrets/system\.yaml$
+    key_groups:
+      - age:
+        - *elitedesk
+        - *raspi400
+        - *raspi5
+        - *thinkpad-t14s
+        - *thinkpad-x1-carbon
+        - *thunderdome
+
+  # elitedesk runtime secrets, editable from the workstations
+  - path_regex: secrets/homeserver\.yaml$
+    key_groups:
+      - age:
+        - *elitedesk
+        - *thinkpad-t14s
+        - *thinkpad-x1-carbon
+        - *thunderdome
+
+  # workstations only
+  - path_regex: secrets/infra\.yaml$
+    key_groups:
+      - age:
+        - *thinkpad-t14s
+        - *thinkpad-x1-carbon
+        - *thunderdome
+
+  # the wifi that every machine connects to and the router serves
+  - path_regex: secrets/wifi\.yaml$
+    key_groups:
+      - age:
+        - *elitedesk
+        - *raspi400
+        - *raspi5
+        - *thinkpad-t14s
+        - *thinkpad-x1-carbon
+        - *thunderdome

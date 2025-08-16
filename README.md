@@ -29,6 +29,33 @@ This configuration does a lot of the heavy lifting for me but some steps need to
 - [NixOS setup](./bases/nixos/README.md)
 - [nix-darwin setup](./bases/darwin/README.md)
 
+
+## Secret Management
+
+This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing [secrets](./secrets.yaml).
+
+### Setting up secrets on a new machine
+
+1. **Generate age key from SSH key** (if not already done):
+   ```bash
+   mkdir -p ~/.config/sops/age
+   nix-shell -p ssh-to-age --run "ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt"
+   ```
+
+2. **Get the public age key** for this machine:
+   ```bash
+   nix-shell -p age --run "age-keygen -y ~/.config/sops/age/keys.txt"
+   ```
+
+3. **Add the public age key to [.sops.yaml](./.sops.yaml)**:
+   - Add a new entry under the `keys` section with a meaningful name (e.g., `&hostname`)
+   - Add the key reference to the `creation_rules` section
+
+4. **Rekey existing secrets** to include the new machine:
+   ```bash
+   just secret-rekey
+   ```
+
 ## Notes
 
 - On NixOS don't mix multiple desktop environments. For e.g. trying both KDE and hyprland leads to funky issues. The cause seems to be conflicting `xdg-desktop-portal`s.
@@ -39,7 +66,7 @@ This configuration does a lot of the heavy lifting for me but some steps need to
 ## Todo
 
 - [feature] nixify kde plasma using [plasma-manager](https://github.com/nix-community/plasma-manager).
-- [feature] setup secret management using sops-nix or agenix.
+- [refactor] use xdg.configHome rather than string interpolation.
 - [hyprland] setup screenshotting.
 - [hyprland] clipboard manager.
 - [hyprland] blue light filter. It works but is quite jarring.
