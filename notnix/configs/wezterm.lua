@@ -25,67 +25,67 @@ return {
     -- Spawning new tabs
     {
       key = "t",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.SpawnTab("DefaultDomain"),
     },
     -- Split panes
     {
       key = "s",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.SplitPane({ direction = "Down", size = { Percent = 25 } }),
     },
     {
       key = "v",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.SplitPane({ direction = "Right" }),
     },
     -- Navigating tabs
     {
       key = "n",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.ActivateTabRelative(1),
     },
     {
       key = "b",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.ActivateTabRelative(-1),
     },
     -- Navigating panes
     {
       key = "h",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.ActivatePaneDirection("Left"),
     },
     {
       key = "j",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.ActivatePaneDirection("Down"),
     },
     {
       key = "k",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.ActivatePaneDirection("Up"),
     },
     {
       key = "l",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.ActivatePaneDirection("Right"),
     },
     {
       key = "f",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.PaneSelect({ mode = "Activate" }),
     },
     -- Closing panes
     {
       key = "d",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.CloseCurrentPane({ confirm = true }),
     },
     -- Moving panes
     {
       key = "m",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.ActivateKeyTable({
         name = "rotate_pane",
         one_shot = false,
@@ -94,7 +94,7 @@ return {
     -- Misc
     {
       key = "Enter",
-      mods = "ALT",
+      mods = "CTRL|ALT",
       action = act.ActivateCommandPalette,
     },
   },
