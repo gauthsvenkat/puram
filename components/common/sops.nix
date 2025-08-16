@@ -14,7 +14,10 @@ in
   };
 
   home-manager.users.${username} = {
-    home.packages = with pkgs; [ sops ];
+    home = {
+      packages = with pkgs; [ sops ];
+      sessionVariables.SOPS_AGE_KEY_FILE = config.sops.age.keyFile;
+    };
 
     programs.git.extraConfig.diff.sopsdiffer.textconv = "sops decrypt";
   };
