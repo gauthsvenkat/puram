@@ -7,8 +7,6 @@
 
     ../../components/config.nix
 
-    ../../components/nixos/extra/autologin.nix
-
     ./hardware-configuration.nix
   ];
 

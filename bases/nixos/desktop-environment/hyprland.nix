@@ -1,6 +1,7 @@
 {
   imports = [
     ../../../components/nixos/gui/hypr/config.nix
+    ../../../components/nixos/gui/hypr/greetd.nix
     ../../../components/nixos/gui/hypr/hypridle.nix
     ../../../components/nixos/gui/hypr/hyprland.nix
     ../../../components/nixos/gui/hypr/hyprlock.nix
