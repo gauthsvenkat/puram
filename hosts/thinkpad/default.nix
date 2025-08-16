@@ -12,8 +12,5 @@
     ./hardware-configuration.nix
   ];
 
-  hostCfg = {
-    hostname = "thinkpad";
-    isLaptop = true;
-  };
+  hostCfg.isLaptop = true;
 }

@@ -21,8 +21,6 @@ in
     ./hardware-configuration.nix
   ];
 
-  hostCfg.hostname = "elitedesk";
-
   boot.zfs.extraPools = [ zpool ];
 
   services.sanoid.datasets."${zpool}" = {

@@ -12,8 +12,6 @@
   # specific boot options.
   boot.loader.systemd-boot.enable = lib.mkForce false;
 
-  hostCfg.hostname = "nixpi400";
-
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS_SD";
     fsType = "ext4";

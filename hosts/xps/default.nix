@@ -20,7 +20,6 @@ in
   ];
 
   hostCfg = {
-    hostname = "xps";
     username = "gautham";
     gitEmail = "gautham@dexterenergy.ai";
     isLaptop = true;

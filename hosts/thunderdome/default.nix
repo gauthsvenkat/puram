@@ -26,8 +26,6 @@ in
     ./hardware-configuration.nix
   ];
 
-  hostCfg.hostname = "thunderdome";
-
   # NOTE: Without the following disabling of tpm, the boot process
   # gets stuck on "A start job is running for /dev/tpmrm0".
   systemd.tpm2.enable = false;
