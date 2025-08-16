@@ -4,7 +4,7 @@
   ...
 }:
 let
-  inherit (config.hostCfg) username;
+  inherit (config.hostCfg) username homeDirectory;
 in
 {
   imports = [
@@ -23,7 +23,7 @@ in
     username = "gautham";
     gitEmail = "gautham@dexterenergy.ai";
     isLaptop = true;
-    wallpaper = "neon_shallows.png";
+    wallpaper = "${homeDirectory}/Pictures/wallpapers/neon_shallows.png";
   };
 
   programs = {

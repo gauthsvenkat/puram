@@ -41,8 +41,8 @@ in
 
     wallpaper = mkOption {
       type = types.str;
-      default = "astronaut.jpg";
-      description = "Name of the wallpaper file, relative to ~/Pictures/wallpapers/";
+      default = "${hostCfg.homeDirectory}/Pictures/wallpapers/astronaut.jpg";
+      description = "Full path to the wallpaper file";
     };
 
     terminal = mkOption {

@@ -4,7 +4,7 @@
   ...
 }:
 let
-  inherit (config.hostCfg) username;
+  inherit (config.hostCfg) username homeDirectory;
 in
 {
   imports = [
@@ -18,7 +18,7 @@ in
     homeDirectory = "/Users/${username}";
     gitEmail = "gautham@dexterenergy.ai";
     isLaptop = true;
-    wallpaper = "neon_shallows.png";
+    wallpaper = "${homeDirectory}/Pictures/wallpapers/neon_shallows.png";
   };
 
   homebrew.casks = [

@@ -20,6 +20,12 @@
       inputs.nixpkgs.follows = "nixpkgs-nixos";
     };
 
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs-nixos";
+      inputs.home-manager.follows = "home-manager-nixos";
+    };
+
     # nix-darwin flake inputs
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
