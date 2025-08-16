@@ -1,11 +1,15 @@
 #NOTE: This config file is used by the `sops` cli tool.
 
 keys:
-  - &thunderdome age17fetz7rj5rkc89ts5l2qde3cpwswy5pkgs52czaykv8en5lw6cuqf3pa9s
   - &elitedesk age1uahu5azpp836eurg3mvx5qqmnsecd0729f0jnq8zn2zchgp0a9zs79xjpt
+  - &macbook-m1-pro age1rhwv9a2vlh533usg40q8c3pwcz45rxfv2nwtzqdf0e9kpvx0v97qq2f6zp
+  - &thinkpad age1yge6gjxlqgmnzng2jeg4x3n7mafwrjlxa9xxgw5flrs97k0gwfmq8x7sy9
+  - &thunderdome age17fetz7rj5rkc89ts5l2qde3cpwswy5pkgs52czaykv8en5lw6cuqf3pa9s
 creation_rules:
   - path_regex: secrets.yaml
     key_groups:
       - age:
-        - *thunderdome
         - *elitedesk
+        - *macbook-m1-pro
+        - *thinkpad
+        - *thunderdome
