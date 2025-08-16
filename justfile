@@ -20,6 +20,15 @@ upgrade:
     git commit -m "system upgrade {{ datetime('%Y-%m-%d') }}"
     just apply boot
 
+secrets-edit:
+    sops edit secrets.yaml
+
+secrets-view:
+    sops decrypt secrets.yaml
+
+secrets-rekey:
+    sops updatekeys secrets.yaml
+
 [confirm]
 nixos-install hostname ip:
     nix run github:nix-community/nixos-anywhere -- \

@@ -3,13 +3,16 @@ repos:
   rev: v5.0.0
   hooks:
     - id: trailing-whitespace
+      exclude: secrets.yaml
     - id: end-of-file-fixer
+      exclude: secrets.yaml
     - id: check-merge-conflict
 
 - repo: https://github.com/crate-ci/typos
   rev: v1.32.0
   hooks:
     - id: typos
+      exclude: secrets.yaml
 
 - repo: local
   hooks:

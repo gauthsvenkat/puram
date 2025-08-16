@@ -1,0 +1,9 @@
+#NOTE: This config file is used by the `sops` cli tool.
+
+keys:
+  - &thunderdome age17fetz7rj5rkc89ts5l2qde3cpwswy5pkgs52czaykv8en5lw6cuqf3pa9s
+creation_rules:
+  - path_regex: secrets.yaml
+    key_groups:
+      - age:
+        - *thunderdome

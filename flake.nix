@@ -2,11 +2,16 @@
   description = "NixOS, nix-darwin and home-manager flakes for my machines";
 
   inputs = {
+    # NixOS flake inputs
     nixpkgs-nixos.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     home-manager-nixos = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-nixos";
+    };
+
+    sops-nix-nixos = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs-nixos";
     };
 
@@ -15,6 +20,9 @@
       inputs.nixpkgs.follows = "nixpkgs-nixos";
     };
 
+    # nix-darwin flake inputs
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
@@ -22,6 +30,11 @@
 
     home-manager-darwin = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
+
+    sops-nix-darwin = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
