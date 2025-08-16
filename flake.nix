@@ -1,5 +1,5 @@
 {
-  description = "Personal nix flake for my various machines";
+  description = "NixOS, nix-darwin and home-manager flakes for my machines";
 
   inputs = {
     nixpkgs-nixos.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -43,7 +43,10 @@
         nixpkgs-nixos.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
-          modules = [ ./hosts/${hostname} ];
+          modules = [
+            { hostCfg = { inherit hostname; }; }
+            ./hosts/${hostname}
+          ];
         };
     in
     {
@@ -67,6 +70,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           { nixpkgs.hostPlatform = "aarch64-darwin"; }
+          { hostCfg.hostname = "macbook-m1-pro"; }
           ./hosts/macbook-m1-pro
         ];
       };
