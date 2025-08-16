@@ -42,6 +42,11 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
    nix-shell -p ssh-to-age --run "ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt"
    ```
 
+   The age key might already be generated (since the [generate file option is set to true](./components/common/sops.nix#L12)). In that case, the key will be owned by `root`. So make yourself the owner by running
+   ```bash
+   sudo chown <user> ~/.config/sops/age/keys.txt
+   ```
+
 2. **Get the public age key** for this machine:
    ```bash
    nix-shell -p age --run "age-keygen -y ~/.config/sops/age/keys.txt"
