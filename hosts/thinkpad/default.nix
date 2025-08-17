@@ -5,7 +5,7 @@
     ../../bases/nixos/flavor/laptop.nix
     ../../bases/nixos/flavor/personal.nix
 
-    ../../components/config.nix
+    ../../components/variables.nix
 
     ./hardware-configuration.nix
   ];

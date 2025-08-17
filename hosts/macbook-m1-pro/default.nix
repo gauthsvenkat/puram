@@ -8,7 +8,7 @@ let
 in
 {
   imports = [
-    ../../components/config.nix
+    ../../components/variables.nix
 
     ../../bases/darwin/workstation.nix
   ];

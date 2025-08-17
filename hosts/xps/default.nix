@@ -12,7 +12,7 @@ in
 
     ../../bases/nixos/flavor/laptop.nix
 
-    ../../components/config.nix
+    ../../components/variables.nix
 
     ../../components/nixos/extra/autologin.nix
 
