@@ -71,9 +71,6 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
 
 ## Todo
 
-- [feature] pre-commit and direnv aliases
-- [refactor] use xdg.configHome rather than string interpolation.
-- [fix] keybind agreement between hyprland, kde-plasma, wezterm, yakuake and neovim.
 - [hyprland] setup screenshotting.
 - [hyprland] clipboard manager.
 - [hyprland] blue light filter. It works but is quite jarring.

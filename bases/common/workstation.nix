@@ -22,6 +22,7 @@
     ../../components/common/terminal/mcfly.nix
     ../../components/common/terminal/neovim.nix
     ../../components/common/terminal/nh.nix
+    ../../components/common/terminal/pre-commit.nix
     ../../components/common/terminal/spotify-player.nix
     ../../components/common/terminal/utils.nix
     ../../components/common/terminal/zoxide.nix
