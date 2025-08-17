@@ -21,14 +21,17 @@ in
     wallpaper = "${homeDirectory}/Pictures/wallpapers/neon_shallows.png";
   };
 
-  homebrew.casks = [
-    "1password"
-    "1password-cli"
-    "claude"
-    "notion"
-    "slack"
-    "thunderbird"
-  ];
+  homebrew = {
+    brews = [ "libomp" ];
+    casks = [
+      "1password"
+      "1password-cli"
+      "claude"
+      "notion"
+      "slack"
+      "thunderbird"
+    ];
+  };
 
   home-manager.users.${username}.home.packages = with pkgs; [
     glab
