@@ -3,7 +3,7 @@
   imports = [
     ../../bases/nixos/flavor/server.nix
 
-    ../../components/config.nix
+    ../../components/variables.nix
 
     ../../components/nixos/services/adguardhome.nix
     ../../components/nixos/services/foldingathome.nix
