@@ -6,6 +6,7 @@
 }:
 let
   inherit (config.hostCfg) username;
+  inherit (lib) getExe;
 in
 {
   home-manager.users.${username}.programs = {
@@ -16,6 +17,6 @@ in
       nix-direnv.enable = true;
     };
 
-    zsh.shellAliases."da." = "${lib.getExe pkgs.direnv} allow .";
+    zsh.shellAliases."da." = "${getExe pkgs.direnv} allow .";
   };
 }

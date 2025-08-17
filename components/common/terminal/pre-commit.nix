@@ -6,6 +6,7 @@
 }:
 let
   inherit (config.hostCfg) username;
+  inherit (lib) getExe;
 in
 {
   home-manager.users.${username} =
@@ -15,8 +16,8 @@ in
     {
       home.packages = [ pkg ];
       programs.zsh.shellAliases = {
-        "pc" = "${lib.getExe pkg} run --all-files";
-        "pci" = "${lib.getExe pkg} install";
+        "pc" = "${getExe pkg} run --all-files";
+        "pci" = "${getExe pkg} install";
       };
     };
 }

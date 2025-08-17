@@ -6,6 +6,7 @@
 }:
 let
   inherit (config.hostCfg) username isLaptop;
+  inherit (lib) getExe;
   mkSeparator = {
     type = "separator";
     string = "─────────────────────────";
@@ -143,6 +144,6 @@ in
       };
     };
 
-    zsh.shellAliases."ff" = lib.getExe pkgs.fastfetch;
+    zsh.shellAliases."ff" = getExe pkgs.fastfetch;
   };
 }

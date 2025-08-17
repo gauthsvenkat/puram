@@ -6,6 +6,7 @@
 }:
 let
   inherit (config.hostCfg) username;
+  inherit (lib) getExe;
   pkg = pkgs.neovim;
 in
 {
@@ -33,7 +34,7 @@ in
 
     programs = {
       neovim.enable = true;
-      zsh.shellAliases."v" = lib.getExe pkg;
+      zsh.shellAliases."v" = getExe pkg;
     };
   };
 }
