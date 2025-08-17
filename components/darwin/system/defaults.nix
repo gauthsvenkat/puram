@@ -15,8 +15,7 @@
     dock = {
       magnification = true;
       minimize-to-application = true;
-      autohide = true;
-      autohide-delay = 0.0;
+      autohide = false;
       expose-animation-duration = 0.1;
     };
 
