@@ -6,7 +6,12 @@
 }:
 let
   inherit (config) hostCfg;
-  inherit (lib) mkOption types;
+  inherit (lib)
+    mkOption
+    types
+    getExe
+    getExe'
+    ;
 in
 {
   options.hostCfg = {
@@ -47,19 +52,19 @@ in
 
     terminal = mkOption {
       type = types.str;
-      default = lib.getExe pkgs.wezterm;
+      default = getExe pkgs.wezterm;
       description = "terminal emulator";
     };
 
     fileManager = mkOption {
       type = types.str;
-      default = lib.getExe' pkgs.kdePackages.dolphin "dolphin";
+      default = getExe' pkgs.kdePackages.dolphin "dolphin";
       description = "file manager";
     };
 
     browser = mkOption {
       type = types.str;
-      default = lib.getExe pkgs.firefox;
+      default = getExe pkgs.firefox;
       description = "web browser";
     };
   };

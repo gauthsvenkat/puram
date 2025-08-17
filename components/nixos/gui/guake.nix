@@ -6,6 +6,7 @@
 }:
 let
   inherit (config.hostCfg) username;
+  inherit (lib) getExe;
 in
 {
   home-manager.users.${username} =
@@ -25,7 +26,7 @@ in
           "${path}" = {
             binding = "F12";
             name = "guake";
-            command = lib.getExe pkg;
+            command = getExe pkg;
           };
 
           "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [ "/${path}/" ];

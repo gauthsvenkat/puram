@@ -6,6 +6,7 @@
 }:
 let
   inherit (config.hostCfg) username;
+  inherit (lib) getExe;
 in
 {
   home-manager.users.${username}.programs = {
@@ -16,6 +17,6 @@ in
         quit-alt1 = "<delete>";
       };
     };
-    zsh.shellAliases."lg" = lib.getExe pkgs.lazygit;
+    zsh.shellAliases."lg" = getExe pkgs.lazygit;
   };
 }

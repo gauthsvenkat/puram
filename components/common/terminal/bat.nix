@@ -6,10 +6,11 @@
 }:
 let
   inherit (config.hostCfg) username;
+  inherit (lib) getExe;
 in
 {
   home-manager.users.${username}.programs = {
     bat.enable = true;
-    zsh.shellAliases."b" = lib.getExe pkgs.bat;
+    zsh.shellAliases."b" = getExe pkgs.bat;
   };
 }

@@ -6,6 +6,7 @@
 }:
 let
   inherit (config.hostCfg) username;
+  inherit (lib) getExe;
 in
 {
   home-manager.users.${username} =
@@ -19,7 +20,7 @@ in
       };
 
       programs = {
-        zsh.shellAliases."ai" = lib.getExe pkg;
+        zsh.shellAliases."ai" = getExe pkg;
         git.ignores = [ ".aider*" ];
       };
     };

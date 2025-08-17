@@ -6,6 +6,7 @@
 }:
 let
   inherit (config.hostCfg) username;
+  inherit (lib) getExe;
 in
 {
   home-manager.users.${username} =
@@ -14,6 +15,6 @@ in
     in
     {
       home.packages = [ pkg ];
-      programs.zsh.shellAliases."ju" = lib.getExe pkg;
+      programs.zsh.shellAliases."ju" = getExe pkg;
     };
 }
