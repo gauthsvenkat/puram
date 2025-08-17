@@ -6,7 +6,7 @@ in
   home-manager.users.${username}.programs.plasma.shortcuts = {
     # launchers
     "services/org.kde.dolphin.desktop"."_launch" = "Meta+E";
-    "plasmashell"."activate application launcher" = "Meta+Space";
+    "plasmashell"."activate application launcher" = "Meta";
 
     # session management
     "ksmserver"."Lock Session" = "Meta+L";

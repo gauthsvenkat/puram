@@ -119,7 +119,7 @@ in
           # launchers
           "super, return, exec, ${terminal}"
           "super, e, exec, ${fileManager}"
-          "alt, space, exec, ${launcher}"
+          "super, space, exec, ${launcher}"
 
           # session management
           "super, l, exec, ${lockScreen}"
