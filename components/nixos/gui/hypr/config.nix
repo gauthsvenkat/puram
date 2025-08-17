@@ -26,6 +26,12 @@ in
       description = "media player";
     };
 
+    brightnessctl = mkOption {
+      type = types.str;
+      default = lib.getExe pkgs.brightnessctl;
+      description = "brightness control";
+    };
+
     statusBar = mkOption {
       type = types.str;
       default = "hyprpanel";
