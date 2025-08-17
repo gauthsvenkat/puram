@@ -6,6 +6,7 @@
 }:
 let
   inherit (config.hostCfg) username;
+  pkg = pkgs.neovim;
 in
 {
   # Neovim is installed through NixOS so it is also available to root.
@@ -13,7 +14,7 @@ in
   # they are only required for the user's nvim configuration. The actual
   # configuration lives in a separate repo.
   environment = {
-    systemPackages = [ pkgs.neovim ];
+    systemPackages = [ pkg ];
     variables.EDITOR = "nvim";
   };
 
@@ -32,7 +33,7 @@ in
 
     programs = {
       neovim.enable = true;
-      zsh.shellAliases."v" = lib.getExe pkgs.neovim;
+      zsh.shellAliases."v" = lib.getExe pkg;
     };
   };
 }
