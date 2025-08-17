@@ -73,5 +73,4 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
 - [hyprland] setup screenshotting.
 - [hyprland] clipboard manager.
 - [hyprland] blue light filter. It works but is quite jarring.
-- [hyprland] figure out brightnessctl for idling.
 - [hyprland] checkout [pyprland](https://github.com/hyprland-community/pyprland)

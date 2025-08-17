@@ -1,7 +1,7 @@
 { config, ... }:
 let
   inherit (config.hostCfg) username;
-  inherit (config.hyprCfg) lockScreen;
+  inherit (config.hyprCfg) lockScreen brightnessctl;
 in
 {
   home-manager.users.${username}.services.hypridle = {
@@ -11,22 +11,33 @@ in
         hyprctl = "hyprctl dispatch dpms";
         dpmsOff = "${hyprctl} off";
         dpmsOn = "${hyprctl} on";
+
+        dimDisplay = "${brightnessctl} set 10%";
+        restoreBrightness = "${brightnessctl} set 50%";
       in
       {
         general = {
           lock_cmd = "pidof ${lockScreen} || ${lockScreen}";
           before_sleep_cmd = "loginctl lock-session";
-          after_sleep_cmd = dpmsOn;
+          after_sleep_cmd = "${dpmsOn} && ${restoreBrightness}";
         };
 
         listener = [
+          # Dim display after 10 minutes (like KDE AC profile)
           {
             timeout = 600;
-            on-timeout = dpmsOff;
-            on-resume = dpmsOn;
+            on-timeout = dimDisplay;
+            on-resume = restoreBrightness;
           }
+          # Turn off display after 15 minutes
           {
-            timeout = 660;
+            timeout = 900;
+            on-timeout = dpmsOff;
+            on-resume = "${dpmsOn} && ${restoreBrightness}";
+          }
+          # Lock screen after 16 minutes
+          {
+            timeout = 960;
             on-timeout = lockScreen;
           }
         ];
