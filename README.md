@@ -70,6 +70,7 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
 
 ## Todo
 
+[hyprland] Checkout [wdisplays](https://github.com/artizirk/wdisplays)
 - [hyprland] setup screenshotting.
 - [hyprland] clipboard manager.
 - [hyprland] blue light filter. It works but is quite jarring.
