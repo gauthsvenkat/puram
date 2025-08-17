@@ -5,13 +5,16 @@
 }:
 let
   inherit (config.hostCfg)
-    username
-    isLaptop
-    terminal
     browser
     fileManager
+    isLaptop
+    terminal
+    username
     ;
-  inherit (config.hyprCfg) launcher;
+  inherit (config.hyprCfg)
+    launcher
+    screenshot
+    ;
 in
 {
   #NOTE: upower is a dependency for hyprpanel
@@ -84,8 +87,7 @@ in
           right = {
             shortcut1 = {
               icon = "";
-              #TODO: Screenshot command
-              command = "";
+              command = screenshot;
               tooltip = "Screenshot";
             };
             shortcut2 = {
