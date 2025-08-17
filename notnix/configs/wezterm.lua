@@ -13,7 +13,7 @@ return {
   audible_bell = "Disabled",
   warn_about_missing_glyphs = false,
 
-  font_size = 12,
+  font_size = (wezterm.target_triple == "aarch64-apple-darwin") and 16 or 12,
 
   hide_tab_bar_if_only_one_tab = true,
   use_fancy_tab_bar = false,

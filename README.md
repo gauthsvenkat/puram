@@ -71,7 +71,7 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
 
 ## Todo
 
-- [feature] nixify kde plasma using [plasma-manager](https://github.com/nix-community/plasma-manager).
+- [feature] pre-commit and direnv aliases
 - [refactor] use xdg.configHome rather than string interpolation.
 - [fix] keybind agreement between hyprland, kde-plasma, wezterm, yakuake and neovim.
 - [feature] checkout [targets.darwin.keybindings](https://nix-community.github.io/home-manager/options.xhtml#opt-targets.darwin.keybindings) to implement sane copy paste behaviors.

@@ -35,7 +35,10 @@ in
       "iterm2"
       "libreoffice-still"
       "middleclick"
+      "monitorcontrol"
       "rectangle"
+      "scroll-reverser"
+      "spotify"
       "visual-studio-code"
     ];
   };
