@@ -14,6 +14,9 @@ let
   inherit (config.hyprCfg) launcher;
 in
 {
+  #NOTE: upower is a dependency for hyprpanel
+  services.upower.enable = true;
+
   home-manager.users.${username}.programs.hyprpanel = {
     enable = true;
     settings = {
