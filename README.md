@@ -67,7 +67,6 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
 - nix-darwin configuration relies on the homebrew module to install gui apps. The reason is there are lots of issues with spotlight indexing gui apps installed through nixpkgs. See
   - [mac-app-util](https://github.com/hraban/mac-app-util).
   - [this PR](https://github.com/nix-darwin/nix-darwin/pull/1396#issuecomment-3150075769) for a potential solution.
-- Hyprpanel shows incorrect battery percentage. See [this issue](https://github.com/Jas-SinghFSU/HyprPanel/issues/728) for a potential fix.
 
 ## Todo
 
