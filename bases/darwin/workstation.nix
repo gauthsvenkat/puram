@@ -17,6 +17,7 @@ in
     ../../components/darwin/services/kanata.nix
 
     ../../components/darwin/system/defaults.nix
+    ../../components/darwin/system/keybindings.nix
     ../../components/darwin/system/misc.nix
 
     ../common/workstation.nix
