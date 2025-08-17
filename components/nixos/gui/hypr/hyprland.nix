@@ -9,6 +9,7 @@ let
     launcher
     lockScreen
     playerctl
+    screenshot
     statusBar
     ;
 in
@@ -168,6 +169,9 @@ in
           "super shift, 8, movetoworkspace, 8"
           "super shift, 9, movetoworkspace, 9"
           "super shift, 0, movetoworkspace, 10"
+
+          # screenshot
+          ", Print, exec, ${screenshot}"
         ];
 
         bindm = [
