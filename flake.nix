@@ -70,8 +70,6 @@
     in
     {
       nixosConfigurations = {
-        # work
-        xps = mkNixosSystem { hostname = "xps"; };
         # personal
         thinkpad = mkNixosSystem { hostname = "thinkpad"; };
         thunderdome = mkNixosSystem { hostname = "thunderdome"; };
@@ -85,6 +83,7 @@
         };
       };
 
+      # work
       darwinConfigurations.macbook-m1-pro = nix-darwin.lib.darwinSystem {
         specialArgs = { inherit inputs; };
         modules = [
