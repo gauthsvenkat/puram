@@ -8,6 +8,7 @@ let
 in
 {
   imports = [
+    ../../components/common/extra/wallpaper.nix
     ../../components/common/home-manager.nix
 
     ../../components/darwin/gui/wezterm.nix
