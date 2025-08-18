@@ -33,15 +33,29 @@ in
     ];
   };
 
-  home-manager.users.${username}.home.packages = with pkgs; [
-    glab
-    hurl
-    k9s
-    kubernetes-helm
+  home-manager.users.${username} = {
+    home.packages = with pkgs; [
+      glab
+      hurl
+      k9s
+      kubernetes-helm
 
-    (google-cloud-sdk.withExtraComponents [
-      google-cloud-sdk.components.gke-gcloud-auth-plugin
-      google-cloud-sdk.components.kubectl
-    ])
-  ];
+      (google-cloud-sdk.withExtraComponents [
+        google-cloud-sdk.components.gke-gcloud-auth-plugin
+        google-cloud-sdk.components.kubectl
+      ])
+    ];
+
+    programs.claude-code.mcpServer = {
+      atlassian = {
+        type = "sse";
+        url = "https://mcp.atlassian.com/v1/sse";
+      };
+
+      notion = {
+        type = "http";
+        url = "https://mcp.notion.com/mcp";
+      };
+    };
+  };
 }
