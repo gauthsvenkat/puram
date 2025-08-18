@@ -17,5 +17,6 @@ return {
   },
   keys = {
     { "<Bs>", cmd("Oil --float"), desc = "oil" },
+    { "<leader>o", cmd("Oil --float"), desc = "[o]il" },
   },
 }
