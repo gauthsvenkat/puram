@@ -15,6 +15,7 @@ in
 
     ../../components/nixos/hardware/intel-transcoding.nix
 
+    ../../components/nixos/services/boinc.nix
     ../../components/nixos/services/foldingathome.nix
     ../../components/nixos/services/sanoid.nix
     ../../components/nixos/services/zfs.nix
