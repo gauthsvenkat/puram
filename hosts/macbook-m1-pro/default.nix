@@ -46,7 +46,7 @@ in
       ])
     ];
 
-    programs.claude-code.mcpServer = {
+    programs.claude-code.mcpServers = {
       atlassian = {
         type = "sse";
         url = "https://mcp.atlassian.com/v1/sse";
