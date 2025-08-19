@@ -17,7 +17,10 @@ in
       userName = "Gautham Venkataraman";
       userEmail = gitEmail;
 
-      extraConfig.init.DefaultBranch = "main";
+      extraConfig = {
+        init.DefaultBranch = "main";
+        pull.rebase = true;
+      };
 
       ignores = [
         "*.envrc"
