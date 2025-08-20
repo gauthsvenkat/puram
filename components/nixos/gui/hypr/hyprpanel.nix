@@ -13,6 +13,7 @@ let
     ;
   inherit (config.hyprCfg)
     launcher
+    recorder
     screenshot
     ;
 in
@@ -93,13 +94,12 @@ in
             shortcut2 = {
               icon = "";
               #TODO: bluelight command
-              command = "";
+              command = "cd .";
               tooltip = "Bluelight Filter";
             };
             shortcut3 = {
               icon = "";
-              #TODO: record command
-              command = "";
+              command = recorder;
               tooltip = "Record screen";
             };
             shortcut4 = {
