@@ -57,5 +57,10 @@ in
         url = "https://mcp.notion.com/mcp";
       };
     };
+
+    programs.gemini-cli.settings.mcpServers = {
+      atlassian.url = "https://mcp.atlassian.com/v1/sse";
+      notion.httpUrl = "https://mcp.notion.com/mcp";
+    };
   };
 }
