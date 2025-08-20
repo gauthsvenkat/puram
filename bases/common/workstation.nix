@@ -16,6 +16,7 @@
     ../../components/common/terminal/eza.nix
     ../../components/common/terminal/fastfetch.nix
     ../../components/common/terminal/fzf.nix
+    ../../components/common/terminal/gemini-cli.nix
     ../../components/common/terminal/git.nix
     ../../components/common/terminal/just.nix
     ../../components/common/terminal/lazygit.nix
