@@ -58,5 +58,21 @@ in
       '';
       description = "screenshot (with annotation)";
     };
+
+    recorder = mkOption {
+      type = types.str;
+      default = "${pkgs.writeShellScript "wf-recorder-wrapper" ''
+        # Ensure recordings directory exists
+        RECORDINGS_DIR="${homeDirectory}/Videos/recordings"
+        mkdir -p "$RECORDINGS_DIR"
+
+        # Change to recordings directory and run wf-recorder
+        cd "$RECORDINGS_DIR"
+        exec ${getExe pkgs.wf-recorder} \
+          -f "recording-$(date +%Y%m%d_%H%M%S).mp4" \
+          "$@"
+      ''}";
+      description = "screen recorder";
+    };
   };
 }

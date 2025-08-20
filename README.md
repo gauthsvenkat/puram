@@ -70,8 +70,9 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
 
 ## Todo
 
-[hyprland] Checkout [wdisplays](https://github.com/artizirk/wdisplays)
-- [hyprland] setup screenshotting.
+- [style] Maybe use variables as actual variables rather than options in `./components/nixos/gui/hypr/`. Take a look at `./components/variables.nix` while at it.
+- [hyprland] Checkout [wdisplays](https://github.com/artizirk/wdisplays)
+- [hyprland] screenshotting and recording is done but calling it in hyprpanel is quite buggy. If using shortcuts, need to figure out how to stop recording.
 - [hyprland] clipboard manager.
 - [hyprland] blue light filter. It works but is quite jarring.
 - [hyprland] checkout [pyprland](https://github.com/hyprland-community/pyprland)
