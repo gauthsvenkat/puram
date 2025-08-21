@@ -5,8 +5,8 @@
     ../../bases/nixos/flavor/laptop.nix
     ../../bases/nixos/flavor/personal.nix
 
+    ../../components/host-config.nix
     ../../components/nixos/gui/hypr/variables.nix
-    ../../components/variables.nix
 
     ./hardware-configuration.nix
   ];
