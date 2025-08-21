@@ -11,7 +11,7 @@ in
   imports = [
     ../../bases/nixos/flavor/server.nix
 
-    ../../components/variables.nix
+    ../../components/host-config.nix
 
     ../../components/nixos/hardware/intel-transcoding.nix
 

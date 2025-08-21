@@ -8,9 +8,9 @@ let
 in
 {
   imports = [
-    ../../components/variables.nix
-
     ../../bases/darwin/workstation.nix
+
+    ../../components/host-config.nix
   ];
 
   hostCfg = {

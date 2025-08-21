@@ -13,7 +13,7 @@ in
 
     ../../bases/nixos/flavor/personal.nix
 
-    ../../components/variables.nix
+    ../../components/host-config.nix
 
     ../../components/nixos/extra/autologin.nix
     ../../components/nixos/extra/gaming.nix
