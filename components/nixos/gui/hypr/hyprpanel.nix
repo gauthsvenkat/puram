@@ -5,16 +5,16 @@
 }:
 let
   inherit (config.hostCfg)
-    browser
-    fileManager
     isLaptop
-    terminal
     username
     ;
   inherit (config.hyprCfg)
+    browser
+    fileManager
     launcher
     recorder
     screenshot
+    terminal
     ;
 in
 {

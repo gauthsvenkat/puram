@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -9,8 +8,6 @@ let
   inherit (lib)
     mkOption
     types
-    getExe
-    getExe'
     ;
 in
 {
@@ -48,24 +45,6 @@ in
       type = types.str;
       default = "${hostCfg.homeDirectory}/Pictures/wallpapers/astronaut.jpg";
       description = "Full path to the wallpaper file";
-    };
-
-    terminal = mkOption {
-      type = types.str;
-      default = getExe pkgs.wezterm;
-      description = "terminal emulator";
-    };
-
-    fileManager = mkOption {
-      type = types.str;
-      default = getExe' pkgs.kdePackages.dolphin "dolphin";
-      description = "file manager";
-    };
-
-    browser = mkOption {
-      type = types.str;
-      default = getExe pkgs.firefox;
-      description = "web browser";
     };
   };
 }

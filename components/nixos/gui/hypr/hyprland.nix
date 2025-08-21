@@ -3,14 +3,16 @@
   ...
 }:
 let
-  inherit (config.hostCfg) username terminal fileManager;
+  inherit (config.hostCfg) username;
   inherit (config.hyprCfg)
     brightnessctl
+    fileManager
     launcher
     lockScreen
     playerctl
     screenshot
     statusBar
+    terminal
     ;
 in
 {
