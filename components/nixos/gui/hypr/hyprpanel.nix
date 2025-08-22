@@ -14,7 +14,7 @@ let
     launcher
     recorder
     screenshot
-    terminal
+    wezterm
     ;
 in
 {
@@ -66,7 +66,7 @@ in
           left = {
             shortcut1 = {
               icon = "";
-              command = terminal;
+              command = wezterm;
               tooltip = "Terminal";
             };
             shortcut2 = {

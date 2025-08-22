@@ -27,7 +27,7 @@ in
     lockScreen = getExe hyprlock;
     playerctl = getExe playerctl;
     statusBar = getExe hyprpanel;
-    terminal = getExe wezterm;
+    wezterm = getExe wezterm;
 
     screenshot = ''
       ${getExe grimblast} save area - | \
