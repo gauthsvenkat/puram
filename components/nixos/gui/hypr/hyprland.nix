@@ -120,7 +120,7 @@ in
 
         bind = [
           # launchers
-          "super, return, exec, ${terminal}"
+          "super, t, exec, ${terminal}"
           "super, e, exec, ${fileManager}"
           "super, space, exec, ${launcher}"
 
@@ -129,7 +129,7 @@ in
           "super shift, escape, exit"
 
           # window management
-          "super, w, killactive"
+          "super, q, killactive"
           "alt, f, fullscreen"
           "alt, v, togglefloating"
 
