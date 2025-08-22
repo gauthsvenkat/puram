@@ -64,11 +64,17 @@
       ...
     }@inputs:
     let
-      mkNixosSystem =
-        {
-          hostname,
-          system ? "x86_64-linux",
-        }:
+      hosts = {
+        elitedesk = "x86_64-linux";
+        nixpi400 = "aarch64-linux";
+        toshiba = "x86_64-linux";
+        thinkpad = "x86_64-linux";
+        thunderdome = "x86_64-linux";
+      };
+    in
+    {
+      nixosConfigurations = builtins.mapAttrs (
+        hostname: system:
         nixpkgs-nixos.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
@@ -76,24 +82,9 @@
             { hostCfg = { inherit hostname; }; }
             ./hosts/${hostname}
           ];
-        };
-    in
-    {
-      nixosConfigurations = {
-        # personal
-        thinkpad = mkNixosSystem { hostname = "thinkpad"; };
-        thunderdome = mkNixosSystem { hostname = "thunderdome"; };
-        # homeserver
-        elitedesk = mkNixosSystem { hostname = "elitedesk"; };
-        # server
-        toshiba = mkNixosSystem { hostname = "toshiba"; };
-        nixpi400 = mkNixosSystem {
-          hostname = "nixpi400";
-          system = "aarch64-linux";
-        };
-      };
+        }
+      ) hosts;
 
-      # work
       darwinConfigurations.macbook-m1-pro = nix-darwin.lib.darwinSystem {
         specialArgs = { inherit inputs; };
         modules = [
