@@ -13,8 +13,6 @@ in
 
     ../../bases/nixos/flavor/personal.nix
 
-    ../../components/host-config.nix
-
     ../../components/nixos/extra/autologin.nix
     ../../components/nixos/extra/gaming.nix
 
@@ -22,6 +20,8 @@ in
 
     ../../components/nixos/services/sanoid.nix
     ../../components/nixos/services/zfs.nix
+
+    ../host-configuration.nix
 
     ./hardware-configuration.nix
   ];
