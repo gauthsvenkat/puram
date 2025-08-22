@@ -70,7 +70,6 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
 
 ## Todo
 
-- [style] Maybe use variables as actual variables rather than options in `./components/nixos/gui/hypr/`. Take a look at `./components/host-config.nix` while at it.
 - [hyprland] Checkout [wdisplays](https://github.com/artizirk/wdisplays)
 - [hyprland] screenshotting and recording is done but calling it in hyprpanel is quite buggy. If using shortcuts, need to figure out how to stop recording.
 - [hyprland] clipboard manager.

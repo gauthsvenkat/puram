@@ -10,7 +10,7 @@ in
   imports = [
     ../../bases/darwin/workstation.nix
 
-    ../../components/host-config.nix
+    ../host-configuration.nix
   ];
 
   hostCfg = {

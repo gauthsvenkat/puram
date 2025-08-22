@@ -5,7 +5,7 @@
 
     ../../bases/nixos/flavor/server.nix
 
-    ../../components/host-config.nix
+    ../host-configuration.nix
   ];
 
   # NOTE: Disabling the default boot options in favor of raspberry pi
