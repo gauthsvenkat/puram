@@ -70,8 +70,11 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
 
 ## Todo
 
+- [refactor] hyprland setup. For example, execing hyprpanel can be done in hyprpanel.nix
+- [hyprland] kdeconnect?
 - [hyprland] Checkout [wdisplays](https://github.com/artizirk/wdisplays)
 - [hyprland] screenshotting and recording is done but calling it in hyprpanel is quite buggy. If using shortcuts, need to figure out how to stop recording.
 - [hyprland] clipboard manager.
 - [hyprland] blue light filter. It works but is quite jarring.
 - [hyprland] checkout [pyprland](https://github.com/hyprland-community/pyprland)
+- [hyprland] [QoL] hide special workspace on focus loss.
