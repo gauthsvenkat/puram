@@ -12,6 +12,7 @@
     ../../components/common/terminal/bat.nix
     ../../components/common/terminal/btop.nix
     ../../components/common/terminal/claude-code.nix
+    ../../components/common/terminal/claude-monitor.nix
     ../../components/common/terminal/direnv.nix
     ../../components/common/terminal/eza.nix
     ../../components/common/terminal/fastfetch.nix
