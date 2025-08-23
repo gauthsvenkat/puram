@@ -11,7 +11,6 @@ let
     lockScreen
     playerctl
     screenshot
-    statusBar
     wezterm
     ;
 in
@@ -23,6 +22,10 @@ in
 
     wayland.windowManager.hyprland = {
       enable = true;
+
+      #NOTE : Following is set in the NixOS module.
+      package = null;
+      portalPackage = null;
 
       settings =
         let
@@ -108,10 +111,6 @@ in
             force_default_wallpaper = 0;
             disable_hyprland_logo = true;
           };
-
-          exec-once = [
-            "pidof ${statusBar} || ${statusBar}"
-          ];
 
           input = {
             kb_layout = "us";
