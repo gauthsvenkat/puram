@@ -26,7 +26,6 @@ in
     launcher = "${getExe' tofi "tofi-drun"} --drun-launch=true";
     lockScreen = getExe hyprlock;
     playerctl = getExe playerctl;
-    statusBar = getExe hyprpanel;
     wezterm = getExe wezterm;
 
     screenshot = ''
