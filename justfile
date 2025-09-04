@@ -17,8 +17,8 @@ update input="":
 upgrade:
     just update
     git add flake.lock
-    git commit -m "system upgrade {{ datetime('%Y-%m-%d') }}"
-    just apply boot
+    just apply boot || (git checkout HEAD -- flake.lock && exit 1)
+    git commit -m "chore(flake): update inputs"
 
 secrets-edit:
     sops edit secrets.yaml
