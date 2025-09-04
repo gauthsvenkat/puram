@@ -16,7 +16,6 @@ in
 
   home-manager.users.${username}.home.packages = with pkgs; [
     age
-    jellyfin-media-player
     localsend
     rpi-imager
   ];
