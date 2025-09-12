@@ -24,5 +24,4 @@
   - (If not installed through nixos-anywhere) Switch to the new configuration `sudo nixos-rebuild switch`.
 
 - Post configuration steps for workstations
-  - Install the rust toolchain by running `rustup default stable`.
   - Clone neovim configuration: `git clone git@github.com:gauthsvenkat/nvim.git ~/.config/nvim/`.
