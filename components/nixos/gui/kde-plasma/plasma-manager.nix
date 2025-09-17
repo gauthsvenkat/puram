@@ -10,8 +10,8 @@ in
       enable = true;
 
       kwin.virtualDesktops = {
-        number = 6;
-        rows = 2;
+        number = 3;
+        rows = 1;
       };
 
       session = {
