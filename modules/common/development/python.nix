@@ -8,10 +8,9 @@ let
 in
 {
   home-manager.users.${username}.home.packages = with pkgs; [
-    basedpyright
-    mypy
     python3
     ruff
+    ty
     uv
   ];
 }
