@@ -1,18 +1,18 @@
 {
   imports = [
-    ../../../components/nixos/services/docker.nix
+    ../../../modules/nixos/services/docker.nix
 
-    ../../../components/common/terminal/bat.nix
-    ../../../components/common/terminal/btop.nix
-    ../../../components/common/terminal/eza.nix
-    ../../../components/common/terminal/fastfetch.nix
-    ../../../components/common/terminal/git.nix
-    ../../../components/common/terminal/just.nix
-    ../../../components/common/terminal/mcfly.nix
-    ../../../components/common/terminal/nh.nix
-    ../../../components/common/terminal/utils.nix
-    ../../../components/common/terminal/zoxide.nix
-    ../../../components/common/terminal/zsh.nix
+    ../../../modules/common/terminal/bat.nix
+    ../../../modules/common/terminal/btop.nix
+    ../../../modules/common/terminal/eza.nix
+    ../../../modules/common/terminal/fastfetch.nix
+    ../../../modules/common/terminal/git.nix
+    ../../../modules/common/terminal/just.nix
+    ../../../modules/common/terminal/mcfly.nix
+    ../../../modules/common/terminal/nh.nix
+    ../../../modules/common/terminal/utils.nix
+    ../../../modules/common/terminal/zoxide.nix
+    ../../../modules/common/terminal/zsh.nix
 
     ../system.nix
   ];

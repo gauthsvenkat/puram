@@ -4,10 +4,10 @@
 { inputs, ... }:
 {
   imports = [
-    ../../components/nixos/system/boot.nix
-    ../../components/nixos/system/misc.nix
-    ../../components/nixos/system/networking.nix
-    ../../components/nixos/system/user.nix
+    ../../modules/nixos/system/boot.nix
+    ../../modules/nixos/system/misc.nix
+    ../../modules/nixos/system/networking.nix
+    ../../modules/nixos/system/user.nix
 
     inputs.home-manager-nixos.nixosModules.home-manager
     inputs.sops-nix-nixos.nixosModules.sops

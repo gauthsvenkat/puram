@@ -13,13 +13,13 @@ in
 
     ../../bases/nixos/flavor/personal.nix
 
-    ../../components/nixos/extra/autologin.nix
-    ../../components/nixos/extra/gaming.nix
+    ../../modules/nixos/extra/autologin.nix
+    ../../modules/nixos/extra/gaming.nix
 
-    ../../components/nixos/hardware/nvidia.nix
+    ../../modules/nixos/hardware/nvidia.nix
 
-    ../../components/nixos/services/sanoid.nix
-    ../../components/nixos/services/zfs.nix
+    ../../modules/nixos/services/sanoid.nix
+    ../../modules/nixos/services/zfs.nix
 
     ../host-configuration.nix
 

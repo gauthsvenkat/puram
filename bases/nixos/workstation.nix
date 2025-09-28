@@ -11,16 +11,16 @@ let
 in
 {
   imports = [
-    ../../components/common/extra/wallpaper.nix
+    ../../modules/common/extra/wallpaper.nix
 
-    ../../components/nixos/extra/vial.nix
+    ../../modules/nixos/extra/vial.nix
 
-    ../../components/nixos/gui/wezterm.nix
+    ../../modules/nixos/gui/wezterm.nix
 
-    ../../components/nixos/hardware/bluetooth.nix
+    ../../modules/nixos/hardware/bluetooth.nix
 
-    ../../components/nixos/services/docker.nix
-    ../../components/nixos/services/pipewire.nix
+    ../../modules/nixos/services/docker.nix
+    ../../modules/nixos/services/pipewire.nix
 
     ../common/workstation.nix
 

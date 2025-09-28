@@ -3,8 +3,8 @@
   imports = [
     ../../bases/nixos/flavor/server.nix
 
-    ../../components/nixos/services/adguardhome.nix
-    ../../components/nixos/services/foldingathome.nix
+    ../../modules/nixos/services/adguardhome.nix
+    ../../modules/nixos/services/foldingathome.nix
 
     ../host-configuration.nix
 

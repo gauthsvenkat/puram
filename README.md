@@ -6,13 +6,13 @@ This repository holds the configurations of all my machines running [NixOS](http
 
 The organization philosophy of this repository is inspired by the [polylith](https://polylith.gitbook.io/polylith) software architecture, with a focus on composability.
 
-### [Components](./components/)
+### [Modules](./modules/)
 
 These are the building blocks of my machines. Each component tries to handle one related set of configurations.
 
 ### [Bases](./bases/)
 
-These contain abstract hosts declarations, which put together multiple `components/` to build a specialized machine. For e.g. a [Mac workstation](./bases/darwin/workstation.nix), a [NixOS KDE workstation](./bases/nixos/desktop-environment/k) or a [NixOS server](./bases/nixos/flavor/server.nix).
+These contain abstract hosts declarations, which put together multiple `modules/` to build a specialized machine. For e.g. a [Mac workstation](./bases/darwin/workstation.nix), a [NixOS KDE workstation](./bases/nixos/desktop-environment/k) or a [NixOS server](./bases/nixos/flavor/server.nix).
 
 ### [Hosts](./hosts/)
 
@@ -42,7 +42,7 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
    nix-shell -p ssh-to-age --run "ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt"
    ```
 
-   The age key might already be generated (since the [generate file option is set to true](./components/common/sops.nix#L12)). In that case, the key will be owned by `root`. So make yourself the owner by running
+   The age key might already be generated (since the [generate file option is set to true](./modules/common/sops.nix#L12)). In that case, the key will be owned by `root`. So make yourself the owner by running
    ```bash
    sudo chown <user> ~/.config/sops/age/keys.txt
    ```

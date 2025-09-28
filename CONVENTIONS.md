@@ -2,7 +2,7 @@
 
 ## Architecture Principles
 
-- **Components must not import other components**. They are self-contained building blocks designed for reuse across different bases and hosts.
+- **Modules must not import other modules**. They are self-contained building blocks designed for reuse across different bases and hosts.
 - If a component's configuration doesn't apply to all hosts, consider splitting it into multiple files within its own subdirectory. This allows bases or hosts to selectively import the relevant parts.
 
 ## Code Style
