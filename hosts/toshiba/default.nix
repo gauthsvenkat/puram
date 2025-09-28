@@ -4,7 +4,6 @@
     ../../bases/nixos/flavor/server.nix
 
     ../../modules/nixos/services/adguardhome.nix
-    ../../modules/nixos/services/foldingathome.nix
 
     ../host-configuration.nix
 
