@@ -13,8 +13,6 @@ in
 
     ../../modules/nixos/hardware/intel-transcoding.nix
 
-    ../../modules/nixos/services/boinc.nix
-    ../../modules/nixos/services/foldingathome.nix
     ../../modules/nixos/services/sanoid.nix
     ../../modules/nixos/services/zfs.nix
 
