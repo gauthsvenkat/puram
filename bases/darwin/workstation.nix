@@ -8,18 +8,18 @@ let
 in
 {
   imports = [
-    ../../components/common/extra/wallpaper.nix
-    ../../components/common/home-manager.nix
+    ../../modules/common/extra/wallpaper.nix
+    ../../modules/common/home-manager.nix
 
-    ../../components/darwin/gui/wezterm.nix
+    ../../modules/darwin/gui/wezterm.nix
 
-    ../../components/darwin/homebrew.nix
+    ../../modules/darwin/homebrew.nix
 
-    ../../components/darwin/services/kanata.nix
+    ../../modules/darwin/services/kanata.nix
 
-    ../../components/darwin/system/defaults.nix
-    ../../components/darwin/system/keybindings.nix
-    ../../components/darwin/system/misc.nix
+    ../../modules/darwin/system/defaults.nix
+    ../../modules/darwin/system/keybindings.nix
+    ../../modules/darwin/system/misc.nix
 
     ../common/workstation.nix
 

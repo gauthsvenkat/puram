@@ -11,12 +11,12 @@ in
   imports = [
     ../../bases/nixos/flavor/server.nix
 
-    ../../components/nixos/hardware/intel-transcoding.nix
+    ../../modules/nixos/hardware/intel-transcoding.nix
 
-    ../../components/nixos/services/boinc.nix
-    ../../components/nixos/services/foldingathome.nix
-    ../../components/nixos/services/sanoid.nix
-    ../../components/nixos/services/zfs.nix
+    ../../modules/nixos/services/boinc.nix
+    ../../modules/nixos/services/foldingathome.nix
+    ../../modules/nixos/services/sanoid.nix
+    ../../modules/nixos/services/zfs.nix
 
     ../host-configuration.nix
 

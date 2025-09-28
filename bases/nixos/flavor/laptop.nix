@@ -1,7 +1,7 @@
 {
   imports = [
-    ../../../components/nixos/services/kanata.nix
-    ../../../components/nixos/services/tlp.nix
+    ../../../modules/nixos/services/kanata.nix
+    ../../../modules/nixos/services/tlp.nix
 
     ../workstation.nix
   ];
