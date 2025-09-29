@@ -1,7 +1,7 @@
 { config, ... }:
 let
   inherit (config.hostCfg) username;
-  inherit (config.hyprCfg) lockScreen brightnessctl;
+  inherit (config.hyprVars) lockScreen brightnessctl;
 in
 {
   home-manager.users.${username}.services.hypridle = {
