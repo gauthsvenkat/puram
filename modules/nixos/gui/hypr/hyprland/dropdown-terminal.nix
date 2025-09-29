@@ -4,7 +4,7 @@
 }:
 let
   inherit (config.hostCfg) username;
-  inherit (config.hyprCfg) wezterm;
+  inherit (config.hyprVars) wezterm;
 in
 {
   home-manager.users.${username}.wayland.windowManager.hyprland.settings =

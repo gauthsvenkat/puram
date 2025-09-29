@@ -4,7 +4,7 @@
 }:
 let
   inherit (config.hostCfg) username;
-  inherit (config.hyprCfg)
+  inherit (config.hyprVars)
     brightnessctl
     fileManager
     launcher

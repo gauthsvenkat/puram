@@ -14,12 +14,12 @@ let
   inherit (config.hostCfg) homeDirectory;
 in
 {
-  options.hyprCfg = mkOption {
+  options.hyprVars = mkOption {
     type = types.attrs;
     readOnly = true;
   };
 
-  config.hyprCfg = with pkgs; {
+  config.hyprVars = with pkgs; {
     brightnessctl = getExe brightnessctl;
     browser = getExe firefox;
     fileManager = getExe' kdePackages.dolphin "dolphin";

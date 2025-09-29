@@ -8,7 +8,7 @@ let
     isLaptop
     username
     ;
-  inherit (config.hyprCfg)
+  inherit (config.hyprVars)
     browser
     fileManager
     launcher
