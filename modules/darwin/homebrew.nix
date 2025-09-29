@@ -1,10 +1,11 @@
 {
-  inputs,
   config,
+  hostCfg,
+  inputs,
   ...
 }:
 let
-  inherit (config.hostCfg) username;
+  inherit (hostCfg) username;
 in
 {
   imports = [

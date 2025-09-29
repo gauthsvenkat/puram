@@ -1,10 +1,10 @@
 {
-  config,
+  hostCfg,
   pkgs,
   ...
 }:
 let
-  inherit (config.hostCfg) username;
+  inherit (hostCfg) username;
   zpool = "dontdie";
 in
 {
@@ -15,8 +15,6 @@ in
 
     ../../modules/nixos/services/sanoid.nix
     ../../modules/nixos/services/zfs.nix
-
-    ../host-configuration.nix
 
     ./disko-config.nix
     ./hardware-configuration.nix

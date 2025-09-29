@@ -7,10 +7,6 @@
 
     ../../modules/nixos/gui/hypr/variables.nix
 
-    ../host-configuration.nix
-
     ./hardware-configuration.nix
   ];
-
-  hostCfg.isLaptop = true;
 }

@@ -1,11 +1,11 @@
 {
-  config,
+  hostCfg,
   lib,
   pkgs,
   ...
 }:
 let
-  inherit (config.hostCfg) username isLaptop;
+  inherit (hostCfg) username isLaptop;
   inherit (lib) getExe;
   mkSeparator = {
     type = "separator";

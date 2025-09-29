@@ -1,25 +1,15 @@
 {
-  config,
+  hostCfg,
   pkgs,
   ...
 }:
 let
-  inherit (config.hostCfg) username homeDirectory;
+  inherit (hostCfg) username homeDirectory;
 in
 {
   imports = [
     ../../bases/darwin/workstation.nix
-
-    ../host-configuration.nix
   ];
-
-  hostCfg = {
-    username = "gautham";
-    homeDirectory = "/Users/${username}";
-    gitEmail = "gautham@dexterenergy.ai";
-    isLaptop = true;
-    wallpaper = "${homeDirectory}/Pictures/wallpapers/neon_shallows.png";
-  };
 
   homebrew = {
     brews = [ "libomp" ];

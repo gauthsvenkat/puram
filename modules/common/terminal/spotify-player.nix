@@ -1,6 +1,6 @@
-{ config, ... }:
+{ hostCfg, ... }:
 let
-  inherit (config.hostCfg) username hostname;
+  inherit (hostCfg) username hostname;
 in
 {
   home-manager.users.${username}.programs.spotify-player = {

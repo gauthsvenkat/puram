@@ -1,11 +1,11 @@
 {
-  config,
+  hostCfg,
   lib,
   pkgs,
   ...
 }:
 let
-  inherit (config.hostCfg) username;
+  inherit (hostCfg) username;
   inherit (lib) getExe;
 in
 {

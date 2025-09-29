@@ -5,8 +5,6 @@
 
     ../../modules/nixos/services/adguardhome.nix
 
-    ../host-configuration.nix
-
     ./hardware-configuration.nix
   ];
 

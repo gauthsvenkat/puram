@@ -1,6 +1,6 @@
-{ config, ... }:
+{ hostCfg, ... }:
 let
-  inherit (config.hostCfg) username;
+  inherit (hostCfg) username;
 in
 {
   homebrew = {

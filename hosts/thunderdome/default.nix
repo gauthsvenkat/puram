@@ -1,10 +1,10 @@
 {
-  config,
+  hostCfg,
   pkgs,
   ...
 }:
 let
-  inherit (config.hostCfg) username;
+  inherit (hostCfg) username;
   zpool = "wombocombo";
 in
 {
@@ -20,8 +20,6 @@ in
 
     ../../modules/nixos/services/sanoid.nix
     ../../modules/nixos/services/zfs.nix
-
-    ../host-configuration.nix
 
     ./hardware-configuration.nix
   ];

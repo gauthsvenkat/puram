@@ -64,34 +64,77 @@
       ...
     }@inputs:
     let
-      hosts = {
-        elitedesk = "x86_64-linux";
-        nixpi400 = "aarch64-linux";
-        toshiba = "x86_64-linux";
-        thinkpad = "x86_64-linux";
-        thunderdome = "x86_64-linux";
-      };
+      mkHostCfg =
+        {
+          hostname,
+          system ? "x86_64-linux",
+          username ? "ando",
+          isLaptop ? false,
+          homeDirectory ? "/home/${username}",
+          gitEmail ? "gauthsvenkat@gmail.com",
+          wallpaper ? "${homeDirectory}/Pictures/wallpapers/astronaut.jpg",
+        }:
+        {
+          inherit
+            hostname
+            system
+            username
+            isLaptop
+            homeDirectory
+            gitEmail
+            wallpaper
+            ;
+        };
+
+      hostConfigs = [
+        (mkHostCfg { hostname = "elitedesk"; })
+        (mkHostCfg {
+          hostname = "nixpi400";
+          system = "aarch64-linux";
+        })
+        (mkHostCfg { hostname = "toshiba"; })
+        (mkHostCfg {
+          hostname = "thinkpad";
+          isLaptop = true;
+        })
+        (mkHostCfg { hostname = "thunderdome"; })
+      ];
     in
     {
-      nixosConfigurations = builtins.mapAttrs (
-        hostname: system:
-        nixpkgs-nixos.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
-          modules = [
-            { hostCfg = { inherit hostname; }; }
-            ./hosts/${hostname}
-          ];
-        }
-      ) hosts;
+      nixosConfigurations = builtins.listToAttrs (
+        builtins.map (hostCfg: {
+          name = hostCfg.hostname;
+          value = nixpkgs-nixos.lib.nixosSystem {
+            inherit (hostCfg) system;
+            specialArgs = {
+              inherit inputs;
+              inherit hostCfg;
+            };
+            modules = [ ./hosts/${hostCfg.hostname} ];
+          };
+        }) hostConfigs
+      );
 
-      darwinConfigurations.macbook-m1-pro = nix-darwin.lib.darwinSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          { nixpkgs.hostPlatform = "aarch64-darwin"; }
-          { hostCfg.hostname = "macbook-m1-pro"; }
-          ./hosts/macbook-m1-pro
-        ];
-      };
+      darwinConfigurations.macbook-m1-pro =
+        let
+          hostCfg = mkHostCfg rec {
+            hostname = "macbook-m1-pro";
+            system = "aarch64-darwin";
+            username = "gautham";
+            isLaptop = true;
+            homeDirectory = "/Users/${username}";
+            gitEmail = "gautham@dexterenergy.ai";
+          };
+        in
+        nix-darwin.lib.darwinSystem {
+          specialArgs = {
+            inherit inputs;
+            inherit hostCfg;
+          };
+          modules = [
+            { nixpkgs.hostPlatform = hostCfg.system; }
+            ./hosts/macbook-m1-pro
+          ];
+        };
     };
 }
