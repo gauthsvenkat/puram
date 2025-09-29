@@ -1,6 +1,11 @@
-{ config, pkgs, ... }:
+{
+  config,
+  hostCfg,
+  pkgs,
+  ...
+}:
 let
-  inherit (config.hostCfg) username homeDirectory;
+  inherit (hostCfg) username homeDirectory;
 in
 {
   sops = {

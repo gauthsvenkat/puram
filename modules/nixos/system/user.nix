@@ -1,6 +1,6 @@
-{ config, ... }:
+{ config, hostCfg, ... }:
 let
-  inherit (config.hostCfg) username;
+  inherit (hostCfg) username;
 in
 {
   sops.secrets.hashedPassword.neededForUsers = true;

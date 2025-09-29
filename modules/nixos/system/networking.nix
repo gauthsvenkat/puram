@@ -1,6 +1,6 @@
-{ config, ... }:
+{ hostCfg, ... }:
 let
-  inherit (config.hostCfg) hostname username;
+  inherit (hostCfg) hostname username;
 in
 {
   networking = {

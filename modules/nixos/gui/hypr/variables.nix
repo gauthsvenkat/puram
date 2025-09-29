@@ -1,5 +1,5 @@
 {
-  config,
+  hostCfg,
   lib,
   pkgs,
   ...
@@ -11,7 +11,7 @@ let
     mkOption
     types
     ;
-  inherit (config.hostCfg) homeDirectory;
+  inherit (hostCfg) homeDirectory;
 in
 {
   options.hyprVars = mkOption {

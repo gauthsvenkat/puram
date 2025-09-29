@@ -1,6 +1,6 @@
-{ config, ... }:
+{ hostCfg, ... }:
 let
-  inherit (config.hostCfg) username homeDirectory;
+  inherit (hostCfg) username homeDirectory;
 in
 {
   home-manager = {
@@ -15,5 +15,10 @@ in
     useUserPackages = true;
 
     backupFileExtension = "backup";
+
+    # TODO: Uncomment when moving to support home-manager standalone setup.
+    # extraSpecialArgs = {
+    #   inherit hostCfg;
+    # };
   };
 }

@@ -1,9 +1,9 @@
 {
-  config,
+  hostCfg,
   ...
 }:
 let
-  inherit (config.hostCfg) username;
+  inherit (hostCfg) username;
 in
 {
   home-manager.users.${username}.wayland.windowManager.hyprland.settings = {

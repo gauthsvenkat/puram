@@ -1,6 +1,6 @@
-{ config, inputs, ... }:
+{ hostCfg, inputs, ... }:
 let
-  inherit (config.hostCfg) username wallpaper;
+  inherit (hostCfg) username wallpaper;
 in
 {
   home-manager.users.${username} = {

@@ -1,10 +1,11 @@
 {
   config,
+  hostCfg,
   lib,
   ...
 }:
 let
-  inherit (config.hostCfg)
+  inherit (hostCfg)
     isLaptop
     username
     ;

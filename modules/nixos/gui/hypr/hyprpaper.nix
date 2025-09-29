@@ -1,6 +1,6 @@
-{ config, ... }:
+{ hostCfg, ... }:
 let
-  inherit (config.hostCfg) username wallpaper;
+  inherit (hostCfg) username wallpaper;
 in
 {
   home-manager.users.${username}.services.hyprpaper = {

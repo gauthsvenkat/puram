@@ -1,10 +1,10 @@
 {
-  config,
+  hostCfg,
   pkgs,
   ...
 }:
 let
-  inherit (config.hostCfg) username;
+  inherit (hostCfg) username;
   package = with pkgs; [ vial ];
 in
 {
