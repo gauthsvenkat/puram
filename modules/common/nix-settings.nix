@@ -10,5 +10,6 @@
       options = "--delete-older-than 30d";
     };
     optimise.automatic = true;
+    channel.enable = false;
   };
 }
