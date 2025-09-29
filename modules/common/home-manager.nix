@@ -16,9 +16,8 @@ in
 
     backupFileExtension = "backup";
 
-    # TODO: Uncomment when moving to support home-manager standalone setup.
-    # extraSpecialArgs = {
-    #   inherit hostCfg;
-    # };
+    extraSpecialArgs = {
+      inherit hostCfg;
+    };
   };
 }

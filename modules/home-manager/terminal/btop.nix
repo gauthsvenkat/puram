@@ -1,9 +1,5 @@
-{ hostCfg, ... }:
-let
-  inherit (hostCfg) username;
-in
 {
-  home-manager.users.${username}.programs.btop = {
+  programs.btop = {
     enable = true;
     settings = {
       color_theme = "gruvbox_dark";

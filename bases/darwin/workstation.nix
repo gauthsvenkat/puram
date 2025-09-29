@@ -8,7 +8,6 @@ let
 in
 {
   imports = [
-    ../../modules/common/extra/wallpaper.nix
     ../../modules/common/home-manager.nix
 
     ../../modules/darwin/gui/wezterm.nix
@@ -45,5 +44,11 @@ in
     ];
   };
 
-  home-manager.users.${username}.programs.zsh.shellAliases."o" = "open";
+  home-manager.users.${username} = {
+    imports = [
+      ../../modules/home-manager/extra/wallpaper.nix
+    ];
+
+    programs.zsh.shellAliases."o" = "open";
+  };
 }

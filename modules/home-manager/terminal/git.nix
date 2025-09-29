@@ -1,9 +1,9 @@
 { hostCfg, ... }:
 let
-  inherit (hostCfg) username gitEmail;
+  inherit (hostCfg) gitEmail;
 in
 {
-  home-manager.users.${username}.programs = {
+  programs = {
     git = {
       enable = true;
 

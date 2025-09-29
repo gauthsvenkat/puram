@@ -1,9 +1,5 @@
-{ hostCfg, ... }:
-let
-  inherit (hostCfg) username;
-in
 {
-  home-manager.users.${username}.programs.mcfly = {
+  programs.mcfly = {
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;

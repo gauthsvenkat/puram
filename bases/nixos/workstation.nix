@@ -11,8 +11,6 @@ let
 in
 {
   imports = [
-    ../../modules/common/extra/wallpaper.nix
-
     ../../modules/nixos/extra/vial.nix
 
     ../../modules/nixos/gui/wezterm.nix
@@ -28,6 +26,10 @@ in
   ];
 
   home-manager.users.${username} = {
+    imports = [
+      ../../modules/home-manager/extra/wallpaper.nix
+    ];
+
     xdg.autostart.enable = true;
 
     home.packages = with pkgs; [
