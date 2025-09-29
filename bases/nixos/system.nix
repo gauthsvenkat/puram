@@ -9,9 +9,9 @@
     ../../modules/nixos/system/networking.nix
     ../../modules/nixos/system/user.nix
 
+    ../common/system.nix
+
     inputs.home-manager-nixos.nixosModules.home-manager
     inputs.sops-nix-nixos.nixosModules.sops
-
-    ../common/system.nix
   ];
 }

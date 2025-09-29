@@ -1,15 +1,13 @@
 {
-  hostCfg,
   lib,
   pkgs,
   ...
 }:
 let
-  inherit (hostCfg) username;
   inherit (lib) getExe;
 in
 {
-  home-manager.users.${username}.programs = {
+  programs = {
     lazygit = {
       enable = true;
       settings.keybinding.universal = {

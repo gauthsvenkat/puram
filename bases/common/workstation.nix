@@ -1,34 +1,43 @@
 # Common workstation imports that I want on both nixos and darwin systems.
 # This includes development tools and terminal utilities used across platforms.
+{ hostCfg, ... }:
+let
+  inherit (hostCfg) username;
+in
 {
   imports = [
-    ../../modules/common/development/lua.nix
-    ../../modules/common/development/misc.nix
-    ../../modules/common/development/nix.nix
-    ../../modules/common/development/python.nix
-    ../../modules/common/development/rust.nix
-
-    ../../modules/common/terminal/aider.nix
-    ../../modules/common/terminal/bat.nix
-    ../../modules/common/terminal/btop.nix
-    ../../modules/common/terminal/claude-code.nix
-    ../../modules/common/terminal/direnv.nix
-    ../../modules/common/terminal/eza.nix
-    ../../modules/common/terminal/fastfetch.nix
-    ../../modules/common/terminal/fzf.nix
-    ../../modules/common/terminal/gemini-cli.nix
-    ../../modules/common/terminal/git.nix
-    ../../modules/common/terminal/just.nix
-    ../../modules/common/terminal/lazygit.nix
-    ../../modules/common/terminal/mcfly.nix
-    ../../modules/common/terminal/neovim.nix
-    ../../modules/common/terminal/nh.nix
-    ../../modules/common/terminal/pre-commit.nix
-    ../../modules/common/terminal/spotify-player.nix
-    ../../modules/common/terminal/utils.nix
-    ../../modules/common/terminal/zoxide.nix
-    ../../modules/common/terminal/zsh.nix
+    ../../modules/common/home-manager.nix
+    ../../modules/common/zsh.nix
 
     ./system.nix
+  ];
+
+  home-manager.users.${username}.imports = [
+    ../../modules/home-manager/development/lua.nix
+    ../../modules/home-manager/development/misc.nix
+    ../../modules/home-manager/development/nix.nix
+    ../../modules/home-manager/development/python.nix
+    ../../modules/home-manager/development/rust.nix
+
+    ../../modules/home-manager/terminal/aider.nix
+    ../../modules/home-manager/terminal/bat.nix
+    ../../modules/home-manager/terminal/btop.nix
+    ../../modules/home-manager/terminal/claude-code.nix
+    ../../modules/home-manager/terminal/direnv.nix
+    ../../modules/home-manager/terminal/eza.nix
+    ../../modules/home-manager/terminal/fastfetch.nix
+    ../../modules/home-manager/terminal/fzf.nix
+    ../../modules/home-manager/terminal/gemini-cli.nix
+    ../../modules/home-manager/terminal/git.nix
+    ../../modules/home-manager/terminal/just.nix
+    ../../modules/home-manager/terminal/lazygit.nix
+    ../../modules/home-manager/terminal/mcfly.nix
+    ../../modules/home-manager/terminal/neovim.nix
+    ../../modules/home-manager/terminal/nh.nix
+    ../../modules/home-manager/terminal/pre-commit.nix
+    ../../modules/home-manager/terminal/spotify-player.nix
+    ../../modules/home-manager/terminal/utils.nix
+    ../../modules/home-manager/terminal/zoxide.nix
+    ../../modules/home-manager/terminal/zsh.nix
   ];
 }
