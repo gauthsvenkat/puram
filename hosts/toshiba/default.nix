@@ -3,8 +3,6 @@
   imports = [
     ../../bases/nixos/flavor/server.nix
 
-    ../../modules/nixos/services/adguardhome.nix
-
     ./hardware-configuration.nix
   ];
 
