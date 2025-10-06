@@ -4,7 +4,7 @@
   ...
 }:
 let
-  inherit (hostCfg) username homeDirectory;
+  inherit (hostCfg) username;
 in
 {
   imports = [
