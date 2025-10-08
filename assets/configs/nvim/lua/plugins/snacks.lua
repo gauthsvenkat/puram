@@ -65,6 +65,20 @@ return {
       desc = "lazy[g]it",
     },
     {
+      "<leader>d",
+      function()
+        Snacks.bufdelete.delete()
+      end,
+      desc = "[d]elete buffer",
+    },
+    {
+      "<leader>D",
+      function()
+        Snacks.bufdelete.other()
+      end,
+      desc = "[D]elete all buffers",
+    },
+    {
       "<leader>go",
       function()
         Snacks.gitbrowse()
