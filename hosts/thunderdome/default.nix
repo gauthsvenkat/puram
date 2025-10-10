@@ -29,7 +29,10 @@ in
   systemd.tpm2.enable = false;
 
   boot.zfs.extraPools = [ zpool ];
-  services.sanoid.datasets."${zpool}".use_template = [ "default" ];
+  services = {
+    sanoid.datasets."${zpool}".use_template = [ "default" ];
+    ratbagd.enable = true;
+  };
 
   home-manager.users.${username}.home.packages = [ pkgs.discord ];
 }
