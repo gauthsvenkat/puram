@@ -29,6 +29,7 @@ in
       hurl
       k9s
       kubernetes-helm
+      vault
 
       (google-cloud-sdk.withExtraComponents [
         google-cloud-sdk.components.gke-gcloud-auth-plugin
