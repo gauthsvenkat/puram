@@ -5,9 +5,12 @@
 }:
 let
   inherit (hostCfg) username;
-  package = with pkgs; [ vial ];
+  packages = with pkgs; [
+    via
+    vial
+  ];
 in
 {
-  home-manager.users.${username}.home.packages = package;
-  services.udev.packages = package;
+  home-manager.users.${username}.home = { inherit packages; };
+  services.udev = { inherit packages; };
 }
