@@ -24,6 +24,6 @@ in
       sessionVariables.SOPS_AGE_KEY_FILE = config.sops.age.keyFile;
     };
 
-    programs.git.extraConfig.diff.sopsdiffer.textconv = "sops decrypt";
+    programs.git.settings.diff.sopsdiffer.textconv = "sops decrypt";
   };
 }
