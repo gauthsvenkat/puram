@@ -7,17 +7,13 @@ in
     git = {
       enable = true;
 
-      difftastic = {
-        enable = true;
-        enableAsDifftool = true;
-      };
-
       lfs.enable = true;
 
-      userName = "Gautham Venkataraman";
-      userEmail = gitEmail;
-
-      extraConfig = {
+      settings = {
+        user = {
+          name = "Gautham Venkataraman";
+          email = gitEmail;
+        };
         init.DefaultBranch = "main";
         pull.rebase = true;
       };
@@ -27,6 +23,15 @@ in
         "*.env"
       ];
     };
+
+    difftastic = {
+      enable = true;
+      git = {
+        enable = true;
+        diffToolMode = true;
+      };
+    };
+
     zsh.oh-my-zsh.plugins = [ "git" ];
   };
 }
