@@ -17,7 +17,7 @@ update input="":
 upgrade:
     just update
     git add flake.lock
-    just apply boot || (git checkout HEAD -- flake.lock && exit 1)
+    just apply {{ if os() == "linux" { "boot" } else { "switch" } }} || (git checkout HEAD -- flake.lock && exit 1)
     git commit -m "chore(flake): update inputs"
 
 secrets-edit:
