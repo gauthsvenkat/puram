@@ -5,7 +5,7 @@ return {
     local lint = require("lint")
 
     lint.linters_by_ft = {
-      python = { "ruff", "mypy" },
+      python = { "ruff" },
     }
 
     -- Create an autocommand to run lint on certain events

@@ -63,6 +63,19 @@ return {
     local capabilities = require("blink.cmp").get_lsp_capabilities()
 
     local servers = {
+      -- nix
+      nil_ls = {
+        settings = { ["nil"] = { nix = { flake = { autoArchive = true } } } },
+      },
+
+      -- lua
+      lua_ls = {},
+
+      -- python
+      ruff = {},
+      rust_analyzer = {},
+      -- ty = {},
+      -- pyrefly = {},
       basedpyright = {
         settings = {
           basedpyright = {
@@ -79,14 +92,6 @@ return {
           },
         },
       },
-
-      nil_ls = {
-        settings = { ["nil"] = { nix = { flake = { autoArchive = true } } } },
-      },
-
-      lua_ls = {},
-      rust_analyzer = {},
-      ruff = {},
     }
 
     -- Setup global LSP configuration
