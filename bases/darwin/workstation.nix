@@ -35,10 +35,10 @@ in
       "firefox"
       "iterm2"
       "libreoffice-still"
+      "linearmouse"
       "middleclick"
       "monitorcontrol"
       "rectangle"
-      "scroll-reverser"
       "spotify"
       "visual-studio-code"
     ];
