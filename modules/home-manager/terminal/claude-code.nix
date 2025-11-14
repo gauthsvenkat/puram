@@ -34,7 +34,7 @@ in
         includeCoAuthoredBy = false;
 
         permissions = {
-          defaultMode = "plan";
+          defaultMode = "default";
           deny = [
             "Read(./.env*)"
             "Read(${homeDirectory}/.ssh/*)"
