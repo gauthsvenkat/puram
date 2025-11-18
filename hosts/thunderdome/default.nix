@@ -28,6 +28,9 @@ in
   # gets stuck on "A start job is running for /dev/tpmrm0".
   systemd.tpm2.enable = false;
 
+  # Enable cross-compilation for ARM builds
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   boot.zfs.extraPools = [ zpool ];
   services = {
     sanoid.datasets."${zpool}".use_template = [ "default" ];
