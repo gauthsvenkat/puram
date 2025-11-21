@@ -20,7 +20,6 @@ in
       ../../modules/home-manager/development/python.nix
       ../../modules/home-manager/development/rust.nix
 
-      ../../modules/home-manager/terminal/aider.nix
       ../../modules/home-manager/terminal/bat.nix
       ../../modules/home-manager/terminal/btop.nix
       ../../modules/home-manager/terminal/claude-code.nix
