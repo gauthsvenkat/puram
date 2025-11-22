@@ -2,7 +2,7 @@
   description = "NixOS, nix-darwin and home-manager flakes for my machines";
 
   inputs = {
-    # NixOS flake inputs
+    # ==================== NixOS flake inputs ====================
     nixpkgs-nixos.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager-nixos = {
@@ -26,7 +26,7 @@
       inputs.home-manager.follows = "home-manager-nixos";
     };
 
-    # nix-darwin flake inputs
+    # ==================== nix-darwin flake inputs ====================
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     nix-darwin = {
@@ -64,10 +64,11 @@
       ...
     }@inputs:
     let
+      # Helper function to create a a host configuration, with sensible defaults
+      # that can be overridden.
       mkHostCfg =
         {
           hostname,
-          system ? "x86_64-linux",
           username ? "ando",
           isLaptop ? false,
           homeDirectory ? "/home/${username}",
@@ -77,7 +78,6 @@
         {
           inherit
             hostname
-            system
             username
             isLaptop
             homeDirectory
@@ -85,56 +85,77 @@
             wallpaper
             ;
         };
-
-      hostConfigs = [
-        (mkHostCfg { hostname = "elitedesk"; })
-        (mkHostCfg {
-          hostname = "nixpi400";
-          system = "aarch64-linux";
-        })
-        (mkHostCfg { hostname = "toshiba"; })
-        (mkHostCfg {
-          hostname = "thinkpad";
-          isLaptop = true;
-        })
-        (mkHostCfg { hostname = "thunderdome"; })
-      ];
     in
     {
-      nixosConfigurations = builtins.listToAttrs (
-        builtins.map (hostCfg: {
-          name = hostCfg.hostname;
-          value = nixpkgs-nixos.lib.nixosSystem {
-            inherit (hostCfg) system;
-            specialArgs = {
-              inherit inputs;
-              inherit hostCfg;
-            };
-            modules = [ ./hosts/${hostCfg.hostname} ];
-          };
-        }) hostConfigs
-      );
-
-      darwinConfigurations.macbook-m1-pro =
-        let
-          hostCfg = mkHostCfg rec {
-            hostname = "macbook-m1-pro";
-            system = "aarch64-darwin";
-            username = "gautham";
-            isLaptop = true;
-            homeDirectory = "/Users/${username}";
-            gitEmail = "gautham@dexterenergy.ai";
-          };
-        in
-        nix-darwin.lib.darwinSystem {
+      # ==================== NixOS configurations ====================
+      nixosConfigurations = {
+        "elitedesk" = nixpkgs-nixos.lib.nixosSystem {
+          system = "x86_64-linux";
           specialArgs = {
             inherit inputs;
-            inherit hostCfg;
+            hostCfg = mkHostCfg { hostname = "elitedesk"; };
+          };
+          modules = [ ./hosts/elitedesk ];
+        };
+
+        "toshiba" = nixpkgs-nixos.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+            hostCfg = mkHostCfg { hostname = "toshiba"; };
+          };
+          modules = [ ./hosts/toshiba ];
+        };
+
+        "thinkpad" = nixpkgs-nixos.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+            hostCfg = mkHostCfg {
+              hostname = "thinkpad";
+              isLaptop = true;
+            };
+          };
+          modules = [ ./hosts/thinkpad ];
+        };
+
+        "thunderdome" = nixpkgs-nixos.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+            hostCfg = mkHostCfg { hostname = "thunderdome"; };
+          };
+          modules = [ ./hosts/thunderdome ];
+        };
+
+        "nixpi400" = nixpkgs-nixos.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = {
+            inherit inputs;
+            hostCfg = mkHostCfg { hostname = "nixpi400"; };
+          };
+          modules = [ ./hosts/nixpi400 ];
+        };
+      };
+
+      # ==================== nix-darwin configurations ====================
+      darwinConfigurations = {
+        "macbook-m1-pro" = nix-darwin.lib.darwinSystem {
+          specialArgs = {
+            inherit inputs;
+            hostCfg = mkHostCfg rec {
+              hostname = "macbook-m1-pro";
+              username = "gautham";
+              isLaptop = true;
+              homeDirectory = "/Users/${username}";
+              gitEmail = "gautham@dexterenergy.ai";
+            };
           };
           modules = [
-            { nixpkgs.hostPlatform = hostCfg.system; }
+            { nixpkgs.hostPlatform = "aarch64-darwin"; }
             ./hosts/macbook-m1-pro
           ];
         };
+      };
     };
 }
