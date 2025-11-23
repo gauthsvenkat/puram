@@ -3,7 +3,10 @@
 
   inputs = {
     # ==================== NixOS flake inputs ====================
-    nixpkgs-nixos.url = "github:nixos/nixpkgs/nixos-unstable";
+    # TODO: Revert to nixos-unstable when immich v2.3.1 hits nixos-unstable
+    # Current hack needed for immich to work on nixpi400
+    # nixpkgs-nixos.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-nixos.url = "github:nixos/nixpkgs/3412a1b3e0be611283116c0578405ee6d1c51536";
 
     home-manager-nixos = {
       url = "github:nix-community/home-manager";
