@@ -25,6 +25,8 @@ in
     ./system.nix
   ];
 
+  programs.ssh.startAgent = true;
+
   home-manager.users.${username} = {
     imports = [
       ../../modules/home-manager/extra/wallpaper.nix
