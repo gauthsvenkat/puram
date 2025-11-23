@@ -40,6 +40,7 @@ in
       ../../modules/home-manager/terminal/zoxide.nix
       ../../modules/home-manager/terminal/zsh.nix
     ];
+
     home.packages = [ pkgs.gh ];
   };
 }
