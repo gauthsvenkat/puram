@@ -20,6 +20,14 @@ upgrade:
     just apply {{ if os() == "linux" { "boot" } else { "switch" } }} || (git checkout HEAD -- flake.lock && exit 1)
     git commit -m "chore(flake): update inputs"
 
+# NOTE: Following recipe has some dependencies
+# 1. For a `hostname` in the flake, there should be an equivalent `<hostname>-root` in `~/.ssh/config`.
+# This should refer to the root user in the corresponding host.
+# 2. The user running the following recipe should be public-key authenticated for the above.
+# 3. The host running the following recipe should have ssh-agent enabled
+deploy hostname action='boot':
+    nh os {{ action }} . --hostname {{ hostname }} --target-host {{ hostname }}-root --build-host localhost
+
 secrets-edit:
     sops edit secrets.yaml
 
