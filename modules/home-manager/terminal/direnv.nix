@@ -16,5 +16,7 @@ in
     };
 
     zsh.shellAliases."da." = "${getExe pkgs.direnv} allow .";
+
+    git.ignores = [ ".direnv" ];
   };
 }
