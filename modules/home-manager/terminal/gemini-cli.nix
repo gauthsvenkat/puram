@@ -10,11 +10,15 @@ in
   programs.gemini-cli = {
     enable = true;
     settings = {
-      contextFileName = "CONVENTIONS.md";
-      vimMode = true;
-      preferredEditor = "nvim";
+      general = {
+        vimMode = true;
+        preferredEditor = "nvim";
+        disableAutoUpdate = true;
+      };
+
+      context.fileName = "CONVENTIONS.md";
       telemetry.enabled = false;
-      usageStatisticsEnabled = false;
+      privacy.usageStatisticsEnabled = false;
 
       mcpServers = {
         context7.httpUrl = "https://mcp.context7.com/mcp";
