@@ -73,7 +73,15 @@ return {
 
       -- python
       ruff = {},
-      rust_analyzer = {},
+      rust_analyzer = {
+        settings = {
+          ["rust-analyzer"] = {
+            check = {
+              command = "clippy",
+            },
+          },
+        },
+      },
       -- ty = {},
       -- pyrefly = {},
       basedpyright = {
