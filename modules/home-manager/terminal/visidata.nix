@@ -1,0 +1,3 @@
+{
+  programs.visidata.enable = true;
+}
