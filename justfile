@@ -15,6 +15,14 @@ update input="":
     nix flake update {{ input }}
 
 upgrade:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    # Ask for password upfront
+    sudo -v
+    # Keep-alive: update existing sudo timestamp until script finishes
+    while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
     just update
     git add flake.lock
     just apply {{ if os() == "linux" { "boot" } else { "switch" } }} || (git checkout HEAD -- flake.lock && exit 1)
