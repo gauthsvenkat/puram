@@ -6,11 +6,7 @@ in
   programs = {
     claude-code = {
       enable = true;
-
-      mcpServers.context7 = {
-        type = "http";
-        url = "https://mcp.context7.com/mcp";
-      };
+      enableMcpIntegration = true;
 
       settings = {
         env.DISABLE_TELEMETRY = "1";
