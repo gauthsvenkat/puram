@@ -32,8 +32,10 @@ in
       ../../modules/home-manager/terminal/just.nix
       ../../modules/home-manager/terminal/lazygit.nix
       ../../modules/home-manager/terminal/mcfly.nix
+      ../../modules/home-manager/terminal/mcp.nix
       ../../modules/home-manager/terminal/neovim.nix
       ../../modules/home-manager/terminal/nh.nix
+      ../../modules/home-manager/terminal/opencode.nix
       ../../modules/home-manager/terminal/pre-commit.nix
       ../../modules/home-manager/terminal/spotify-player.nix
       ../../modules/home-manager/terminal/utils.nix
