@@ -7,5 +7,6 @@
     age
     localsend
     rpi-imager
+    jellyfin-desktop
   ];
 }
