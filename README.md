@@ -63,7 +63,6 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
 
 ## Notes
 
-- On NixOS don't mix multiple desktop environments. For e.g. trying both KDE and hyprland leads to funky issues. The cause seems to be conflicting `xdg-desktop-portal`s.
 - nix-darwin configuration relies on the homebrew module to install gui apps. The reason is there are lots of issues with spotlight indexing gui apps installed through nixpkgs. See
   - [mac-app-util](https://github.com/hraban/mac-app-util).
   - [this PR](https://github.com/nix-darwin/nix-darwin/pull/1396#issuecomment-3150075769) for a potential solution.
@@ -71,10 +70,3 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
 ## Todo
 
 - [mac] Check if spotlight indexing works finally.
-- [hyprland] kdeconnect?
-- [hyprland] Checkout [wdisplays](https://github.com/artizirk/wdisplays)
-- [hyprland] screenshotting and recording is done but calling it in hyprpanel is quite buggy. If using shortcuts, need to figure out how to stop recording.
-- [hyprland] clipboard manager.
-- [hyprland] blue light filter. It works but is quite jarring.
-- [hyprland] checkout [pyprland](https://github.com/hyprland-community/pyprland)
-- [hyprland] [QoL] hide special workspace on focus loss.
