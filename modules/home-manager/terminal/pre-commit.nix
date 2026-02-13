@@ -5,7 +5,7 @@
 }:
 let
   inherit (lib) getExe;
-  pkg = pkgs.pre-commit;
+  pkg = pkgs.prek;
 in
 {
   home.packages = [ pkg ];
