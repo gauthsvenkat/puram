@@ -7,6 +7,8 @@ in
     enable = true;
     enableMcpIntegration = true;
 
+    rules = ../../../notnix/llms/rules.md;
+
     settings = {
       autoupdate = false;
 
