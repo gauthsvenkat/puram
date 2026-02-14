@@ -8,6 +8,8 @@ in
       enable = true;
       enableMcpIntegration = true;
 
+      rules."general" = ../../../notnix/llms/rules.md;
+
       settings = {
         env.DISABLE_TELEMETRY = "1";
         theme = "dark";
