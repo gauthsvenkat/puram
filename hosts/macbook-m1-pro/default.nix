@@ -38,7 +38,7 @@ in
     ];
 
     programs.mcp.servers = {
-      atlassian.url = "https://mcp.atlassian.com/v1/sse";
+      atlassian.url = "https://mcp.atlassian.com/v1/mcp";
       notion.url = "https://mcp.notion.com/mcp";
     };
   };
