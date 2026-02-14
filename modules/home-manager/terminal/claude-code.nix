@@ -19,7 +19,7 @@ in
         permissions = {
           defaultMode = "default";
           deny = [
-            "Read(./.env*)"
+            "Read(*.env*)"
             "Read(${homeDirectory}/.ssh/*)"
           ];
         };
