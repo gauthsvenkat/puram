@@ -45,9 +45,15 @@ in
       ])
     ];
 
-    programs.mcp.servers = {
-      atlassian.url = "https://mcp.atlassian.com/v1/mcp";
-      notion.url = "https://mcp.notion.com/mcp";
+    programs.claude-code.mcpServers = {
+      atlassian = {
+        type = "http";
+        url = "https://mcp.atlassian.com/v1/mcp";
+      };
+      notion = {
+        type = "http";
+        url = "https://mcp.notion.com/mcp";
+      };
     };
   };
 }
