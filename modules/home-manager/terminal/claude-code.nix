@@ -1,14 +1,35 @@
-{ hostCfg, ... }:
+{
+  hostCfg,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (hostCfg) homeDirectory;
+  uvx = lib.getExe' pkgs.uv "uvx";
 in
 {
   programs = {
     claude-code = {
       enable = true;
-      enableMcpIntegration = true;
 
       rules."general" = ../../../notnix/llms/rules.md;
+
+      mcpServers = {
+        context7 = {
+          type = "http";
+          url = "https://mcp.context7.com/mcp";
+        };
+        ref = {
+          type = "http";
+          url = "https://api.ref.tools/mcp";
+        };
+        markitdown = {
+          type = "stdio";
+          command = uvx;
+          args = [ "markitdown-mcp" ];
+        };
+      };
 
       settings = {
         env.DISABLE_TELEMETRY = "1";
