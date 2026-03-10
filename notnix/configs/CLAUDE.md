@@ -1,4 +1,4 @@
-# General Rules
+# General
 
 ## Communication
 
@@ -13,10 +13,13 @@
 - Don't over-engineer. No unnecessary abstractions, wrappers, or indirection.
 - Flag anti-patterns at the end of a response, not inline.
 
-## Tools
+## CLI Tools
 
 - Use `fd` instead of `find`.
 - Use `rg` instead of `grep`.
+
+## MCPs
+
 - Look up relevant documentation using `ref`. Fall back to `context7` if ref is unavailable.
 - Use `markitdown` MCP to read content from websites.
 - Use `CodeGraphContext` MCP to understand code structure, call chains, and relationships. If the repo hasn't been indexed yet, run `cgc index .` first.
@@ -25,15 +28,14 @@
 
 ## Commits
 
-Follow Conventional Commits
-
+- Follow Conventional Commits (look it up when needed).
 - No emojis in commit messages.
 - Prefer small, focused commits — one logical change per commit.
 - Format:
   ```
   <type>[optional scope]: <title>
 
-  <brief description>
+  <very brief description>
   ```
 - Title should be concise and lowercase.
 - Description should be 1-2 sentences at most. Omit if the title is self-explanatory.
@@ -47,7 +49,7 @@ Follow Conventional Commits
 - `docs` — documentation only
 - `test` — adding or updating tests
 - `ci` — CI/CD changes
-- `perf` — performance improvement
+- postfix `!` if breaking change
 
 ### Scope
 
