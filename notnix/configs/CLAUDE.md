@@ -11,6 +11,7 @@
 - Keep code simple, readable, and maintainable.
 - Code should be self-documenting. Only add comments for genuinely complex logic.
 - Don't over-engineer. No unnecessary abstractions, wrappers, or indirection.
+- Look up relevant documentation before making code changes, especially for unfamiliar APIs or libraries.
 - Flag anti-patterns at the end of a response, not inline.
 
 ## CLI Tools
