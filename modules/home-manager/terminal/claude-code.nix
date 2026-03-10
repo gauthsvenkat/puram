@@ -24,6 +24,17 @@ in
           type = "http";
           url = "https://api.ref.tools/mcp";
         };
+        CodeGraphContext = {
+          type = "stdio";
+          command = uvx;
+          args = [
+            "--from"
+            "codegraphcontext"
+            "cgc"
+            "mcp"
+            "start"
+          ];
+        };
         markitdown = {
           type = "stdio";
           command = uvx;

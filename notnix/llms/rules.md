@@ -19,6 +19,7 @@
 - Use `rg` instead of `grep`.
 - Look up relevant documentation using `ref`. Fall back to `context7` if ref is unavailable.
 - Use `markitdown` MCP to read content from websites.
+- Use `CodeGraphContext` MCP to understand code structure, call chains, and relationships. If the repo hasn't been indexed yet, run `cgc index .` first.
 
 # Git Conventions
 
