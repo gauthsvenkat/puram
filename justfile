@@ -34,7 +34,7 @@ upgrade:
 # 2. The user running the following recipe should be public-key authenticated for the above.
 # 3. The host running the following recipe should have ssh-agent enabled
 deploy hostname action='boot':
-    nh os {{ action }} . --hostname {{ hostname }} --target-host {{ hostname }}-root --build-host localhost
+    nh os {{ action }} . --hostname {{ hostname }} --target-host {{ hostname }}-root
 
 secrets-edit:
     sops edit secrets.yaml
