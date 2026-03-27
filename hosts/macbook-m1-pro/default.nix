@@ -25,8 +25,12 @@ in
   };
 
   home-manager.users.${username} = {
-    #NOTE: Needed to link libpq.pg_config with openssl.
-    home.sessionVariables.LDFLAGS = "-L${pkgs.openssl.out}/lib";
+    home.sessionVariables = {
+      #NOTE: Needed to link libpq.pg_config with openssl.
+      LDFLAGS = "-L${pkgs.openssl.out}/lib";
+      # NOTE: Needed for rust crates that link against libiconv (e.g. -liconv)
+      LIBRARY_PATH = "${pkgs.libiconv}/lib";
+    };
 
     home.packages = with pkgs; [
       glab
