@@ -15,7 +15,6 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 -- search
-vim.opt.hlsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
@@ -29,9 +28,6 @@ vim.opt.scrolloff = 10
 -- fast updatetime
 vim.opt.updatetime = 50
 
--- more colors!!!
-vim.opt.termguicolors = true
-
 -- undo options
 vim.opt.undofile = true
 vim.opt.undodir = os.getenv("HOME") .. "/.undodir"
@@ -39,8 +35,6 @@ vim.opt.undodir = os.getenv("HOME") .. "/.undodir"
 -- some reading and writing options
 vim.opt.backup = false
 vim.opt.writebackup = false
-vim.opt.autoread = true
-vim.opt.autowrite = false
 
 -- fold options
 vim.opt.foldenable = true
