@@ -89,6 +89,7 @@ in
             # Git (non-destructive)
             "Bash(git add *)"
             "Bash(git blame *)"
+            "Bash(git commit *)"
             "Bash(git branch)"
             "Bash(git branch --list *)"
             "Bash(git branch -a)"
@@ -138,10 +139,10 @@ in
             "WebSearch"
 
             # MCP
-            "mcp__CodeGraphContext"
-            "mcp__context7"
-            "mcp__markitdown"
-            "mcp__ref"
+            "mcp__plugin_claude-code-home-manager_CodeGraphContext"
+            "mcp__plugin_claude-code-home-manager_context7"
+            "mcp__plugin_claude-code-home-manager_markitdown"
+            "mcp__plugin_claude-code-home-manager_ref"
           ];
 
           ask = [
@@ -165,7 +166,6 @@ in
             "Bash(git checkout *)"
             "Bash(git cherry-pick *)"
             "Bash(git clean *)"
-            "Bash(git commit *)"
             "Bash(git merge *)"
             "Bash(git push*)"
             "Bash(git rebase *)"
