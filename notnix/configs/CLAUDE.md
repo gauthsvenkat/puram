@@ -18,6 +18,7 @@
 
 - Use `fd` instead of `find`.
 - Use `rg` instead of `grep`.
+- Use `prek` instead of `pre-commit` (it is a drop-in replacement).
 
 ## MCPs
 
