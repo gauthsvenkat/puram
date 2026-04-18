@@ -25,7 +25,11 @@ in
   };
 
   programs = {
-    neovim.enable = true;
+    neovim = {
+      enable = true;
+      # Avoid writing init.lua to ~/.config/nvim/ — managed imperatively via a separate git repo.
+      sideloadInitLua = true;
+    };
     zsh.shellAliases."v" = getExe pkg;
   };
 }
