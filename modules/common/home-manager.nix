@@ -5,7 +5,7 @@ in
 {
   home-manager = {
     users.${username}.home = {
-      stateVersion = "24.11"; # Don't change this
+      stateVersion = "26.05";
       inherit username homeDirectory;
       # to add ~/.local/bin to $PATH
       sessionPath = [ "$HOME/.local/bin" ];
