@@ -13,7 +13,7 @@ in
     claude-code = {
       enable = true;
 
-      memory.source = ../../../notnix/configs/CLAUDE.md;
+      context = ../../../notnix/configs/CLAUDE.md;
 
       mcpServers = {
         context7 = {
