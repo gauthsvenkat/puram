@@ -24,10 +24,6 @@ in
     ./hardware-configuration.nix
   ];
 
-  # NOTE: Without the following disabling of tpm, the boot process
-  # gets stuck on "A start job is running for /dev/tpmrm0".
-  systemd.tpm2.enable = false;
-
   # Enable cross-compilation for ARM builds
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
