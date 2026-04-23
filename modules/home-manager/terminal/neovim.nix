@@ -19,6 +19,7 @@ in
       imagemagick # snacks.image
       python3
       ripgrep # fzf-lua
+      tree-sitter
     ];
 
     sessionVariables.EDITOR = "nvim";
