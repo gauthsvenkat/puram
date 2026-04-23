@@ -41,6 +41,8 @@ in
       # NOTE: Needed to build psycopg2 from source for work-api
       libpq.pg_config
       nodejs
+      terraform
+      tflint
       vault
 
       (google-cloud-sdk.withExtraComponents [
