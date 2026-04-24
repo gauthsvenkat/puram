@@ -2,46 +2,32 @@
   description = "NixOS, nix-darwin and home-manager flakes for my machines";
 
   inputs = {
-    # ==================== NixOS flake inputs ====================
-    nixpkgs-nixos.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager-nixos = {
+    home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    sops-nix-nixos = {
+    sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs-nixos";
-      inputs.home-manager.follows = "home-manager-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
-
-    # ==================== nix-darwin flake inputs ====================
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
-    };
-
-    home-manager-darwin = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
-    };
-
-    sops-nix-darwin = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
@@ -59,7 +45,7 @@
 
   outputs =
     {
-      nixpkgs-nixos,
+      nixpkgs,
       nix-darwin,
       ...
     }@inputs:
@@ -89,7 +75,7 @@
     {
       # ==================== NixOS configurations ====================
       nixosConfigurations = {
-        "elitedesk" = nixpkgs-nixos.lib.nixosSystem {
+        "elitedesk" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs;
@@ -98,7 +84,7 @@
           modules = [ ./hosts/elitedesk ];
         };
 
-        "toshiba" = nixpkgs-nixos.lib.nixosSystem {
+        "toshiba" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs;
@@ -107,7 +93,7 @@
           modules = [ ./hosts/toshiba ];
         };
 
-        "thinkpad" = nixpkgs-nixos.lib.nixosSystem {
+        "thinkpad" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs;
@@ -119,7 +105,7 @@
           modules = [ ./hosts/thinkpad ];
         };
 
-        "thunderdome" = nixpkgs-nixos.lib.nixosSystem {
+        "thunderdome" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs;
@@ -128,7 +114,7 @@
           modules = [ ./hosts/thunderdome ];
         };
 
-        "nixpi400" = nixpkgs-nixos.lib.nixosSystem {
+        "nixpi400" = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           specialArgs = {
             inherit inputs;
