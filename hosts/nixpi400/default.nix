@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    "${inputs.nixpkgs-nixos}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+    "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
 
     ../../bases/nixos/flavor/server.nix
 

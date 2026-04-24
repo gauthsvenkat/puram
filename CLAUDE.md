@@ -19,7 +19,7 @@ justfile          -- task runner for common operations
 # Key concepts
 
 - `hostCfg` -- attribute set passed via `specialArgs` containing: `hostname`, `username`, `isLaptop`, `homeDirectory`, `gitEmail`, `wallpaper`. Defined per-host in `flake.nix` via `mkHostCfg`. Flows to home-manager via `extraSpecialArgs`.
-- Separate nixpkgs/home-manager/sops-nix inputs for NixOS vs darwin (e.g., `nixpkgs-nixos`, `nixpkgs-darwin`).
+- Single `nixpkgs` input (`nixos-unstable`) shared between NixOS and darwin; `home-manager`, `sops-nix`, `disko`, `plasma-manager`, and `nix-darwin` all follow it.
 - Base composition chain: host imports bases, bases import modules. E.g., `kde.nix` -> `personal.nix` -> `workstation.nix` -> `system.nix`.
 
 # Architecture

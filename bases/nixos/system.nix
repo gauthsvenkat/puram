@@ -11,7 +11,7 @@
 
     ../common/system.nix
 
-    inputs.home-manager-nixos.nixosModules.home-manager
-    inputs.sops-nix-nixos.nixosModules.sops
+    inputs.home-manager.nixosModules.home-manager
+    inputs.sops-nix.nixosModules.sops
   ];
 }
