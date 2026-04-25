@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     curl
+    duf
     fd
     gnumake
     jq
