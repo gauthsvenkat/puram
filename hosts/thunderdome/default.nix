@@ -5,7 +5,7 @@
 }:
 let
   inherit (hostCfg) username;
-  zpool = "wombocombo";
+  zpool = "dontdie";
 in
 {
   imports = [
