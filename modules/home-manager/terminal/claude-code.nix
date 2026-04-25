@@ -20,10 +20,6 @@ in
           type = "http";
           url = "https://mcp.context7.com/mcp";
         };
-        ref = {
-          type = "http";
-          url = "https://api.ref.tools/mcp";
-        };
         CodeGraphContext = {
           type = "stdio";
           command = uvx;
