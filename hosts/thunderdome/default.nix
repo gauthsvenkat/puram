@@ -4,8 +4,7 @@
   ...
 }:
 let
-  inherit (hostCfg) username;
-  zpool = "dontdie";
+  inherit (hostCfg) username zpool;
 in
 {
   imports = [
@@ -38,7 +37,14 @@ in
 
   boot.zfs.extraPools = [ zpool ];
   services = {
-    sanoid.datasets."${zpool}".use_template = [ "default" ];
+    sanoid.datasets = {
+      "${zpool}" = {
+        recursive = true;
+        process_children_only = true;
+        use_template = [ "default" ];
+      };
+      "${zpool}/cache".autosnap = false;
+    };
     ratbagd.enable = true;
   };
 
