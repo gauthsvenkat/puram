@@ -8,7 +8,6 @@ in
 
     ../../bases/nixos/flavor/server.nix
 
-    ../../modules/nixos/services/immich.nix
     ../../modules/nixos/services/sanoid.nix
     ../../modules/nixos/services/zfs.nix
   ];
@@ -27,8 +26,6 @@ in
 
   services = {
     tailscale.enable = true;
-
-    immich.mediaLocation = "/tank/photos";
 
     sanoid.datasets."${zpool}" = {
       recursive = true;
