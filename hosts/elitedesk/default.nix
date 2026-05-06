@@ -13,6 +13,7 @@ in
     ../../modules/nixos/hardware/intel-transcoding.nix
 
     ../../modules/nixos/services/adguard-home.nix
+    ../../modules/nixos/services/caddy.nix
     ../../modules/nixos/services/homarr.nix
     ../../modules/nixos/services/immich.nix
     ../../modules/nixos/services/jellyfin.nix
@@ -20,6 +21,7 @@ in
     ../../modules/nixos/services/sanoid.nix
     ../../modules/nixos/services/speedtest-tracker.nix
     ../../modules/nixos/services/stirling-pdf.nix
+    ../../modules/nixos/services/tailscale.nix
     ../../modules/nixos/services/zfs.nix
 
     ./disko-config.nix
@@ -37,8 +39,6 @@ in
       };
       "${zpool}/cache".autosnap = false;
     };
-
-    tailscale.enable = true;
 
     # Shared by every service that opts to use postgresql (paperless, immich, ...).
     postgresql.dataDir = hostCfg.paths.postgres;

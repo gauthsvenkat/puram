@@ -149,6 +149,7 @@
               gitEmail = "gauthsvenkat@gmail.com";
 
               zpool = "dontdie";
+              domain = "example.com";
               paths = rec {
                 config = "/${zpool}/services/config";
                 databases = "/${zpool}/services/databases";
@@ -175,7 +176,6 @@
                   gotenberg_port = 3030;
                   tika_port = 9998;
                 };
-                speedtestTracker.port = 80;
                 stirlingPdf.port = 8081;
               };
 

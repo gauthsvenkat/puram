@@ -1,3 +1,6 @@
 [default.extend-words]
 iterm = "iterm"
 HAX = "HAX"
+
+[default.extend-identifiers]
+UPnP = "UPnP"

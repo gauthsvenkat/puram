@@ -9,6 +9,7 @@ in
     ../../bases/nixos/flavor/server.nix
 
     ../../modules/nixos/services/sanoid.nix
+    ../../modules/nixos/services/tailscale.nix
     ../../modules/nixos/services/zfs.nix
   ];
 
@@ -25,8 +26,6 @@ in
   };
 
   services = {
-    tailscale.enable = true;
-
     sanoid.datasets."${zpool}" = {
       recursive = true;
       process_children_only = true;
