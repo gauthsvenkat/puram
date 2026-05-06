@@ -46,7 +46,13 @@ in
     jellyfin = {
       hardwareAcceleration = {
         enable = true;
-        type = "qsv";
+        # VAAPI, not QSV: Skylake (Gen 9, HD 530) is past the support window
+        # for both oneVPL and the legacy Intel Media SDK that QSV depends on.
+        # Without this, HLS transcodes fail in the ffmpeg device-init step
+        # ("Error creating a MFX session") and the Jellyfin client reports
+        # "playback failed due to a fatal player error".
+        # https://jellyfin.org/docs/general/post-install/transcoding/hardware-acceleration/intel
+        type = "vaapi";
         device = "/dev/dri/renderD128";
       };
       # NixOS owns encoding.xml; existing file from the cloned dataset is
@@ -56,9 +62,15 @@ in
         enableHardwareEncoding = true;
         # Codec list verified via vainfo on elitedesk's Skylake-era iGPU.
         # No VP9 / AV1 / HEVC Main10 support; HEVC encode is 8-bit Main only.
+        # HEVC decode is intentionally disabled: the GPU can do HEVC Main
+        # (8-bit) but not Main10, and the nixpkgs jellyfin module does not
+        # expose `EnableDecodingColorDepth10Hevc`, so we can't selectively
+        # gate Main10 — leaving HEVC HW decode on causes ffmpeg to fail
+        # ("No support for codec hevc profile 2") on any 10-bit HEVC source
+        # instead of falling back to software decode. SW decode of 1080p
+        # HEVC is comfortable on this CPU; HW H264 encoding still applies.
         hardwareDecodingCodecs = {
           h264 = true;
-          hevc = true;
           mpeg2 = true;
           vc1 = true;
           vp8 = true;
