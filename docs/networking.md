@@ -1,0 +1,129 @@
+# Networking: Caddy + Tailscale + Cloudflare
+
+Out-of-repo dependencies and recovery recipe for `*.gauthsvenkat.dev` access on/off LAN.
+
+## Request flow
+
+```
+[client device]                  Tailscale-connected (laptop, phone, thunderdome, ...)
+   ↓ DNS query *.gauthsvenkat.dev
+[Cloudflare DNS]                 authoritative for the domain (registrar + DNS in one)
+   → returns 100.103.236.120     (elitedesk's tailnet IP)
+   ↓ TCP/443
+[Tailscale tailnet]              encrypted overlay; WAN never sees these packets
+[Caddy on elitedesk]             TLS termination (LE certs via DNS-01) + reverse proxy
+   ↓ loopback or LAN
+[backend service]                jellyfin, immich, paperless, ...
+```
+
+The router has no inbound ports forwarded; all entry happens via Tailscale.
+
+## External accounts
+
+| Service | Account | Holds |
+|---|---|---|
+| Cloudflare (registrar + DNS) | `gauthsvenkat99@gmail.com` | `gauthsvenkat.dev` domain, wildcard A record, ACME API token |
+| Tailscale | `gauthsvenkat@gmail.com` (Google login) | tailnet, device list |
+| Let's Encrypt | `gauthsvenkat@gmail.com` | ACME account, auto-registered by Caddy on first cert request |
+
+## Cloudflare
+
+The domain was purchased through Cloudflare, so Cloudflare is both registrar and authoritative DNS host. No nameserver delegation step.
+
+### DNS records
+
+| Name | Type | Value | Proxy |
+|---|---|---|---|
+| `*` | A | `100.103.236.120` | DNS only (gray cloud) |
+
+A single wildcard A record covers every subdomain (`jellyfin`, `immich`, `paperless`, …). Adding a new vhost in Caddy needs no DNS change.
+
+Do **not** turn on Cloudflare's HTTP proxy (orange cloud): the tailnet IP is unroutable from the public internet, and proxying breaks the off-LAN path.
+
+If elitedesk's tailnet IP ever shifts (rare; only on tailnet recreate or device deletion), update this single record.
+
+### ACME API token
+
+Caddy needs a token to perform Let's Encrypt DNS-01 challenges. Stored in sops as `cloudflare_dns_token` in env-file shape so it can be passed directly via `EnvironmentFile`:
+
+```yaml
+cloudflare_dns_token: CLOUDFLARE_API_TOKEN=<token>
+```
+
+Token scope (Cloudflare → My Profile → API Tokens → Create Custom Token):
+- **Permissions**: `Zone:Read` + `Zone:DNS:Edit`
+- **Zone resources**: include specific zone `gauthsvenkat.dev` (NOT all zones)
+- **Client IP filter**: empty
+- **TTL**: open-ended
+
+Rotation: roll the token in the dashboard, paste new value into sops via `just secrets-edit`, deploy.
+
+## Tailscale
+
+Tailnet IP for elitedesk: **`100.103.236.120`**. Verify after re-enrolment with `tailscale ip -4`.
+
+### Per-host enrollment
+
+Hosts that import `modules/nixos/services/tailscale.nix` get the daemon enabled but do not auto-authenticate. One-shot per device:
+
+```sh
+sudo tailscale up
+```
+
+Opens a browser auth URL; sign in via Google. Device shows up in the tailnet admin within seconds.
+
+No auth-key file is wired in — Tailscale auth keys expire after 90 days, and the rebuild cadence doesn't justify rotating them.
+
+### Hosts in the tailnet
+
+| Host | Role | Tailscale needed |
+|---|---|---|
+| `elitedesk` | server (Caddy + services) | yes |
+| `nixpi400` | sanoid replication target | yes |
+| `thunderdome` | desktop | yes |
+| Laptops (`thinkpad`, etc.) | inherit via `bases/nixos/flavor/laptop.nix` | yes |
+| Phones, tablets | added manually from device | yes if you want named/HTTPS access |
+
+LAN-only or IoT devices (smart TVs, etc.) keep using direct LAN IPs — they don't get the named-HTTPS path.
+
+## Router / WAN posture
+
+- **All inbound ports closed.** No port forwards. Caddy is unreachable from the public internet by design.
+- **UPnP disabled** on the router. Same posture is encoded in `modules/nixos/services/syncthing.nix` (LAN-only sync).
+- **Static DHCP** on the router pins elitedesk to a fixed LAN IP. No nix-side reference to that IP — it's only relevant when reaching elitedesk by LAN IP for service-side configuration (e.g. the qBittorrent / sabnzbd UIs below).
+
+## Per-service runtime config (out of nix)
+
+Two services enforce host-header / origin checks via their own UI configs, not env vars — has to be done once per service after first deploy:
+
+### qBittorrent
+
+Tools (gear) → Options → Web UI → **Server domains**: `qbittorrent.gauthsvenkat.dev`
+
+### sabnzbd
+
+Config → General → Tuning → **Host whitelist**: `sabnzbd.gauthsvenkat.dev`
+
+Paperless is configured fully through nix (`PAPERLESS_URL`); the rest of the stack accepts whatever Caddy proxies through.
+
+## Caddy state and certs
+
+ACME state — account, registered keys, per-vhost certs — lives at `/var/lib/caddy/` on the host rootfs. Not on the `dontdie` pool. Implication: a full reinstall wipes it, but Caddy re-issues every cert via DNS-01 within ~60s on first start, so no backup is needed. Just don't delete this between deploys.
+
+## Disaster recovery: fresh elitedesk install
+
+1. NixOS install + import `dontdie` (see `zfs-pool.md`).
+2. Restore `~/.ssh/id_ed25519` so sops can decrypt.
+3. Confirm `cloudflare_dns_token` is in `secrets.yaml`.
+4. `just apply`.
+5. `sudo tailscale up` → authorize device in browser.
+6. Wait ~60s — Caddy issues certs for every declared vhost via DNS-01.
+7. Verify: `curl https://homarr.gauthsvenkat.dev` from any tailnet device.
+8. If `tailscale ip -4` on elitedesk returns something other than `100.103.236.120`, update the wildcard A record in Cloudflare.
+9. Redo the per-service runtime config above (qBittorrent server domains, sabnzbd host whitelist) — the configs live in service state, not in nix.
+
+## See also
+
+- `zfs-pool.md` — storage layout for the homeserver datasets.
+- Caddy DNS-01 / Cloudflare plugin: https://github.com/caddy-dns/cloudflare
+- Tailscale admin: https://login.tailscale.com/admin

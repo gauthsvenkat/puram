@@ -23,4 +23,8 @@ in
     dependsOn = [ "gluetun" ];
     extraOptions = [ "--network=container:gluetun" ];
   };
+
+  services.caddy.virtualHosts."qbittorrent.${hostCfg.domain}".extraConfig = ''
+    reverse_proxy 127.0.0.1:${toString ports.qbittorrent.port}
+  '';
 }

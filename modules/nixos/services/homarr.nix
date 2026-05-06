@@ -21,5 +21,9 @@ in
     ];
   };
 
+  services.caddy.virtualHosts."homarr.${hostCfg.domain}".extraConfig = ''
+    reverse_proxy 127.0.0.1:${toString port}
+  '';
+
   networking.firewall.allowedTCPPorts = [ port ];
 }

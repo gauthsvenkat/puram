@@ -149,6 +149,7 @@
               gitEmail = "gauthsvenkat@gmail.com";
 
               zpool = "dontdie";
+              domain = "gauthsvenkat.dev";
               paths = rec {
                 config = "/${zpool}/services/config";
                 databases = "/${zpool}/services/databases";
@@ -188,7 +189,6 @@
                 sabnzbd.port = 8083;
                 sonarr.port = 8989;
                 # END-PRIVATE
-                speedtestTracker.port = 80;
                 stirlingPdf.port = 8081;
               };
 

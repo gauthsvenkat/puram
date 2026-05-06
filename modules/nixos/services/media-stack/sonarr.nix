@@ -1,6 +1,7 @@
 { hostCfg, ... }:
 let
   inherit (hostCfg) commonEnvVars images paths;
+  port = hostCfg.ports.sonarr.port;
 in
 {
   virtualisation.oci-containers.containers.sonarr = {
@@ -13,4 +14,8 @@ in
     dependsOn = [ "gluetun" ];
     extraOptions = [ "--network=container:gluetun" ];
   };
+
+  services.caddy.virtualHosts."sonarr.${hostCfg.domain}".extraConfig = ''
+    reverse_proxy 127.0.0.1:${toString port}
+  '';
 }
