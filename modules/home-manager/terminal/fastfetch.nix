@@ -6,7 +6,6 @@
 }:
 let
   inherit (hostCfg) isLaptop;
-  inherit (lib) getExe;
 in
 {
   programs = {
@@ -147,6 +146,6 @@ in
       };
     };
 
-    zsh.shellAliases."ff" = getExe pkgs.fastfetch;
+    zsh.shellAliases."ff" = lib.getExe pkgs.fastfetch;
   };
 }

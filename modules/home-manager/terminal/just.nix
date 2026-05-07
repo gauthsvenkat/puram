@@ -4,10 +4,9 @@
   ...
 }:
 let
-  inherit (lib) getExe;
   pkg = pkgs.just;
 in
 {
   home.packages = [ pkg ];
-  programs.zsh.shellAliases."ju" = getExe pkg;
+  programs.zsh.shellAliases."ju" = lib.getExe pkg;
 }

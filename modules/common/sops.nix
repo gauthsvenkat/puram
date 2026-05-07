@@ -6,6 +6,7 @@
 }:
 let
   inherit (hostCfg) username homeDirectory;
+  inherit (config.sops) age;
 in
 {
   sops = {
@@ -21,7 +22,7 @@ in
   home-manager.users.${username} = {
     home = {
       packages = with pkgs; [ sops ];
-      sessionVariables.SOPS_AGE_KEY_FILE = config.sops.age.keyFile;
+      sessionVariables.SOPS_AGE_KEY_FILE = age.keyFile;
     };
 
     programs.git.settings.diff.sopsdiffer.textconv = "sops decrypt";

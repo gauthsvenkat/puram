@@ -1,7 +1,12 @@
 { hostCfg, ... }:
 let
-  inherit (hostCfg) commonEnvVars images paths;
-  port = hostCfg.ports.radarr.port;
+  inherit (hostCfg)
+    commonEnvVars
+    domain
+    images
+    paths
+    ;
+  inherit (hostCfg.ports.radarr) port;
 in
 {
   virtualisation.oci-containers.containers.radarr = {
@@ -15,7 +20,7 @@ in
     extraOptions = [ "--network=container:gluetun" ];
   };
 
-  services.caddy.virtualHosts."radarr.${hostCfg.domain}".extraConfig = ''
+  services.caddy.virtualHosts."radarr.${domain}".extraConfig = ''
     reverse_proxy 127.0.0.1:${toString port}
   '';
 }

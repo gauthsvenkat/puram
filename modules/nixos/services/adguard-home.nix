@@ -1,5 +1,6 @@
 { hostCfg, ... }:
 let
+  inherit (hostCfg) domain;
   inherit (hostCfg.ports) adguard;
 in
 {
@@ -63,7 +64,7 @@ in
     };
   };
 
-  services.caddy.virtualHosts."adguard.${hostCfg.domain}".extraConfig = ''
+  services.caddy.virtualHosts."adguard.${domain}".extraConfig = ''
     reverse_proxy 127.0.0.1:${toString adguard.web_port}
   '';
 

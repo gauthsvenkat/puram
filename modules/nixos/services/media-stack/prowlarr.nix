@@ -1,7 +1,12 @@
 { hostCfg, ... }:
 let
-  inherit (hostCfg) commonEnvVars images paths;
-  port = hostCfg.ports.prowlarr.port;
+  inherit (hostCfg)
+    commonEnvVars
+    domain
+    images
+    paths
+    ;
+  inherit (hostCfg.ports.prowlarr) port;
 in
 {
   virtualisation.oci-containers.containers.prowlarr = {
@@ -12,7 +17,7 @@ in
     extraOptions = [ "--network=container:gluetun" ];
   };
 
-  services.caddy.virtualHosts."prowlarr.${hostCfg.domain}".extraConfig = ''
+  services.caddy.virtualHosts."prowlarr.${domain}".extraConfig = ''
     reverse_proxy 127.0.0.1:${toString port}
   '';
 }

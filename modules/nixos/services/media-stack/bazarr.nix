@@ -1,7 +1,12 @@
 { hostCfg, ... }:
 let
-  inherit (hostCfg) commonEnvVars images paths;
-  port = hostCfg.ports.bazarr.port;
+  inherit (hostCfg)
+    commonEnvVars
+    domain
+    images
+    paths
+    ;
+  inherit (hostCfg.ports.bazarr) port;
 in
 {
   virtualisation.oci-containers.containers.bazarr = {
@@ -15,7 +20,7 @@ in
     extraOptions = [ "--network=container:gluetun" ];
   };
 
-  services.caddy.virtualHosts."bazarr.${hostCfg.domain}".extraConfig = ''
+  services.caddy.virtualHosts."bazarr.${domain}".extraConfig = ''
     reverse_proxy 127.0.0.1:${toString port}
   '';
 }

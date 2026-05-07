@@ -4,7 +4,6 @@
   ...
 }:
 let
-  inherit (lib) getExe;
   pkg = pkgs.neovim;
 in
 {
@@ -31,6 +30,6 @@ in
       # Avoid writing init.lua to ~/.config/nvim/ — managed imperatively via a separate git repo.
       sideloadInitLua = true;
     };
-    zsh.shellAliases."v" = getExe pkg;
+    zsh.shellAliases."v" = lib.getExe pkg;
   };
 }

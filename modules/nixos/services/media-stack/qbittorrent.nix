@@ -2,6 +2,7 @@
 let
   inherit (hostCfg)
     commonEnvVars
+    domain
     images
     paths
     ports
@@ -24,7 +25,7 @@ in
     extraOptions = [ "--network=container:gluetun" ];
   };
 
-  services.caddy.virtualHosts."qbittorrent.${hostCfg.domain}".extraConfig = ''
+  services.caddy.virtualHosts."qbittorrent.${domain}".extraConfig = ''
     reverse_proxy 127.0.0.1:${toString ports.qbittorrent.port}
   '';
 }

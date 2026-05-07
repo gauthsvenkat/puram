@@ -10,6 +10,7 @@
 { config, hostCfg, ... }:
 let
   inherit (hostCfg) commonEnvVars images ports;
+  inherit (config.sops) secrets;
 in
 {
   sops.secrets.gluetun_wireguard_env = { };
@@ -23,7 +24,7 @@ in
       OWNED_ONLY = "yes";
       inherit (commonEnvVars) TZ;
     };
-    environmentFiles = [ config.sops.secrets.gluetun_wireguard_env.path ];
+    environmentFiles = [ secrets.gluetun_wireguard_env.path ];
     ports = [
       "${toString ports.bazarr.port}:6767"
       "${toString ports.prowlarr.port}:9696"
