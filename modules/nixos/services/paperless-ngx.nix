@@ -31,10 +31,6 @@ in
 
     gotenberg.port = paperless.gotenberg_port;
     tika.port = paperless.tika_port;
-
-    caddy.virtualHosts.${vhost}.extraConfig = ''
-      reverse_proxy 127.0.0.1:${toString paperless.port}
-    '';
   };
 
   networking.firewall.allowedTCPPorts = [ paperless.port ];

@@ -2,11 +2,9 @@
 let
   inherit (hostCfg)
     commonEnvVars
-    domain
     images
     paths
     ;
-  inherit (hostCfg.ports.sabnzbd) port;
 in
 {
   virtualisation.oci-containers.containers.sabnzbd = {
@@ -19,8 +17,4 @@ in
     dependsOn = [ "gluetun" ];
     extraOptions = [ "--network=container:gluetun" ];
   };
-
-  services.caddy.virtualHosts."sabnzbd.${domain}".extraConfig = ''
-    reverse_proxy 127.0.0.1:${toString port}
-  '';
 }
