@@ -164,10 +164,13 @@
                   dns_port = 53;
                   web_port = 3000;
                 };
-                homarr.port = 7575;
+                # Cosmetic — Caddy hardcodes its admin API on 127.0.0.1:2019.
+                # Tracked here for documentation.
+                caddy.admin_port = 2019;
+                homepage.port = 7575;
                 immich.port = 2283;
                 # Cosmetic — services.jellyfin hardcodes 8096/8920 TCP and 1900/7359 UDP via
-                # openFirewall. Tracked here for documentation and future cross-references.
+                # openFirewall. Tracked here for documentation.
                 jellyfin = {
                   port = 8096;
                   https_port = 8920;
@@ -178,10 +181,6 @@
                   tika_port = 9998;
                 };
                 stirlingPdf.port = 8081;
-              };
-
-              images = {
-                homarr = "ghcr.io/homarr-labs/homarr:v1.59.3";
               };
 
               commonEnvVars = {
