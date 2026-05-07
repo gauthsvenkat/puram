@@ -8,8 +8,9 @@ in
 
     ../../bases/nixos/flavor/server.nix
 
+    ../../modules/common/tailscale.nix
+
     ../../modules/nixos/services/sanoid.nix
-    ../../modules/nixos/services/tailscale.nix
     ../../modules/nixos/services/zfs.nix
   ];
 

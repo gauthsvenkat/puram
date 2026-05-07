@@ -64,7 +64,7 @@ Tailnet IP for elitedesk: **`100.103.236.120`**. Verify after re-enrolment with 
 
 ### Per-host enrollment
 
-Hosts that import `modules/nixos/services/tailscale.nix` get the daemon enabled but do not auto-authenticate. One-shot per device:
+Hosts that import `modules/common/tailscale.nix` get the daemon enabled but do not auto-authenticate. One-shot per device:
 
 ```sh
 sudo tailscale up
