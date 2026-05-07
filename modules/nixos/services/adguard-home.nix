@@ -6,7 +6,6 @@ in
   services.adguardhome = {
     enable = true;
     mutableSettings = true;
-    openFirewall = true;
     port = adguard.web_port;
     settings = {
       dns = {
@@ -62,8 +61,7 @@ in
       ];
     };
   };
-
-  # openFirewall covers the web UI port only; DNS needs explicit allow.
+  # DNS ports needs explicit allow in firewall
   networking.firewall.allowedTCPPorts = [ adguard.dns_port ];
   networking.firewall.allowedUDPPorts = [ adguard.dns_port ];
 }

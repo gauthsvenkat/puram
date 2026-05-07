@@ -12,6 +12,5 @@ in
     host = "0.0.0.0";
     inherit port;
     mediaLocation = "${paths.data}/immich";
-    openFirewall = true;
   };
 }
