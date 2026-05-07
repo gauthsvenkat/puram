@@ -32,6 +32,4 @@ in
     gotenberg.port = paperless.gotenberg_port;
     tika.port = paperless.tika_port;
   };
-
-  networking.firewall.allowedTCPPorts = [ paperless.port ];
 }
