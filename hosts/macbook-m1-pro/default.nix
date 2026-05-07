@@ -9,6 +9,8 @@ in
 {
   imports = [
     ../../bases/darwin/workstation.nix
+
+    ../../modules/common/tailscale.nix
   ];
 
   homebrew = {
