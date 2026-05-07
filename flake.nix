@@ -132,6 +132,7 @@
               homeDirectory = "/home/${username}";
               gitEmail = "gauthsvenkat@gmail.com";
               wallpaper = "${homeDirectory}/Pictures/wallpapers/astronaut.jpg";
+              zpool = "tank";
             };
           };
           modules = [ ./hosts/nixpi400 ];

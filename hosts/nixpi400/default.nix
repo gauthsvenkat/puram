@@ -1,6 +1,11 @@
-{ inputs, lib, ... }:
+{
+  hostCfg,
+  inputs,
+  lib,
+  ...
+}:
 let
-  zpool = "tank";
+  inherit (hostCfg) zpool;
 in
 {
   imports = [

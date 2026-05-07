@@ -1,6 +1,7 @@
 { hostCfg, ... }:
 let
-  port = hostCfg.ports.stirlingPdf.port;
+  inherit (hostCfg) domain;
+  inherit (hostCfg.ports.stirlingPdf) port;
 in
 {
   services.stirling-pdf = {
@@ -8,7 +9,7 @@ in
     environment.SERVER_PORT = port;
   };
 
-  services.caddy.virtualHosts."stirling.${hostCfg.domain}".extraConfig = ''
+  services.caddy.virtualHosts."stirling.${domain}".extraConfig = ''
     reverse_proxy 127.0.0.1:${toString port}
   '';
 

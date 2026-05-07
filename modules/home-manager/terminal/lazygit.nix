@@ -3,9 +3,6 @@
   pkgs,
   ...
 }:
-let
-  inherit (lib) getExe;
-in
 {
   programs = {
     lazygit = {
@@ -15,6 +12,6 @@ in
         quit-alt1 = "<delete>";
       };
     };
-    zsh.shellAliases."lg" = getExe pkgs.lazygit;
+    zsh.shellAliases."lg" = lib.getExe pkgs.lazygit;
   };
 }

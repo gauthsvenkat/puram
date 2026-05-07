@@ -5,11 +5,12 @@
 }:
 let
   cfg = config.services.caddy;
+  inherit (config.sops) secrets;
 in
 {
   sops.secrets.cloudflare_dns_token = {
     owner = cfg.user;
-    group = cfg.group;
+    inherit (cfg) group;
   };
 
   services.caddy = {
@@ -24,8 +25,7 @@ in
     '';
   };
 
-  systemd.services.caddy.serviceConfig.EnvironmentFile =
-    config.sops.secrets.cloudflare_dns_token.path;
+  systemd.services.caddy.serviceConfig.EnvironmentFile = secrets.cloudflare_dns_token.path;
 
   networking.firewall.allowedTCPPorts = [
     80

@@ -4,7 +4,7 @@
   ...
 }:
 let
-  inherit (hostCfg) username zpool;
+  inherit (hostCfg) paths username zpool;
 in
 {
   imports = [
@@ -42,7 +42,7 @@ in
     };
 
     # Shared by every service that opts to use postgresql (paperless, immich, ...).
-    postgresql.dataDir = hostCfg.paths.postgres;
+    postgresql.dataDir = paths.postgres;
 
     jellyfin = {
       hardwareAcceleration = {
@@ -109,13 +109,13 @@ in
   # Ref: https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#StateDirectory=
   fileSystems = {
     "/var/lib/private/AdGuardHome" = {
-      device = "${hostCfg.paths.config}/adguard-home";
+      device = "${paths.config}/adguard-home";
       fsType = "none";
       options = [ "bind" ];
       depends = [ "/${zpool}" ];
     };
     "/var/lib/private/stirling-pdf" = {
-      device = "${hostCfg.paths.config}/stirling-pdf";
+      device = "${paths.config}/stirling-pdf";
       fsType = "none";
       options = [ "bind" ];
       depends = [ "/${zpool}" ];
