@@ -167,10 +167,13 @@
                 # BEGIN-PRIVATE
                 bazarr.port = 6767;
                 # END-PRIVATE
-                homarr.port = 7575;
+                # Cosmetic — Caddy hardcodes its admin API on 127.0.0.1:2019.
+                # Tracked here for documentation.
+                caddy.admin_port = 2019;
+                homepage.port = 7575;
                 immich.port = 2283;
                 # Cosmetic — services.jellyfin hardcodes 8096/8920 TCP and 1900/7359 UDP via
-                # openFirewall. Tracked here for documentation and future cross-references.
+                # openFirewall. Tracked here for documentation.
                 jellyfin = {
                   port = 8096;
                   https_port = 8920;
@@ -193,22 +196,19 @@
                 stirlingPdf.port = 8081;
               };
 
+              # BEGIN-PRIVATE
               images = {
-                # BEGIN-PRIVATE
                 bazarr = "lscr.io/linuxserver/bazarr:1.5.6";
                 flaresolverr = "ghcr.io/flaresolverr/flaresolverr:v3.4.6";
                 gluetun = "qmcgaw/gluetun:v3.41.1";
-                # END-PRIVATE
-                homarr = "ghcr.io/homarr-labs/homarr:v1.59.3";
-                # BEGIN-PRIVATE
                 prowlarr = "lscr.io/linuxserver/prowlarr:2.3.5";
                 qbittorrent = "lscr.io/linuxserver/qbittorrent:5.1.4";
                 radarr = "lscr.io/linuxserver/radarr:6.1.1";
                 sabnzbd = "lscr.io/linuxserver/sabnzbd:4.5.5";
                 sonarr = "lscr.io/linuxserver/sonarr:4.0.17";
-                # END-PRIVATE
               };
 
+              # END-PRIVATE
               commonEnvVars = {
                 PUID = "1000";
                 PGID = "1000";
