@@ -203,13 +203,15 @@ in
       theme = "dark";
       color = "slate";
       layout = [
+        # BEGIN-PRIVATE
         {
-          "Infra" = {
+          "Downloads" = {
             style = "row";
             columns = 2;
             useEqualHeights = true;
           };
         }
+        # END-PRIVATE
         {
           "Media" = {
             style = "row";
@@ -233,15 +235,13 @@ in
             useEqualHeights = true;
           };
         }
-        # BEGIN-PRIVATE
         {
-          "Downloads" = {
+          "Infra" = {
             style = "row";
             columns = 2;
             useEqualHeights = true;
           };
         }
-        # END-PRIVATE
       ];
     };
 
@@ -286,26 +286,36 @@ in
     ];
 
     services = [
+      # BEGIN-PRIVATE
       {
-        "Infra" = [
+        "Downloads" = [
           {
-            "Caddy" = {
-              icon = "caddy.svg";
-              href = "https://${domain}";
-              widget = {
-                type = "caddy";
-                url = loopback caddy.admin_port;
-              };
+            "qBittorrent" = {
+              icon = "qbittorrent.svg";
+              href = "https://qbittorrent.${domain}";
+              # TODO: re-enable once qBit 5.x CSRF / Host-header validation is sorted.
+              # widget = {
+              #   type = "qbittorrent";
+              #   url = loopback qbittorrent.port;
+              #   username = "{{HOMEPAGE_VAR_QBIT_USER}}";
+              #   password = "{{HOMEPAGE_VAR_QBIT_PASS}}";
+              # };
             };
           }
           {
-            "Tailscale" = {
-              icon = "tailscale.svg";
-              href = "https://login.tailscale.com/admin/machines";
+            "SABnzbd" = {
+              icon = "sabnzbd.svg";
+              href = "https://sabnzbd.${domain}";
+              widget = {
+                type = "sabnzbd";
+                url = loopback sabnzbd.port;
+                key = "{{HOMEPAGE_VAR_SABNZBD_KEY}}";
+              };
             };
           }
         ];
       }
+      # END-PRIVATE
       {
         "Media" = [
           {
@@ -429,36 +439,25 @@ in
           }
         ];
       }
-      # BEGIN-PRIVATE
       {
-        "Downloads" = [
+        "Infra" = [
           {
-            "qBittorrent" = {
-              icon = "qbittorrent.svg";
-              href = "https://qbittorrent.${domain}";
-              # TODO: re-enable once qBit 5.x CSRF / Host-header validation is sorted.
-              # widget = {
-              #   type = "qbittorrent";
-              #   url = loopback qbittorrent.port;
-              #   username = "{{HOMEPAGE_VAR_QBIT_USER}}";
-              #   password = "{{HOMEPAGE_VAR_QBIT_PASS}}";
-              # };
+            "Caddy" = {
+              icon = "caddy.svg";
+              widget = {
+                type = "caddy";
+                url = loopback caddy.admin_port;
+              };
             };
           }
           {
-            "SABnzbd" = {
-              icon = "sabnzbd.svg";
-              href = "https://sabnzbd.${domain}";
-              widget = {
-                type = "sabnzbd";
-                url = loopback sabnzbd.port;
-                key = "{{HOMEPAGE_VAR_SABNZBD_KEY}}";
-              };
+            "Tailscale" = {
+              icon = "tailscale.svg";
+              href = "https://login.tailscale.com/admin/machines";
             };
           }
         ];
       }
-      # END-PRIVATE
     ];
   };
 }
