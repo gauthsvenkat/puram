@@ -1,8 +1,10 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
+    deadnix
     nil
-    nixfmt
     nix-output-monitor
+    nixfmt
+    statix
   ];
 }
