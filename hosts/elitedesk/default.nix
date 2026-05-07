@@ -176,13 +176,6 @@ in
       color = "slate";
       layout = [
         {
-          "Infra" = {
-            style = "row";
-            columns = 2;
-            useEqualHeights = true;
-          };
-        }
-        {
           "Media" = {
             style = "row";
             columns = 3;
@@ -193,6 +186,13 @@ in
           "Utilities" = {
             style = "row";
             columns = 3;
+            useEqualHeights = true;
+          };
+        }
+        {
+          "Infra" = {
+            style = "row";
+            columns = 2;
             useEqualHeights = true;
           };
         }
@@ -240,26 +240,6 @@ in
     ];
 
     services = [
-      {
-        "Infra" = [
-          {
-            "Caddy" = {
-              icon = "caddy.svg";
-              href = "https://${domain}";
-              widget = {
-                type = "caddy";
-                url = loopback caddy.admin_port;
-              };
-            };
-          }
-          {
-            "Tailscale" = {
-              icon = "tailscale.svg";
-              href = "https://login.tailscale.com/admin/machines";
-            };
-          }
-        ];
-      }
       {
         "Media" = [
           {
@@ -329,6 +309,25 @@ in
                 type = "speedtest";
                 url = "https://speedtest.${domain}";
               };
+            };
+          }
+        ];
+      }
+      {
+        "Infra" = [
+          {
+            "Caddy" = {
+              icon = "caddy.svg";
+              widget = {
+                type = "caddy";
+                url = loopback caddy.admin_port;
+              };
+            };
+          }
+          {
+            "Tailscale" = {
+              icon = "tailscale.svg";
+              href = "https://login.tailscale.com/admin/machines";
             };
           }
         ];
