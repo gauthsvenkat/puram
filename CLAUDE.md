@@ -43,3 +43,25 @@ justfile          -- task runner for common operations
 - Group multiple definitions with common prefixes into a single attribute set
 - Sort lexicographically: package lists, imports, attribute definitions within groups
 - Use `lib.getExe`/`lib.getExe'` instead of `"${pkg}/bin/name"` interpolation
+
+## let / inherit
+
+- Top-level `let` is reserved for bindings that depend on `hostCfg` or `config`. Other helpers go in the lowest scope where they're used (often inside an attribute value).
+- Never inline `hostCfg.<field>` or `config.<field>` in module bodies. Pull them into the top-level `let` so the module's surface area is visible upfront. The body references only bound names.
+- Top-level `let` order, top to bottom: `inherit (hostCfg) ...;`, `cfg = config.services.X;` (or `cfg_<name>` when more than one), `inherit (config.sops) secrets;`, then derived bindings (`vhost`, `dataRoot`, ...). Example:
+  ```nix
+  let
+    inherit (hostCfg) domain paths;
+    inherit (hostCfg.ports) paperless;
+    cfg = config.services.paperless;
+    inherit (config.sops) secrets;
+    vhost = "paperless.${domain}";
+  in
+  ```
+- Prefer `inherit (source) field;` over `field = source.field;` when the names match (statix W04). Apply at every scope, including inside attribute sets.
+- Bare `inherit foo bar;` is only for re-exporting names already bound in the enclosing scope.
+- Inline `lib.getExe pkg` at the call site rather than `inherit (lib) getExe;` unless `getExe` is used 2+ times in the file.
+- `with` is allowed only inside package list literals (`with pkgs; [ ... ]`). Never `with lib;` or `with config;`.
+- `rec { ... }` is reserved for `hostCfg` definitions in `flake.nix`. Don't introduce `rec` elsewhere.
+- Function arguments use destructuring with `...`. Don't use `@args`.
+- Auto-generated `hosts/*/hardware-configuration.nix` files are exempt — let `nixos-generate-config` own them.
