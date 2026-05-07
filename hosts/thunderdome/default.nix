@@ -15,10 +15,11 @@ in
     ../../modules/nixos/extra/autologin.nix
     ../../modules/nixos/extra/gaming.nix
 
+    ../../modules/common/tailscale.nix
+
     ../../modules/nixos/hardware/nvidia.nix
 
     ../../modules/nixos/services/sanoid.nix
-    ../../modules/nixos/services/tailscale.nix
     ../../modules/nixos/services/zfs.nix
 
     ./hardware-configuration.nix

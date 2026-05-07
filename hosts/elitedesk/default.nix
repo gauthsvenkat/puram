@@ -10,6 +10,8 @@ in
   imports = [
     ../../bases/nixos/flavor/server.nix
 
+    ../../modules/common/tailscale.nix
+
     ../../modules/nixos/hardware/intel-transcoding.nix
 
     ../../modules/nixos/services/adguard-home.nix
@@ -21,7 +23,6 @@ in
     ../../modules/nixos/services/sanoid.nix
     ../../modules/nixos/services/speedtest-tracker.nix
     ../../modules/nixos/services/stirling-pdf.nix
-    ../../modules/nixos/services/tailscale.nix
     ../../modules/nixos/services/zfs.nix
 
     ./disko-config.nix
