@@ -1,7 +1,6 @@
 { hostCfg, ... }:
 let
-  inherit (hostCfg) domain paths;
-  inherit (hostCfg.ports.jellyfin) port;
+  inherit (hostCfg) paths;
 in
 {
   services.jellyfin = {
@@ -11,8 +10,4 @@ in
     dataDir = "${paths.databases}/jellyfin";
     cacheDir = "${paths.cache}/jellyfin";
   };
-
-  services.caddy.virtualHosts."jellyfin.${domain}".extraConfig = ''
-    reverse_proxy 127.0.0.1:${toString port}
-  '';
 }

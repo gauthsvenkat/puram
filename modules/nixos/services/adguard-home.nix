@@ -1,6 +1,5 @@
 { hostCfg, ... }:
 let
-  inherit (hostCfg) domain;
   inherit (hostCfg.ports) adguard;
 in
 {
@@ -63,10 +62,6 @@ in
       ];
     };
   };
-
-  services.caddy.virtualHosts."adguard.${domain}".extraConfig = ''
-    reverse_proxy 127.0.0.1:${toString adguard.web_port}
-  '';
 
   # openFirewall covers the web UI port only; DNS needs explicit allow.
   networking.firewall.allowedTCPPorts = [ adguard.dns_port ];
