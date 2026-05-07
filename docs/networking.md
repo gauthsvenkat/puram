@@ -86,6 +86,24 @@ No auth-key file is wired in — Tailscale auth keys expire after 90 days, and t
 
 LAN-only or IoT devices (smart TVs, etc.) keep using direct LAN IPs — they don't get the named-HTTPS path.
 
+### Admin console DNS
+
+The tailnet DNS panel (https://login.tailscale.com/admin/dns) routes every tailnet device's DNS through AdGuard on elitedesk, so blocklists apply on and off LAN.
+
+| Setting | Value | Purpose |
+|---|---|---|
+| MagicDNS | on (`taile02742.ts.net`) | resolves tailnet hostnames via `100.100.100.100` |
+| Global nameserver 1 | `100.103.236.120` | elitedesk AdGuard — primary |
+| Global nameserver 2 | Cloudflare Public DNS (`1.1.1.1`, `1.0.0.1`, …) | fallback if elitedesk is offline |
+| Global nameserver 3 | Quad9 Public DNS (`9.9.9.9`, `149.112.112.112`, …) | second fallback |
+| Override DNS servers | **on** | forces all tailnet devices to use the above regardless of local DHCP / manual DNS |
+
+The fallbacks matter: with override on, if elitedesk goes down every tailnet device loses DNS unless there's a backup. Cloudflare and Quad9 keep resolution working in that window.
+
+AdGuard binds `0.0.0.0:53` (`modules/nixos/services/adguard-home.nix`), so the tailnet interface is covered without extra config. Allowed-clients defaults to permissive — any tailnet peer can query — so no allowlist tweak is needed.
+
+This config lives entirely in the Tailscale admin console; nothing in this repo encodes it. A fresh tailnet would need it re-applied by hand.
+
 ## Router / WAN posture
 
 - **All inbound ports closed.** No port forwards. Caddy is unreachable from the public internet by design.
@@ -119,7 +137,7 @@ ACME state — account, registered keys, per-vhost certs — lives at `/var/lib/
 5. `sudo tailscale up` → authorize device in browser.
 6. Wait ~60s — Caddy issues certs for every declared vhost via DNS-01.
 7. Verify: `curl https://homarr.gauthsvenkat.dev` from any tailnet device.
-8. If `tailscale ip -4` on elitedesk returns something other than `100.103.236.120`, update the wildcard A record in Cloudflare.
+8. If `tailscale ip -4` on elitedesk returns something other than `100.103.236.120`, update both the wildcard A record in Cloudflare **and** the first global nameserver in the Tailscale admin DNS panel.
 9. Redo the per-service runtime config above (qBittorrent server domains, sabnzbd host whitelist) — the configs live in service state, not in nix.
 
 ## See also
