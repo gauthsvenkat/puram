@@ -109,6 +109,7 @@ This config lives entirely in the Tailscale admin console; nothing in this repo 
 - **All inbound ports closed.** No port forwards. Caddy is unreachable from the public internet by design.
 - **UPnP disabled** on the router. Same posture is encoded in `modules/nixos/services/syncthing.nix` (LAN-only sync).
 - **Static DHCP** on the router pins elitedesk to a fixed LAN IP. No nix-side reference to that IP — it's only relevant when reaching elitedesk by LAN IP for service-side configuration (e.g. the qBittorrent / sabnzbd UIs below).
+- **DNS** is configured to be elitedesk's LAN IP, so all devices on LAN use adguard as the resolver.
 
 ## Per-service runtime config (out of nix)
 
@@ -121,6 +122,8 @@ Tools (gear) → Options → Web UI → **Server domains**: `qbittorrent.gauthsv
 ### sabnzbd
 
 Config → General → Tuning → **Host whitelist**: `sabnzbd.gauthsvenkat.dev`
+
+Config → Servers → **Port**: `443` (SSL; not the NNTPS default `563`). ISP providers *may* throttle usenet traffic on `563`.
 
 Paperless is configured fully through nix (`PAPERLESS_URL`); the rest of the stack accepts whatever Caddy proxies through.
 
