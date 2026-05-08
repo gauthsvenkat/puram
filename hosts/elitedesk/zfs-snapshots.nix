@@ -1,0 +1,21 @@
+{
+  hostCfg,
+  ...
+}:
+let
+  inherit (hostCfg) zpool;
+in
+{
+  imports = [
+    ../../modules/nixos/services/sanoid.nix
+  ];
+
+  services.sanoid.datasets = {
+    "${zpool}" = {
+      recursive = true;
+      process_children_only = true;
+      use_template = [ "default" ];
+    };
+    "${zpool}/cache".autosnap = false;
+  };
+}
