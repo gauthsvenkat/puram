@@ -1,8 +1,7 @@
 # Mullvad WireGuard VPN gateway. Every other container in this folder shares
 # this container's network namespace, so all dependents' egress flows through
 # Mullvad and their listeners are exposed only via the port mappings declared
-# here. Flaresolverr (8191) is intentionally not mapped — *arr reach it at
-# localhost:8191 inside the shared netns; no external consumer needs it.
+# here.
 #
 # No host firewall opens needed: docker (and podman with default networking)
 # DNATs published ports in PREROUTING and forwards them through its own chain,

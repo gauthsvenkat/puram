@@ -199,7 +199,6 @@
               # BEGIN-PRIVATE
               images = {
                 bazarr = "lscr.io/linuxserver/bazarr:1.5.6";
-                flaresolverr = "ghcr.io/flaresolverr/flaresolverr:v3.4.6";
                 gluetun = "qmcgaw/gluetun:v3.41.1";
                 prowlarr = "lscr.io/linuxserver/prowlarr:2.3.5";
                 qbittorrent = "lscr.io/linuxserver/qbittorrent:5.1.4";

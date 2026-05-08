@@ -17,7 +17,6 @@ in
     ../../modules/nixos/services/jellyfin.nix
     # BEGIN-PRIVATE
     ../../modules/nixos/services/media-stack/bazarr.nix
-    ../../modules/nixos/services/media-stack/flaresolverr.nix
     ../../modules/nixos/services/media-stack/gluetun.nix
     ../../modules/nixos/services/media-stack/prowlarr.nix
     ../../modules/nixos/services/media-stack/qbittorrent.nix
