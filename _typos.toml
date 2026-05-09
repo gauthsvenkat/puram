@@ -1,6 +1,7 @@
 [default.extend-words]
 iterm = "iterm"
 HAX = "HAX"
+ACI = "ACI"
 
 [default.extend-identifiers]
 UPnP = "UPnP"
