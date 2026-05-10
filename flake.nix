@@ -203,7 +203,6 @@
                 qbittorrent = "lscr.io/linuxserver/qbittorrent:5.1.4";
                 radarr = "lscr.io/linuxserver/radarr:6.1.1";
                 sabnzbd = "lscr.io/linuxserver/sabnzbd:4.5.5";
-                sonarr = "lscr.io/linuxserver/sonarr:4.0.17";
               };
 
               # END-PRIVATE
