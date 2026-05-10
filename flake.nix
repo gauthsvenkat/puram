@@ -201,7 +201,6 @@
                 gluetun = "qmcgaw/gluetun:v3.41.1";
                 prowlarr = "lscr.io/linuxserver/prowlarr:2.3.5";
                 qbittorrent = "lscr.io/linuxserver/qbittorrent:5.1.4";
-                radarr = "lscr.io/linuxserver/radarr:6.1.1";
                 sabnzbd = "lscr.io/linuxserver/sabnzbd:4.5.5";
               };
 

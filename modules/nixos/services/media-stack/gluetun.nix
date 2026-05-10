@@ -27,7 +27,6 @@ in
     ports = [
       "${toString ports.prowlarr.port}:9696"
       "${toString ports.qbittorrent.port}:8082"
-      "${toString ports.radarr.port}:7878"
       "${toString ports.sabnzbd.port}:8080"
       "${toString ports.qbittorrent.bt_port}:6881/tcp"
       "${toString ports.qbittorrent.bt_port}:6881/udp"

@@ -22,11 +22,11 @@ in
     ../../modules/nixos/services/media-stack/gluetun.nix
     ../../modules/nixos/services/media-stack/prowlarr.nix
     ../../modules/nixos/services/media-stack/qbittorrent.nix
-    ../../modules/nixos/services/media-stack/radarr.nix
     ../../modules/nixos/services/media-stack/sabnzbd.nix
     # END-PRIVATE
     ../../modules/nixos/services/paperless-ngx.nix
     # BEGIN-PRIVATE
+    ../../modules/nixos/services/radarr.nix
     ../../modules/nixos/services/sonarr.nix
     # END-PRIVATE
     ../../modules/nixos/services/speedtest-tracker.nix
