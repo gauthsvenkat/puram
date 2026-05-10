@@ -12,11 +12,13 @@ in
     ../../modules/common/tailscale.nix
 
     ../../modules/nixos/services/adguard-home.nix
+    # BEGIN-PRIVATE
+    ../../modules/nixos/services/bazarr.nix
+    # END-PRIVATE
     ../../modules/nixos/services/homepage.nix
     ../../modules/nixos/services/immich.nix
     ../../modules/nixos/services/jellyfin.nix
     # BEGIN-PRIVATE
-    ../../modules/nixos/services/media-stack/bazarr.nix
     ../../modules/nixos/services/media-stack/gluetun.nix
     ../../modules/nixos/services/media-stack/prowlarr.nix
     ../../modules/nixos/services/media-stack/qbittorrent.nix

@@ -25,7 +25,6 @@ in
     };
     environmentFiles = [ secrets.gluetun_wireguard_env.path ];
     ports = [
-      "${toString ports.bazarr.port}:6767"
       "${toString ports.prowlarr.port}:9696"
       "${toString ports.qbittorrent.port}:8082"
       "${toString ports.radarr.port}:7878"
