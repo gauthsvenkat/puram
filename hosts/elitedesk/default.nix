@@ -38,6 +38,7 @@ in
     ./disko-config.nix
     ./hardware-acceleration.nix
     ./hardware-configuration.nix
+    ./media-permissions.nix
     ./reverse-proxy.nix
     ./zfs-snapshots.nix
   ];
