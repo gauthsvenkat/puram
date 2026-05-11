@@ -30,6 +30,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # BEGIN-PRIVATE
+    vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
+
+    # END-PRIVATE
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
     homebrew-core = {
@@ -209,6 +213,14 @@
                 PGID = "1000";
                 TZ = "Europe/Paris";
               };
+# BEGIN-PRIVATE
+
+              vpn = {
+                namespace = "wg";
+                bridgeAddress = "192.168.15.5";
+                namespaceAddress = "192.168.15.1";
+              };
+# END-PRIVATE
             };
           };
           modules = [ ./hosts/elitedesk ];

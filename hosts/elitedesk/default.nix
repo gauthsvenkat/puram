@@ -40,6 +40,9 @@ in
     ./hardware-configuration.nix
     ./media-permissions.nix
     ./reverse-proxy.nix
+    # BEGIN-PRIVATE
+    ./vpn.nix
+    # END-PRIVATE
     ./zfs-snapshots.nix
   ];
 

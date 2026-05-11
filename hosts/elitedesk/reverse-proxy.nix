@@ -23,14 +23,23 @@ let
     # END-PRIVATE
     stirlingPdf
     ;
+  # BEGIN-PRIVATE
+  inherit (hostCfg.vpn) namespaceAddress;
+  # END-PRIVATE
   cfg_st = config.services.speedtest-tracker;
   cfg_caddy = config.services.caddy;
   cfg_phpfpm = config.services.phpfpm;
 
-  addr = p: "127.0.0.1:${toString p}";
   proxy = p: ''
-    reverse_proxy ${addr p}
+    reverse_proxy 127.0.0.1:${toString p}
   '';
+  # BEGIN-PRIVATE
+  # VPN-confined services bind on the namespace's internal IP rather
+  # than host loopback. Caddy reaches them via the bridge.
+  proxyVpn = p: ''
+    reverse_proxy ${namespaceAddress}:${toString p}
+  '';
+  # END-PRIVATE
 in
 {
   imports = [
@@ -49,7 +58,7 @@ in
     # BEGIN-PRIVATE
     "sonarr.${domain}".extraConfig = proxy sonarr.port;
     "radarr.${domain}".extraConfig = proxy radarr.port;
-    "prowlarr.${domain}".extraConfig = proxy prowlarr.port;
+    "prowlarr.${domain}".extraConfig = proxyVpn prowlarr.port;
     "bazarr.${domain}".extraConfig = proxy bazarr.port;
     "qbittorrent.${domain}".extraConfig = proxy qbittorrent.port;
     "sabnzbd.${domain}".extraConfig = proxy sabnzbd.port;
