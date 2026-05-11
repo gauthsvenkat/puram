@@ -20,8 +20,14 @@ let
     sonarr
     # END-PRIVATE
     ;
+  # BEGIN-PRIVATE
+  inherit (hostCfg.vpn) namespaceAddress;
+  # END-PRIVATE
 
   loopback = p: "http://127.0.0.1:${toString p}";
+  # BEGIN-PRIVATE
+  vpnLoopback = p: "http://${namespaceAddress}:${toString p}";
+  # END-PRIVATE
 in
 {
   services.homepage-dashboard = {
@@ -136,7 +142,7 @@ in
               href = "https://sabnzbd.${domain}";
               widget = {
                 type = "sabnzbd";
-                url = loopback sabnzbd.port;
+                url = vpnLoopback sabnzbd.port;
                 key = "{{HOMEPAGE_VAR_SABNZBD_KEY}}";
               };
             };
@@ -216,7 +222,7 @@ in
               href = "https://prowlarr.${domain}";
               widget = {
                 type = "prowlarr";
-                url = loopback prowlarr.port;
+                url = vpnLoopback prowlarr.port;
                 key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
               };
             };

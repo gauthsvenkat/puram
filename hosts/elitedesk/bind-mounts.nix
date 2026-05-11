@@ -29,5 +29,13 @@ in
       options = [ "bind" ];
       depends = [ "/${zpool}" ];
     };
+    # BEGIN-PRIVATE
+    "/var/lib/sabnzbd" = {
+      device = "${paths.config}/sabnzbd";
+      fsType = "none";
+      options = [ "bind" ];
+      depends = [ "/${zpool}" ];
+    };
+    # END-PRIVATE
   };
 }

@@ -161,6 +161,9 @@
                 postgres = "${databases}/postgres";
                 data = "/${zpool}/data";
                 cache = "/${zpool}/cache";
+                # BEGIN-PRIVATE
+                usenet = "${data}/entertainment/usenet";
+                # END-PRIVATE
               };
 
               ports = {
@@ -204,7 +207,6 @@
               images = {
                 gluetun = "qmcgaw/gluetun:v3.41.1";
                 qbittorrent = "lscr.io/linuxserver/qbittorrent:5.1.4";
-                sabnzbd = "lscr.io/linuxserver/sabnzbd:4.5.5";
               };
 
               # END-PRIVATE

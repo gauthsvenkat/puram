@@ -8,8 +8,9 @@ let
     "jellyfin"
     # BEGIN-PRIVATE
     "radarr"
+    "sabnzbd"
     "sonarr"
-    # qbittorrent, sabnzbd added when those services migrate native.
+    # qbittorrent added when it migrates native.
     # END-PRIVATE
   ];
 in

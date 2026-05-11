@@ -26,7 +26,6 @@ in
     environmentFiles = [ secrets.gluetun_wireguard_env.path ];
     ports = [
       "${toString ports.qbittorrent.port}:8082"
-      "${toString ports.sabnzbd.port}:8080"
       "${toString ports.qbittorrent.bt_port}:6881/tcp"
       "${toString ports.qbittorrent.bt_port}:6881/udp"
     ];
