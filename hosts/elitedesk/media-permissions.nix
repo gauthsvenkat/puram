@@ -7,10 +7,10 @@ let
     # END-PRIVATE
     "jellyfin"
     # BEGIN-PRIVATE
+    "qbittorrent"
     "radarr"
     "sabnzbd"
     "sonarr"
-    # qbittorrent added when it migrates native.
     # END-PRIVATE
   ];
 in

@@ -9,6 +9,7 @@ let
   inherit (config.sops) secrets;
   confined = [
     "prowlarr"
+    "qbittorrent"
     "sabnzbd"
   ];
 in

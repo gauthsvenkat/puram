@@ -36,6 +36,12 @@ in
       options = [ "bind" ];
       depends = [ "/${zpool}" ];
     };
+    "/var/lib/qBittorrent" = {
+      device = "${paths.config}/qbittorrent";
+      fsType = "none";
+      options = [ "bind" ];
+      depends = [ "/${zpool}" ];
+    };
     # END-PRIVATE
   };
 }

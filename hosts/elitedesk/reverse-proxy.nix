@@ -60,7 +60,7 @@ in
     "radarr.${domain}".extraConfig = proxy radarr.port;
     "prowlarr.${domain}".extraConfig = proxyVpn prowlarr.port;
     "bazarr.${domain}".extraConfig = proxy bazarr.port;
-    "qbittorrent.${domain}".extraConfig = proxy qbittorrent.port;
+    "qbittorrent.${domain}".extraConfig = proxyVpn qbittorrent.port;
     "sabnzbd.${domain}".extraConfig = proxyVpn sabnzbd.port;
     # END-PRIVATE
     "adguard.${domain}".extraConfig = proxy adguard.web_port;

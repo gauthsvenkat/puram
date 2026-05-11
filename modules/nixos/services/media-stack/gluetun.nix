@@ -8,7 +8,7 @@
 # bypassing NixOS firewall's INPUT filter.
 { config, hostCfg, ... }:
 let
-  inherit (hostCfg) commonEnvVars images ports;
+  inherit (hostCfg) commonEnvVars images;
   inherit (config.sops) secrets;
 in
 {
@@ -24,11 +24,8 @@ in
       inherit (commonEnvVars) TZ;
     };
     environmentFiles = [ secrets.gluetun_wireguard_env.path ];
-    ports = [
-      "${toString ports.qbittorrent.port}:8082"
-      "${toString ports.qbittorrent.bt_port}:6881/tcp"
-      "${toString ports.qbittorrent.bt_port}:6881/udp"
-    ];
+    # Gluetun has no consumers left; Phase 4 deletes this module entirely.
+    ports = [ ];
     extraOptions = [
       "--cap-add=NET_ADMIN"
       "--device=/dev/net/tun:/dev/net/tun"

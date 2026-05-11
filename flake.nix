@@ -162,7 +162,9 @@
                 data = "/${zpool}/data";
                 cache = "/${zpool}/cache";
                 # BEGIN-PRIVATE
-                usenet = "${data}/entertainment/usenet";
+                entertainment = "${data}/entertainment";
+                torrents = "${entertainment}/torrents";
+                usenet = "${entertainment}/usenet";
                 # END-PRIVATE
               };
 
@@ -206,7 +208,6 @@
               # BEGIN-PRIVATE
               images = {
                 gluetun = "qmcgaw/gluetun:v3.41.1";
-                qbittorrent = "lscr.io/linuxserver/qbittorrent:5.1.4";
               };
 
               # END-PRIVATE
