@@ -39,6 +39,7 @@ in
       go-task
       hurl
       k9s
+      kubectx
       kubernetes-helm
       # NOTE: Needed to build psycopg2 from source for work-api
       libpq.pg_config
