@@ -17,9 +17,8 @@ let
   cfg_caddy = config.services.caddy;
   cfg_phpfpm = config.services.phpfpm;
 
-  addr = p: "127.0.0.1:${toString p}";
   proxy = p: ''
-    reverse_proxy ${addr p}
+    reverse_proxy 127.0.0.1:${toString p}
   '';
 in
 {
