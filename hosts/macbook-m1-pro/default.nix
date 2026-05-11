@@ -9,8 +9,6 @@ in
 {
   imports = [
     ../../bases/darwin/workstation.nix
-
-    ../../modules/common/tailscale.nix
   ];
 
   homebrew = {
@@ -22,6 +20,7 @@ in
       "notion"
       "pgadmin4"
       "slack"
+      "tailscale-app"
       "thunderbird"
     ];
   };
