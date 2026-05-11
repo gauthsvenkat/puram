@@ -25,6 +25,7 @@ The router has no inbound ports forwarded; all entry happens via Tailscale.
 | Cloudflare (registrar + DNS) | `gauthsvenkat99@gmail.com` | `gauthsvenkat.dev` domain, wildcard A record, ACME API token |
 | Tailscale | `gauthsvenkat@gmail.com` (Google login) | tailnet, device list |
 | Let's Encrypt | `gauthsvenkat@gmail.com` | ACME account, auto-registered by Caddy on first cert request |
+| Mullvad | — | wg-quick configs |
 
 ## Cloudflare
 
@@ -111,6 +112,66 @@ This config lives entirely in the Tailscale admin console; nothing in this repo 
 - **Static DHCP** on the router pins elitedesk to a fixed LAN IP. No nix-side reference to that IP — it's only relevant when reaching elitedesk by LAN IP for service-side configuration (e.g. the qBittorrent / sabnzbd UIs below).
 - **DNS** is configured to be elitedesk's LAN IP, so all devices on LAN use adguard as the resolver.
 
+## Egress: VPN-confined services
+
+Some services run inside a dedicated network namespace (`wg`) whose only
+egress is a WireGuard tunnel to Mullvad. If the tunnel drops, the
+namespace has no fallback route — confined services stall (kernel-
+enforced kill switch). Wired via the `vpn-confinement` flake input;
+the host-side entrypoint is `hosts/elitedesk/vpn.nix`, and the
+`confined` list there is the source of truth for what's behind VPN.
+
+```
+service in wg ns ── wg0 ── Mullvad endpoint ── clearnet
+       ▲
+       │  veth-wg (192.168.15.1)  ↔  wg-br (192.168.15.5)
+       │
+    host default ns: Caddy, sonarr, radarr, ...
+```
+
+### Non-obvious mechanics
+
+- `portMappings` is the only mechanism to poke holes in the namespace's
+  default-DROP INPUT firewall. The DNAT side (`from` → host port) is
+  inert in our setup since the host firewall closes those ports
+  anyway; we use `portMappings` purely for its INPUT-allow side
+  effect on the `to` port.
+- `networking.firewall.trustedInterfaces = [ "wg-br" ]` enables the
+  reverse direction — confined services reaching back to host services
+  (e.g. Prowlarr's Application sync pushing indexers to Sonarr/Radarr).
+- `accessibleFrom` adds return-path routes inside the namespace for
+  source IPs **outside** the bridge subnet. Caddy on the host connects
+  via the bridge subnet itself, so empty/omitted is correct.
+- DNS resolution inside the namespace goes via Mullvad's tunnel DNS
+  (whatever the wg-quick config sets, typically `10.64.0.1`), not via
+  AdGuard. The vpn-confinement module hard-drops outbound UDP/53 to
+  any other resolver.
+
+### URL conventions
+
+Service UIs that talk to a peer on the other side of the bridge need
+explicit IPs (loopback won't traverse the namespace boundary):
+
+| Direction | Use |
+|---|---|
+| Host → confined service (Caddy, other host services) | `192.168.15.1:<port>` |
+| Confined service → host service | `192.168.15.5:<port>` |
+
+### Mullvad caveats
+
+- The wg-quick config pins one server. No automatic rotation; regenerate
+  the conf at Mullvad's portal to switch locations.
+- Port forwarding has been disabled at Mullvad since 2023, so qBit's
+  incoming peer connections won't reach us. Outbound (DHT, PEX,
+  connecting to peers with open ports) still works.
+
+### Mullvad wg-quick secret
+
+`mullvad_wg_config` in `secrets.yaml` holds a complete wg-quick config
+file as a multiline string (`[Interface]` / `[Peer]` shape). Generate
+at https://mullvad.net/en/account → WireGuard configuration → pick a
+location → download.
+
 ## Per-service runtime config (out of nix)
 
 Two services enforce host-header / origin checks via their own UI configs, not env vars — has to be done once per service after first deploy:
@@ -135,7 +196,7 @@ ACME state — account, registered keys, per-vhost certs — lives at `/var/lib/
 
 1. NixOS install + import `dontdie` (see `zfs-pool.md`).
 2. Restore `~/.ssh/id_ed25519` so sops can decrypt.
-3. Confirm `cloudflare_dns_token` is in `secrets.yaml`.
+3. Confirm `cloudflare_dns_token` and `mullvad_wg_config` are in `secrets.yaml` (regenerate the Mullvad conf at https://mullvad.net/en/account if not).
 4. `just apply`.
 5. `sudo tailscale up` → authorize device in browser.
 6. Wait ~60s — Caddy issues certs for every declared vhost via DNS-01.
