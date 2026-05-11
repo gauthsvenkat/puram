@@ -204,18 +204,6 @@
                 # END-PRIVATE
                 stirlingPdf.port = 8081;
               };
-
-              # BEGIN-PRIVATE
-              images = {
-                gluetun = "qmcgaw/gluetun:v3.41.1";
-              };
-
-              # END-PRIVATE
-              commonEnvVars = {
-                PUID = "1000";
-                PGID = "1000";
-                TZ = "Europe/Paris";
-              };
 # BEGIN-PRIVATE
 
               vpn = {
