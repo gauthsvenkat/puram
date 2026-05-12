@@ -18,6 +18,10 @@ in
       host_whitelist = "sabnzbd.${domain},${namespaceAddress}";
       download_dir = "${usenet}/incomplete";
       complete_dir = "${usenet}/complete";
+      # chmod completed downloads to 775 so sonarr/radarr (media group)
+      # can traverse and import. sabnzbd creates working dirs as 0700;
+      # without this they'd stay 0700 on move-to-complete.
+      permissions = "775";
     };
   };
 }
