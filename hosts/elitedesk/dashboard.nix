@@ -11,8 +11,6 @@ let
     jellyfin
     paperless
     ;
-
-  loopback = p: "http://127.0.0.1:${toString p}";
 in
 {
   services.homepage-dashboard = {
@@ -86,99 +84,106 @@ in
       }
     ];
 
-    services = [
-      {
-        "Media" = [
-          {
-            "Jellyfin" = {
-              icon = "jellyfin.svg";
-              href = "https://jellyfin.${domain}";
-              widget = {
-                type = "jellyfin";
-                url = loopback jellyfin.port;
-                key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
-                enableBlocks = true;
-                enableMediaControl = false;
-                version = 2;
+    services =
+      let
+        loopback = p: "http://127.0.0.1:${toString p}";
+        href = sub: "https://${sub}.${domain}";
+        icon = name: "${name}.svg";
+        envVar = name: "{{HOMEPAGE_VAR_${name}}}";
+      in
+      [
+        {
+          "Media" = [
+            {
+              "Jellyfin" = {
+                icon = icon "jellyfin";
+                href = href "jellyfin";
+                widget = {
+                  type = "jellyfin";
+                  url = loopback jellyfin.port;
+                  key = envVar "JELLYFIN_KEY";
+                  enableBlocks = true;
+                  enableMediaControl = false;
+                  version = 2;
+                };
               };
-            };
-          }
-          {
-            "Immich" = {
-              icon = "immich.svg";
-              href = "https://immich.${domain}";
-              widget = {
-                type = "immich";
-                url = loopback immich.port;
-                key = "{{HOMEPAGE_VAR_IMMICH_KEY}}";
-                version = 2;
+            }
+            {
+              "Immich" = {
+                icon = icon "immich";
+                href = href "immich";
+                widget = {
+                  type = "immich";
+                  url = loopback immich.port;
+                  key = envVar "IMMICH_KEY";
+                  version = 2;
+                };
               };
-            };
-          }
-          {
-            "Paperless" = {
-              icon = "paperless.svg";
-              href = "https://paperless.${domain}";
-              widget = {
-                type = "paperlessngx";
-                url = loopback paperless.port;
-                key = "{{HOMEPAGE_VAR_PAPERLESS_KEY}}";
+            }
+            {
+              "Paperless" = {
+                icon = icon "paperless";
+                href = href "paperless";
+                widget = {
+                  type = "paperlessngx";
+                  url = loopback paperless.port;
+                  key = envVar "PAPERLESS_KEY";
+                };
               };
-            };
-          }
-        ];
-      }
-      {
-        "Utilities" = [
-          {
-            "AdGuard Home" = {
-              icon = "adguard-home.svg";
-              href = "https://adguard.${domain}";
-              widget = {
-                type = "adguard";
-                url = loopback adguard.web_port;
-                username = "{{HOMEPAGE_VAR_ADGUARD_USER}}";
-                password = "{{HOMEPAGE_VAR_ADGUARD_PASS}}";
+            }
+          ];
+        }
+        {
+          "Utilities" = [
+            {
+              "AdGuard Home" = {
+                icon = icon "adguard-home";
+                href = href "adguard";
+                widget = {
+                  type = "adguard";
+                  url = loopback adguard.web_port;
+                  username = envVar "ADGUARD_USER";
+                  password = envVar "ADGUARD_PASS";
+                };
               };
-            };
-          }
-          {
-            "Stirling PDF" = {
-              icon = "stirling-pdf.svg";
-              href = "https://stirling.${domain}";
-            };
-          }
-          {
-            "Speedtest" = {
-              icon = "sh-speedtest-tracker.svg";
-              href = "https://speedtest.${domain}";
-              widget = {
-                type = "speedtest";
-                url = "https://speedtest.${domain}";
+            }
+            {
+              "Stirling PDF" = {
+                icon = icon "stirling-pdf";
+                href = href "stirling";
               };
-            };
-          }
-        ];
-      }
-      {
-        "Infra" = [
-          {
-            "Caddy" = {
-              icon = "caddy.svg";
-              widget = {
-                type = "caddy";
-                url = loopback caddy.admin_port;
+            }
+            {
+              "Speedtest" = {
+                icon = icon "sh-speedtest-tracker";
+                href = href "speedtest";
+                widget = {
+                  type = "speedtest";
+                  url = href "speedtest";
+                };
               };
-            };
-          }
-          {
-            "Tailscale" = {
-              icon = "tailscale.svg";
-              href = "https://login.tailscale.com/admin/machines";
-            };
-          }
-        ];
-      }
-    ];
+            }
+          ];
+        }
+        {
+          "Infra" = [
+            {
+              "Caddy" = {
+                icon = icon "caddy";
+                widget = {
+                  type = "caddy";
+                  url = loopback caddy.admin_port;
+                };
+              };
+            }
+            {
+              "Tailscale" = {
+                icon = icon "tailscale";
+                href = "https://login.tailscale.com/admin/machines";
+              };
+            }
+          ];
+        }
+      ];
   };
 }
