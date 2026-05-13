@@ -24,11 +24,6 @@ let
   # BEGIN-PRIVATE
   inherit (hostCfg.vpn) namespaceAddress;
   # END-PRIVATE
-
-  loopback = p: "http://127.0.0.1:${toString p}";
-  # BEGIN-PRIVATE
-  vpnLoopback = p: "http://${namespaceAddress}:${toString p}";
-  # END-PRIVATE
 in
 {
   services.homepage-dashboard = {
@@ -120,192 +115,202 @@ in
       }
     ];
 
-    services = [
-      # BEGIN-PRIVATE
-      {
-        "Downloads" = [
-          {
-            "qBittorrent" = {
-              icon = "qbittorrent.svg";
-              href = "https://qbittorrent.${domain}";
-              # TODO: re-enable once qBit 5.x CSRF / Host-header validation is sorted.
-              # widget = {
-              #   type = "qbittorrent";
-              #   url = loopback qbittorrent.port;
-              #   username = "{{HOMEPAGE_VAR_QBIT_USER}}";
-              #   password = "{{HOMEPAGE_VAR_QBIT_PASS}}";
-              # };
-            };
-          }
-          {
-            "SABnzbd" = {
-              icon = "sabnzbd.svg";
-              href = "https://sabnzbd.${domain}";
-              widget = {
-                type = "sabnzbd";
-                url = vpnLoopback sabnzbd.port;
-                key = "{{HOMEPAGE_VAR_SABNZBD_KEY}}";
+    services =
+      let
+        loopback = p: "http://127.0.0.1:${toString p}";
+        # BEGIN-PRIVATE
+        vpnLoopback = p: "http://${namespaceAddress}:${toString p}";
+        # END-PRIVATE
+        href = sub: "https://${sub}.${domain}";
+        icon = name: "${name}.svg";
+        envVar = name: "{{HOMEPAGE_VAR_${name}}}";
+      in
+      [
+        # BEGIN-PRIVATE
+        {
+          "Downloads" = [
+            {
+              "qBittorrent" = {
+                icon = icon "qbittorrent";
+                href = href "qbittorrent";
+                # TODO: re-enable once qBit 5.x CSRF / Host-header validation is sorted.
+                # widget = {
+                #   type = "qbittorrent";
+                #   url = loopback qbittorrent.port;
+                #   username = "{{HOMEPAGE_VAR_QBIT_USER}}";
+                #   password = "{{HOMEPAGE_VAR_QBIT_PASS}}";
+                # };
               };
-            };
-          }
-        ];
-      }
-      # END-PRIVATE
-      {
-        "Media" = [
-          # BEGIN-PRIVATE
-          {
-            "Seerr" = {
-              icon = "seerr.svg";
-              href = "https://seerr.${domain}";
-              widget = {
-                type = "seerr";
-                url = loopback seerr.port;
-                key = "{{HOMEPAGE_VAR_SEERR_KEY}}";
+            }
+            {
+              "SABnzbd" = {
+                icon = icon "sabnzbd";
+                href = href "sabnzbd";
+                widget = {
+                  type = "sabnzbd";
+                  url = vpnLoopback sabnzbd.port;
+                  key = envVar "SABNZBD_KEY";
+                };
               };
-            };
-          }
-          # END-PRIVATE
-          {
-            "Jellyfin" = {
-              icon = "jellyfin.svg";
-              href = "https://jellyfin.${domain}";
-              widget = {
-                type = "jellyfin";
-                url = loopback jellyfin.port;
-                key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
-                enableBlocks = true;
-                enableMediaControl = false;
-                version = 2;
+            }
+          ];
+        }
+        # END-PRIVATE
+        {
+          "Media" = [
+            # BEGIN-PRIVATE
+            {
+              "Seerr" = {
+                icon = icon "seerr";
+                href = href "seerr";
+                widget = {
+                  type = "seerr";
+                  url = loopback seerr.port;
+                  key = envVar "SEERR_KEY";
+                };
               };
-            };
-          }
-          {
-            "Immich" = {
-              icon = "immich.svg";
-              href = "https://immich.${domain}";
-              widget = {
-                type = "immich";
-                url = loopback immich.port;
-                key = "{{HOMEPAGE_VAR_IMMICH_KEY}}";
-                version = 2;
+            }
+            # END-PRIVATE
+            {
+              "Jellyfin" = {
+                icon = icon "jellyfin";
+                href = href "jellyfin";
+                widget = {
+                  type = "jellyfin";
+                  url = loopback jellyfin.port;
+                  key = envVar "JELLYFIN_KEY";
+                  enableBlocks = true;
+                  enableMediaControl = false;
+                  version = 2;
+                };
               };
-            };
-          }
-          {
-            "Paperless" = {
-              icon = "paperless.svg";
-              href = "https://paperless.${domain}";
-              widget = {
-                type = "paperlessngx";
-                url = loopback paperless.port;
-                key = "{{HOMEPAGE_VAR_PAPERLESS_KEY}}";
+            }
+            {
+              "Immich" = {
+                icon = icon "immich";
+                href = href "immich";
+                widget = {
+                  type = "immich";
+                  url = loopback immich.port;
+                  key = envVar "IMMICH_KEY";
+                  version = 2;
+                };
               };
-            };
-          }
-        ];
-      }
-      # BEGIN-PRIVATE
-      {
-        "Arrs" = [
-          {
-            "Sonarr" = {
-              icon = "sonarr.svg";
-              href = "https://sonarr.${domain}";
-              widget = {
-                type = "sonarr";
-                url = loopback sonarr.port;
-                key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
+            }
+            {
+              "Paperless" = {
+                icon = icon "paperless";
+                href = href "paperless";
+                widget = {
+                  type = "paperlessngx";
+                  url = loopback paperless.port;
+                  key = envVar "PAPERLESS_KEY";
+                };
               };
-            };
-          }
-          {
-            "Radarr" = {
-              icon = "radarr.svg";
-              href = "https://radarr.${domain}";
-              widget = {
-                type = "radarr";
-                url = loopback radarr.port;
-                key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
+            }
+          ];
+        }
+        # BEGIN-PRIVATE
+        {
+          "Arrs" = [
+            {
+              "Sonarr" = {
+                icon = icon "sonarr";
+                href = href "sonarr";
+                widget = {
+                  type = "sonarr";
+                  url = loopback sonarr.port;
+                  key = envVar "SONARR_KEY";
+                };
               };
-            };
-          }
-          {
-            "Prowlarr" = {
-              icon = "prowlarr.svg";
-              href = "https://prowlarr.${domain}";
-              widget = {
-                type = "prowlarr";
-                url = vpnLoopback prowlarr.port;
-                key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
+            }
+            {
+              "Radarr" = {
+                icon = icon "radarr";
+                href = href "radarr";
+                widget = {
+                  type = "radarr";
+                  url = loopback radarr.port;
+                  key = envVar "RADARR_KEY";
+                };
               };
-            };
-          }
-          {
-            "Bazarr" = {
-              icon = "bazarr.svg";
-              href = "https://bazarr.${domain}";
-              widget = {
-                type = "bazarr";
-                url = loopback bazarr.port;
-                key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
+            }
+            {
+              "Prowlarr" = {
+                icon = icon "prowlarr";
+                href = href "prowlarr";
+                widget = {
+                  type = "prowlarr";
+                  url = vpnLoopback prowlarr.port;
+                  key = envVar "PROWLARR_KEY";
+                };
               };
-            };
-          }
-        ];
-      }
-      # END-PRIVATE
-      {
-        "Utilities" = [
-          {
-            "AdGuard Home" = {
-              icon = "adguard-home.svg";
-              href = "https://adguard.${domain}";
-              widget = {
-                type = "adguard";
-                url = loopback adguard.web_port;
-                username = "{{HOMEPAGE_VAR_ADGUARD_USER}}";
-                password = "{{HOMEPAGE_VAR_ADGUARD_PASS}}";
+            }
+            {
+              "Bazarr" = {
+                icon = icon "bazarr";
+                href = href "bazarr";
+                widget = {
+                  type = "bazarr";
+                  url = loopback bazarr.port;
+                  key = envVar "BAZARR_KEY";
+                };
               };
-            };
-          }
-          {
-            "Stirling PDF" = {
-              icon = "stirling-pdf.svg";
-              href = "https://stirling.${domain}";
-            };
-          }
-          {
-            "Speedtest" = {
-              icon = "sh-speedtest-tracker.svg";
-              href = "https://speedtest.${domain}";
-              widget = {
-                type = "speedtest";
-                url = "https://speedtest.${domain}";
+            }
+          ];
+        }
+        # END-PRIVATE
+        {
+          "Utilities" = [
+            {
+              "AdGuard Home" = {
+                icon = icon "adguard-home";
+                href = href "adguard";
+                widget = {
+                  type = "adguard";
+                  url = loopback adguard.web_port;
+                  username = envVar "ADGUARD_USER";
+                  password = envVar "ADGUARD_PASS";
+                };
               };
-            };
-          }
-        ];
-      }
-      {
-        "Infra" = [
-          {
-            "Caddy" = {
-              icon = "caddy.svg";
-              widget = {
-                type = "caddy";
-                url = loopback caddy.admin_port;
+            }
+            {
+              "Stirling PDF" = {
+                icon = icon "stirling-pdf";
+                href = href "stirling";
               };
-            };
-          }
-          {
-            "Tailscale" = {
-              icon = "tailscale.svg";
-              href = "https://login.tailscale.com/admin/machines";
-            };
-          }
-        ];
-      }
-    ];
+            }
+            {
+              "Speedtest" = {
+                icon = icon "sh-speedtest-tracker";
+                href = href "speedtest";
+                widget = {
+                  type = "speedtest";
+                  url = href "speedtest";
+                };
+              };
+            }
+          ];
+        }
+        {
+          "Infra" = [
+            {
+              "Caddy" = {
+                icon = icon "caddy";
+                widget = {
+                  type = "caddy";
+                  url = loopback caddy.admin_port;
+                };
+              };
+            }
+            {
+              "Tailscale" = {
+                icon = icon "tailscale";
+                href = "https://login.tailscale.com/admin/machines";
+              };
+            }
+          ];
+        }
+      ];
   };
 }
