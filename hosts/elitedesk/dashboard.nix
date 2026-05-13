@@ -1,4 +1,5 @@
 {
+  config,
   hostCfg,
   ...
 }:
@@ -25,9 +26,50 @@ let
   # BEGIN-PRIVATE
   inherit (hostCfg.vpn) namespaceAddress;
   # END-PRIVATE
+  inherit (config.sops) placeholder;
 in
 {
+  sops.secrets = {
+    adguard_password = { };
+    adguard_username = { };
+    # BEGIN-PRIVATE
+    bazarr_api_key = { };
+    # END-PRIVATE
+    immich_api_key = { };
+    jellyfin_api_key = { };
+    paperless_api_key = { };
+    # BEGIN-PRIVATE
+    prowlarr_api_key = { };
+    qbittorrent_password = { };
+    qbittorrent_username = { };
+    sabnzbd_api_key = { };
+    seerr_api_key = { };
+    # END-PRIVATE
+  };
+
+  sops.templates.homepage_env.content = ''
+    HOMEPAGE_VAR_ADGUARD_PASS=${placeholder.adguard_password}
+    HOMEPAGE_VAR_ADGUARD_USER=${placeholder.adguard_username}
+    # BEGIN-PRIVATE
+    HOMEPAGE_VAR_BAZARR_KEY=${placeholder.bazarr_api_key}
+    # END-PRIVATE
+    HOMEPAGE_VAR_IMMICH_KEY=${placeholder.immich_api_key}
+    HOMEPAGE_VAR_JELLYFIN_KEY=${placeholder.jellyfin_api_key}
+    HOMEPAGE_VAR_PAPERLESS_KEY=${placeholder.paperless_api_key}
+    # BEGIN-PRIVATE
+    HOMEPAGE_VAR_PROWLARR_KEY=${placeholder.prowlarr_api_key}
+    HOMEPAGE_VAR_QBIT_PASS=${placeholder.qbittorrent_password}
+    HOMEPAGE_VAR_QBIT_USER=${placeholder.qbittorrent_username}
+    HOMEPAGE_VAR_RADARR_KEY=${placeholder.radarr_api_key}
+    HOMEPAGE_VAR_SABNZBD_KEY=${placeholder.sabnzbd_api_key}
+    HOMEPAGE_VAR_SEERR_KEY=${placeholder.seerr_api_key}
+    HOMEPAGE_VAR_SONARR_KEY=${placeholder.sonarr_api_key}
+    # END-PRIVATE
+  '';
+
   services.homepage-dashboard = {
+    environmentFiles = [ config.sops.templates.homepage_env.path ];
+
     settings = {
       title = hostname;
       headerStyle = "clean";

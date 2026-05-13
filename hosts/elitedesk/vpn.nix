@@ -6,7 +6,7 @@
 }:
 let
   inherit (hostCfg.vpn) namespace bridgeAddress namespaceAddress;
-  inherit (config.sops) secrets;
+  inherit (config.sops) placeholder;
   confined = [
     "flaresolverr"
     "prowlarr"
@@ -21,11 +21,26 @@ in
   # services reach back to host services (sonarr/radarr) via this interface.
   networking.firewall.trustedInterfaces = [ "${namespace}-br" ];
 
-  sops.secrets.mullvad_wg_config = { };
+  sops.secrets = {
+    mullvad_wg_address = { };
+    mullvad_wg_private_key = { };
+  };
+
+  sops.templates.mullvad_wg_config.content = ''
+    [Interface]
+    PrivateKey = ${placeholder.mullvad_wg_private_key}
+    Address = ${placeholder.mullvad_wg_address}
+    DNS = 10.64.0.1
+
+    [Peer]
+    PublicKey = MkP/Jytkg51/Y/EostONjIN6YaFRpsAYiNKMX27/CAY=
+    AllowedIPs = 0.0.0.0/0,::0/0
+    Endpoint = 185.195.233.76:51820
+  '';
 
   vpnNamespaces.${namespace} = {
     enable = true;
-    wireguardConfigFile = secrets.mullvad_wg_config.path;
+    wireguardConfigFile = config.sops.templates.mullvad_wg_config.path;
     inherit bridgeAddress namespaceAddress;
     # portMappings is used to open ports in the namespace's INPUT firewall.
     portMappings = map (name: {
