@@ -23,6 +23,7 @@ in
     ../../modules/nixos/services/prowlarr.nix
     ../../modules/nixos/services/qbittorrent.nix
     ../../modules/nixos/services/radarr.nix
+    ../../modules/nixos/services/recyclarr.nix
     ../../modules/nixos/services/sabnzbd.nix
     ../../modules/nixos/services/seerr.nix
     ../../modules/nixos/services/sonarr.nix
