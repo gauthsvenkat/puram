@@ -8,6 +8,7 @@ let
   inherit (hostCfg.vpn) namespace bridgeAddress namespaceAddress;
   inherit (config.sops) secrets;
   confined = [
+    "flaresolverr"
     "prowlarr"
     "qbittorrent"
     "sabnzbd"

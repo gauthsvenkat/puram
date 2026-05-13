@@ -179,6 +179,9 @@
                 # Cosmetic — Caddy hardcodes its admin API on 127.0.0.1:2019.
                 # Tracked here for documentation.
                 caddy.admin_port = 2019;
+                # BEGIN-PRIVATE
+                flaresolverr.port = 8191;
+                # END-PRIVATE
                 homepage.port = 7575;
                 immich.port = 2283;
                 # Cosmetic — services.jellyfin hardcodes 8096/8920 TCP and 1900/7359 UDP via
