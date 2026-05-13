@@ -6,7 +6,6 @@ in
   imports = [
     ../../../modules/common/home-manager.nix
     ../../../modules/common/zsh.nix
-    ../../../modules/nixos/services/docker.nix
 
     ../system.nix
   ];
