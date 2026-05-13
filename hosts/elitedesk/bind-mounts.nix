@@ -7,8 +7,8 @@ let
 in
 {
   # BEGIN-PRIVATE
-  # AdGuard Home and Stirling PDF run with `DynamicUser=true`, which
-  # makes systemd redirect their StateDirectory to /var/lib/private/<name>
+  # AdGuard Home, Stirling PDF, and Seerr run with `DynamicUser=true`,
+  # which makes systemd redirect their StateDirectory to /var/lib/private/<name>
   # (a root-only parent that guards against UID recycling). Sabnzbd and
   # qBittorrent use static User= accounts, so their StateDirectory lands
   # at /var/lib/<name> directly. Bind under the path each service
@@ -25,6 +25,9 @@ in
     in
     {
       "/var/lib/private/AdGuardHome" = bind "${paths.config}/adguard-home";
+      # BEGIN-PRIVATE
+      "/var/lib/private/seerr" = bind "${paths.config}/seerr";
+      # END-PRIVATE
       "/var/lib/private/stirling-pdf" = bind "${paths.config}/stirling-pdf";
       # BEGIN-PRIVATE
       "/var/lib/sabnzbd" = bind "${paths.config}/sabnzbd";

@@ -19,6 +19,7 @@ let
     qbittorrent
     radarr
     sabnzbd
+    seerr
     sonarr
     # END-PRIVATE
     stirlingPdf
@@ -62,6 +63,7 @@ in
     "bazarr.${domain}".extraConfig = proxy bazarr.port;
     "qbittorrent.${domain}".extraConfig = proxyVpn qbittorrent.port;
     "sabnzbd.${domain}".extraConfig = proxyVpn sabnzbd.port;
+    "seerr.${domain}".extraConfig = proxy seerr.port;
     # END-PRIVATE
     "adguard.${domain}".extraConfig = proxy adguard.web_port;
     "stirling.${domain}".extraConfig = proxy stirlingPdf.port;

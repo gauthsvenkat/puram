@@ -200,6 +200,7 @@
                 };
                 radarr.port = 7878;
                 sabnzbd.port = 8083;
+                seerr.port = 5055;
                 sonarr.port = 8989;
                 # END-PRIVATE
                 stirlingPdf.port = 8081;

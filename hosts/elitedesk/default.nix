@@ -24,6 +24,7 @@ in
     ../../modules/nixos/services/qbittorrent.nix
     ../../modules/nixos/services/radarr.nix
     ../../modules/nixos/services/sabnzbd.nix
+    ../../modules/nixos/services/seerr.nix
     ../../modules/nixos/services/sonarr.nix
     # END-PRIVATE
     ../../modules/nixos/services/speedtest-tracker.nix

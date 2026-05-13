@@ -17,6 +17,7 @@ let
     prowlarr
     radarr
     sabnzbd
+    seerr
     sonarr
     # END-PRIVATE
     ;
@@ -49,7 +50,7 @@ in
         {
           "Media" = {
             style = "row";
-            columns = 3;
+            columns = 4;
             useEqualHeights = true;
           };
         }
@@ -152,6 +153,19 @@ in
       # END-PRIVATE
       {
         "Media" = [
+          # BEGIN-PRIVATE
+          {
+            "Seerr" = {
+              icon = "seerr.svg";
+              href = "https://seerr.${domain}";
+              widget = {
+                type = "seerr";
+                url = loopback seerr.port;
+                key = "{{HOMEPAGE_VAR_SEERR_KEY}}";
+              };
+            };
+          }
+          # END-PRIVATE
           {
             "Jellyfin" = {
               icon = "jellyfin.svg";
