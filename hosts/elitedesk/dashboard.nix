@@ -15,6 +15,7 @@ let
     paperless
     # BEGIN-PRIVATE
     prowlarr
+    qbittorrent
     radarr
     sabnzbd
     seerr
@@ -133,13 +134,12 @@ in
               "qBittorrent" = {
                 icon = icon "qbittorrent";
                 href = href "qbittorrent";
-                # TODO: re-enable once qBit 5.x CSRF / Host-header validation is sorted.
-                # widget = {
-                #   type = "qbittorrent";
-                #   url = loopback qbittorrent.port;
-                #   username = "{{HOMEPAGE_VAR_QBIT_USER}}";
-                #   password = "{{HOMEPAGE_VAR_QBIT_PASS}}";
-                # };
+                widget = {
+                  type = "qbittorrent";
+                  url = vpnLoopback qbittorrent.port;
+                  username = envVar "QBIT_USER";
+                  password = envVar "QBIT_PASS";
+                };
               };
             }
             {

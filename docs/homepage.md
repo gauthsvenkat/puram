@@ -28,6 +28,8 @@ homepage_env: |
   HOMEPAGE_VAR_BAZARR_KEY=...
   HOMEPAGE_VAR_SABNZBD_KEY=...
   HOMEPAGE_VAR_SEERR_KEY=...
+  HOMEPAGE_VAR_QBIT_USER=...
+  HOMEPAGE_VAR_QBIT_PASS=...
   HOMEPAGE_VAR_ADGUARD_USER=...
   HOMEPAGE_VAR_ADGUARD_PASS=...
 ```
@@ -47,21 +49,10 @@ The dashboard renders fine if a value is missing — the affected tile just show
 | `BAZARR_KEY` | `https://bazarr.gauthsvenkat.dev` → Settings → General → API Key |
 | `SABNZBD_KEY` | `https://sabnzbd.gauthsvenkat.dev` → Config → General → API Key (full, not NZB) |
 | `SEERR_KEY` | `https://seerr.gauthsvenkat.dev` → Settings → General → API Key |
+| `QBIT_USER` / `QBIT_PASS` | The Web UI login credentials for `https://qbittorrent.gauthsvenkat.dev` (Tools → Options → Web UI → Authentication) |
 | `ADGUARD_USER` / `ADGUARD_PASS` | The login credentials for `https://adguard.gauthsvenkat.dev` |
 
 To add or remove vars, edit the placeholder in `hosts/elitedesk/default.nix`, then add/remove the matching `HOMEPAGE_VAR_*` line via `just secrets-edit`.
-
-## Per-service runtime config (out of nix)
-
-### qBittorrent (currently disabled)
-
-The widget is commented out in `hosts/elitedesk/default.nix` because qBittorrent 5.x's CSRF + Host-header validation rejects homepage's POST. To re-enable later:
-
-1. In qBit Web UI → Tools → Options → Web UI:
-   - Disable **Enable Cross-Site Request Forgery (CSRF) protection**
-   - Disable **Enable Host header validation** (or whitelist the podman bridge subnet from `podman network inspect podman`)
-2. Uncomment the `widget = { ... }` block on the qBittorrent entry.
-3. Add `HOMEPAGE_VAR_QBIT_USER` / `HOMEPAGE_VAR_QBIT_PASS` to `homepage_env`.
 
 ## Icons
 
