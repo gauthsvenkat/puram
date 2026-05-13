@@ -25,7 +25,7 @@ in
         {
           "Media" = {
             style = "row";
-            columns = 3;
+            columns = 4;
             useEqualHeights = true;
           };
         }
