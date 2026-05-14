@@ -50,7 +50,7 @@ in
         {
           "Utilities" = {
             style = "row";
-            columns = 3;
+            columns = 2;
             useEqualHeights = true;
           };
         }
@@ -165,12 +165,6 @@ in
                   username = envVar "ADGUARD_USER";
                   password = envVar "ADGUARD_PASS";
                 };
-              };
-            }
-            {
-              "Stirling PDF" = {
-                icon = icon "stirling-pdf";
-                href = href "stirling";
               };
             }
             {

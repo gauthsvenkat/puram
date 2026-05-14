@@ -17,6 +17,5 @@ in
     in
     {
       "/var/lib/private/AdGuardHome" = bind "${paths.config}/adguard-home";
-      "/var/lib/private/stirling-pdf" = bind "${paths.config}/stirling-pdf";
     };
 }

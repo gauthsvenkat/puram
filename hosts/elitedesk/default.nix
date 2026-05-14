@@ -17,7 +17,6 @@ in
     ../../modules/nixos/services/jellyfin.nix
     ../../modules/nixos/services/paperless-ngx.nix
     ../../modules/nixos/services/speedtest-tracker.nix
-    ../../modules/nixos/services/stirling-pdf.nix
     ../../modules/nixos/services/zfs.nix
 
     ./bind-mounts.nix

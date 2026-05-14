@@ -40,6 +40,7 @@ in
       "monitorcontrol"
       "rectangle"
       "spotify"
+      "stirling-pdf"
       "visual-studio-code"
     ];
   };
