@@ -53,6 +53,8 @@ in
       ])
     ];
 
+    programs.starship.settings.kubernetes.disabled = false;
+
     programs.claude-code.settings.permissions = {
       allow = [
         # GitLab CLI (read-only)
