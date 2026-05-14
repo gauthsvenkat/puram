@@ -64,4 +64,5 @@ justfile          -- task runner for common operations
 - `with` is allowed only inside package list literals (`with pkgs; [ ... ]`). Never `with lib;` or `with config;`.
 - `rec { ... }` is reserved for `hostCfg` definitions in `flake.nix`. Don't introduce `rec` elsewhere.
 - Function arguments use destructuring with `...`. Don't use `@args`.
+- If a module body uses no arguments at all, omit the function head entirely — write a bare attrset, not `{ ... }: { ... }`.
 - Auto-generated `hosts/*/hardware-configuration.nix` files are exempt — let `nixos-generate-config` own them.
