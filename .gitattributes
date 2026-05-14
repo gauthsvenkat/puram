@@ -1,5 +1,1 @@
-*.jpg filter=lfs diff=lfs merge=lfs -text
-*.png filter=lfs diff=lfs merge=lfs -text
 secrets.yaml diff=sopsdiffer
-notnix/wallpapers/astronaut.jpg !text !filter !merge !diff
-notnix/wallpapers/neon_shallows.png !text !filter !merge !diff
