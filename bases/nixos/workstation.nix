@@ -40,6 +40,7 @@ in
       mpv
       nerd-fonts.jetbrains-mono
       spotify
+      stirling-pdf-desktop
       vscode
 
       #NOTE: This is required for neovim on linux
