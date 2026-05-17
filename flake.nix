@@ -53,6 +53,35 @@
       nix-darwin,
       ...
     }@inputs:
+    let
+      # Patched nixpkgs tree for NixOS hosts. Each entry in `patches` is applied
+      # to the nixpkgs source via applyPatches; the resulting store path is then
+      # used as the root for eval-config.nix, so both modules and packages come
+      # from the patched copy. Remove patches here as they merge upstream.
+      patchedNixpkgsFor =
+        system:
+        (import nixpkgs { inherit system; }).applyPatches {
+          name = "nixpkgs-patched";
+          src = nixpkgs;
+          patches = [ ./patches/jellyfin-hevc10bit-520045.patch ];
+        };
+
+      mkNixos =
+        {
+          system,
+          specialArgs,
+          modules,
+        }:
+        let
+          patchedSrc = patchedNixpkgsFor system;
+        in
+        import "${patchedSrc}/nixos/lib/eval-config.nix" {
+          inherit system specialArgs;
+          modules = modules ++ [
+            { nixpkgs.flake.source = patchedSrc.outPath; }
+          ];
+        };
+    in
     {
       darwinConfigurations = {
         "macbook-m1-pro" = nix-darwin.lib.darwinSystem {
@@ -75,7 +104,7 @@
       };
 
       nixosConfigurations = {
-        "toshiba" = nixpkgs.lib.nixosSystem {
+        "toshiba" = mkNixos {
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs;
@@ -91,7 +120,7 @@
           modules = [ ./hosts/toshiba ];
         };
 
-        "thinkpad" = nixpkgs.lib.nixosSystem {
+        "thinkpad" = mkNixos {
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs;
@@ -107,7 +136,7 @@
           modules = [ ./hosts/thinkpad ];
         };
 
-        "thunderdome" = nixpkgs.lib.nixosSystem {
+        "thunderdome" = mkNixos {
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs;
@@ -125,7 +154,7 @@
           modules = [ ./hosts/thunderdome ];
         };
 
-        "nixpi400" = nixpkgs.lib.nixosSystem {
+        "nixpi400" = mkNixos {
           system = "aarch64-linux";
           specialArgs = {
             inherit inputs;
@@ -142,7 +171,7 @@
           modules = [ ./hosts/nixpi400 ];
         };
 
-        "elitedesk" = nixpkgs.lib.nixosSystem {
+        "elitedesk" = mkNixos {
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs;
