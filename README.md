@@ -22,6 +22,10 @@ These contain fully realized NixOS, nix-darwin or home-manager configurations, c
 
 Just a bunch of stuff that aren't nix files. Things like binaries (wallpaper images), configuration files.
 
+### [patches](./patches/)
+
+Upstream `nixpkgs` PRs applied at evaluation time, as a holding pen until they merge. See [patches/README.md](./patches/README.md) for how to add/remove one.
+
 ## Setting up
 
 This configuration does a lot of the heavy lifting for me but some steps need to be run manually, which I'm documenting. You can probably write some advanced nix code that'll eliminate some of these steps, but practicality beats purity.
