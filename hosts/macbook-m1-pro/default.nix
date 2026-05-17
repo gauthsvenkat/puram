@@ -53,7 +53,7 @@ in
       ])
     ];
 
-    programs.starship.settings.kubernetes.disabled = false;
+    programs.starship.settings.gcloud.disabled = true;
 
     programs.claude-code.settings.permissions = {
       allow = [
