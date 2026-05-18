@@ -179,5 +179,14 @@ in
       ".claude/"
       "CLAUDE.local.md"
     ];
+
+    zsh.shellAliases =
+      let
+        pkg = lib.getExe pkgs.claude-code;
+      in
+      {
+        cl = pkg;
+        clr = "${pkg} --resume";
+      };
   };
 }
