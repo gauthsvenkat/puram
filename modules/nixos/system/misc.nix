@@ -3,8 +3,8 @@
   # to run dynamically linked executables
   programs.nix-ld.enable = true;
 
-  #NOTE: By default only NIX_SSL_CERT_FILE is set. Better to set
-  # the following to make non-nix programs work as well.
+  # NixOS sets NIX_SSL_CERT_FILE by default; SSL_CERT_FILE is what non-nix
+  # programs look for.
   environment.variables.SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
 
   time.timeZone = "Europe/Amsterdam";

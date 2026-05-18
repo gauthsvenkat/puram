@@ -99,6 +99,27 @@ Two edits land the pool in NixOS:
 
 Apply with `just apply`. First boot will mount all datasets and arm the sanoid timer.
 
+#### Services with a custom dataDir on the pool
+
+Any NixOS service whose unit has sandboxing (`BindPaths=`, `ReadWritePaths=`, ...) referencing a custom `dataDir` refuses to start if that directory is missing -- the mount namespace fails before `preStart` runs. Declare the dir via `systemd-tmpfiles` so it's created at boot before the unit starts:
+
+```nix
+systemd.tmpfiles.rules = [
+  "d ${paths.postgres} 0700 postgres postgres - -"
+];
+```
+
+Postgres on the shared cluster (`services/databases/postgres`) is the canonical example.
+
+## Bootstrapping on a fresh host
+
+NixOS won't activate if `boot.zfs.extraPools` names a pool that doesn't exist, and any service consuming a pool path fails the same way. To break the chicken-and-egg on a new machine:
+
+1. Comment out `boot.zfs.extraPools` and every service that touches a pool path (caddy virtualHosts, postgres `dataDir`, sanoid datasets, bind-mounts, immich, ...). Keep `modules/nixos/services/zfs.nix` -- it adds the kernel module + userspace tools without trying to import.
+2. Deploy with `nixos-rebuild boot` and reboot so the ZFS-aware kernel is the one running.
+3. Create the pool + datasets per the [Fresh-pool setup recipe](#fresh-pool-setup-recipe).
+4. Uncomment everything, redeploy.
+
 ## Design notes
 
 ### Why `data/entertainment` is one dataset

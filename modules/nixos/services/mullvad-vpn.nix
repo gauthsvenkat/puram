@@ -10,8 +10,7 @@ in
 {
   services.mullvad-vpn = {
     enable = true;
-    # NOTE: pkgs.mullvad only contains the cli while
-    # pkgs.mullvad-vpn comes with the gui as well.
+    # pkgs.mullvad only contains the cli; pkgs.mullvad-vpn ships the gui too.
     package = pkg;
   };
 
