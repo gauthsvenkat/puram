@@ -1,6 +1,3 @@
-# NOTE: This config will put together a very basic workstation
-# with tools and services that I prefer on all workstations.
-# Desktop environment is chosen downstream.
 {
   hostCfg,
   pkgs,
@@ -43,7 +40,7 @@ in
       stirling-pdf-desktop
       vscode
 
-      #NOTE: This is required for neovim on linux
+      # Required for neovim clipboard integration on linux.
       wl-clipboard
     ];
 

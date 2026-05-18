@@ -27,9 +27,9 @@ in
 
   home-manager.users.${username} = {
     home.sessionVariables = {
-      #NOTE: Needed to link libpq.pg_config with openssl.
+      # Lets libpq.pg_config link against openssl.
       LDFLAGS = "-L${pkgs.openssl.out}/lib";
-      # NOTE: Needed for rust crates that link against libiconv (e.g. -liconv)
+      # For rust crates that link against libiconv (e.g. -liconv).
       LIBRARY_PATH = "${pkgs.libiconv}/lib";
     };
 
@@ -40,7 +40,7 @@ in
       k9s
       kubectx
       kubernetes-helm
-      # NOTE: Needed to build psycopg2 from source for work-api
+      # Needed to build psycopg2 from source for work-api.
       libpq.pg_config
       nodejs
       terraform

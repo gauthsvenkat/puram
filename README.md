@@ -65,6 +65,8 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
    just secret-rekey
    ```
 
+> **Use the user SSH key, not the host key.** `modules/common/sops.nix` configures `sops.age.sshKeyPaths = [ "~/.ssh/id_ed25519" ]`, so enrollment must use the same path. `sops-install-secrets` runs as root at activation and reads it regardless of file perms — but the file must exist before the first rebuild, or activation fails silently and `/run/secrets` stays empty.
+
 ## Notes
 
 - nix-darwin configuration relies on the homebrew module to install gui apps. The reason is there are lots of issues with spotlight indexing gui apps installed through nixpkgs. See

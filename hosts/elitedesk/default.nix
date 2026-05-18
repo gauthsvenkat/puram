@@ -3,7 +3,7 @@
   ...
 }:
 let
-  inherit (hostCfg) paths zpool;
+  inherit (hostCfg) zpool;
 in
 {
   imports = [
@@ -16,6 +16,7 @@ in
     ../../modules/nixos/services/immich.nix
     ../../modules/nixos/services/jellyfin.nix
     ../../modules/nixos/services/paperless-ngx.nix
+    ../../modules/nixos/services/postgresql.nix
     ../../modules/nixos/services/speedtest-tracker.nix
     ../../modules/nixos/services/zfs.nix
 
@@ -30,7 +31,4 @@ in
   ];
 
   boot.zfs.extraPools = [ zpool ];
-
-  # Shared by every service that opts to use postgresql (paperless, immich, ...).
-  services.postgresql.dataDir = paths.postgres;
 }
