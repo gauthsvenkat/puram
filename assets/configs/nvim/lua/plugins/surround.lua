@@ -1,25 +1,20 @@
 return {
   "kylechui/nvim-surround",
-  opts = {
-    keymaps = {
-      -- s -> Same line surround | Enter operator pending mode
-      -- ss -> Same line surround | Whole line
-      -- S -> Multi line surround | Enter operator pending mode
-      -- SS -> Multi line surround | Whole line
-      normal = "gs",
-      normal_cur = "gss",
-      normal_line = "gS",
-      normal_cur_line = "gSS",
-      visual = "gs",
-      visual_line = "gS",
-      delete = "ds",
-      change = "cs",
-    },
-  },
+  init = function()
+    vim.g.nvim_surround_no_mappings = true
+  end,
   keys = {
-    { "gs", mode = { "n", "v" } },
-    { "gS", mode = { "n", "v" } },
-    { "ds", mode = { "n", "v" } },
-    { "cs", mode = { "n", "v" } },
+    -- s -> Same line surround | Enter operator pending mode
+    -- ss -> Same line surround | Whole line
+    -- S -> Multi line surround | Enter operator pending mode
+    -- SS -> Multi line surround | Whole line
+    { "gs", "<Plug>(nvim-surround-normal)", mode = "n" },
+    { "gss", "<Plug>(nvim-surround-normal-cur)", mode = "n" },
+    { "gS", "<Plug>(nvim-surround-normal-line)", mode = "n" },
+    { "gSS", "<Plug>(nvim-surround-normal-cur-line)", mode = "n" },
+    { "gs", "<Plug>(nvim-surround-visual)", mode = "x" },
+    { "gS", "<Plug>(nvim-surround-visual-line)", mode = "x" },
+    { "ds", "<Plug>(nvim-surround-delete)", mode = "n" },
+    { "cs", "<Plug>(nvim-surround-change)", mode = "n" },
   },
 }
