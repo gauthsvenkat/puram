@@ -13,7 +13,7 @@ bases/            -- composable configs that import modules
 hosts/            -- per-machine configs that import bases + host-specific modules
   <hostname>/     -- default.nix + hardware-configuration.nix (+ disko-config.nix if applicable)
 docs/             -- operational notes (setup-*, server-*, repo-*)
-notnix/           -- non-nix assets (configs/, wallpapers/)
+assets/           -- non-nix assets (configs/, wallpapers/)
 patches/          -- nixpkgs PRs applied at evaluation time (auto-discovered *.patch files)
 secrets.yaml      -- sops-nix encrypted secrets (age keys derived from SSH keys)
 justfile          -- task runner for common operations
