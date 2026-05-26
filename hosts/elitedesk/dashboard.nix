@@ -76,15 +76,6 @@ in
       theme = "dark";
       color = "slate";
       layout = [
-        # BEGIN-PRIVATE
-        {
-          "Downloads" = {
-            style = "row";
-            columns = 2;
-            useEqualHeights = true;
-          };
-        }
-        # END-PRIVATE
         {
           "Media" = {
             style = "row";
@@ -92,15 +83,6 @@ in
             useEqualHeights = true;
           };
         }
-        # BEGIN-PRIVATE
-        {
-          "Arrs" = {
-            style = "row";
-            columns = 4;
-            useEqualHeights = true;
-          };
-        }
-        # END-PRIVATE
         {
           "Utilities" = {
             style = "row";
@@ -108,6 +90,15 @@ in
             useEqualHeights = true;
           };
         }
+        # BEGIN-PRIVATE
+        {
+          "Arrs" = {
+            style = "row";
+            columns = 3;
+            useEqualHeights = true;
+          };
+        }
+        # END-PRIVATE
         {
           "Infra" = {
             style = "row";
@@ -169,50 +160,8 @@ in
         envVar = name: "{{HOMEPAGE_VAR_${name}}}";
       in
       [
-        # BEGIN-PRIVATE
-        {
-          "Downloads" = [
-            {
-              "qBittorrent" = {
-                icon = icon "qbittorrent";
-                href = href "qbittorrent";
-                widget = {
-                  type = "qbittorrent";
-                  url = vpnLoopback qbittorrent.port;
-                  username = envVar "QBIT_USER";
-                  password = envVar "QBIT_PASS";
-                };
-              };
-            }
-            {
-              "SABnzbd" = {
-                icon = icon "sabnzbd";
-                href = href "sabnzbd";
-                widget = {
-                  type = "sabnzbd";
-                  url = vpnLoopback sabnzbd.port;
-                  key = envVar "SABNZBD_KEY";
-                };
-              };
-            }
-          ];
-        }
-        # END-PRIVATE
         {
           "Media" = [
-            # BEGIN-PRIVATE
-            {
-              "Seerr" = {
-                icon = icon "seerr";
-                href = href "seerr";
-                widget = {
-                  type = "seerr";
-                  url = loopback seerr.port;
-                  key = envVar "SEERR_KEY";
-                };
-              };
-            }
-            # END-PRIVATE
             {
               "Jellyfin" = {
                 icon = icon "jellyfin";
@@ -227,6 +176,19 @@ in
                 };
               };
             }
+            # BEGIN-PRIVATE
+            {
+              "Seerr" = {
+                icon = icon "seerr";
+                href = href "seerr";
+                widget = {
+                  type = "seerr";
+                  url = loopback seerr.port;
+                  key = envVar "SEERR_KEY";
+                };
+              };
+            }
+            # END-PRIVATE
             {
               "Immich" = {
                 icon = icon "immich";
@@ -252,56 +214,6 @@ in
             }
           ];
         }
-        # BEGIN-PRIVATE
-        {
-          "Arrs" = [
-            {
-              "Sonarr" = {
-                icon = icon "sonarr";
-                href = href "sonarr";
-                widget = {
-                  type = "sonarr";
-                  url = loopback sonarr.port;
-                  key = envVar "SONARR_KEY";
-                };
-              };
-            }
-            {
-              "Radarr" = {
-                icon = icon "radarr";
-                href = href "radarr";
-                widget = {
-                  type = "radarr";
-                  url = loopback radarr.port;
-                  key = envVar "RADARR_KEY";
-                };
-              };
-            }
-            {
-              "Prowlarr" = {
-                icon = icon "prowlarr";
-                href = href "prowlarr";
-                widget = {
-                  type = "prowlarr";
-                  url = vpnLoopback prowlarr.port;
-                  key = envVar "PROWLARR_KEY";
-                };
-              };
-            }
-            {
-              "Bazarr" = {
-                icon = icon "bazarr";
-                href = href "bazarr";
-                widget = {
-                  type = "bazarr";
-                  url = loopback bazarr.port;
-                  key = envVar "BAZARR_KEY";
-                };
-              };
-            }
-          ];
-        }
-        # END-PRIVATE
         {
           "Utilities" = [
             {
@@ -328,6 +240,79 @@ in
             }
           ];
         }
+        # BEGIN-PRIVATE
+        {
+          "Arrs" = [
+            {
+              "SABnzbd" = {
+                icon = icon "sabnzbd";
+                href = href "sabnzbd";
+                widget = {
+                  type = "sabnzbd";
+                  url = vpnLoopback sabnzbd.port;
+                  key = envVar "SABNZBD_KEY";
+                };
+              };
+            }
+            {
+              "Radarr" = {
+                icon = icon "radarr";
+                href = href "radarr";
+                widget = {
+                  type = "radarr";
+                  url = loopback radarr.port;
+                  key = envVar "RADARR_KEY";
+                };
+              };
+            }
+            {
+              "Prowlarr" = {
+                icon = icon "prowlarr";
+                href = href "prowlarr";
+                widget = {
+                  type = "prowlarr";
+                  url = vpnLoopback prowlarr.port;
+                  key = envVar "PROWLARR_KEY";
+                };
+              };
+            }
+            {
+              "qBittorrent" = {
+                icon = icon "qbittorrent";
+                href = href "qbittorrent";
+                widget = {
+                  type = "qbittorrent";
+                  url = vpnLoopback qbittorrent.port;
+                  username = envVar "QBIT_USER";
+                  password = envVar "QBIT_PASS";
+                };
+              };
+            }
+            {
+              "Sonarr" = {
+                icon = icon "sonarr";
+                href = href "sonarr";
+                widget = {
+                  type = "sonarr";
+                  url = loopback sonarr.port;
+                  key = envVar "SONARR_KEY";
+                };
+              };
+            }
+            {
+              "Bazarr" = {
+                icon = icon "bazarr";
+                href = href "bazarr";
+                widget = {
+                  type = "bazarr";
+                  url = loopback bazarr.port;
+                  key = envVar "BAZARR_KEY";
+                };
+              };
+            }
+          ];
+        }
+        # END-PRIVATE
         {
           "Infra" = [
             {
