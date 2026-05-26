@@ -6,15 +6,15 @@ This repository holds the configurations of all my machines running [NixOS](http
 
 The organization philosophy of this repository is inspired by the [polylith](https://polylith.gitbook.io/polylith) software architecture, with a focus on composability.
 
-### [Modules](./modules/)
+### [modules](./modules/)
 
 These are the building blocks of my machines. Each component tries to handle one related set of configurations.
 
-### [Bases](./bases/)
+### [bases](./bases/)
 
 These contain abstract hosts declarations, which put together multiple `modules/` to build a specialized machine. For e.g. a [Mac workstation](./bases/darwin/workstation.nix), a [NixOS KDE workstation](./bases/nixos/desktop-environment/k) or a [NixOS server](./bases/nixos/flavor/server.nix).
 
-### [Hosts](./hosts/)
+### [hosts](./hosts/)
 
 These contain fully realized NixOS, nix-darwin or home-manager configurations, corresponding to my machines. It also contain host specific options / packages.
 
