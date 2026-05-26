@@ -32,7 +32,7 @@
 
 - Follow Conventional Commits (look it up when needed).
 - No emojis in commit messages.
-- Prefer small, focused commits — one logical change per commit.
+- Prefer small, focused commits - one logical change per commit.
 - Format:
   ```
   <type>[optional scope]: <title>
@@ -44,13 +44,13 @@
 
 ### Types
 
-- `feat` — new feature
-- `fix` — bug fix
-- `refactor` — restructuring without behavior change
-- `chore` — maintenance, dependencies, tooling
-- `docs` — documentation only
-- `test` — adding or updating tests
-- `ci` — CI/CD changes
+- `feat` - new feature
+- `fix` - bug fix
+- `refactor` - restructuring without behavior change
+- `chore` - maintenance, dependencies, tooling
+- `docs` - documentation only
+- `test` - adding or updating tests
+- `ci` - CI/CD changes
 - postfix `!` if breaking change
 
 ### Scope
