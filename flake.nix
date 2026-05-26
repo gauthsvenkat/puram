@@ -50,33 +50,7 @@
       ...
     }@inputs:
     let
-      # Patched nixpkgs tree for NixOS hosts. Each entry in `patches` is applied
-      # to the nixpkgs source via applyPatches; the resulting store path is then
-      # used as the root for eval-config.nix, so both modules and packages come
-      # from the patched copy. Remove patches here as they merge upstream.
-      patchedNixpkgsFor =
-        system:
-        (import nixpkgs { inherit system; }).applyPatches {
-          name = "nixpkgs-patched";
-          src = nixpkgs;
-          patches = [ ./patches/jellyfin-hevc10bit-520045.patch ];
-        };
-
-      mkNixos =
-        {
-          system,
-          specialArgs,
-          modules,
-        }:
-        let
-          patchedSrc = patchedNixpkgsFor system;
-        in
-        import "${patchedSrc}/nixos/lib/eval-config.nix" {
-          inherit system specialArgs;
-          modules = modules ++ [
-            { nixpkgs.flake.source = patchedSrc.outPath; }
-          ];
-        };
+      mkNixos = import ./patches { inherit nixpkgs; };
     in
     {
       darwinConfigurations = {
