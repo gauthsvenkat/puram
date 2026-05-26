@@ -54,7 +54,7 @@
       ...
     }@inputs:
     let
-      mkNixos = import ./patches { inherit nixpkgs; };
+      mkNixos = import ./patches.nix { inherit nixpkgs; };
     in
     {
       darwinConfigurations = {
