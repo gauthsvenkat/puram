@@ -34,7 +34,7 @@ homepage_env: |
   HOMEPAGE_VAR_ADGUARD_PASS=...
 ```
 
-The dashboard renders fine if a value is missing — the affected tile just shows an "API Error". Populate incrementally.
+The dashboard renders fine if a value is missing - the affected tile just shows an "API Error". Populate incrementally.
 
 ### Where each value comes from
 
@@ -56,7 +56,7 @@ To add or remove vars, edit the placeholder in `hosts/elitedesk/default.nix`, th
 
 ## Icons
 
-Default icon source is the dashboard-icons CDN — referenced by bare filename like `jellyfin.svg`. For services missing from dashboard-icons, prefix with `sh-` to pull from selfh.st instead. Currently used for Speedtest (`sh-speedtest-tracker.svg`), since dashboard-icons doesn't carry it.
+Default icon source is the dashboard-icons CDN - referenced by bare filename like `jellyfin.svg`. For services missing from dashboard-icons, prefix with `sh-` to pull from selfh.st instead. Currently used for Speedtest (`sh-speedtest-tracker.svg`), since dashboard-icons doesn't carry it.
 
 To check whether an icon exists: try `https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/<name>.svg` (200 = use bare name) and `https://cdn.jsdelivr.net/gh/selfhst/icons/svg/<name>.svg` (200 = use `sh-<name>.svg`).
 
@@ -66,6 +66,6 @@ After a fresh elitedesk install, homepage comes up empty (every widget shows "AP
 
 ## See also
 
-- `networking.md` — Caddy / Tailscale / Cloudflare setup that fronts the dashboard.
+- `server-networking.md` - Caddy / Tailscale / Cloudflare setup that fronts the dashboard.
 - Homepage docs: https://gethomepage.dev
 - selfh.st icons: https://selfh.st/icons

@@ -12,6 +12,9 @@ bases/            -- composable configs that import modules
   darwin/         -- macOS bases (system.nix, workstation.nix)
 hosts/            -- per-machine configs that import bases + host-specific modules
   <hostname>/     -- default.nix + hardware-configuration.nix (+ disko-config.nix if applicable)
+docs/             -- operational notes (setup-*, server-*, repo-*)
+notnix/           -- non-nix assets (configs/, wallpapers/)
+patches/          -- nixpkgs PRs applied at evaluation time (auto-discovered *.patch files)
 secrets.yaml      -- sops-nix encrypted secrets (age keys derived from SSH keys)
 justfile          -- task runner for common operations
 ```
@@ -34,7 +37,6 @@ justfile          -- task runner for common operations
 - Update inputs: `just update` (or `just u`) -- optionally pass a single input name
 - Upgrade: `just upgrade` -- updates flake lock, rebuilds, and commits
 - Deploy: `just deploy <hostname>` -- builds locally, deploys to remote host
-- Secrets: `just secrets-edit`, `just secrets-view`, `just secrets-rekey`
 
 # Code style
 
@@ -64,5 +66,5 @@ justfile          -- task runner for common operations
 - `with` is allowed only inside package list literals (`with pkgs; [ ... ]`). Never `with lib;` or `with config;`.
 - `rec { ... }` is reserved for `hostCfg` definitions in `flake.nix`. Don't introduce `rec` elsewhere.
 - Function arguments use destructuring with `...`. Don't use `@args`.
-- If a module body uses no arguments at all, omit the function head entirely — write a bare attrset, not `{ ... }: { ... }`.
-- Auto-generated `hosts/*/hardware-configuration.nix` files are exempt — let `nixos-generate-config` own them.
+- If a module body uses no arguments at all, omit the function head entirely - write a bare attrset, not `{ ... }: { ... }`.
+- Auto-generated `hosts/*/hardware-configuration.nix` files are exempt - let `nixos-generate-config` own them.

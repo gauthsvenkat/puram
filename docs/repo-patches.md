@@ -21,7 +21,7 @@ gh pr diff <PR_NUMBER> --repo NixOS/nixpkgs \
 
 `git add` the file (flakes ignore untracked files) and run `just check` to
 confirm it applies cleanly against the locked nixpkgs. No edits to `flake.nix`
-are needed — the file is auto-discovered.
+are needed - the file is auto-discovered.
 
 ## Removing a patch
 
