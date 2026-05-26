@@ -13,7 +13,7 @@ in
     claude-code = {
       enable = true;
 
-      context = ../../../notnix/configs/CLAUDE.md;
+      context = ../../../assets/configs/CLAUDE.md;
 
       mcpServers = {
         context7 = {

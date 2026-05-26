@@ -18,7 +18,7 @@ These contain abstract hosts declarations, which put together multiple `modules/
 
 These contain fully realized NixOS, nix-darwin or home-manager configurations, corresponding to my machines. It also contain host specific options / packages.
 
-### [notnix](./notnix/)
+### [assets](./assets/)
 
 Just a bunch of stuff that aren't nix files. Things like binaries (wallpaper images), configuration files.
 
