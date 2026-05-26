@@ -24,55 +24,13 @@ Just a bunch of stuff that aren't nix files. Things like binaries (wallpaper ima
 
 ### [patches](./patches/)
 
-Upstream `nixpkgs` PRs applied at evaluation time, as a holding pen until they merge. See [patches/README.md](./patches/README.md) for how to add/remove one.
+Upstream `nixpkgs` PRs applied at evaluation time, as a holding pen until they merge.
 
-## Setting up
+### [docs](./docs/)
 
-This configuration does a lot of the heavy lifting for me but some steps need to be run manually, which I'm documenting. You can probably write some advanced nix code that'll eliminate some of these steps, but practicality beats purity.
-
-- [NixOS setup](./bases/nixos/README.md)
-- [nix-darwin setup](./bases/darwin/README.md)
-
-
-## Secret Management
-
-This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing [secrets](./secrets.yaml).
-
-### Setting up secrets on a new machine
-
-1. **Generate age key from SSH key** (if not already done):
-   ```bash
-   mkdir -p ~/.config/sops/age
-   nix-shell -p ssh-to-age --run "ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt"
-   ```
-
-   The age key might already be generated (since the [generate file option is set to true](./modules/common/sops.nix#L12)). In that case, the key will be owned by `root`. So make yourself the owner by running
-   ```bash
-   sudo chown <user> ~/.config/sops/age/keys.txt
-   ```
-
-2. **Get the public age key** for this machine:
-   ```bash
-   nix-shell -p age --run "age-keygen -y ~/.config/sops/age/keys.txt"
-   ```
-
-3. **Add the public age key to [.sops.yaml](./.sops.yaml)**:
-   - Add a new entry under the `keys` section with a meaningful name (e.g., `&hostname`)
-   - Add the key reference to the `creation_rules` section
-
-4. **Rekey existing secrets** to include the new machine:
-   ```bash
-   just secret-rekey
-   ```
-
-> **Use the user SSH key, not the host key.** `modules/common/sops.nix` configures `sops.age.sshKeyPaths = [ "~/.ssh/id_ed25519" ]`, so enrollment must use the same path. `sops-install-secrets` runs as root at activation and reads it regardless of file perms — but the file must exist before the first rebuild, or activation fails silently and `/run/secrets` stays empty.
-
-## Notes
-
-- nix-darwin configuration relies on the homebrew module to install gui apps. The reason is there are lots of issues with spotlight indexing gui apps installed through nixpkgs. See
-  - [mac-app-util](https://github.com/hraban/mac-app-util).
-  - [this PR](https://github.com/nix-darwin/nix-darwin/pull/1396#issuecomment-3150075769) for a potential solution.
-
-## Todo
-
-- [mac] Check if spotlight indexing works finally.
+- [setup-nixos](./docs/setup-nixos.md)
+- [setup-darwin](./docs/setup-darwin.md)
+- [setup-secrets](./docs/setup-secrets.md)
+- [server-zfs-pool](./docs/server-zfs-pool.md)
+- [server-homepage](./docs/server-homepage.md)
+- [repo-patches](./docs/repo-patches.md)
