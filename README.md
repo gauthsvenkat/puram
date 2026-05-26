@@ -22,7 +22,7 @@ These contain fully realized NixOS, nix-darwin or home-manager configurations, c
 
 Just a bunch of stuff that aren't nix files. Things like binaries (wallpaper images), configuration files.
 
-### [patches](./patches/)
+### [patches](./patches.nix)
 
 Upstream `nixpkgs` PRs applied at evaluation time, as a holding pen until they merge.
 
