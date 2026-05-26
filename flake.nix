@@ -195,7 +195,7 @@
                 # BEGIN-PRIVATE
                 bazarr.port = 6767;
                 # END-PRIVATE
-                # Cosmetic — Caddy hardcodes its admin API on 127.0.0.1:2019.
+                # Cosmetic - Caddy hardcodes its admin API on 127.0.0.1:2019.
                 # Tracked here for documentation.
                 caddy.admin_port = 2019;
                 # BEGIN-PRIVATE
@@ -203,7 +203,7 @@
                 # END-PRIVATE
                 homepage.port = 7575;
                 immich.port = 2283;
-                # Cosmetic — services.jellyfin hardcodes 8096/8920 TCP and 1900/7359 UDP via
+                # Cosmetic - services.jellyfin hardcodes 8096/8920 TCP and 1900/7359 UDP via
                 # openFirewall. Tracked here for documentation.
                 jellyfin = {
                   port = 8096;
