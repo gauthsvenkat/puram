@@ -26,6 +26,7 @@ in
     mullvad_wg_private_key = { };
   };
 
+  # Device: Bright Pug
   sops.templates.mullvad_wg_config.content = ''
     [Interface]
     PrivateKey = ${placeholder.mullvad_wg_private_key}
@@ -33,9 +34,9 @@ in
     DNS = 10.64.0.1
 
     [Peer]
-    PublicKey = MkP/Jytkg51/Y/EostONjIN6YaFRpsAYiNKMX27/CAY=
+    PublicKey = Vh3Y2LsBG1yN4kDeebOr3J6dFooGJIBTftzVqlWhiD4=
     AllowedIPs = 0.0.0.0/0,::0/0
-    Endpoint = 185.195.233.76:51820
+    Endpoint = 185.209.199.17:51820
   '';
 
   vpnNamespaces.${namespace} = {
