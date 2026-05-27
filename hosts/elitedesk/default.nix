@@ -27,6 +27,7 @@ in
     ./hardware-configuration.nix
     ./media-permissions.nix
     ./reverse-proxy.nix
+    ./zfs-encryption.nix
     ./zfs-snapshots.nix
   ];
 
