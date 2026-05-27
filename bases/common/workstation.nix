@@ -20,6 +20,7 @@ in
       ../../modules/home-manager/development/python.nix
       ../../modules/home-manager/development/rust.nix
 
+      ../../modules/home-manager/terminal/atuin.nix
       ../../modules/home-manager/terminal/bat.nix
       ../../modules/home-manager/terminal/btop.nix
       ../../modules/home-manager/terminal/claude-code.nix
@@ -30,7 +31,6 @@ in
       ../../modules/home-manager/terminal/git.nix
       ../../modules/home-manager/terminal/just.nix
       ../../modules/home-manager/terminal/lazygit.nix
-      ../../modules/home-manager/terminal/mcfly.nix
       ../../modules/home-manager/terminal/neovim.nix
       ../../modules/home-manager/terminal/nh.nix
       ../../modules/home-manager/terminal/pre-commit.nix
