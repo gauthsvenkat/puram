@@ -3,7 +3,7 @@
   ...
 }:
 let
-  inherit (hostCfg) paths zpool;
+  inherit (hostCfg) paths;
 in
 {
   # BEGIN-PRIVATE
@@ -18,8 +18,11 @@ in
       bind = device: {
         inherit device;
         fsType = "none";
-        options = [ "bind" ];
-        depends = [ "/${zpool}" ];
+        options = [
+          "bind"
+          "x-systemd.after=zfs-mount.service"
+          "x-systemd.requires=zfs-mount.service"
+        ];
       };
     in
     {

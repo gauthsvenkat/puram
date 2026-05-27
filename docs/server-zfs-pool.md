@@ -7,13 +7,15 @@ Canonical reference for the homeserver data pool. Layout, property choices, and 
 ```
 dontdie/
 ├── services/                 mountpoint=none (organizational)
-│   ├── config                app configs (one subdir per service)
-│   └── databases             DB-backed state -- shared Postgres cluster, Jellyfin's sqlite-driven dataDir
+│   ├── config*               app configs (one subdir per service)
+│   └── databases*            DB-backed state -- shared Postgres cluster, Jellyfin's sqlite-driven dataDir
 ├── data/                     mountpoint=none (organizational)
-│   ├── immich                photos
-│   ├── paperless-ngx         documents
+│   ├── immich*               photos
+│   ├── paperless-ngx*        documents
 │   └── entertainment         media library + downloaders (shared root for *arr hardlinks)
 └── cache                     regenerable scratch
+
+* = encrypted, see `hosts/elitedesk/zfs-encryption.nix`
 ```
 
 `services/databases` and `data/<service>` keep stateful DB data and bulk user data separate from configs so each can have appropriate ZFS properties and backup cadence.
@@ -72,20 +74,19 @@ zpool create \
 ### Datasets
 
 ```
+ENC="-o encryption=on -o keyformat=hex -o keylocation=file:///run/secrets/zfs_dontdie_key"
+
 # Organizational parents (not mounted)
 zfs create -o mountpoint=none dontdie/services
 zfs create -o mountpoint=none dontdie/data
 
-zfs create -o mountpoint=/dontdie/services/config     dontdie/services/config
-zfs create -o mountpoint=/dontdie/services/databases \
-           -o recordsize=16k                          dontdie/services/databases
+zfs create -o mountpoint=/dontdie/services/config     $ENC dontdie/services/config
+zfs create -o mountpoint=/dontdie/services/databases  -o recordsize=16k  $ENC dontdie/services/databases
+zfs create -o mountpoint=/dontdie/data/immich         $ENC dontdie/data/immich
+zfs create -o mountpoint=/dontdie/data/paperless-ngx  $ENC dontdie/data/paperless-ngx
 
-zfs create -o mountpoint=/dontdie/data/immich         dontdie/data/immich
-zfs create -o mountpoint=/dontdie/data/paperless-ngx  dontdie/data/paperless-ngx
-zfs create -o mountpoint=/dontdie/data/entertainment  dontdie/data/entertainment
-
-zfs create -o mountpoint=/dontdie/cache \
-           -o sync=disabled                           dontdie/cache
+zfs create -o mountpoint=/dontdie/data/entertainment dontdie/data/entertainment
+zfs create -o mountpoint=/dontdie/cache -o sync=disabled dontdie/cache
 ```
 
 Children of `dontdie/services` and `dontdie/data` need explicit mountpoints because they can't inherit through a `mountpoint=none` parent.

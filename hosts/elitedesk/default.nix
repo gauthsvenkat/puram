@@ -43,6 +43,7 @@ in
     # BEGIN-PRIVATE
     ./vpn.nix
     # END-PRIVATE
+    ./zfs-encryption.nix
     ./zfs-snapshots.nix
   ];
 
