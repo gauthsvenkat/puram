@@ -5,7 +5,7 @@ modules/          -- self-contained, reusable modules (MUST NOT import other mod
   common/         -- shared between nixos and darwin (home-manager, sops, nix-settings)
   nixos/          -- NixOS-specific (system/, hardware/, services/, gui/, extra/)
   darwin/         -- macOS-specific (system/, gui/, services/, homebrew)
-  home-manager/   -- platform-agnostic user config (development/, terminal/, extra/)
+  home-manager/   -- platform-agnostic user config (cli/, development/, extra/)
 bases/            -- composable configs that import modules
   common/         -- cross-platform bases (system.nix, workstation.nix)
   nixos/          -- NixOS bases (system.nix, workstation.nix, flavor/, desktop-environment/)
