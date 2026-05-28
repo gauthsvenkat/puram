@@ -32,7 +32,7 @@ return {
     {
       key = "s",
       mods = "CTRL|ALT",
-      action = act.SplitPane({ direction = "Down", size = { Percent = 25 } }),
+      action = act.SplitPane({ direction = "Down", size = { Percent = 40 } }),
     },
     {
       key = "v",
@@ -49,6 +49,17 @@ return {
       key = "b",
       mods = "CTRL|ALT",
       action = act.ActivateTabRelative(-1),
+    },
+    -- Moving tabs
+    {
+      key = "n",
+      mods = "CTRL|ALT|SHIFT",
+      action = act.MoveTabRelative(1),
+    },
+    {
+      key = "b",
+      mods = "CTRL|ALT|SHIFT",
+      action = act.MoveTabRelative(-1),
     },
     -- Navigating panes
     {
@@ -76,20 +87,16 @@ return {
       mods = "CTRL|ALT",
       action = act.PaneSelect({ mode = "Activate" }),
     },
+    {
+      key = "f",
+      mods = "CTRL|ALT|SHIFT",
+      action = act.PaneSelect({ mode = "SwapWithActive" }),
+    },
     -- Closing panes
     {
       key = "d",
       mods = "CTRL|ALT",
       action = act.CloseCurrentPane({ confirm = true }),
-    },
-    -- Moving panes
-    {
-      key = "m",
-      mods = "CTRL|ALT",
-      action = act.ActivateKeyTable({
-        name = "rotate_pane",
-        one_shot = false,
-      }),
     },
     -- Misc
     {
