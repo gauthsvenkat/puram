@@ -12,18 +12,18 @@ in
 
   home-manager.users.${username} = {
     imports = [
-      ../../../modules/home-manager/terminal/atuin.nix
-      ../../../modules/home-manager/terminal/bat.nix
-      ../../../modules/home-manager/terminal/btop.nix
-      ../../../modules/home-manager/terminal/eza.nix
-      ../../../modules/home-manager/terminal/fastfetch.nix
-      ../../../modules/home-manager/terminal/git.nix
-      ../../../modules/home-manager/terminal/just.nix
-      ../../../modules/home-manager/terminal/nh.nix
-      ../../../modules/home-manager/terminal/starship.nix
-      ../../../modules/home-manager/terminal/utils.nix
-      ../../../modules/home-manager/terminal/zoxide.nix
-      ../../../modules/home-manager/terminal/zsh.nix
+      ../../../modules/home-manager/cli/atuin.nix
+      ../../../modules/home-manager/cli/bat.nix
+      ../../../modules/home-manager/cli/btop.nix
+      ../../../modules/home-manager/cli/eza.nix
+      ../../../modules/home-manager/cli/fastfetch.nix
+      ../../../modules/home-manager/cli/git.nix
+      ../../../modules/home-manager/cli/just.nix
+      ../../../modules/home-manager/cli/nh.nix
+      ../../../modules/home-manager/cli/starship.nix
+      ../../../modules/home-manager/cli/utils.nix
+      ../../../modules/home-manager/cli/zoxide.nix
+      ../../../modules/home-manager/cli/zsh.nix
     ];
 
     programs.starship.presets = [ "pure-preset" ];
