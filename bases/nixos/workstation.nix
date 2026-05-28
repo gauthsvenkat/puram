@@ -10,8 +10,6 @@ in
   imports = [
     ../../modules/nixos/extra/vial.nix
 
-    ../../modules/nixos/gui/wezterm.nix
-
     ../../modules/nixos/hardware/bluetooth.nix
 
     ../../modules/nixos/services/docker.nix
