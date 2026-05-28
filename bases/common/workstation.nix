@@ -34,7 +34,6 @@ in
       ../../modules/home-manager/terminal/neovim.nix
       ../../modules/home-manager/terminal/nh.nix
       ../../modules/home-manager/terminal/pre-commit.nix
-      ../../modules/home-manager/terminal/spotify-player.nix
       ../../modules/home-manager/terminal/starship.nix
       ../../modules/home-manager/terminal/utils.nix
       ../../modules/home-manager/terminal/zoxide.nix
