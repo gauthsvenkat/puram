@@ -10,8 +10,6 @@ in
   imports = [
     ../../modules/common/home-manager.nix
 
-    ../../modules/darwin/gui/wezterm.nix
-
     ../../modules/darwin/homebrew.nix
 
     ../../modules/darwin/services/kanata.nix
