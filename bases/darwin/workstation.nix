@@ -32,7 +32,6 @@ in
       "docker-desktop"
       "firefox"
       "iterm2"
-      "libreoffice-still"
       "linearmouse"
       "middleclick"
       "monitorcontrol"
