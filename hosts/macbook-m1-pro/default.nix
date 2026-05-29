@@ -54,28 +54,5 @@ in
     ];
 
     programs.starship.settings.gcloud.disabled = true;
-
-    programs.claude-code.settings.permissions = {
-      allow = [
-        # GitLab CLI (read-only)
-        "Bash(glab ci list *)"
-        "Bash(glab ci view *)"
-        "Bash(glab issue list *)"
-        "Bash(glab issue view *)"
-        "Bash(glab mr list *)"
-        "Bash(glab mr view *)"
-        "Bash(glab release list *)"
-        "Bash(glab release view *)"
-        "Bash(glab repo view *)"
-      ];
-
-      ask = [
-        # GitLab CLI (mutating)
-        "Bash(glab issue create *)"
-        "Bash(glab mr approve *)"
-        "Bash(glab mr create *)"
-        "Bash(glab mr merge *)"
-      ];
-    };
   };
 }
