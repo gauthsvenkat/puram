@@ -194,6 +194,10 @@
                 };
                 # BEGIN-PRIVATE
                 bazarr.port = 6767;
+                bitmagnet = {
+                  port = 3333;
+                  dht_port = 3334;
+                };
                 # END-PRIVATE
                 # Cosmetic - Caddy hardcodes its admin API on 127.0.0.1:2019.
                 # Tracked here for documentation.

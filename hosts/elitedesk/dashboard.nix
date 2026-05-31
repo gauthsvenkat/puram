@@ -310,6 +310,12 @@ in
                 };
               };
             }
+            {
+              "Bitmagnet" = {
+                icon = icon "bitmagnet";
+                href = href "bitmagnet";
+              };
+            }
           ];
         }
         # END-PRIVATE

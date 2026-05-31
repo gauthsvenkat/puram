@@ -14,6 +14,7 @@ in
     ../../modules/nixos/services/adguard-home.nix
     # BEGIN-PRIVATE
     ../../modules/nixos/services/bazarr.nix
+    ../../modules/nixos/services/bitmagnet.nix
     ../../modules/nixos/services/flaresolverr.nix
     # END-PRIVATE
     ../../modules/nixos/services/homepage.nix

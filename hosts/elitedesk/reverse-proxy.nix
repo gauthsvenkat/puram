@@ -9,6 +9,7 @@ let
     adguard
     # BEGIN-PRIVATE
     bazarr
+    bitmagnet
     # END-PRIVATE
     homepage
     immich
@@ -60,6 +61,7 @@ in
     "radarr.${domain}".extraConfig = proxy radarr.port;
     "prowlarr.${domain}".extraConfig = proxyVpn prowlarr.port;
     "bazarr.${domain}".extraConfig = proxy bazarr.port;
+    "bitmagnet.${domain}".extraConfig = proxyVpn bitmagnet.port;
     "qbittorrent.${domain}".extraConfig = proxyVpn qbittorrent.port;
     "sabnzbd.${domain}".extraConfig = proxyVpn sabnzbd.port;
     "seerr.${domain}".extraConfig = proxy seerr.port;
