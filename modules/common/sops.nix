@@ -24,7 +24,5 @@ in
       packages = with pkgs; [ sops ];
       sessionVariables.SOPS_AGE_KEY_FILE = age.keyFile;
     };
-
-    programs.git.settings.diff.sopsdiffer.textconv = "sops decrypt";
   };
 }
