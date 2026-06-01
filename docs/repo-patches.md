@@ -5,12 +5,11 @@ upstream PRs that haven't merged yet but that this repo needs.
 
 ## How it works
 
-`patches.nix` at the repo root exposes `mkNixos`. It carries an inline list of
-PR URLs; each entry is fetched via `pkgs.fetchpatch2`, applied to the locked
-`nixpkgs` via `pkgs.applyPatches`, and each NixOS configuration is evaluated
-against the patched source so both modules and `pkgs` reflect the patches. If
-the list is empty, it short-circuits to vanilla `nixpkgs`. Darwin hosts skip
-this path entirely.
+`lib/patcher.nix` exposes the builder; `flake.nix` calls it with an inline
+list of PR URLs. Each entry is fetched via `pkgs.fetchpatch2`, applied to
+the locked `nixpkgs` via `pkgs.applyPatches`, and each NixOS configuration
+is evaluated against the patched source so both modules and `pkgs` reflect
+the patches. Darwin hosts skip this path entirely.
 
 ## Adding a patch
 
@@ -27,7 +26,7 @@ this path entirely.
    hashes in the diff, which is what `fetchpatch2` expects. Without it you'd
    need the older `fetchpatch`.
 
-2. Append an entry to the list in `patches.nix` with the printed hash:
+2. Append an entry to the `patches` list in `flake.nix` with the printed hash:
 
    ```nix
    {
@@ -38,7 +37,7 @@ this path entirely.
    ```
 
 3. `just check` to confirm the patch applies cleanly against the locked
-   `nixpkgs`. Commit `patches.nix`.
+   `nixpkgs`. Commit `flake.nix`.
 
 ## Removing a patch
 
