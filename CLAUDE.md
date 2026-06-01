@@ -21,7 +21,7 @@ justfile          -- task runner for common operations
 
 # Key concepts
 
-- `hostCfg` -- attribute set passed via `specialArgs`, defined inline per-host as a literal `rec { ... }` in `flake.nix`. Common fields: `hostname`, `username`, `isLaptop`, `homeDirectory`, `gitEmail`, `wallpaper`. Hosts running the homeserver stack additionally carry `zpool`, `domain`, `paths`, `ports`, `images`, `commonEnvVars`; service modules read from these instead of hardcoding paths/ports/image tags/env defaults. Flows to home-manager via `extraSpecialArgs`.
+- `hostCfg` -- attribute set passed via `specialArgs`, defined per-host as a literal `rec { ... }` in `hosts/<hostname>/hostCfg.nix`. Bases and modules read from this instead of hardcoding paths/ports/image tags/env defaults. Flows to home-manager via `extraSpecialArgs`.
 - Single `nixpkgs` input (`nixos-unstable`) shared between NixOS and darwin; `home-manager`, `sops-nix`, `disko`, `plasma-manager`, and `nix-darwin` all follow it.
 - Base composition chain: host imports bases, bases import modules. E.g., `kde.nix` -> `personal.nix` -> `workstation.nix` -> `system.nix`.
 
@@ -64,7 +64,7 @@ justfile          -- task runner for common operations
 - Bare `inherit foo bar;` is only for re-exporting names already bound in the enclosing scope.
 - Inline `lib.getExe pkg` at the call site rather than `inherit (lib) getExe;` unless `getExe` is used 2+ times in the file.
 - `with` is allowed only inside package list literals (`with pkgs; [ ... ]`). Never `with lib;` or `with config;`.
-- `rec { ... }` is reserved for `hostCfg` definitions in `flake.nix`. Don't introduce `rec` elsewhere.
+- `rec { ... }` is reserved for `hostCfg` definitions in `hosts/<hostname>/hostCfg.nix`. Don't introduce `rec` elsewhere.
 - Function arguments use destructuring with `...`. Don't use `@args`.
 - If a module body uses no arguments at all, omit the function head entirely - write a bare attrset, not `{ ... }: { ... }`.
 - Auto-generated `hosts/*/hardware-configuration.nix` files are exempt - let `nixos-generate-config` own them.
