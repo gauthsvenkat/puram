@@ -44,167 +44,36 @@
   };
 
   outputs =
-    {
-      nixpkgs,
-      nix-darwin,
-      ...
-    }@inputs:
+    { nixpkgs, ... }@inputs:
     let
       mkNixos = import ./patches.nix { inherit nixpkgs; };
+
+      mkHost =
+        name: system:
+        let
+          builder =
+            if nixpkgs.lib.hasSuffix "darwin" system then inputs.nix-darwin.lib.darwinSystem else mkNixos;
+        in
+        builder {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            hostCfg = import ./hosts/${name}/hostCfg.nix;
+          };
+          modules = [ ./hosts/${name} ];
+        };
     in
     {
       darwinConfigurations = {
-        "macbook-m1-pro" = nix-darwin.lib.darwinSystem {
-          specialArgs = {
-            inherit inputs;
-            hostCfg = rec {
-              hostname = "macbook-m1-pro";
-              username = "gautham";
-              isLaptop = true;
-              homeDirectory = "/Users/${username}";
-              gitEmail = "user@work.example";
-              wallpaper = "${homeDirectory}/Pictures/wallpapers/astronaut.jpg";
-            };
-          };
-          modules = [
-            { nixpkgs.hostPlatform = "aarch64-darwin"; }
-            ./hosts/macbook-m1-pro
-          ];
-        };
+        "macbook-m1-pro" = mkHost "macbook-m1-pro" "aarch64-darwin";
       };
 
       nixosConfigurations = {
-        "toshiba" = mkNixos {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-            hostCfg = rec {
-              hostname = "toshiba";
-              username = "ando";
-              isLaptop = false;
-              homeDirectory = "/home/${username}";
-              gitEmail = "gauthsvenkat@gmail.com";
-              wallpaper = "${homeDirectory}/Pictures/wallpapers/astronaut.jpg";
-
-              zpool = "tank";
-              domain = "toshiba.example.com";
-              paths = rec {
-                config = "/${zpool}/services/config";
-                databases = "/${zpool}/services/databases";
-                postgres = "${databases}/postgres";
-                data = "/${zpool}/data";
-              };
-              ports = {
-                adguard = {
-                  dns_port = 53;
-                  web_port = 3000;
-                };
-                immich.port = 2283;
-              };
-            };
-          };
-          modules = [ ./hosts/toshiba ];
-        };
-
-        "thinkpad" = mkNixos {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-            hostCfg = rec {
-              hostname = "thinkpad";
-              username = "ando";
-              isLaptop = true;
-              homeDirectory = "/home/${username}";
-              gitEmail = "gauthsvenkat@gmail.com";
-              wallpaper = "${homeDirectory}/Pictures/wallpapers/astronaut.jpg";
-            };
-          };
-          modules = [ ./hosts/thinkpad ];
-        };
-
-        "thunderdome" = mkNixos {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-            hostCfg = rec {
-              hostname = "thunderdome";
-              username = "ando";
-              isLaptop = false;
-              homeDirectory = "/home/${username}";
-              gitEmail = "gauthsvenkat@gmail.com";
-              wallpaper = "${homeDirectory}/Pictures/wallpapers/astronaut.jpg";
-
-              zpool = "dontdie";
-            };
-          };
-          modules = [ ./hosts/thunderdome ];
-        };
-
-        "nixpi400" = mkNixos {
-          system = "aarch64-linux";
-          specialArgs = {
-            inherit inputs;
-            hostCfg = rec {
-              hostname = "nixpi400";
-              username = "ando";
-              isLaptop = false;
-              homeDirectory = "/home/${username}";
-              gitEmail = "gauthsvenkat@gmail.com";
-              wallpaper = "${homeDirectory}/Pictures/wallpapers/astronaut.jpg";
-              zpool = "tank";
-            };
-          };
-          modules = [ ./hosts/nixpi400 ];
-        };
-
-        "elitedesk" = mkNixos {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-            hostCfg = rec {
-              hostname = "elitedesk";
-              username = "ando";
-              isLaptop = false;
-              homeDirectory = "/home/${username}";
-              gitEmail = "gauthsvenkat@gmail.com";
-
-              zpool = "dontdie";
-              domain = "example.com";
-              paths = rec {
-                config = "/${zpool}/services/config";
-                databases = "/${zpool}/services/databases";
-                postgres = "${databases}/postgres";
-                data = "/${zpool}/data";
-                cache = "/${zpool}/cache";
-              };
-
-              ports = {
-                adguard = {
-                  dns_port = 53;
-                  web_port = 3000;
-                };
-                # Cosmetic - Caddy hardcodes its admin API on 127.0.0.1:2019.
-                # Tracked here for documentation.
-                caddy.admin_port = 2019;
-                homepage.port = 7575;
-                immich.port = 2283;
-                # Cosmetic - services.jellyfin hardcodes 8096/8920 TCP and 1900/7359 UDP via
-                # openFirewall. Tracked here for documentation.
-                jellyfin = {
-                  port = 8096;
-                  https_port = 8920;
-                };
-                paperless = {
-                  port = 8000;
-                  gotenberg_port = 3030;
-                  tika_port = 9998;
-                };
-              };
-            };
-          };
-          modules = [ ./hosts/elitedesk ];
-        };
+        "toshiba" = mkHost "toshiba" "x86_64-linux";
+        "thinkpad" = mkHost "thinkpad" "x86_64-linux";
+        "thunderdome" = mkHost "thunderdome" "x86_64-linux";
+        "nixpi400" = mkHost "nixpi400" "aarch64-linux";
+        "elitedesk" = mkHost "elitedesk" "x86_64-linux";
       };
-
     };
 }
