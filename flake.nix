@@ -46,7 +46,16 @@
   outputs =
     { nixpkgs, ... }@inputs:
     let
-      mkNixos = import ./patches.nix { inherit nixpkgs; };
+      mkNixos = import ./lib/patcher.nix {
+        inherit nixpkgs;
+        patches = [
+          {
+            name = "jellyfin-hevc10bit-520045";
+            url = "https://github.com/NixOS/nixpkgs/pull/520045.patch?full_index=1";
+            hash = "sha256-fmAG7AcagzUEfBEzkJ8cSG5prX/TgAth3s1JhHEzTzU=";
+          }
+        ];
+      };
 
       mkHost =
         name: system:

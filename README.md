@@ -22,9 +22,9 @@ These contain fully realized NixOS, nix-darwin or home-manager configurations, c
 
 Just a bunch of stuff that aren't nix files. Things like binaries (wallpaper images), configuration files.
 
-### [patches](./patches.nix)
+### [lib](./lib/)
 
-Upstream `nixpkgs` PRs applied at evaluation time, as a holding pen until they merge.
+Pure helper functions used by `flake.nix`.
 
 ### [docs](./docs/)
 
