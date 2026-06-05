@@ -48,8 +48,9 @@ in
           defaultMode = "auto";
 
           deny = [
-            "Read(*.env*)"
-            "Read(.env*)"
+            "Read(**/.env*)"
+            "Edit(**/.env*)"
+            "Write(**/.env*)"
             "Read(*.key)"
             "Read(*.pem)"
             "Read(**/credentials.json)"
