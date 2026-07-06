@@ -23,13 +23,16 @@ in
     paperless_api_key = { };
   };
 
-  sops.templates.homepage_env.content = ''
-    HOMEPAGE_VAR_ADGUARD_PASS=${placeholder.adguard_password}
-    HOMEPAGE_VAR_ADGUARD_USER=${placeholder.adguard_username}
-    HOMEPAGE_VAR_IMMICH_KEY=${placeholder.immich_api_key}
-    HOMEPAGE_VAR_JELLYFIN_KEY=${placeholder.jellyfin_api_key}
-    HOMEPAGE_VAR_PAPERLESS_KEY=${placeholder.paperless_api_key}
-  '';
+  sops.templates.homepage_env = {
+    restartUnits = [ "homepage-dashboard.service" ];
+    content = ''
+      HOMEPAGE_VAR_ADGUARD_PASS=${placeholder.adguard_password}
+      HOMEPAGE_VAR_ADGUARD_USER=${placeholder.adguard_username}
+      HOMEPAGE_VAR_IMMICH_KEY=${placeholder.immich_api_key}
+      HOMEPAGE_VAR_JELLYFIN_KEY=${placeholder.jellyfin_api_key}
+      HOMEPAGE_VAR_PAPERLESS_KEY=${placeholder.paperless_api_key}
+    '';
+  };
 
   services.homepage-dashboard = {
     environmentFiles = [ config.sops.templates.homepage_env.path ];

@@ -11,6 +11,7 @@ in
   sops.secrets.cloudflare_dns_token = { };
 
   sops.templates.cloudflare_env = {
+    restartUnits = [ "caddy.service" ];
     content = "CLOUDFLARE_API_TOKEN=${placeholder.cloudflare_dns_token}\n";
     owner = cfg.user;
     inherit (cfg) group;

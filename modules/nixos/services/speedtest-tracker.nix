@@ -6,6 +6,7 @@ let
 in
 {
   sops.secrets.speedtest_tracker_app_key = {
+    restartUnits = [ "speedtest-tracker.service" ];
     owner = cfg.user;
     inherit (cfg) group;
   };
