@@ -47,25 +47,28 @@ in
     # END-PRIVATE
   };
 
-  sops.templates.homepage_env.content = ''
-    HOMEPAGE_VAR_ADGUARD_PASS=${placeholder.adguard_password}
-    HOMEPAGE_VAR_ADGUARD_USER=${placeholder.adguard_username}
-    # BEGIN-PRIVATE
-    HOMEPAGE_VAR_BAZARR_KEY=${placeholder.bazarr_api_key}
-    # END-PRIVATE
-    HOMEPAGE_VAR_IMMICH_KEY=${placeholder.immich_api_key}
-    HOMEPAGE_VAR_JELLYFIN_KEY=${placeholder.jellyfin_api_key}
-    HOMEPAGE_VAR_PAPERLESS_KEY=${placeholder.paperless_api_key}
-    # BEGIN-PRIVATE
-    HOMEPAGE_VAR_PROWLARR_KEY=${placeholder.prowlarr_api_key}
-    HOMEPAGE_VAR_QBIT_PASS=${placeholder.qbittorrent_password}
-    HOMEPAGE_VAR_QBIT_USER=${placeholder.qbittorrent_username}
-    HOMEPAGE_VAR_RADARR_KEY=${placeholder.radarr_api_key}
-    HOMEPAGE_VAR_SABNZBD_KEY=${placeholder.sabnzbd_api_key}
-    HOMEPAGE_VAR_SEERR_KEY=${placeholder.seerr_api_key}
-    HOMEPAGE_VAR_SONARR_KEY=${placeholder.sonarr_api_key}
-    # END-PRIVATE
-  '';
+  sops.templates.homepage_env = {
+    restartUnits = [ "homepage-dashboard.service" ];
+    content = ''
+      HOMEPAGE_VAR_ADGUARD_PASS=${placeholder.adguard_password}
+      HOMEPAGE_VAR_ADGUARD_USER=${placeholder.adguard_username}
+      # BEGIN-PRIVATE
+      HOMEPAGE_VAR_BAZARR_KEY=${placeholder.bazarr_api_key}
+      # END-PRIVATE
+      HOMEPAGE_VAR_IMMICH_KEY=${placeholder.immich_api_key}
+      HOMEPAGE_VAR_JELLYFIN_KEY=${placeholder.jellyfin_api_key}
+      HOMEPAGE_VAR_PAPERLESS_KEY=${placeholder.paperless_api_key}
+      # BEGIN-PRIVATE
+      HOMEPAGE_VAR_PROWLARR_KEY=${placeholder.prowlarr_api_key}
+      HOMEPAGE_VAR_QBIT_PASS=${placeholder.qbittorrent_password}
+      HOMEPAGE_VAR_QBIT_USER=${placeholder.qbittorrent_username}
+      HOMEPAGE_VAR_RADARR_KEY=${placeholder.radarr_api_key}
+      HOMEPAGE_VAR_SABNZBD_KEY=${placeholder.sabnzbd_api_key}
+      HOMEPAGE_VAR_SEERR_KEY=${placeholder.seerr_api_key}
+      HOMEPAGE_VAR_SONARR_KEY=${placeholder.sonarr_api_key}
+      # END-PRIVATE
+    '';
+  };
 
   services.homepage-dashboard = {
     environmentFiles = [ config.sops.templates.homepage_env.path ];

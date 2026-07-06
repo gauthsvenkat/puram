@@ -4,8 +4,8 @@ let
   inherit (config.sops) secrets;
 in
 {
-  sops.secrets.radarr_api_key = { };
-  sops.secrets.sonarr_api_key = { };
+  sops.secrets.radarr_api_key.restartUnits = [ "recyclarr.service" ];
+  sops.secrets.sonarr_api_key.restartUnits = [ "recyclarr.service" ];
 
   services.recyclarr = {
     enable = true;
