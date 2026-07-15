@@ -1,7 +1,6 @@
 rec {
   hostname = "elitedesk";
   username = "ando";
-  isLaptop = false;
   homeDirectory = "/home/${username}";
   gitEmail = "gauthsvenkat@gmail.com";
 
