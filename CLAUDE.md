@@ -12,9 +12,9 @@ bases/            -- composable configs that import modules
   darwin/         -- macOS bases (system.nix, workstation.nix)
 hosts/            -- per-machine configs that import bases + host-specific modules
   <hostname>/     -- default.nix + hardware-configuration.nix (+ disko-config.nix if applicable)
+lib/              -- standalone helper functions, composed in flake.nix (mk-host, patcher)
 docs/             -- operational notes (setup-*, server-*, repo-*)
 assets/           -- non-nix assets (configs/, wallpapers/)
-patches.nix       -- nixpkgs PRs applied at evaluation time (fetchpatch2 by URL)
 secrets.yaml      -- sops-nix encrypted secrets (age keys derived from SSH keys)
 justfile          -- task runner for common operations
 ```
