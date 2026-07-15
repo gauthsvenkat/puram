@@ -57,20 +57,7 @@
         ];
       };
 
-      mkHost =
-        name: system:
-        let
-          builder =
-            if nixpkgs.lib.hasSuffix "darwin" system then inputs.nix-darwin.lib.darwinSystem else mkNixos;
-        in
-        builder {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            hostCfg = import ./hosts/${name}/hostCfg.nix;
-          };
-          modules = [ ./hosts/${name} ];
-        };
+      mkHost = import ./lib/mk-host.nix { inherit inputs mkNixos; };
     in
     {
       darwinConfigurations = {
