@@ -11,6 +11,7 @@ let
     immich
     jellyfin
     paperless
+    vikunja
     ;
   inherit (config.sops) placeholder;
 in
@@ -21,6 +22,7 @@ in
     immich_api_key = { };
     jellyfin_api_key = { };
     paperless_api_key = { };
+    vikunja_api_key = { };
   };
 
   sops.templates.homepage_env = {
@@ -31,6 +33,7 @@ in
       HOMEPAGE_VAR_IMMICH_KEY=${placeholder.immich_api_key}
       HOMEPAGE_VAR_JELLYFIN_KEY=${placeholder.jellyfin_api_key}
       HOMEPAGE_VAR_PAPERLESS_KEY=${placeholder.paperless_api_key}
+      HOMEPAGE_VAR_VIKUNJA_KEY=${placeholder.vikunja_api_key}
     '';
   };
 
@@ -53,7 +56,7 @@ in
         {
           "Utilities" = {
             style = "row";
-            columns = 2;
+            columns = 3;
             useEqualHeights = true;
           };
         }
@@ -177,6 +180,18 @@ in
                 widget = {
                   type = "speedtest";
                   url = href "speedtest";
+                };
+              };
+            }
+            {
+              "Vikunja" = {
+                icon = icon "vikunja";
+                href = href "vikunja";
+                widget = {
+                  type = "vikunja";
+                  url = loopback vikunja.port;
+                  key = envVar "VIKUNJA_KEY";
+                  version = 2;
                 };
               };
             }

@@ -20,5 +20,6 @@ in
     in
     {
       "/var/lib/private/AdGuardHome" = bind "${paths.config}/adguard-home";
+      "/var/lib/private/vikunja" = bind "${paths.data}/vikunja";
     };
 }

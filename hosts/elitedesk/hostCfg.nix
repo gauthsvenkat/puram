@@ -35,5 +35,6 @@ rec {
       gotenberg_port = 3030;
       tika_port = 9998;
     };
+    vikunja.port = 3456;
   };
 }
