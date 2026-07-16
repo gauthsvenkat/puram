@@ -29,6 +29,9 @@ in
       "/var/lib/private/AdGuardHome" = bind "${paths.config}/adguard-home";
       # BEGIN-PRIVATE
       "/var/lib/private/seerr" = bind "${paths.config}/seerr";
+      # END-PRIVATE
+      "/var/lib/private/vikunja" = bind "${paths.data}/vikunja";
+      # BEGIN-PRIVATE
       "/var/lib/sabnzbd" = bind "${paths.config}/sabnzbd";
       "/var/lib/qBittorrent" = bind "${paths.config}/qbittorrent";
       # END-PRIVATE

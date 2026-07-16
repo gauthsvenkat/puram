@@ -22,6 +22,7 @@ let
     seerr
     sonarr
     # END-PRIVATE
+    vikunja
     ;
   # BEGIN-PRIVATE
   inherit (hostCfg.vpn) namespaceAddress;
@@ -45,6 +46,7 @@ in
     sabnzbd_api_key = { };
     seerr_api_key = { };
     # END-PRIVATE
+    vikunja_api_key = { };
   };
 
   sops.templates.homepage_env = {
@@ -67,6 +69,7 @@ in
       HOMEPAGE_VAR_SEERR_KEY=${placeholder.seerr_api_key}
       HOMEPAGE_VAR_SONARR_KEY=${placeholder.sonarr_api_key}
       # END-PRIVATE
+      HOMEPAGE_VAR_VIKUNJA_KEY=${placeholder.vikunja_api_key}
     '';
   };
 
@@ -89,7 +92,7 @@ in
         {
           "Utilities" = {
             style = "row";
-            columns = 2;
+            columns = 3;
             useEqualHeights = true;
           };
         }
@@ -238,6 +241,18 @@ in
                 widget = {
                   type = "speedtest";
                   url = href "speedtest";
+                };
+              };
+            }
+            {
+              "Vikunja" = {
+                icon = icon "vikunja";
+                href = href "vikunja";
+                widget = {
+                  type = "vikunja";
+                  url = loopback vikunja.port;
+                  key = envVar "VIKUNJA_KEY";
+                  version = 2;
                 };
               };
             }

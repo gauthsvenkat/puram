@@ -32,6 +32,7 @@ in
     ../../modules/nixos/services/sonarr.nix
     # END-PRIVATE
     ../../modules/nixos/services/speedtest-tracker.nix
+    ../../modules/nixos/services/vikunja.nix
     ../../modules/nixos/services/zfs.nix
 
     ./bind-mounts.nix

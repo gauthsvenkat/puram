@@ -61,6 +61,7 @@ rec {
     seerr.port = 5055;
     sonarr.port = 8989;
     # END-PRIVATE
+    vikunja.port = 3456;
   };
 # BEGIN-PRIVATE
 
