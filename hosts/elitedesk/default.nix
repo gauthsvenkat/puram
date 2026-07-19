@@ -21,7 +21,7 @@ in
     ../../modules/nixos/services/vikunja.nix
     ../../modules/nixos/services/zfs.nix
 
-    ./bind-mounts.nix
+    ./backups.nix
     ./dashboard.nix
     ./disko-config.nix
     ./hardware-acceleration.nix

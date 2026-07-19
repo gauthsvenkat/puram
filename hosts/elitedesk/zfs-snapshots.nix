@@ -17,5 +17,7 @@ in
       use_template = [ "default" ];
     };
     "${zpool}/cache".autosnap = false;
+    "${zpool}/services/config".autosnap = false;
+    "${zpool}/services/databases".autosnap = false;
   };
 }

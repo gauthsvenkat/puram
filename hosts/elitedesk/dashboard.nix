@@ -81,7 +81,10 @@ in
         resources = {
           cpu = true;
           memory = true;
-          disk = "/${zpool}";
+          disk = [
+            "/"
+            "/${zpool}"
+          ];
         };
       }
       {
