@@ -47,10 +47,9 @@ Two edits:
 
 1. Append the service name to `members` in
    `hosts/elitedesk/media-permissions.nix`.
-2. If the service has its own state dir under `/dontdie/services/config/`,
-   re-chown that one-shot too: `sudo chgrp -R media
-   /dontdie/services/config/<svc>` (mode 0700 ignores the group anyway,
-   but keeps `stat` output tidy).
+2. If the service has its own state dir under `/var/lib/`, re-chown that
+   one-shot too: `sudo chgrp -R media /var/lib/<svc>` (mode 0700 ignores
+   the group anyway, but keeps `stat` output tidy).
 
 That's it for any future *arr-shaped service. No tree-rewalk needed.
 

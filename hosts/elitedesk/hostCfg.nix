@@ -7,11 +7,10 @@ rec {
   zpool = "dontdie";
   domain = "gauthsvenkat.dev";
   paths = rec {
-    config = "/${zpool}/services/config";
-    databases = "/${zpool}/services/databases";
-    postgres = "${databases}/postgres";
+    config = "/var/lib";
+    postgres = "${config}/postgresql";
+    backups = "/${zpool}/services/backups";
     data = "/${zpool}/data";
-    cache = "/${zpool}/cache";
     # BEGIN-PRIVATE
     entertainment = "${data}/entertainment";
     torrents = "${entertainment}/torrents";
