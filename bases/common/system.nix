@@ -3,6 +3,7 @@
   imports = [
     ../../modules/common/home-manager.nix
     ../../modules/common/nix-settings.nix
-    ../../modules/common/sops.nix
   ];
+
+  sops.defaultSopsFile = ../../secrets.yaml;
 }
