@@ -1,8 +1,13 @@
 # Common workstation imports that I want on both nixos and darwin systems.
 # This includes development tools and terminal utilities used across platforms.
-{ hostCfg, pkgs, ... }:
+{
+  config,
+  hostCfg,
+  pkgs,
+  ...
+}:
 let
-  inherit (hostCfg) username;
+  inherit (hostCfg) username homeDirectory;
 in
 {
   imports = [
@@ -41,11 +46,23 @@ in
       ../../modules/home-manager/gui/wezterm.nix
     ];
 
-    home.packages = [ pkgs.gh ];
+    home = {
+      packages = with pkgs; [
+        gh
+        sops
+      ];
+      sessionVariables.SOPS_AGE_KEY_FILE = config.sops.age.keyFile;
+    };
 
     programs.starship.presets = [
       "bracketed-segments"
       "nerd-font-symbols"
     ];
+  };
+
+  sops.age = {
+    generateKey = true;
+    keyFile = "${homeDirectory}/.config/sops/age/keys.txt";
+    sshKeyPaths = [ "${homeDirectory}/.ssh/id_ed25519" ];
   };
 }
