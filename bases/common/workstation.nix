@@ -21,7 +21,6 @@ in
       ../../modules/home-manager/cli/direnv.nix
       ../../modules/home-manager/cli/eza.nix
       ../../modules/home-manager/cli/fastfetch.nix
-      ../../modules/home-manager/cli/fzf.nix
       ../../modules/home-manager/cli/git.nix
       ../../modules/home-manager/cli/just.nix
       ../../modules/home-manager/cli/lazygit.nix
