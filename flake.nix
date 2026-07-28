@@ -49,11 +49,14 @@
       mkNixos = import ./lib/patcher.nix {
         inherit nixpkgs;
         patches = [
-          {
-            name = "jellyfin-hevc10bit-520045";
-            url = "https://github.com/NixOS/nixpkgs/pull/520045.patch?full_index=1";
-            hash = "sha256-fmAG7AcagzUEfBEzkJ8cSG5prX/TgAth3s1JhHEzTzU=";
-          }
+          /*
+            # e.g. patch
+            {
+              name = "jellyfin-hevc10bit-520045";
+              url = "https://github.com/NixOS/nixpkgs/pull/520045.patch?full_index=1";
+              hash = "sha256-fmAG7AcagzUEfBEzkJ8cSG5prX/TgAth3s1JhHEzTzU=";
+            }
+          */
         ];
       };
 
