@@ -22,8 +22,6 @@ in
       settings = {
         PAPERLESS_OCR_LANGUAGE = "eng";
         PAPERLESS_OCR_USER_ARGS.invalidate_digital_signatures = true;
-        PAPERLESS_TIKA_ENDPOINT = "http://localhost:${toString paperless.tika_port}";
-        PAPERLESS_TIKA_GOTENBERG_ENDPOINT = "http://localhost:${toString paperless.gotenberg_port}";
         PAPERLESS_URL = "https://${vhost}";
         PAPERLESS_USE_X_FORWARD_HOST = true;
       };
