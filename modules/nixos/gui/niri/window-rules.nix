@@ -32,6 +32,7 @@ in
         x = 10;
         y = 10;
       };
+      open-focused = false;
     }
   ];
 }
