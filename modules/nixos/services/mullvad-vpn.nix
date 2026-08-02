@@ -1,20 +1,19 @@
 {
   hostCfg,
-  pkgs,
+  config,
   ...
 }:
 let
   inherit (hostCfg) username;
-  pkg = pkgs.mullvad-vpn;
+  cfg = config.services.mullvad-vpn;
 in
 {
   services.mullvad-vpn = {
     enable = true;
-    # pkgs.mullvad only contains the cli; pkgs.mullvad-vpn ships the gui too.
-    package = pkg;
+    gui.enable = true;
   };
 
   home-manager.users.${username}.xdg.autostart.entries = [
-    "${pkg}/share/applications/mullvad-vpn.desktop"
+    "${cfg.gui.package}/share/applications/mullvad-vpn.desktop"
   ];
 }
