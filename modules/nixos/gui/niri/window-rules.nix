@@ -23,6 +23,20 @@ in
     {
       matches = [
         {
+          app-id = "^firefox$";
+          title = "^Picture-in-Picture$";
+        }
+      ];
+      default-floating-position = {
+        relative-to = "bottom-right";
+        x = 32;
+        y = 32;
+      };
+      open-floating = true;
+    }
+    {
+      matches = [
+        {
           app-id = "steam";
           title = "^notificationtoasts_\\d+_desktop$";
         }
