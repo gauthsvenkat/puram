@@ -49,7 +49,7 @@ in
     input = {
       focus-follows-mouse = {
         enable = true;
-        max-scroll-amount = "50%";
+        max-scroll-amount = "25%";
       };
       warp-mouse-to-focus.enable = true;
     };
