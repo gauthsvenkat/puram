@@ -74,8 +74,16 @@ in
           idle = {
             pre_action_fade_seconds = 2.0;
             behavior = {
-              lock.enabled = true;
-              screen-off.enabled = true;
+              lock = {
+                action = "lock";
+                enabled = true;
+                timeout = 600;
+              };
+              screen-off = {
+                action = "screen_off";
+                enabled = true;
+                timeout = 660;
+              };
             };
           };
 
