@@ -6,7 +6,6 @@
 }:
 let
   inherit (hostCfg) homeDirectory;
-  uvx = lib.getExe' pkgs.uv "uvx";
 in
 {
   programs = {
@@ -15,31 +14,14 @@ in
 
       context = ../../../assets/configs/CLAUDE.md;
 
-      mcpServers = {
-        context7 = {
-          type = "http";
-          url = "https://mcp.context7.com/mcp";
-        };
-        CodeGraphContext = {
-          type = "stdio";
-          command = uvx;
-          args = [
-            "--from"
-            "codegraphcontext"
-            "cgc"
-            "mcp"
-            "start"
-          ];
-        };
-        markitdown = {
-          type = "stdio";
-          command = uvx;
-          args = [ "markitdown-mcp" ];
-        };
+      mcpServers.context7 = {
+        type = "http";
+        url = "https://mcp.context7.com/mcp";
       };
 
       settings = {
         env.DISABLE_TELEMETRY = "1";
+        autoMemoryEnabled = false;
         theme = "dark";
         cleanupPeriodDays = 7;
         includeCoAuthoredBy = false;
