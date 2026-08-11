@@ -16,6 +16,7 @@
 - Simple, self-documenting code. Prefer no comments - only comment if I ask. Don't over-engineer.
 - Flag anti-patterns at the end, not inline.
 - Start from latest `main`, new branch. Match the repo's existing branch/commit convention - check `git log`.
+- Don't commit until I've reviewed the code. Exception: autonomous contexts (background agents, throwaway work).
 - Default commit style: Conventional Commits (`feat/fix/refactor/chore/docs/test/ci`, `!` for breaking), lowercase, focused.
 - Commit messages: title plus a sentence or two at most; omit the body if the title says it all.
 - MR/PR descriptions: 2 sentences max.
