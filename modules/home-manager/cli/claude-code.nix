@@ -12,7 +12,7 @@ in
     claude-code = {
       enable = true;
 
-      context = ../../../assets/configs/CLAUDE.md;
+      context = ../../../assets/configs/AGENTS.md;
 
       mcpServers.context7 = {
         type = "http";
