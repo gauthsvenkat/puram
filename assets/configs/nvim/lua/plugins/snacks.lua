@@ -6,6 +6,7 @@ return {
   opts = {
     bigfile = { enabled = true },
     dashboard = { example = "doom" },
+    explorer = { enabled = true, replace_netrw = false },
     quickfile = { enabled = true },
     statuscolumn = { enabled = true },
     indent = { enabled = true, chunk = { enabled = true } },
@@ -77,6 +78,18 @@ return {
         Snacks.bufdelete.other()
       end,
       desc = "[D]elete all buffers",
+    },
+    {
+      "<leader>e",
+      function()
+        local explorer = Snacks.picker.get({ source = "explorer" })[1]
+        if explorer then
+          explorer:close()
+        else
+          Snacks.explorer.open({ focus = false })
+        end
+      end,
+      desc = "[e]xplorer",
     },
     {
       "<leader>go",
