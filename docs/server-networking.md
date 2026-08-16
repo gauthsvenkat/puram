@@ -80,7 +80,6 @@ No auth-key file is wired in - Tailscale auth keys expire after 90 days, and the
 | Host | Role | Tailscale needed |
 |---|---|---|
 | `elitedesk` | server (Caddy + services) | yes |
-| `nixpi400` | sanoid replication target | yes |
 | `thunderdome` | desktop | yes |
 | Laptops (`thinkpad`, etc.) | inherit via `bases/nixos/flavor/laptop.nix` | yes |
 | Phones, tablets | added manually from device | yes if you want named/HTTPS access |
