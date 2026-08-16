@@ -78,10 +78,8 @@
       };
 
       nixosConfigurations = {
-        "toshiba" = mkHost "toshiba" "x86_64-linux";
         "thinkpad" = mkHost "thinkpad" "x86_64-linux";
         "thunderdome" = mkHost "thunderdome" "x86_64-linux";
-        "nixpi400" = mkHost "nixpi400" "aarch64-linux";
         "elitedesk" = mkHost "elitedesk" "x86_64-linux";
       };
     };

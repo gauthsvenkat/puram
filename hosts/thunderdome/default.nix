@@ -34,9 +34,6 @@ in
       "nvidia_uvm"
     ];
 
-    # Enable cross-compilation for ARM builds
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
-
     zfs.extraPools = [ zpool ];
   };
 
