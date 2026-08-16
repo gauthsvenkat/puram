@@ -7,6 +7,8 @@
   # programs look for.
   environment.variables.SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
 
+  services.fwupd.enable = true;
+
   time.timeZone = "Europe/Amsterdam";
 
   # This value determines the NixOS release from which the default
