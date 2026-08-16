@@ -1,7 +1,6 @@
 {
   imports = [
     ../../../modules/nixos/gui/kde-plasma/effects.nix
-    ../../../modules/nixos/gui/kde-plasma/kde.nix
     ../../../modules/nixos/gui/kde-plasma/krunner.nix
     ../../../modules/nixos/gui/kde-plasma/kscreenlocker.nix
     ../../../modules/nixos/gui/kde-plasma/nightlight.nix
@@ -13,4 +12,8 @@
 
     ../workstation.nix
   ];
+
+  programs.kdeconnect.enable = true;
+
+  services.desktopManager.plasma6.enable = true;
 }

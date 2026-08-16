@@ -18,7 +18,6 @@ in
     {
       programs.niri.settings.binds = {
         # apps
-        "Mod+E".action = actions.spawn "dolphin";
         "Mod+T".action = actions.spawn "wezterm";
 
         # window management
