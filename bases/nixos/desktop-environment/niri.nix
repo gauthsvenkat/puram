@@ -9,4 +9,6 @@
 
     ../workstation.nix
   ];
+
+  services.displayManager.ly.enable = true;
 }

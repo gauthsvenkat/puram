@@ -8,12 +8,10 @@ let
 in
 {
   imports = [
-    ../../bases/nixos/desktop-environment/kde.nix
     ../../bases/nixos/desktop-environment/niri.nix
 
     ../../bases/nixos/flavor/personal.nix
 
-    ../../modules/nixos/extra/autologin.nix
     ../../modules/nixos/extra/gaming.nix
 
     ../../modules/common/tailscale.nix
@@ -43,6 +41,14 @@ in
   };
 
   services = {
+    displayManager = {
+      autoLogin = {
+        enable = true;
+        user = username;
+      };
+      defaultSession = "niri";
+    };
+
     sanoid.datasets = {
       "${zpool}" = {
         recursive = true;
