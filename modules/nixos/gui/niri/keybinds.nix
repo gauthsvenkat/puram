@@ -18,7 +18,8 @@ in
     {
       programs.niri.settings.binds = {
         # apps
-        "Mod+T".action = actions.spawn "wezterm";
+        "Mod+B".action.spawn = lib.getExe pkgs.firefox;
+        "Mod+T".action.spawn = lib.getExe pkgs.wezterm;
 
         # window management
         "Alt+Tab".action = actions.focus-window-previous;

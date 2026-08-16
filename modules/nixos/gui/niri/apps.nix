@@ -1,5 +1,6 @@
 {
   hostCfg,
+  lib,
   pkgs,
   ...
 }:
@@ -25,7 +26,7 @@ in
     };
 
     programs.niri.settings = {
-      binds."Mod+E".action.spawn = "nautilus";
+      binds."Mod+E".action.spawn = lib.getExe pkgs.nautilus;
 
       cursor = {
         theme = "Adwaita";
