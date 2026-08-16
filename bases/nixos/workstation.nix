@@ -22,6 +22,11 @@ in
 
   programs.ssh.startAgent = true;
 
+  services = {
+    gvfs.enable = true;
+    udisks2.enable = true;
+  };
+
   home-manager.users.${username} = {
     imports = [
       ../../modules/home-manager/extra/wallpaper.nix
