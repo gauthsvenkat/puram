@@ -20,11 +20,23 @@ in
     ./system.nix
   ];
 
+  environment.systemPackages = [ pkgs.adwaita-icon-theme ];
+
   programs.ssh.startAgent = true;
 
   services = {
+    displayManager.sddm = {
+      enable = true;
+      settings.Theme.CursorTheme = "Adwaita";
+      theme = "${pkgs.catppuccin-sddm}/share/sddm/themes/catppuccin-mocha-mauve";
+      wayland = {
+        enable = true;
+        compositor = "kwin";
+      };
+    };
     gvfs.enable = true;
     udisks2.enable = true;
+    upower.enable = true;
   };
 
   home-manager.users.${username} = {
