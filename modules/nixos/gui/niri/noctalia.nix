@@ -107,7 +107,7 @@ in
 
           widget = {
             battery = {
-              hide_when_plugged = true;
+              hide_when_plugged = false;
               show_label = false;
             };
             brightness.show_label = false;
