@@ -78,8 +78,8 @@
       };
 
       nixosConfigurations = {
-        "thinkpad" = mkHost "thinkpad" "x86_64-linux";
         "thinkpad-t14s" = mkHost "thinkpad-t14s" "x86_64-linux";
+        "thinkpad-x1-carbon" = mkHost "thinkpad-x1-carbon" "x86_64-linux";
         "thunderdome" = mkHost "thunderdome" "x86_64-linux";
         "elitedesk" = mkHost "elitedesk" "x86_64-linux";
       };
