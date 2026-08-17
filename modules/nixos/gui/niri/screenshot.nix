@@ -26,6 +26,9 @@ in
         };
       };
 
+      # satty doesn't create the output directory itself
+      systemd.user.tmpfiles.rules = [ "d %h/Pictures/Screenshots 0755 - - -" ];
+
       programs.niri.settings = {
         binds."Print".action.spawn-sh = "sel=$(${slurp}) && ${grim} -g \"$sel\" - | ${satty} --filename -";
 
