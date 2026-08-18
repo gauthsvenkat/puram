@@ -15,6 +15,7 @@ in
       loupe
       nautilus
       papers
+      wdisplays
     ];
 
     gtk = {
