@@ -37,6 +37,26 @@ in
         "Mod+Shift+K".action = actions.move-column-to-workspace-up;
         "Mod+Shift+L".action = actions.move-column-right;
 
+        # monitors: arrows focus, shift moves the column across
+        "Mod+Left".action = actions.focus-monitor-left;
+        "Mod+Down".action = actions.focus-monitor-down;
+        "Mod+Up".action = actions.focus-monitor-up;
+        "Mod+Right".action = actions.focus-monitor-right;
+
+        "Mod+Shift+Left".action = actions.move-column-to-monitor-left;
+        "Mod+Shift+Down".action = actions.move-column-to-monitor-down;
+        "Mod+Shift+Up".action = actions.move-column-to-monitor-up;
+        "Mod+Shift+Right".action = actions.move-column-to-monitor-right;
+
+        # workspaces: j/k reorders within the monitor, arrows send across
+        "Mod+Alt+Shift+J".action = actions.move-workspace-down;
+        "Mod+Alt+Shift+K".action = actions.move-workspace-up;
+
+        "Mod+Alt+Shift+Left".action = actions.move-workspace-to-monitor-left;
+        "Mod+Alt+Shift+Down".action = actions.move-workspace-to-monitor-down;
+        "Mod+Alt+Shift+Up".action = actions.move-workspace-to-monitor-up;
+        "Mod+Alt+Shift+Right".action = actions.move-workspace-to-monitor-right;
+
         # sizing
         "Mod+F".action = actions.maximize-column;
         "Mod+Shift+F".action = actions.fullscreen-window;
