@@ -8,8 +8,12 @@
     ../workstation.nix
   ];
 
-  services.logind.settings.Login = {
-    HandleLidSwitch = "suspend";
-    HandleLidSwitchExternalPower = "ignore";
+  services = {
+    fprintd.enable = true;
+
+    logind.settings.Login = {
+      HandleLidSwitch = "suspend";
+      HandleLidSwitchExternalPower = "ignore";
+    };
   };
 }
