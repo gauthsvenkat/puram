@@ -23,6 +23,7 @@ in
         env.DISABLE_TELEMETRY = "1";
         autoMemoryEnabled = false;
         theme = "dark";
+        editorMode = "vim";
         cleanupPeriodDays = 7;
         includeCoAuthoredBy = false;
 
