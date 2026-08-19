@@ -14,10 +14,17 @@ in
     ./hardware-configuration.nix
   ];
 
+  programs = {
+    _1password.enable = true;
+
+    _1password-gui = {
+      enable = true;
+      polkitPolicyOwners = [ username ];
+    };
+  };
+
   home-manager.users.${username} = {
     home.packages = with pkgs; [
-      _1password-cli
-      _1password-gui
       glab
       go-task
       hurl
