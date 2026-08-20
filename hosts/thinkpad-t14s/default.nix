@@ -31,6 +31,8 @@ in
       k9s
       kubectx
       kubernetes-helm
+      # Needed to build psycopg2 from source for work-api.
+      libpq.pg_config
       nodejs
       slack
       terraform
