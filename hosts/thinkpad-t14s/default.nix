@@ -46,27 +46,57 @@ in
 
     programs.starship.settings.gcloud.disabled = true;
 
-    programs.niri.settings.outputs = {
-      "Samsung Electric Company LC32G5xT H000000000" = {
-        mode = {
-          width = 2560;
-          height = 1440;
-          refresh = 144.0;
-        };
-        position = {
-          x = 0;
-          y = 0;
-        };
-        scale = 1.0;
-      };
-
-      "eDP-1" = {
-        position = {
-          x = 2560;
-          y = 330;
-        };
-        scale = 1.25;
-      };
+    services.shikane = {
+      enable = true;
+      settings.profile = [
+        {
+          name = "lg-ultrawide";
+          output = [
+            {
+              enable = true;
+              mode = "best";
+              position = "0,0";
+              scale = 1.0;
+              search = "s=0x00000000";
+            }
+            {
+              enable = true;
+              position = "952,1440";
+              scale = 1.25;
+              search = "n=eDP-1";
+            }
+          ];
+        }
+        {
+          name = "samsung";
+          output = [
+            {
+              enable = true;
+              mode = "best";
+              position = "0,0";
+              scale = 1.0;
+              search = "s=H000000000";
+            }
+            {
+              enable = true;
+              position = "2560,330";
+              scale = 1.25;
+              search = "n=eDP-1";
+            }
+          ];
+        }
+        {
+          name = "undocked";
+          output = [
+            {
+              enable = true;
+              position = "0,0";
+              scale = 1.25;
+              search = "n=eDP-1";
+            }
+          ];
+        }
+      ];
     };
   };
 }
