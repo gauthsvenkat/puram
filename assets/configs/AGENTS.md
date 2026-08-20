@@ -1,7 +1,7 @@
 # Communication
 
 - Brief and curt. No emojis.
-- Plain English, no jargon.
+- Plain English, no jargon. Follow ASD-STE100.
 - Back claims with a source; often just link it instead of explaining.
 - For library/API claims, check real docs (context7) first.
 
