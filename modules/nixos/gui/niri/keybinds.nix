@@ -49,13 +49,13 @@ in
         "Mod+Shift+Right".action = actions.move-column-to-monitor-right;
 
         # workspaces: j/k reorders within the monitor, arrows send across
-        "Mod+Alt+Shift+J".action = actions.move-workspace-down;
-        "Mod+Alt+Shift+K".action = actions.move-workspace-up;
+        "Mod+Ctrl+Shift+J".action = actions.move-workspace-down;
+        "Mod+Ctrl+Shift+K".action = actions.move-workspace-up;
 
-        "Mod+Alt+Shift+Left".action = actions.move-workspace-to-monitor-left;
-        "Mod+Alt+Shift+Down".action = actions.move-workspace-to-monitor-down;
-        "Mod+Alt+Shift+Up".action = actions.move-workspace-to-monitor-up;
-        "Mod+Alt+Shift+Right".action = actions.move-workspace-to-monitor-right;
+        "Mod+Ctrl+Shift+Left".action = actions.move-workspace-to-monitor-left;
+        "Mod+Ctrl+Shift+Down".action = actions.move-workspace-to-monitor-down;
+        "Mod+Ctrl+Shift+Up".action = actions.move-workspace-to-monitor-up;
+        "Mod+Ctrl+Shift+Right".action = actions.move-workspace-to-monitor-right;
 
         # sizing
         "Mod+F".action = actions.maximize-column;
@@ -126,9 +126,9 @@ in
         ];
 
         # screencast
-        "Mod+C".action = actions.set-dynamic-cast-window;
-        "Mod+Ctrl+C".action = actions.clear-dynamic-cast-target;
-        "Mod+Shift+C".action = actions.set-dynamic-cast-monitor;
+        "Super+C".action = actions.clear-dynamic-cast-target;
+        "Super+Alt+C".action = actions.set-dynamic-cast-window;
+        "Super+Shift+C".action = actions.set-dynamic-cast-monitor;
 
         # session
         "Mod+Shift+Escape".action = actions.quit;
