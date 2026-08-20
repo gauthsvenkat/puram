@@ -53,6 +53,7 @@ in
           enable = true;
           max-scroll-amount = "25%";
         };
+        mod-key = "Alt";
         warp-mouse-to-focus.enable = true;
       };
 
