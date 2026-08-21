@@ -48,6 +48,8 @@ in
         QT_QPA_PLATFORMTHEME = "kde";
       };
 
+      gestures.hot-corners.enable = false;
+
       input = {
         focus-follows-mouse = {
           enable = true;

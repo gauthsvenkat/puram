@@ -56,6 +56,7 @@ in
                 ];
               }
             ];
+            dead_zone.actions.left = "exec niri msg action toggle-overview";
             start = [ "group:session" ];
             center = [
               "group:left-of-center"
