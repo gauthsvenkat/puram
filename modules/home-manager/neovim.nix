@@ -15,6 +15,7 @@ in
       fzf # fzf-lua
       gcc # nvim-treesitter
       git # blink.cmp, fzf-lua, lazy.nvim, nvim-treesitter
+      harper # harper_ls
       imagemagick # snacks.image
       python3
       ripgrep # fzf-lua

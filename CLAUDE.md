@@ -2,9 +2,9 @@
 
 ```
 modules/          -- self-contained, reusable modules (MUST NOT import other modules)
-  nixos/          -- NixOS system config (system/, hardware/, services/, gui/, extra/)
-  home-manager/   -- user config (cli/, development/, extra/, gui/)
-bases/            -- composable configs that import modules (system.nix, workstation.nix, flavor/, desktop-environment/)
+  nixos/          -- NixOS system config (system/, hardware/, services/, kde-plasma/, niri/)
+  home-manager/   -- user config, flat nix files
+bases/            -- composable configs that import modules, flat (system, workstation, laptop, personal, server, kde, niri)
 hosts/            -- per-machine configs that import bases + host-specific modules
   <hostname>/     -- default.nix + hardware-configuration.nix (+ disko-config.nix if applicable)
 lib/              -- standalone helper functions, composed in flake.nix (mk-host, patcher)

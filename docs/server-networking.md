@@ -81,7 +81,7 @@ No auth-key file is wired in - Tailscale auth keys expire after 90 days, and the
 |---|---|---|
 | `elitedesk` | server (Caddy + services) | yes |
 | `thunderdome` | desktop | yes |
-| Laptops (`thinkpad-x1-carbon`, etc.) | inherit via `bases/flavor/laptop.nix` | yes |
+| Laptops (`thinkpad-x1-carbon`, etc.) | inherit via `bases/laptop.nix` | yes |
 | Phones, tablets | added manually from device | yes if you want named/HTTPS access |
 
 LAN-only or IoT devices (smart TVs, etc.) keep using direct LAN IPs - they don't get the named-HTTPS path.

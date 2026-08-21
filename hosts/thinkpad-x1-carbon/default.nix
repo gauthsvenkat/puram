@@ -4,10 +4,9 @@ let
 in
 {
   imports = [
-    ../../bases/desktop-environment/niri.nix
-
-    ../../bases/flavor/laptop.nix
-    ../../bases/flavor/personal.nix
+    ../../bases/laptop.nix
+    ../../bases/niri.nix
+    ../../bases/personal.nix
 
     ./disko-config.nix
     ./hardware-configuration.nix

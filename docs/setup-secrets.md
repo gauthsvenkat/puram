@@ -2,7 +2,7 @@
 
 This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing the encrypted [`secrets.yaml`](../secrets.yaml). Age keys are derived from SSH keys, but the key source differs by host type:
 
-- **Servers** use the SSH host key (`/etc/ssh/ssh_host_ed25519_key`), set in `bases/flavor/server.nix`.
+- **Servers** use the SSH host key (`/etc/ssh/ssh_host_ed25519_key`), set in `bases/server.nix`.
 - **Workstations** use the user's SSH key (`~/.ssh/id_ed25519`), set in `bases/workstation.nix`.
 
 ## Enrolling a new server
