@@ -1,5 +1,6 @@
 {
   hostCfg,
+  lib,
   pkgs,
   ...
 }:
@@ -22,6 +23,26 @@ in
       polkitPolicyOwners = [ username ];
     };
   };
+
+  # Unload wifi driver before sleep, reload on resume; remove when fixed upstream:
+  # https://bugzilla.kernel.org/show_bug.cgi?id=220438
+  systemd.services.ath11k-sleep =
+    let
+      modprobe = lib.getExe' pkgs.kmod "modprobe";
+    in
+    {
+      description = "Reset ath11k wifi across sleep";
+      before = [ "sleep.target" ];
+      serviceConfig = {
+        ExecStart = "${modprobe} -r ath11k_pci";
+        ExecStop = "${modprobe} ath11k_pci";
+        RemainAfterExit = true;
+        TimeoutSec = 10;
+        Type = "oneshot";
+      };
+      unitConfig.StopWhenUnneeded = true;
+      wantedBy = [ "sleep.target" ];
+    };
 
   home-manager.users.${username} = {
     home.packages = with pkgs; [
