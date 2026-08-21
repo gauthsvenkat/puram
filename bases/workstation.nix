@@ -9,9 +9,8 @@ let
 in
 {
   imports = [
-    ../modules/nixos/extra/vial.nix
-
     ../modules/nixos/hardware/bluetooth.nix
+    ../modules/nixos/hardware/vial.nix
 
     ../modules/nixos/services/docker.nix
     ../modules/nixos/services/pipewire.nix
@@ -31,33 +30,29 @@ in
 
   home-manager.users.${username} = {
     imports = [
-      ../modules/home-manager/cli/atuin.nix
-      ../modules/home-manager/cli/bat.nix
-      ../modules/home-manager/cli/btop.nix
-      ../modules/home-manager/cli/claude-code.nix
-      ../modules/home-manager/cli/direnv.nix
-      ../modules/home-manager/cli/eza.nix
-      ../modules/home-manager/cli/fastfetch.nix
-      ../modules/home-manager/cli/git.nix
-      ../modules/home-manager/cli/just.nix
-      ../modules/home-manager/cli/lazygit.nix
-      ../modules/home-manager/cli/neovim.nix
-      ../modules/home-manager/cli/nh.nix
-      ../modules/home-manager/cli/pre-commit.nix
-      ../modules/home-manager/cli/starship.nix
-      ../modules/home-manager/cli/utils.nix
-      ../modules/home-manager/cli/zoxide.nix
-      ../modules/home-manager/cli/zsh.nix
-
-      ../modules/home-manager/development/lua.nix
-      ../modules/home-manager/development/misc.nix
-      ../modules/home-manager/development/nix.nix
-      ../modules/home-manager/development/python.nix
-      ../modules/home-manager/development/rust.nix
-
-      ../modules/home-manager/extra/wallpaper.nix
-
-      ../modules/home-manager/gui/wezterm.nix
+      ../modules/home-manager/atuin.nix
+      ../modules/home-manager/bat.nix
+      ../modules/home-manager/btop.nix
+      ../modules/home-manager/claude-code.nix
+      ../modules/home-manager/direnv.nix
+      ../modules/home-manager/eza.nix
+      ../modules/home-manager/fastfetch.nix
+      ../modules/home-manager/git.nix
+      ../modules/home-manager/just.nix
+      ../modules/home-manager/lazygit.nix
+      ../modules/home-manager/lua.nix
+      ../modules/home-manager/neovim.nix
+      ../modules/home-manager/nh.nix
+      ../modules/home-manager/nix.nix
+      ../modules/home-manager/pre-commit.nix
+      ../modules/home-manager/python.nix
+      ../modules/home-manager/rust.nix
+      ../modules/home-manager/starship.nix
+      ../modules/home-manager/utils.nix
+      ../modules/home-manager/wallpaper.nix
+      ../modules/home-manager/wezterm.nix
+      ../modules/home-manager/zoxide.nix
+      ../modules/home-manager/zsh.nix
     ];
 
     fonts.fontconfig = {

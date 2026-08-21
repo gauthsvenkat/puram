@@ -7,6 +7,7 @@
     fd
     gnumake
     jq
+    libqalculate
     ripgrep
     unzip
     wget

@@ -7,7 +7,7 @@ let
 in
 {
   imports = [
-    ../../bases/flavor/server.nix
+    ../../bases/server.nix
 
     ../../modules/nixos/services/adguard-home.nix
     ../../modules/nixos/services/homepage.nix

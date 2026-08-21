@@ -8,11 +8,10 @@ let
 in
 {
   imports = [
-    ../../bases/desktop-environment/niri.nix
+    ../../bases/niri.nix
+    ../../bases/personal.nix
 
-    ../../bases/flavor/personal.nix
-
-    ../../modules/nixos/extra/gaming.nix
+    ../../modules/nixos/gaming.nix
 
     ../../modules/nixos/hardware/nvidia.nix
 
