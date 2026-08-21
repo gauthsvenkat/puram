@@ -24,6 +24,11 @@ in
     };
   };
 
+  services.tlp.settings = {
+    START_CHARGE_THRESH_BAT0 = 75;
+    STOP_CHARGE_THRESH_BAT0 = 80;
+  };
+
   # Unload wifi driver before sleep, reload on resume; remove when fixed upstream:
   # https://bugzilla.kernel.org/show_bug.cgi?id=220438
   systemd.services.ath11k-sleep =
