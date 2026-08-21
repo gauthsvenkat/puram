@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, ... }:
 {
   programs.wezterm = {
     enable = true;
@@ -11,7 +11,7 @@
         audible_bell = "Disabled";
         warn_about_missing_glyphs = false;
 
-        font_size = if pkgs.stdenv.isDarwin then 16 else 12;
+        font_size = 12;
 
         hide_tab_bar_if_only_one_tab = true;
         tab_and_split_indices_are_zero_based = true;

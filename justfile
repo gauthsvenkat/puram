@@ -2,11 +2,8 @@ alias a := apply
 alias c := check
 alias u := update
 
-os := os()
-nh_subcommand := if os == "linux" { "os" } else if os == "macos" { "darwin" } else { error("Unsupported OS!") }
-
 apply action='switch':
-    nh {{ nh_subcommand }} {{ action }} .
+    nh os {{ action }} .
 
 check:
     nix flake check
@@ -25,7 +22,7 @@ upgrade:
 
     just update
     git add flake.lock
-    just apply {{ if os() == "linux" { "boot" } else { "switch" } }} || (git checkout HEAD -- flake.lock && exit 1)
+    just apply boot || (git checkout HEAD -- flake.lock && exit 1)
     git commit -m "chore(flake): update inputs"
 
 # NOTE: Following recipe has some dependencies
@@ -43,4 +40,4 @@ secrets-view:
     sops decrypt secrets.yaml
 
 secrets-rekey:
-    sops updatekeys secrets.yaml
+    sops updatekeys --yes secrets.yaml

@@ -7,9 +7,7 @@ let
 in
 {
   imports = [
-    ../../bases/nixos/flavor/server.nix
-
-    ../../modules/common/tailscale.nix
+    ../../bases/flavor/server.nix
 
     ../../modules/nixos/services/adguard-home.nix
     ../../modules/nixos/services/homepage.nix
@@ -18,6 +16,7 @@ in
     ../../modules/nixos/services/paperless-ngx.nix
     ../../modules/nixos/services/postgresql.nix
     ../../modules/nixos/services/speedtest-tracker.nix
+    ../../modules/nixos/services/tailscale.nix
     ../../modules/nixos/services/vikunja.nix
     ../../modules/nixos/services/zfs.nix
 
