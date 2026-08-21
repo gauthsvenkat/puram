@@ -2,14 +2,9 @@
 
 ```
 modules/          -- self-contained, reusable modules (MUST NOT import other modules)
-  common/         -- shared between nixos and darwin (home-manager, sops, nix-settings)
-  nixos/          -- NixOS-specific (system/, hardware/, services/, gui/, extra/)
-  darwin/         -- macOS-specific (system/, gui/, services/, homebrew)
-  home-manager/   -- platform-agnostic user config (cli/, development/, extra/)
-bases/            -- composable configs that import modules
-  common/         -- cross-platform bases (system.nix, workstation.nix)
-  nixos/          -- NixOS bases (system.nix, workstation.nix, flavor/, desktop-environment/)
-  darwin/         -- macOS bases (system.nix, workstation.nix)
+  nixos/          -- NixOS system config (system/, hardware/, services/, gui/, extra/)
+  home-manager/   -- user config (cli/, development/, extra/, gui/)
+bases/            -- composable configs that import modules (system.nix, workstation.nix, flavor/, desktop-environment/)
 hosts/            -- per-machine configs that import bases + host-specific modules
   <hostname>/     -- default.nix + hardware-configuration.nix (+ disko-config.nix if applicable)
 lib/              -- standalone helper functions, composed in flake.nix (mk-host, patcher)
@@ -22,7 +17,7 @@ justfile          -- task runner for common operations
 # Key concepts
 
 - `hostCfg` -- attribute set passed via `specialArgs`, defined per-host as a literal `rec { ... }` in `hosts/<hostname>/hostCfg.nix`. Bases and modules read from this instead of hardcoding paths/ports/image tags/env defaults. Flows to home-manager via `extraSpecialArgs`.
-- Single `nixpkgs` input (`nixos-unstable`) shared between NixOS and darwin; `home-manager`, `sops-nix`, `disko`, `plasma-manager`, and `nix-darwin` all follow it.
+- Single `nixpkgs` input (`nixos-unstable`); `home-manager`, `sops-nix`, `disko`, `plasma-manager`, and `niri` all follow it.
 - Base composition chain: host imports bases, bases import modules. E.g., `kde.nix` -> `personal.nix` -> `workstation.nix` -> `system.nix`.
 
 # Architecture

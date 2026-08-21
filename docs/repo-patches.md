@@ -9,7 +9,7 @@ upstream PRs that haven't merged yet but that this repo needs.
 list of PR URLs. Each entry is fetched via `pkgs.fetchpatch2`, applied to
 the locked `nixpkgs` via `pkgs.applyPatches`, and each NixOS configuration
 is evaluated against the patched source so both modules and `pkgs` reflect
-the patches. Darwin hosts skip this path entirely.
+the patches.
 
 ## Adding a patch
 

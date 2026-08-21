@@ -1,5 +1,5 @@
 {
-  description = "NixOS, nix-darwin and home-manager flakes for my machines";
+  description = "NixOS and home-manager flakes for my machines";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -34,27 +34,10 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+# BEGIN-PRIVATE
 
-    nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # BEGIN-PRIVATE
     vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
-
-    # END-PRIVATE
-    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-
-    homebrew-core = {
-      url = "github:homebrew/homebrew-core";
-      flake = false;
-    };
-
-    homebrew-cask = {
-      url = "github:homebrew/homebrew-cask";
-      flake = false;
-    };
+# END-PRIVATE
   };
 
   outputs =
@@ -77,10 +60,6 @@
       mkHost = import ./lib/mk-host.nix { inherit inputs mkNixos; };
     in
     {
-      darwinConfigurations = {
-        "macbook-m1-pro" = mkHost "macbook-m1-pro" "aarch64-darwin";
-      };
-
       nixosConfigurations = {
         "thinkpad-t14s" = mkHost "thinkpad-t14s" "x86_64-linux";
         "thinkpad-x1-carbon" = mkHost "thinkpad-x1-carbon" "x86_64-linux";

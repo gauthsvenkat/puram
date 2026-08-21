@@ -2,7 +2,6 @@
 
 keys:
   - &elitedesk age1x5fkemnqjf5ta60q83s04pjllrpk35lfjxg2v4jeuhky385emc9svrc6au
-  - &macbook-m1-pro age19gu2nscgrta9q2l8h6kg48lgcd2psh7st30kxz3d4k7trwkw6q4sjapqz2
   - &thinkpad-t14s age1dp79srrk65336pja4f9h7ss3n33cma7l4u7spwkm0avtk63ttsfs6cql0z
   - &thinkpad-x1-carbon age1awzy9trqped05z2yc4eaaz6wn3ddmqcn8tnvxctfach47wrkecnqwyau7z
   - &thunderdome age17fetz7rj5rkc89ts5l2qde3cpwswy5pkgs52czaykv8en5lw6cuqf3pa9s
@@ -11,7 +10,6 @@ creation_rules:
     key_groups:
       - age:
         - *elitedesk
-        - *macbook-m1-pro
         - *thinkpad-t14s
         - *thinkpad-x1-carbon
         - *thunderdome

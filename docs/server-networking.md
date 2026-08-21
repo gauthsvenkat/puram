@@ -65,7 +65,7 @@ Tailnet IP for elitedesk: **`100.103.236.120`**. Verify after re-enrolment with 
 
 ### Per-host enrollment
 
-Hosts that import `modules/common/tailscale.nix` get the daemon enabled but do not auto-authenticate. One-shot per device:
+Hosts that import `modules/nixos/services/tailscale.nix` get the daemon enabled but do not auto-authenticate. One-shot per device:
 
 ```sh
 sudo tailscale up
@@ -81,7 +81,7 @@ No auth-key file is wired in - Tailscale auth keys expire after 90 days, and the
 |---|---|---|
 | `elitedesk` | server (Caddy + services) | yes |
 | `thunderdome` | desktop | yes |
-| Laptops (`thinkpad-x1-carbon`, etc.) | inherit via `bases/nixos/flavor/laptop.nix` | yes |
+| Laptops (`thinkpad-x1-carbon`, etc.) | inherit via `bases/flavor/laptop.nix` | yes |
 | Phones, tablets | added manually from device | yes if you want named/HTTPS access |
 
 LAN-only or IoT devices (smart TVs, etc.) keep using direct LAN IPs - they don't get the named-HTTPS path.

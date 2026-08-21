@@ -7,9 +7,7 @@ let
 in
 {
   imports = [
-    ../../bases/nixos/flavor/server.nix
-
-    ../../modules/common/tailscale.nix
+    ../../bases/flavor/server.nix
 
     ../../modules/nixos/services/adguard-home.nix
     # BEGIN-PRIVATE
@@ -32,6 +30,7 @@ in
     ../../modules/nixos/services/sonarr.nix
     # END-PRIVATE
     ../../modules/nixos/services/speedtest-tracker.nix
+    ../../modules/nixos/services/tailscale.nix
     ../../modules/nixos/services/vikunja.nix
     ../../modules/nixos/services/zfs.nix
 

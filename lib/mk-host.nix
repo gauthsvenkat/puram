@@ -1,13 +1,6 @@
 { inputs, mkNixos }:
 name: system:
-let
-  builder =
-    if inputs.nixpkgs.lib.hasSuffix "darwin" system then
-      inputs.nix-darwin.lib.darwinSystem
-    else
-      mkNixos;
-in
-builder {
+mkNixos {
   inherit system;
   specialArgs = {
     inherit inputs;
