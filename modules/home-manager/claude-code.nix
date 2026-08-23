@@ -33,7 +33,6 @@ in
           deny = [
             "Read(**/.env*)"
             "Edit(**/.env*)"
-            "Write(**/.env*)"
             "Read(*.key)"
             "Read(*.pem)"
             "Read(**/credentials.json)"
