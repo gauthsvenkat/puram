@@ -64,7 +64,7 @@ in
       packages = with pkgs; [
         firefox
         gh
-        libreoffice-still
+        libreoffice-stable
         mpv
         nerd-fonts.jetbrains-mono
         sops
