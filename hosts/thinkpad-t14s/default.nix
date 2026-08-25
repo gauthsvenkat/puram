@@ -30,24 +30,24 @@ in
     STOP_CHARGE_THRESH_BAT0 = 80;
   };
 
-  # Unload wifi driver before sleep, reload on resume; remove when fixed upstream:
+  # Reload wifi driver after resume to clear degraded rx; remove when fixed upstream:
   # https://bugzilla.kernel.org/show_bug.cgi?id=220438
-  systemd.services.ath11k-sleep =
+  systemd.services.ath11k-resume =
     let
       modprobe = lib.getExe' pkgs.kmod "modprobe";
     in
     {
-      description = "Reset ath11k wifi across sleep";
-      before = [ "sleep.target" ];
+      description = "Reload ath11k wifi after resume";
+      after = [ "suspend.target" ];
       serviceConfig = {
-        ExecStart = "${modprobe} -r ath11k_pci";
-        ExecStop = "${modprobe} ath11k_pci";
-        RemainAfterExit = true;
-        TimeoutSec = 10;
+        ExecStart = [
+          "${modprobe} -r ath11k_pci"
+          "${modprobe} ath11k_pci"
+        ];
+        TimeoutSec = 30;
         Type = "oneshot";
       };
-      unitConfig.StopWhenUnneeded = true;
-      wantedBy = [ "sleep.target" ];
+      wantedBy = [ "suspend.target" ];
     };
 
   home-manager.users.${username} = {
