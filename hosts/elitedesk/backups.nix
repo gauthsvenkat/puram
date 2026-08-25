@@ -8,12 +8,6 @@
 let
   inherit (hostCfg) paths;
   inherit (config.sops) placeholder secrets;
-  stateDirs = [
-    "/var/lib/jellyfin"
-    "/var/lib/private/AdGuardHome"
-    "/var/lib/private/vikunja"
-    "/var/lib/speedtest-tracker"
-  ];
 in
 {
   # Live state runs on the (unmirrored) SSD; nightly copies onto the pool keep
@@ -67,10 +61,19 @@ in
 
   systemd.services.state-backup = {
     serviceConfig.Type = "oneshot";
-    script = ''
-      mkdir -p ${paths.backups}/state
-      ${lib.getExe pkgs.rsync} -a --delete ${lib.escapeShellArgs stateDirs} ${paths.backups}/state/
-    '';
+    script =
+      let
+        stateDirs = [
+          "/var/lib/jellyfin"
+          "/var/lib/private/AdGuardHome"
+          "/var/lib/private/vikunja"
+          "/var/lib/speedtest-tracker"
+        ];
+      in
+      ''
+        mkdir -p ${paths.backups}/state
+        ${lib.getExe pkgs.rsync} -a --delete ${lib.escapeShellArgs stateDirs} ${paths.backups}/state/
+      '';
   };
 
   systemd.timers.state-backup = {
