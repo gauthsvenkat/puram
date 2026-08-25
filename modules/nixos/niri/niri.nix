@@ -50,6 +50,8 @@ in
 
       gestures.hot-corners.enable = false;
 
+      hotkey-overlay.skip-at-startup = true;
+
       input = {
         focus-follows-mouse = {
           enable = true;
