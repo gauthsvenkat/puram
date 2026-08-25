@@ -6,15 +6,10 @@
 }:
 let
   inherit (hostCfg) username;
-  grim = lib.getExe pkgs.grim;
-  slurp = lib.getExe pkgs.slurp;
 in
 {
   home-manager.users.${username} =
     { config, ... }:
-    let
-      satty = lib.getExe config.programs.satty.package;
-    in
     {
       programs.satty = {
         enable = true;
@@ -30,7 +25,14 @@ in
       systemd.user.tmpfiles.rules = [ "d %h/Pictures/Screenshots 0755 - - -" ];
 
       programs.niri.settings = {
-        binds."Print".action.spawn-sh = "sel=$(${slurp}) && ${grim} -g \"$sel\" - | ${satty} --filename -";
+        binds."Print".action.spawn-sh =
+          let
+            grim = lib.getExe pkgs.grim;
+            slurp = lib.getExe pkgs.slurp;
+            satty = lib.getExe config.programs.satty.package;
+            pgrep = lib.getExe' pkgs.procps "pgrep";
+          in
+          "${pgrep} -x 'slurp|satty' >/dev/null && exit 0; sel=$(${slurp}) && ${grim} -g \"$sel\" - | ${satty} --filename -";
 
         window-rules = [
           {
