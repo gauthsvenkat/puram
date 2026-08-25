@@ -8,25 +8,6 @@
 let
   inherit (hostCfg) paths;
   inherit (config.sops) placeholder secrets;
-  stateDirs = [
-    # BEGIN-PRIVATE
-    "/var/lib/bazarr"
-    # END-PRIVATE
-    "/var/lib/jellyfin"
-    "/var/lib/private/AdGuardHome"
-    # BEGIN-PRIVATE
-    "/var/lib/private/seerr"
-    # END-PRIVATE
-    "/var/lib/private/vikunja"
-    # BEGIN-PRIVATE
-    "/var/lib/prowlarr"
-    "/var/lib/qBittorrent"
-    "/var/lib/radarr"
-    "/var/lib/sabnzbd"
-    "/var/lib/sonarr"
-    # END-PRIVATE
-    "/var/lib/speedtest-tracker"
-  ];
 in
 {
   # Live state runs on the (unmirrored) SSD; nightly copies onto the pool keep
@@ -80,10 +61,32 @@ in
 
   systemd.services.state-backup = {
     serviceConfig.Type = "oneshot";
-    script = ''
-      mkdir -p ${paths.backups}/state
-      ${lib.getExe pkgs.rsync} -a --delete ${lib.escapeShellArgs stateDirs} ${paths.backups}/state/
-    '';
+    script =
+      let
+        stateDirs = [
+          # BEGIN-PRIVATE
+          "/var/lib/bazarr"
+          # END-PRIVATE
+          "/var/lib/jellyfin"
+          "/var/lib/private/AdGuardHome"
+          # BEGIN-PRIVATE
+          "/var/lib/private/seerr"
+          # END-PRIVATE
+          "/var/lib/private/vikunja"
+          # BEGIN-PRIVATE
+          "/var/lib/prowlarr"
+          "/var/lib/qBittorrent"
+          "/var/lib/radarr"
+          "/var/lib/sabnzbd"
+          "/var/lib/sonarr"
+          # END-PRIVATE
+          "/var/lib/speedtest-tracker"
+        ];
+      in
+      ''
+        mkdir -p ${paths.backups}/state
+        ${lib.getExe pkgs.rsync} -a --delete ${lib.escapeShellArgs stateDirs} ${paths.backups}/state/
+      '';
   };
 
   systemd.timers.state-backup = {
