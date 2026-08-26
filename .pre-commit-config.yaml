@@ -3,16 +3,16 @@ repos:
   rev: v5.0.0
   hooks:
     - id: trailing-whitespace
-      exclude: secrets.yaml
+      exclude: ^secrets\.yaml$
     - id: end-of-file-fixer
-      exclude: secrets.yaml
+      exclude: ^secrets\.yaml$
     - id: check-merge-conflict
 
 - repo: https://github.com/crate-ci/typos
   rev: v1.32.0
   hooks:
     - id: typos
-      exclude: secrets.yaml
+      exclude: ^secrets\.yaml$
 
 - repo: local
   hooks:
@@ -30,7 +30,7 @@ repos:
 
     - id: statix
       name: statix
-      entry: statix check
+      entry: statix check -i .direnv
       language: system
       types: [nix]
       pass_filenames: false
@@ -40,3 +40,16 @@ repos:
       entry: stylua
       language: system
       types: [lua]
+
+    - id: tofu-fmt
+      name: tofu fmt
+      entry: tofu fmt
+      language: system
+      types: [terraform]
+
+    - id: tofu-validate
+      name: tofu validate
+      entry: tofu -chdir=infra validate
+      language: system
+      pass_filenames: false
+      files: ^infra/
