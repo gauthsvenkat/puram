@@ -51,6 +51,7 @@ in
       ../modules/home-manager/utils.nix
       ../modules/home-manager/wallpaper.nix
       ../modules/home-manager/wezterm.nix
+      ../modules/home-manager/yazi.nix
       ../modules/home-manager/zoxide.nix
       ../modules/home-manager/zsh.nix
     ];
