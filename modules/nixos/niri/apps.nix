@@ -27,7 +27,12 @@ in
     };
 
     programs.niri.settings = {
-      binds."Mod+E".action.spawn = lib.getExe pkgs.nautilus;
+      binds."Mod+E".action.spawn = [
+        (lib.getExe pkgs.wezterm)
+        "start"
+        "--"
+        (lib.getExe pkgs.yazi)
+      ];
 
       cursor = {
         theme = "Adwaita";
