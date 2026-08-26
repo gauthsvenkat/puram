@@ -62,5 +62,20 @@
         "thunderdome" = mkHost "thunderdome" "x86_64-linux";
         "elitedesk" = mkHost "elitedesk" "x86_64-linux";
       };
+
+      devShells."x86_64-linux".default =
+        let
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        in
+        pkgs.mkShell {
+          packages = with pkgs; [
+            (opentofu.withPlugins (p: [
+              p.cloudflare_cloudflare
+              p.scaleway_scaleway
+              p.tailscale_tailscale
+            ]))
+            sops
+          ];
+        };
     };
 }
