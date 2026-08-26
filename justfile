@@ -33,6 +33,9 @@ upgrade:
 deploy hostname action='boot':
     nh os {{ action }} . --hostname {{ hostname }} --target-host {{ hostname }}-root
 
+tf *args:
+    sops exec-env secrets.yaml 'tofu -chdir=infra {{ args }}'
+
 secrets-edit:
     sops edit secrets.yaml
 

@@ -39,9 +39,11 @@ The domain was purchased through Cloudflare, so Cloudflare is both registrar and
 
 A single wildcard A record covers every subdomain (`jellyfin`, `immich`, `paperless`, …). Adding a new vhost in Caddy needs no DNS change.
 
+The record is managed by opentofu (`infra/cloudflare.tf`, see `repo-infra.md`). The zone also holds an unmanaged ad-hoc record (`*.myrthe.gauthsvenkat.dev`).
+
 Do **not** turn on Cloudflare's HTTP proxy (orange cloud): the tailnet IP is unroutable from the public internet, and proxying breaks the off-LAN path.
 
-If elitedesk's tailnet IP ever shifts (rare; only on tailnet recreate or device deletion), update this single record.
+If elitedesk's tailnet IP ever shifts (rare; only on tailnet recreate or device deletion), edit `local.tailnet_ip` in `infra/tailscale.tf` and `just tf apply` - it updates this record and the tailnet nameserver together.
 
 ### ACME API token
 
@@ -59,6 +61,8 @@ Token scope (Cloudflare → My Profile → API Tokens → Create Custom Token):
 
 Rotation: roll the token in the dashboard, paste new value into sops via `just secrets-edit`, deploy.
 
+Deliberately not opentofu-managed: minting tokens via the API would require a near-admin token for opentofu itself.
+
 ## Tailscale
 
 Tailnet IP for elitedesk: **`100.103.236.120`**. Verify after re-enrolment with `tailscale ip -4`.
@@ -74,6 +78,8 @@ sudo tailscale up
 Opens a browser auth URL; sign in via Google. Device shows up in the tailnet admin within seconds.
 
 No auth-key file is wired in - Tailscale auth keys expire after 90 days, and the rebuild cadence doesn't justify rotating them.
+
+elitedesk carries `tag:server` (applied via `infra/tailscale.tf`), which disables its node-key expiry - the server never silently drops off the tailnet.
 
 ### Hosts in the tailnet
 
@@ -100,9 +106,11 @@ The tailnet DNS panel (https://login.tailscale.com/admin/dns) routes every tailn
 
 The fallbacks matter: with override on, if elitedesk goes down every tailnet device loses DNS unless there's a backup. Cloudflare and Quad9 keep resolution working in that window.
 
+Caveat: Tailscale does not guarantee nameserver order (https://tailscale.com/docs/reference/dns-in-tailscale) - clients may race all three, so the public resolvers can win over AdGuard and bypass blocklists intermittently. Strict blocklist coverage would require AdGuard as the only global nameserver, at the cost of tailnet-wide DNS outage when elitedesk is down.
+
 AdGuard binds `0.0.0.0:53` (`modules/nixos/services/adguard-home.nix`), so the tailnet interface is covered without extra config. Allowed-clients defaults to permissive - any tailnet peer can query - so no allowlist tweak is needed.
 
-This config lives entirely in the Tailscale admin console; nothing in this repo encodes it. A fresh tailnet would need it re-applied by hand.
+This config is encoded in `infra/tailscale.tf` (along with the ACL policy file) and applied with `just tf apply` - a fresh tailnet gets it back from the repo, not by hand. See `repo-infra.md`.
 
 ## Router / WAN posture
 
@@ -166,10 +174,11 @@ explicit IPs (loopback won't traverse the namespace boundary):
 
 ### Mullvad wg-quick secret
 
-`mullvad_wg_config` in `secrets.yaml` holds a complete wg-quick config
-file as a multiline string (`[Interface]` / `[Peer]` shape). Generate
-at https://mullvad.net/en/account → WireGuard configuration → pick a
-location → download.
+`secrets.yaml` holds `mullvad_wg_private_key` and `mullvad_wg_address`;
+the full wg-quick config is assembled from them by
+`sops.templates.mullvad_wg_config` in `hosts/elitedesk/vpn.nix` (peer
+endpoint and keys live there in plain nix). Generate new values at
+https://mullvad.net/en/account → WireGuard configuration.
 
 ## Per-service runtime config (out of nix)
 
@@ -195,16 +204,17 @@ ACME state - account, registered keys, per-vhost certs - lives at `/var/lib/cadd
 
 1. NixOS install + import `dontdie` (see `server-zfs-pool.md`).
 2. Restore `~/.ssh/id_ed25519` so sops can decrypt.
-3. Confirm `cloudflare_dns_token` and `mullvad_wg_config` are in `secrets.yaml` (regenerate the Mullvad conf at https://mullvad.net/en/account if not).
+3. Confirm `cloudflare_dns_token`, `mullvad_wg_private_key`, and `mullvad_wg_address` are in `secrets.yaml` (regenerate at https://mullvad.net/en/account if not).
 4. `just apply`.
 5. `sudo tailscale up` → authorize device in browser.
 6. Wait ~60s - Caddy issues certs for every declared vhost via DNS-01.
 7. Verify: `curl https://homarr.gauthsvenkat.dev` from any tailnet device.
-8. If `tailscale ip -4` on elitedesk returns something other than `100.103.236.120`, update both the wildcard A record in Cloudflare **and** the first global nameserver in the Tailscale admin DNS panel.
+8. If `tailscale ip -4` on elitedesk returns something other than `100.103.236.120`, edit `local.tailnet_ip` in `infra/tailscale.tf` and `just tf apply` - it updates the Cloudflare record and the tailnet nameserver together (the nameserver change needs the `ignore_changes` block lifted for that one apply, see `repo-infra.md`).
 9. Redo the per-service runtime config above (qBittorrent server domains, sabnzbd host whitelist) - the configs live in service state, not in nix.
 
 ## See also
 
+- `repo-infra.md` - opentofu management of Cloudflare/Tailscale/Scaleway.
 - `server-zfs-pool.md` - storage layout for the homeserver datasets.
 - Caddy DNS-01 / Cloudflare plugin: https://github.com/caddy-dns/cloudflare
 - Tailscale admin: https://login.tailscale.com/admin
