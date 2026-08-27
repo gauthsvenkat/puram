@@ -8,7 +8,7 @@ What `infra/` manages, how to operate it, and how to bootstrap it from nothing.
 |---|---|---|
 | Tailscale | admin DNS panel (`infra/tailscale.tf`), ACL policy file (`infra/tailnet-acl.hujson`), `tag:server` on elitedesk | device enrollment (manual SSO), auth keys, OAuth clients |
 | Cloudflare | zone `gauthsvenkat.dev`, wildcard A record, Caddy's ACME token, opentofu's own token policy (`infra/cloudflare.tf`) | zone settings, registrar, `*.myrthe.gauthsvenkat.dev` (ad-hoc) |
-| Scaleway | `elitedesk-backup` bucket + multipart-abort lifecycle rule (`infra/scaleway.tf`) | IAM applications/policies/keys |
+| Scaleway | `elitedesk-backup` bucket + multipart-abort lifecycle rule, IAM trios (application/policy/api key) for restic and opentofu itself (`infra/scaleway.tf`) | default org policies (Administrators, Editors, ...) |
 
 `local.tailnet_ip` in `infra/tailscale.tf` is the single source for elitedesk's tailnet IP - it feeds both the Cloudflare wildcard record and the tailnet's primary nameserver. If the IP ever changes, edit that one line and apply.
 
@@ -43,9 +43,13 @@ All in `secrets.yaml`, named exactly as the env vars the providers read.
 |---|---|---|
 | `TAILSCALE_OAUTH_CLIENT_ID` / `_SECRET` | admin console → Settings → OAuth clients | `dns` write, `policy_file` write, `devices:core` write, tagged `tag:server` |
 | `CLOUDFLARE_API_TOKEN` | account dashboard → API Tokens (account-owned token) | `Zone Read` + `DNS Write` on `gauthsvenkat.dev`, `Account API Tokens Write`; separate from Caddy's token |
-| `SCW_ACCESS_KEY` / `SCW_SECRET_KEY` | console → IAM → application `opentofu` → API keys | policy `ObjectStorageFullAccess` on project `Backup` |
+| `SCW_ACCESS_KEY` / `SCW_SECRET_KEY` | console → IAM → application `opentofu-infra` → API keys | `ObjectStorageBucketsRead`/`Write` on project `Backup`, `IAMManager` (org) |
 
 Tailscale OAuth client scopes are fixed at creation - a scope change means a new client (create new, swap sops values, revoke old). The Cloudflare token value is shown once; ditto the Scaleway secret key.
+
+## File layout
+
+One file per provider, sections in order: `provider` block (if the provider needs config), `locals`, resources from big scope to small (infrastructure first, then credential trios application → policy → key, with opentofu's own credentials last), `output`s, and `import` blocks at the end grouped by date, mirroring resource order. `data` blocks are not a section - each sits directly above its first consumer.
 
 ## Quirks
 
@@ -63,6 +67,13 @@ Tailscale OAuth client scopes are fixed at creation - a scope change means a new
 4. `just deploy elitedesk` - re-renders Caddy's env file and restarts it.
 
 Between steps 2 and 4 Caddy holds a dead token; only cert issuance in that window would notice.
+
+## Rotating Scaleway keys
+
+Both API keys expire: restic on **2027-07-30**, opentofu on **2027-08-25**. Rotate before then - an expired restic key silently kills offsite backups.
+
+- restic: add (once) a sensitive output for `scaleway_iam_api_key.restic.secret_key`, then `just tf apply -replace=scaleway_iam_api_key.restic`, read access + secret via `just tf output`, update `scaleway_backups_access_key` / `scaleway_backups_secret_key` in sops (both change), `just deploy elitedesk`, verify the next backup run.
+- opentofu's own key: same replace flow (`create_before_destroy` mints the successor before revoking the old key), then update `SCW_ACCESS_KEY` / `SCW_SECRET_KEY` in sops immediately - a wrong paste here locks opentofu out until fixed from state or the console.
 
 ## Disaster recovery
 
