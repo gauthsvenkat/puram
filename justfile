@@ -34,13 +34,15 @@ deploy hostname action='boot':
     nh os {{ action }} . --hostname {{ hostname }} --target-host {{ hostname }}-root
 
 tf *args:
-    sops exec-env secrets.yaml 'tofu -chdir=infra {{ args }}'
+    sops exec-env secrets/infra.yaml 'tofu -chdir=infra {{ args }}'
 
-secrets-edit:
-    sops edit secrets.yaml
+secrets-edit name="homeserver":
+    sops edit secrets/{{ name }}.yaml
 
-secrets-view:
-    sops decrypt secrets.yaml
+secrets-view name="homeserver":
+    sops decrypt secrets/{{ name }}.yaml
 
 secrets-rekey:
-    sops updatekeys --yes secrets.yaml
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for f in secrets/*.yaml; do sops updatekeys --yes "$f"; done
