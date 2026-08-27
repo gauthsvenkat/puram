@@ -32,4 +32,6 @@ in
   ];
 
   boot.zfs.extraPools = [ zpool ];
+
+  sops.defaultSopsFile = ../../secrets/homeserver.yaml;
 }
