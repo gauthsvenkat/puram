@@ -168,7 +168,7 @@ explicit IPs (loopback won't traverse the namespace boundary):
 
 ### Mullvad wg-quick secret
 
-`secrets.yaml` holds `mullvad_wg_private_key` and `mullvad_wg_address`;
+`secrets/homeserver.yaml` holds `mullvad_wg_private_key` and `mullvad_wg_address`;
 the full wg-quick config is assembled from them by
 `sops.templates.mullvad_wg_config` in `hosts/elitedesk/vpn.nix` (peer
 endpoint and keys live there in plain nix). Generate new values at
@@ -198,7 +198,7 @@ ACME state - account, registered keys, per-vhost certs - lives at `/var/lib/cadd
 
 1. NixOS install + import `dontdie` (see `server-zfs-pool.md`).
 2. Restore `~/.ssh/id_ed25519` so sops can decrypt.
-3. Confirm `cloudflare_dns_token`, `mullvad_wg_private_key`, and `mullvad_wg_address` are in `secrets.yaml` (regenerate at https://mullvad.net/en/account if not).
+3. Confirm `cloudflare_dns_token`, `mullvad_wg_private_key`, and `mullvad_wg_address` are in `secrets/homeserver.yaml` (regenerate at https://mullvad.net/en/account if not).
 4. `just apply`.
 5. `sudo tailscale up` → authorize device in browser.
 6. Wait ~60s - Caddy issues certs for every declared vhost via DNS-01.

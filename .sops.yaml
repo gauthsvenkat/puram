@@ -1,15 +1,31 @@
-#NOTE: This config file is used by the `sops` cli tool.
-
 keys:
   - &elitedesk age1x5fkemnqjf5ta60q83s04pjllrpk35lfjxg2v4jeuhky385emc9svrc6au
   - &thinkpad-t14s age1k0692xj0ggl746ghykyuzyetcvdwp9e7tupsaxr6x7kuzp3py4fs4syap7
   - &thinkpad-x1-carbon age1awzy9trqped05z2yc4eaaz6wn3ddmqcn8tnvxctfach47wrkecnqwyau7z
   - &thunderdome age17fetz7rj5rkc89ts5l2qde3cpwswy5pkgs52czaykv8en5lw6cuqf3pa9s
 creation_rules:
-  - path_regex: secrets.yaml
+  # every machine
+  - path_regex: secrets/system-hashed-password\.yaml$
     key_groups:
       - age:
         - *elitedesk
+        - *thinkpad-t14s
+        - *thinkpad-x1-carbon
+        - *thunderdome
+
+  # elitedesk runtime secrets, editable from the workstations
+  - path_regex: secrets/homeserver\.yaml$
+    key_groups:
+      - age:
+        - *elitedesk
+        - *thinkpad-t14s
+        - *thinkpad-x1-carbon
+        - *thunderdome
+
+  # workstations only
+  - path_regex: secrets/infra\.yaml$
+    key_groups:
+      - age:
         - *thinkpad-t14s
         - *thinkpad-x1-carbon
         - *thunderdome

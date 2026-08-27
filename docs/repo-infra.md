@@ -19,7 +19,7 @@ just tf plan
 just tf apply
 ```
 
-The recipe wraps `sops exec-env secrets.yaml 'tofu -chdir=infra ...'` - provider credentials and the state passphrase exist only in that process's environment. `tofu` itself comes from the flake devshell (direnv) with providers pinned from nixpkgs; `init` never touches a registry.
+The recipe wraps `sops exec-env secrets/infra.yaml 'tofu -chdir=infra ...'` - provider credentials and the state passphrase exist only in that process's environment. `tofu` itself comes from the flake devshell (direnv) with providers pinned from nixpkgs; `init` never touches a registry.
 
 - After every `apply`, commit `infra/terraform.tfstate`.
 - After a flake update bumps a provider, `plan` fails on a lock mismatch; run `just tf init -upgrade` and commit `.terraform.lock.hcl`.
@@ -27,7 +27,7 @@ The recipe wraps `sops exec-env secrets.yaml 'tofu -chdir=infra ...'` - provider
 
 ## State
 
-Local state, committed to git, encrypted client-side (AES-GCM, key derived via PBKDF2). `enforced = true` in `infra/providers.tf` makes tofu refuse to read or write plaintext state. The passphrase lives in `secrets.yaml`:
+Local state, committed to git, encrypted client-side (AES-GCM, key derived via PBKDF2). `enforced = true` in `infra/providers.tf` makes tofu refuse to read or write plaintext state. The passphrase lives in `secrets/infra.yaml`:
 
 ```yaml
 TF_ENCRYPTION: '{"key_provider":{"pbkdf2":{"passphrase":{"passphrase":"<random, 16+ chars>"}}}}'
@@ -37,7 +37,7 @@ Losing both the passphrase and the console access means re-importing everything;
 
 ## Credentials
 
-All in `secrets.yaml`, named exactly as the env vars the providers read.
+All in `secrets/infra.yaml` (decryptable by workstations only, see `setup-secrets.md`), named exactly as the env vars the providers read.
 
 | Key(s) | Where to create | Scope |
 |---|---|---|

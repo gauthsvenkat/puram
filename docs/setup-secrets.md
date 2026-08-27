@@ -1,6 +1,16 @@
 # Secrets: sops-nix bootstrap
 
-This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing the encrypted [`secrets.yaml`](../secrets.yaml). Age keys are derived from SSH keys, but the key source differs by host type:
+This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing the encrypted files under [`secrets/`](../secrets/), split by consumer scope:
+
+| File | Decryptable by | Holds |
+|---|---|---|
+| `system-hashed-password.yaml` | every machine | the login password hash (pinned via `sopsFile` in `modules/nixos/system/user.nix`) |
+| `homeserver.yaml` | elitedesk + workstations | elitedesk's runtime service secrets (its `sops.defaultSopsFile`) |
+| `infra.yaml` | workstations only | opentofu provider credentials + state passphrase; no server identity can decrypt these |
+
+Workstations double as operators (they edit secrets and run opentofu), so they appear in every file's recipient list. `.sops.yaml` is the access-control matrix. Secrets declared outside elitedesk must pin `sopsFile` explicitly - only elitedesk sets a `defaultSopsFile`.
+
+Age keys are derived from SSH keys, but the key source differs by host type:
 
 - **Servers** use the SSH host key (`/etc/ssh/ssh_host_ed25519_key`), set in `bases/server.nix`.
 - **Workstations** use the user's SSH key (`~/.ssh/id_ed25519`), set in `bases/workstation.nix`.
@@ -52,7 +62,7 @@ Reinstalling a server regenerates its host key - re-enroll and rekey afterwards.
 ## Adding a recipient to `.sops.yaml`
 
 - Add an entry under `keys` with a meaningful anchor (e.g. `&hostname`).
-- Reference it from the matching `creation_rules` block.
+- Reference it from the `creation_rules` blocks matching the scopes the host should decrypt (a new workstation/operator goes in all three; a server only in the files it consumes).
 - Rekey existing secrets so the new host can decrypt them:
 
   ```sh
@@ -62,7 +72,8 @@ Reinstalling a server regenerates its host key - re-enroll and rekey afterwards.
 ## Editing secrets
 
 ```sh
-just secrets-edit
+just secrets-edit           # defaults to homeserver
+just secrets-edit infra
 ```
 
-Opens `secrets.yaml` in `$EDITOR` via `sops edit`. On save, sops re-encrypts under every key listed in `.sops.yaml`.
+Opens `secrets/<name>.yaml` in `$EDITOR` via `sops edit`. On save, sops re-encrypts under the keys of that file's creation rule.
