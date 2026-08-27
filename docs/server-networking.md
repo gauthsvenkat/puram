@@ -53,15 +53,9 @@ Caddy needs a token to perform Let's Encrypt DNS-01 challenges. Stored in sops a
 cloudflare_dns_token: CLOUDFLARE_API_TOKEN=<token>
 ```
 
-Token scope (Cloudflare → My Profile → API Tokens → Create Custom Token):
-- **Permissions**: `Zone:Read` + `Zone:DNS:Edit`
-- **Zone resources**: include specific zone `gauthsvenkat.dev` (NOT all zones)
-- **Client IP filter**: empty
-- **TTL**: open-ended
+The token itself (`caddy-acme-elitedesk`, account-owned) is managed by opentofu as `cloudflare_account_token.caddy_dns` in `infra/cloudflare.tf`: `Zone Read` + `DNS Write`, scoped to the `gauthsvenkat.dev` zone only.
 
-Rotation: roll the token in the dashboard, paste new value into sops via `just secrets-edit`, deploy.
-
-Deliberately not opentofu-managed: minting tokens via the API would require a near-admin token for opentofu itself.
+Rotation: opentofu replaces the token and sops gets the new value by hand - runbook in `repo-infra.md`.
 
 ## Tailscale
 

@@ -7,7 +7,7 @@ What `infra/` manages, how to operate it, and how to bootstrap it from nothing.
 | Provider | Managed | Deliberately not managed |
 |---|---|---|
 | Tailscale | admin DNS panel (`infra/tailscale.tf`), ACL policy file (`infra/tailnet-acl.hujson`), `tag:server` on elitedesk | device enrollment (manual SSO), auth keys, OAuth clients |
-| Cloudflare | wildcard A record `*.gauthsvenkat.dev` (`infra/cloudflare.tf`) | zone settings, registrar, Caddy's ACME token, `*.myrthe.gauthsvenkat.dev` (ad-hoc) |
+| Cloudflare | zone `gauthsvenkat.dev`, wildcard A record, Caddy's ACME token, opentofu's own token policy (`infra/cloudflare.tf`) | zone settings, registrar, `*.myrthe.gauthsvenkat.dev` (ad-hoc) |
 | Scaleway | `elitedesk-backup` bucket + multipart-abort lifecycle rule (`infra/scaleway.tf`) | IAM applications/policies/keys |
 
 `local.tailnet_ip` in `infra/tailscale.tf` is the single source for elitedesk's tailnet IP - it feeds both the Cloudflare wildcard record and the tailnet's primary nameserver. If the IP ever changes, edit that one line and apply.
@@ -42,7 +42,7 @@ All in `secrets.yaml`, named exactly as the env vars the providers read.
 | Key(s) | Where to create | Scope |
 |---|---|---|
 | `TAILSCALE_OAUTH_CLIENT_ID` / `_SECRET` | admin console → Settings → OAuth clients | `dns` write, `policy_file` write, `devices:core` write, tagged `tag:server` |
-| `CLOUDFLARE_API_TOKEN` | dashboard → My Profile → API Tokens | `Zone:Read` + `Zone:DNS:Edit`, only zone `gauthsvenkat.dev`; separate from Caddy's token |
+| `CLOUDFLARE_API_TOKEN` | account dashboard → API Tokens (account-owned token) | `Zone Read` + `DNS Write` on `gauthsvenkat.dev`, `Account API Tokens Write`; separate from Caddy's token |
 | `SCW_ACCESS_KEY` / `SCW_SECRET_KEY` | console → IAM → application `opentofu` → API keys | policy `ObjectStorageFullAccess` on project `Backup` |
 
 Tailscale OAuth client scopes are fixed at creation - a scope change means a new client (create new, swap sops values, revoke old). The Cloudflare token value is shown once; ditto the Scaleway secret key.
@@ -53,6 +53,16 @@ Tailscale OAuth client scopes are fixed at creation - a scope change means a new
 - **ACL is whole-file**: applying replaces the entire console policy with `tailnet-acl.hujson`. Console-side ACL edits get clobbered on the next apply.
 - **Backup bucket**: never add object expiration to the lifecycle rules - restic owns all deletion, age-based expiry corrupts the repository. `force_destroy = false` makes tofu refuse to destroy the bucket while it holds objects.
 - **elitedesk re-enrollment**: a wiped/re-enrolled device gets a new node ID; the `tailscale_device` data source re-resolves by hostname, so the next apply re-tags it. Tagging disables key expiry automatically.
+- **Cloudflare token families**: tokens are either user-owned (`/user/tokens`, My Profile) or account-owned (`/accounts/{id}/tokens`). Everything here is account-owned; the provider's `cloudflare_api_token` resource is for user tokens and does not apply.
+
+## Rotating the Caddy token
+
+1. Add (once) a sensitive output for `cloudflare_account_token.caddy_dns.value`.
+2. `just tf apply -replace=cloudflare_account_token.caddy_dns` - the old token dies here.
+3. `just tf output -raw caddy_dns_token`, then `just secrets-edit`: `cloudflare_dns_token: CLOUDFLARE_API_TOKEN=<new value>`.
+4. `just deploy elitedesk` - re-renders Caddy's env file and restarts it.
+
+Between steps 2 and 4 Caddy holds a dead token; only cert issuance in that window would notice.
 
 ## Disaster recovery
 
