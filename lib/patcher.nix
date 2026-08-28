@@ -1,5 +1,6 @@
 {
   nixpkgs,
+  # :: [ fetchpatch2 args ]
   patches ? [ ],
 }:
 {
