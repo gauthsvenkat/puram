@@ -20,7 +20,7 @@ in
   # END-PRIVATE
   users.groups.${group}.gid = 169;
 
-  services = builtins.listToAttrs (
+  services = lib.listToAttrs (
     map (u: {
       name = u;
       value = { inherit group; };
@@ -33,7 +33,7 @@ in
   # jellyfin hardcodes 0077. We trade jellyfin's defensive hardening
   # for a uniform stack-wide policy.
   # END-PRIVATE
-  systemd.services = builtins.listToAttrs (
+  systemd.services = lib.listToAttrs (
     map (u: {
       name = u;
       value.serviceConfig.UMask = lib.mkForce "0002";

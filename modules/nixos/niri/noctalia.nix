@@ -104,7 +104,7 @@ in
             wallpaper_scheme = "vibrant";
           };
 
-          wallpaper.directory = builtins.dirOf wallpaper;
+          wallpaper.directory = lib.dirOf wallpaper;
 
           widget = {
             battery = {

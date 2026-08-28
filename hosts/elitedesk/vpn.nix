@@ -1,7 +1,8 @@
 {
-  inputs,
   config,
   hostCfg,
+  inputs,
+  lib,
   ...
 }:
 let
@@ -52,7 +53,7 @@ in
     }) confined;
   };
 
-  systemd.services = builtins.listToAttrs (
+  systemd.services = lib.listToAttrs (
     map (s: {
       name = s;
       value.vpnConfinement = {
