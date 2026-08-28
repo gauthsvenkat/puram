@@ -61,6 +61,8 @@
         "thinkpad-x1-carbon" = mkHost "thinkpad-x1-carbon" "x86_64-linux";
         "thunderdome" = mkHost "thunderdome" "x86_64-linux";
         "elitedesk" = mkHost "elitedesk" "x86_64-linux";
+        "raspi400" = mkHost "raspi400" "aarch64-linux";
+        "raspi5" = mkHost "raspi5" "aarch64-linux";
       };
 
       devShells."x86_64-linux".default =
