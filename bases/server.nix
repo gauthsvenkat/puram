@@ -3,11 +3,7 @@ let
   inherit (hostCfg) username;
 in
 {
-  imports = [
-    ../modules/nixos/system/zsh.nix
-
-    ./system.nix
-  ];
+  imports = [ ./system.nix ];
 
   home-manager.users.${username} = {
     imports = [
