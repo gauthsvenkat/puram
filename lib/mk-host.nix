@@ -1,10 +1,14 @@
-{ inputs, mkNixos }:
+{
+  allHostCfgs,
+  inputs,
+  mkNixos,
+}:
 name: system:
 mkNixos {
   inherit system;
   specialArgs = {
-    inherit inputs;
-    hostCfg = import ../hosts/${name}/hostCfg.nix;
+    inherit allHostCfgs inputs;
+    hostCfg = allHostCfgs.${name};
   };
   modules = [ ../hosts/${name} ];
 }
