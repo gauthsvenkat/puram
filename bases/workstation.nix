@@ -15,8 +15,6 @@ in
     ../modules/nixos/services/docker.nix
     ../modules/nixos/services/pipewire.nix
 
-    ../modules/nixos/system/zsh.nix
-
     ./system.nix
   ];
 
