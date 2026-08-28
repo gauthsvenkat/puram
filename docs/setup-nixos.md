@@ -23,6 +23,60 @@
 - Post configuration steps for workstations
   - Clone neovim configuration: `git clone git@github.com:gauthsvenkat/nvim.git ~/.config/nvim/`.
 
+## Raspberry Pi installation (SD image)
+
+The pis boot an SD card image produced by nixpkgs' `sd-image-aarch64.nix`,
+which the pi hosts import permanently - no disko, no nixos-anywhere. Building
+the aarch64 image needs binfmt emulation (`boot.binfmt.emulatedSystems` on
+thunderdome).
+
+### 1. Pre-generate and register the host key
+
+Same idea as `--extra-files` below, but the key lands on the SD card by hand:
+
+```sh
+mkdir -p /tmp/extra-files/$hostname/etc/ssh
+ssh-keygen -t ed25519 -N "" -f /tmp/extra-files/$hostname/etc/ssh/ssh_host_ed25519_key
+nix run nixpkgs#ssh-to-age -- -i /tmp/extra-files/$hostname/etc/ssh/ssh_host_ed25519_key.pub
+```
+
+Add the printed age key to [`.sops.yaml`](../.sops.yaml) under the
+`secrets/system.yaml` rule, then `just secrets-rekey`. Without this, first
+boot has no wifi and no user password.
+
+### 2. Build and flash
+
+```sh
+nix build .#nixosConfigurations.$hostname.config.system.build.sdImage
+zstd -d --stdout result/sd-image/*.img.zst | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress
+```
+
+### 3. Stage the host key
+
+Mount the card's root partition (labelled `NIXOS_SD`) and copy the key in:
+
+```sh
+mount=$(udisksctl mount -b /dev/disk/by-label/NIXOS_SD | grep -o '/run/media/.*')
+sudo install -d -m 755 $mount/etc/ssh
+sudo install -m 600 /tmp/extra-files/$hostname/etc/ssh/ssh_host_ed25519_key $mount/etc/ssh/
+sudo install -m 644 /tmp/extra-files/$hostname/etc/ssh/ssh_host_ed25519_key.pub $mount/etc/ssh/
+udisksctl unmount -b /dev/disk/by-label/NIXOS_SD
+```
+
+### 4. First boot
+
+Headless: the pi joins the home wifi via the `home-wifi` NetworkManager
+profile (credentials in `secrets/system.yaml`) and starts sshd. Find its IP on
+the router or AdGuard, log in as the user, then `sudo tailscale up`.
+
+Known issue: `expand-root-partition.service` fails on first boot
+(https://github.com/NixOS/nixpkgs/issues/554294), leaving the root filesystem
+at the built image size (~5G). It only runs on first boot, so fix it by hand:
+
+```sh
+sudo sh -c 'echo ",+," | sfdisk -N2 --no-reread /dev/mmcblk0 && partprobe && resize2fs /dev/mmcblk0p2'
+```
+
 ## Automated installation ([nixos-anywhere](https://github.com/nix-community/nixos-anywhere))
 
 Make a partition scheme with [disko](https://github.com/nix-community/disko) in

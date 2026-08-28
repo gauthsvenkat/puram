@@ -4,7 +4,7 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
 
 | File | Decryptable by | Holds |
 |---|---|---|
-| `system-hashed-password.yaml` | every machine | the login password hash (pinned via `sopsFile` in `modules/nixos/system/user.nix`) |
+| `system.yaml` | every machine | the login password hash (pinned via `sopsFile` in `modules/nixos/system/user.nix`) and the home wifi credentials (`modules/nixos/system/wifi.nix`) |
 | `homeserver.yaml` | elitedesk + workstations | elitedesk's runtime service secrets (its `sops.defaultSopsFile`) |
 | `infra.yaml` | workstations only | opentofu provider credentials + state passphrase; no server identity can decrypt these |
 

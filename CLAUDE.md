@@ -10,7 +10,7 @@ hosts/            -- per-machine configs that import bases + host-specific modul
 lib/              -- standalone helper functions, composed in flake.nix (mk-host, patcher)
 docs/             -- operational notes (setup-*, server-*, repo-*)
 assets/           -- non-nix assets (configs/, wallpapers/)
-secrets/          -- sops-nix encrypted secrets, split by scope (system-hashed-password, homeserver, infra); .sops.yaml is the access matrix
+secrets/          -- sops-nix encrypted secrets, split by scope (system, homeserver, infra); .sops.yaml is the access matrix
 justfile          -- task runner for common operations
 ```
 

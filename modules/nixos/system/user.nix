@@ -6,7 +6,7 @@ in
 {
   sops.secrets.hashedPassword = {
     neededForUsers = true;
-    sopsFile = ../../../secrets/system-hashed-password.yaml;
+    sopsFile = ../../../secrets/system.yaml;
   };
 
   users.users.${username} = {

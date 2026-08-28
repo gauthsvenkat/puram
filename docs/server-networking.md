@@ -82,6 +82,7 @@ elitedesk carries `tag:server` (applied via `infra/tailscale.tf`), which disable
 | `elitedesk` | server (Caddy + services) | yes |
 | `thunderdome` | desktop | yes |
 | Laptops (`thinkpad-x1-carbon`, etc.) | inherit via `bases/laptop.nix` | yes |
+| `raspi400`, `raspi5` | bare servers, roles TBD | yes |
 | Phones, tablets | added manually from device | yes if you want named/HTTPS access |
 
 LAN-only or IoT devices (smart TVs, etc.) keep using direct LAN IPs - they don't get the named-HTTPS path.

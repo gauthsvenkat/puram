@@ -1,14 +1,18 @@
 keys:
   - &elitedesk age1x5fkemnqjf5ta60q83s04pjllrpk35lfjxg2v4jeuhky385emc9svrc6au
+  - &raspi400 age172kl6q88tfp87p838cj49ghhq2nhewlet0j8n92ys9gpkfg99cmqrkl0wd
+  - &raspi5 age1yp4wd48rxsal7qupvgcj88wf99d3nfe33v6jgglqqudgue6wt4uq2qgwp5
   - &thinkpad-t14s age1k0692xj0ggl746ghykyuzyetcvdwp9e7tupsaxr6x7kuzp3py4fs4syap7
   - &thinkpad-x1-carbon age1awzy9trqped05z2yc4eaaz6wn3ddmqcn8tnvxctfach47wrkecnqwyau7z
   - &thunderdome age17fetz7rj5rkc89ts5l2qde3cpwswy5pkgs52czaykv8en5lw6cuqf3pa9s
 creation_rules:
   # every machine
-  - path_regex: secrets/system-hashed-password\.yaml$
+  - path_regex: secrets/system\.yaml$
     key_groups:
       - age:
         - *elitedesk
+        - *raspi400
+        - *raspi5
         - *thinkpad-t14s
         - *thinkpad-x1-carbon
         - *thunderdome
