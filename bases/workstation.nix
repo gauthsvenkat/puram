@@ -1,11 +1,15 @@
 {
+  allHostCfgs,
   config,
   hostCfg,
+  lib,
   pkgs,
   ...
 }:
 let
   inherit (hostCfg) username homeDirectory;
+  serverCfgs = lib.filterAttrs (_: hostCfg: hostCfg ? sshHostKey) allHostCfgs;
+  tailnet = "tailnet.ts.net";
 in
 {
   imports = [
@@ -18,7 +22,13 @@ in
     ./system.nix
   ];
 
-  programs.ssh.startAgent = true;
+  programs.ssh = {
+    knownHosts = lib.mapAttrs (hostName: hostCfg: {
+      extraHostNames = [ "${hostName}.${tailnet}" ];
+      publicKey = hostCfg.sshHostKey;
+    }) serverCfgs;
+    startAgent = true;
+  };
 
   services = {
     gvfs.enable = true;
@@ -78,6 +88,30 @@ in
     };
 
     programs = {
+      ssh = {
+        enable = true;
+        enableDefaultConfig = false;
+        settings =
+          lib.concatMapAttrs (hostName: hostCfg: {
+            ${hostName} = {
+              HostName = "${hostName}.${tailnet}";
+              User = hostCfg.username;
+            };
+            "${hostName}-root" = {
+              HostName = "${hostName}.${tailnet}";
+              User = "root";
+            };
+          }) serverCfgs
+          // {
+            # Reuse one connection for consecutive git operations.
+            "github.com" = {
+              ControlMaster = "auto";
+              ControlPath = "/run/user/%i/ssh-%C";
+              ControlPersist = "10m";
+            };
+          };
+      };
+
       starship.presets = [
         "bracketed-segments"
         "nerd-font-symbols"

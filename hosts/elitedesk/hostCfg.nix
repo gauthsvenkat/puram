@@ -3,6 +3,7 @@ rec {
   username = "ando";
   homeDirectory = "/home/${username}";
   gitEmail = "gauthsvenkat@gmail.com";
+  sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHgbm/atBI4qLsSPhlb8pnA4BpMe2WetWXkomjNwoWIL root@elitedesk";
 
   zpool = "dontdie";
   domain = "example.com";

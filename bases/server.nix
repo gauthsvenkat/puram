@@ -1,6 +1,12 @@
-{ hostCfg, ... }:
+{
+  allHostCfgs,
+  hostCfg,
+  lib,
+  ...
+}:
 let
   inherit (hostCfg) username;
+  workstationKeys = lib.catAttrs "sshUserKey" (lib.attrValues allHostCfgs);
 in
 {
   imports = [ ./system.nix ];
@@ -27,4 +33,9 @@ in
   services.openssh.enable = true;
 
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+  users.users = {
+    root.openssh.authorizedKeys.keys = workstationKeys;
+    ${username}.openssh.authorizedKeys.keys = workstationKeys;
+  };
 }
