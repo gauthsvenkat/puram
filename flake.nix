@@ -53,9 +53,11 @@
         ];
       };
 
-      allHostCfgs = nixpkgs.lib.mapAttrs (name: _: import ./hosts/${name}/hostCfg.nix) (
-        nixpkgs.lib.readDir ./hosts
-      );
+      # :: { hostname -> filetype }
+      hostDirs = nixpkgs.lib.readDir ./hosts;
+
+      # :: { hostname -> hostCfg }
+      allHostCfgs = nixpkgs.lib.mapAttrs (name: _: import ./hosts/${name}/hostCfg.nix) hostDirs;
 
       mkHost = import ./lib/mk-host.nix { inherit allHostCfgs inputs mkNixos; };
     in
