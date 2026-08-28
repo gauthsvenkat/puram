@@ -6,6 +6,7 @@
 }:
 let
   inherit (hostCfg) username;
+  # :: [ sshUserKey ]
   workstationKeys = lib.catAttrs "sshUserKey" (lib.attrValues allHostCfgs);
 in
 {

@@ -8,6 +8,7 @@
 }:
 let
   inherit (hostCfg) username homeDirectory;
+  # :: { hostname -> hostCfg }
   serverCfgs = lib.filterAttrs (_: hostCfg: hostCfg ? sshHostKey) allHostCfgs;
   tailnet = "taile02742.ts.net";
 in

@@ -36,6 +36,8 @@ justfile          -- task runner for common operations
 # Code style
 
 - Use kebab-case for filenames (e.g., `graphics-drivers.nix`)
+- Prefer `lib.*` over `builtins.*` whenever lib re-exports the function (it re-exports most of builtins); `builtins.*` only when lib has no counterpart
+- Name bindings so the shape is obvious; when a name can't carry it, add a terse type comment above the binding: `# :: { hostname -> hostCfg }`. Split pipelines with surprising intermediate types into named bindings
 - Collapse single-definition attribute sets using dot notation (e.g., `services.openssh.enable = true;`)
 - Group multiple definitions with common prefixes into a single attribute set
 - Sort lexicographically: package lists, imports, attribute definitions within groups
