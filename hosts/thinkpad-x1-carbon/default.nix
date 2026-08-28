@@ -1,4 +1,4 @@
-{ hostCfg, ... }:
+{ hostCfg, pkgs, ... }:
 let
   inherit (hostCfg) username;
 in
@@ -11,6 +11,10 @@ in
     ./disko-config.nix
     ./hardware-configuration.nix
   ];
+
+  hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
+
+  services.thermald.enable = true;
 
   home-manager.users.${username}.programs.niri.settings.outputs = {
     "Samsung Electric Company LC32G5xT H000000000" = {
