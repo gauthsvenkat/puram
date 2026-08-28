@@ -23,6 +23,8 @@ in
   ];
 
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     # Load nvidia early in initrd to prevent race with simpledrm - without this,
     # SDDM sometimes starts before nvidia-drm is ready, resulting in 720p fallback.
     initrd.kernelModules = [
