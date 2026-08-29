@@ -2,6 +2,7 @@
   hostCfg,
   inputs,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -56,7 +57,7 @@ in
                 ];
               }
             ];
-            dead_zone.actions.left = "exec niri msg action toggle-overview";
+            dead_zone.actions.left = "exec ${lib.getExe pkgs.niri} msg action toggle-overview";
             start = [ "group:session" ];
             center = [
               "group:left-of-center"
