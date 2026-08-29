@@ -22,7 +22,7 @@ in
       tree-sitter
     ];
 
-    sessionVariables.EDITOR = "nvim";
+    sessionVariables.EDITOR = lib.getExe pkg;
   };
 
   programs = {

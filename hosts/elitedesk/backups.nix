@@ -71,7 +71,7 @@ in
         ];
       in
       ''
-        mkdir -p ${paths.backups}/state
+        ${lib.getExe' pkgs.coreutils "mkdir"} -p ${paths.backups}/state
         ${lib.getExe pkgs.rsync} -a --delete ${lib.escapeShellArgs stateDirs} ${paths.backups}/state/
       '';
   };

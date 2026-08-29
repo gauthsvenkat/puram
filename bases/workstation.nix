@@ -118,10 +118,14 @@ in
         "nerd-font-symbols"
       ];
 
-      zsh.shellAliases = {
-        "o" = "xdg-open";
-        "open" = "xdg-open";
-      };
+      zsh.shellAliases =
+        let
+          xdg-open = lib.getExe' pkgs.xdg-utils "xdg-open";
+        in
+        {
+          "o" = xdg-open;
+          "open" = xdg-open;
+        };
     };
 
     xdg.autostart.enable = true;
