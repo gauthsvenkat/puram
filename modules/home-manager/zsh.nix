@@ -1,4 +1,9 @@
 {
+  lib,
+  pkgs,
+  ...
+}:
+{
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -9,6 +14,6 @@
       plugins = [ "vi-mode" ];
     };
 
-    shellAliases."c" = "clear";
+    shellAliases."c" = lib.getExe' pkgs.ncurses "clear";
   };
 }
