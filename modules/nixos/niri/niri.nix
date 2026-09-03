@@ -75,6 +75,7 @@ in
           inactive.color = "#505050";
         };
         preset-column-widths = [
+          { proportion = 1.0 / 3.0; }
           { proportion = 0.5; }
           { proportion = 2.0 / 3.0; }
           { proportion = 1.0; }
