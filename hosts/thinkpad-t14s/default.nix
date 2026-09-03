@@ -86,7 +86,7 @@ in
               mode = "best";
               position = "0,0";
               scale = 1.0;
-              search = "s=0x000819B9";
+              search = "m=LG HDR WQHD";
             }
             {
               enable = true;
