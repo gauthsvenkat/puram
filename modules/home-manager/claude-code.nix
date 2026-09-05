@@ -54,6 +54,7 @@ in
       {
         cl = pkg;
         clr = "${pkg} --resume";
+        clm = "${pkg} --model";
       };
   };
 }
