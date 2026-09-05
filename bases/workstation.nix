@@ -46,6 +46,7 @@ in
       ../modules/home-manager/direnv.nix
       ../modules/home-manager/eza.nix
       ../modules/home-manager/fastfetch.nix
+      ../modules/home-manager/firefox.nix
       ../modules/home-manager/git.nix
       ../modules/home-manager/just.nix
       ../modules/home-manager/lazygit.nix
@@ -72,7 +73,6 @@ in
 
     home = {
       packages = with pkgs; [
-        firefox
         gh
         libreoffice-stable
         mpv
