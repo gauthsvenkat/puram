@@ -18,7 +18,9 @@ in
     {
       programs.niri.settings.binds = {
         # apps
-        "Mod+B".action.spawn = lib.getExe pkgs.firefox;
+        "Mod+B".action.spawn = lib.getExe (
+          if config.programs.firefox.enable then config.programs.firefox.finalPackage else pkgs.firefox
+        );
         "Mod+T".action.spawn = lib.getExe pkgs.wezterm;
 
         # window management
