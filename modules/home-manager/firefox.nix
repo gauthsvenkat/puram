@@ -30,11 +30,9 @@
         in
         {
           "{036a55b4-5e72-4d05-a06c-cba2dfcc134a}" = amo "traduzir-paginas-web";
-          "{446900e4-71c2-419f-a6a7-df9c091e268b}" = amo "bitwarden-password-manager";
           "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = amo "return-youtube-dislikes";
           "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = amo "vimium-ff";
           "addon@darkreader.org" = amo "darkreader";
-          "admin@2fas.com" = amo "2fas-two-factor-authentication";
           "harper@writewithharper.com" = amo "private-grammar-checker-harper";
           "idcac-pub@guus.ninja" = amo "istilldontcareaboutcookies";
           "sponsorBlocker@ajay.app" = amo "sponsorblock";
@@ -43,13 +41,13 @@
 
       Bookmarks = [
         {
-          Title = "WhatsApp";
-          URL = "https://web.whatsapp.com/";
+          Title = "Calendar";
+          URL = "https://calendar.google.com/calendar/u/0/r";
           Placement = "toolbar";
         }
         {
-          Title = "Calendar";
-          URL = "https://calendar.google.com/calendar/u/0/r";
+          Title = "Claude";
+          URL = "https://claude.ai/new";
           Placement = "toolbar";
         }
         {
