@@ -41,21 +41,7 @@ return {
       -- bindings defined in ./lsp.lua
       { "<leader>l", group = "[l]sp" },
 
-      { "<leader>x", group = "diagnosti[x]" },
-      {
-        "]x",
-        function()
-          vim.diagnostic.jump({ count = vim.v.count1, float = true })
-        end,
-        desc = "next diagnostic",
-      },
-      {
-        "[x",
-        function()
-          vim.diagnostic.jump({ count = -vim.v.count1, float = true })
-        end,
-        desc = "prev diagnostic",
-      },
+      { "<leader>x", group = "debug" },
 
       -- bindings defined in treesitter.lua
       { "gw", group = "s[w]ap next" },
