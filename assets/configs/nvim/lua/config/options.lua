@@ -57,4 +57,9 @@ vim.diagnostic.config({
   underline = { severity = vim.diagnostic.severity.ERROR },
   signs = true,
   virtual_text = false,
+  jump = {
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor", focus = false })
+    end,
+  },
 })
