@@ -17,10 +17,6 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  defaults = {
-    -- try installing the latest stable version for plugins that support semver
-    { version = "*" },
-  },
   spec = {
     -- import your plugins
     { import = "plugins" },
