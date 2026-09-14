@@ -63,7 +63,7 @@ in
         "Mod+F".action = actions.maximize-column;
         "Mod+Shift+F".action = actions.fullscreen-window;
         "Mod+R".action = actions.switch-preset-column-width;
-        "Mod+Shift+R".action = actions.switch-preset-window-height;
+        "Mod+Shift+R".action = actions.switch-preset-column-width-back;
         "Mod+Minus".action.set-column-width = "-10%";
         "Mod+Equal".action.set-column-width = "+10%";
         "Mod+Shift+Minus".action.set-window-height = "-10%";
