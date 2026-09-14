@@ -36,6 +36,9 @@ return {
 
       { "<leader>s", group = "[s]earch" },
 
+      -- bindings defined in ./todo-comments.lua
+      { "<leader>st", group = "[t]odo comments" },
+
       -- bindings defined in ./gitsigns.lua
       { "<leader>g", group = "[g]it" },
 
