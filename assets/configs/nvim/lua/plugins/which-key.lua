@@ -50,8 +50,8 @@ return {
       { "<leader>dd", vim.diagnostic.open_float, desc = "line [d]iagnostics" },
 
       -- bindings defined in treesitter.lua
-      { "gw", group = "s[w]ap next" },
-      { "gW", group = "s[W]ap prev" },
+      { "g>", group = "swap next" },
+      { "g<", group = "swap prev" },
     },
   },
   keys = {
