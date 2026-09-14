@@ -6,7 +6,7 @@ return {
     dependencies = { "nvim-neotest/nvim-nio" },
     keys = {
       {
-        "<leader>xu",
+        "<leader>du",
         function()
           require("dapui").toggle()
         end,
@@ -38,10 +38,10 @@ return {
     "mfussenegger/nvim-dap",
     dependencies = { "rcarriga/nvim-dap-ui" },
     keys = {
-      -- Basic debugging commands with <leader>x prefix
-      { "<leader>xb", cmd("DapToggleBreakpoint"), desc = "toggle [b]reakpoint" },
+      -- Basic debugging commands with <leader>d prefix
+      { "<leader>db", cmd("DapToggleBreakpoint"), desc = "toggle [b]reakpoint" },
       {
-        "<leader>xB",
+        "<leader>dB",
         function()
           vim.ui.input({ prompt = "Breakpoint condition: " }, function(condition)
             if condition then
@@ -51,12 +51,12 @@ return {
         end,
         desc = "conditional [B]reakpoint",
       },
-      { "<leader>xC", cmd("DapClearBreakpoints"), desc = "[C]lear all breakpoints" },
-      { "<leader>xc", cmd("DapContinue"), desc = "[c]ontinue" },
-      { "<leader>xi", cmd("DapStepInto"), desc = "step [i]nto" },
-      { "<leader>xo", cmd("DapStepOver"), desc = "step [o]ver" },
-      { "<leader>xO", cmd("DapStepOut"), desc = "step [O]ut" },
-      { "<leader>xt", cmd("DapTerminate"), desc = "[t]erminate" },
+      { "<leader>dC", cmd("DapClearBreakpoints"), desc = "[C]lear all breakpoints" },
+      { "<leader>dc", cmd("DapContinue"), desc = "[c]ontinue" },
+      { "<leader>di", cmd("DapStepInto"), desc = "step [i]nto" },
+      { "<leader>do", cmd("DapStepOver"), desc = "step [o]ver" },
+      { "<leader>dO", cmd("DapStepOut"), desc = "step [O]ut" },
+      { "<leader>dt", cmd("DapTerminate"), desc = "[t]erminate" },
 
       -- Function key bindings for common operations
       { "<F5>", cmd("DapToggleBreakpoint"), desc = "Debug: Toggle Breakpoint" },

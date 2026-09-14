@@ -67,18 +67,18 @@ return {
       desc = "lazy[g]it",
     },
     {
-      "<leader>d",
+      "<leader>c",
       function()
         Snacks.bufdelete.delete()
       end,
-      desc = "[d]elete buffer",
+      desc = "[c]lose buffer",
     },
     {
-      "<leader>D",
+      "<leader>C",
       function()
         Snacks.bufdelete.other()
       end,
-      desc = "[D]elete all buffers",
+      desc = "[C]lose other buffers",
     },
     {
       "<leader>e",
