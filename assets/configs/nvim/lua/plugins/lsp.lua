@@ -4,7 +4,7 @@ return {
     -- for the sweet statuses
     { "j-hui/fidget.nvim", opts = {} },
     -- to setup keybinds
-    "ibhagwan/fzf-lua",
+    "folke/snacks.nvim",
     -- to register capabilities
     "saghen/blink.cmp",
   },
@@ -16,7 +16,7 @@ return {
       -- start custom-lsp-attach callback
       callback = function(aevent)
         local client = vim.lsp.get_client_by_id(aevent.data.client_id)
-        local fzf = require("fzf-lua")
+        local pick = Snacks.picker
 
         ---@param method string
         ---@param keys string
@@ -30,17 +30,15 @@ return {
         end
 
         -- start of keymapping block
-        -- Same keys as Neovim's defaults (:h lsp-defaults), routed through fzf-lua.
-        -- grn, gra, grx, K and <C-s> stay as Neovim provides them.
-        map_if("textDocument/references", "grr", fzf.lsp_references, "[r]eferences")
-        map_if("textDocument/definition", "grd", fzf.lsp_definitions, "[d]efinitions")
-        map_if("textDocument/declaration", "grD", fzf.lsp_declarations, "[D]eclarations")
-        map_if("textDocument/implementation", "gri", fzf.lsp_implementations, "[i]mplementations")
-        map_if("textDocument/typeDefinition", "grt", fzf.lsp_typedefs, "[t]ype definitions")
-        map_if("callHierarchy/incomingCalls", "grI", fzf.lsp_incoming_calls, "[I]ncoming calls")
-        map_if("callHierarchy/outgoingCalls", "grO", fzf.lsp_outgoing_calls, "[O]utgoing calls")
-        map_if("textDocument/documentSymbol", "gO", fzf.lsp_document_symbols, "document symb[O]ls")
-        map_if("workspace/symbol", "gW", fzf.lsp_live_workspace_symbols, "[W]orkspace symbols")
+        map_if("textDocument/references", "grr", pick.lsp_references, "[r]eferences")
+        map_if("textDocument/definition", "grd", pick.lsp_definitions, "[d]efinitions")
+        map_if("textDocument/declaration", "grD", pick.lsp_declarations, "[D]eclarations")
+        map_if("textDocument/implementation", "gri", pick.lsp_implementations, "[i]mplementations")
+        map_if("textDocument/typeDefinition", "grt", pick.lsp_type_definitions, "[t]ype definitions")
+        map_if("callHierarchy/incomingCalls", "grI", pick.lsp_incoming_calls, "[I]ncoming calls")
+        map_if("callHierarchy/outgoingCalls", "grO", pick.lsp_outgoing_calls, "[O]utgoing calls")
+        map_if("textDocument/documentSymbol", "gO", pick.lsp_symbols, "document symb[O]ls")
+        map_if("workspace/symbol", "gW", pick.lsp_workspace_symbols, "[W]orkspace symbols")
         map_if(
           "textDocument/formatting",
           "<leader>lf",

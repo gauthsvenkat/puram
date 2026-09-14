@@ -1,13 +1,13 @@
 local function todos(keywords)
   return function()
-    require("todo-comments.fzf").todo({ keywords = keywords })
+    Snacks.picker.todo_comments({ keywords = keywords })
   end
 end
 
 return {
   "folke/todo-comments.nvim",
   event = "VeryLazy",
-  dependencies = { "nvim-lua/plenary.nvim", "ibhagwan/fzf-lua" },
+  dependencies = { "nvim-lua/plenary.nvim", "folke/snacks.nvim" },
   opts = { signs = false },
   keys = {
     {
