@@ -77,24 +77,24 @@ return {
           },
         },
       },
-      -- ty = {},
+      ty = {},
       -- pyrefly = {},
-      basedpyright = {
-        settings = {
-          basedpyright = {
-            analysis = {
-              typeCheckingMode = "off",
-              diagnosticSeverityOverrides = {
-                reportUnusedImport = "unused",
-                reportUnusedClass = "unused",
-                reportUnusedFunction = "unused",
-                reportUnusedVariable = "unused",
-                reportUnusedParameter = "unused",
-              },
-            },
-          },
-        },
-      },
+      -- basedpyright = {
+      --   settings = {
+      --     basedpyright = {
+      --       analysis = {
+      --         typeCheckingMode = "off",
+      --         diagnosticSeverityOverrides = {
+      --           reportUnusedImport = "unused",
+      --           reportUnusedClass = "unused",
+      --           reportUnusedFunction = "unused",
+      --           reportUnusedVariable = "unused",
+      --           reportUnusedParameter = "unused",
+      --         },
+      --       },
+      --     },
+      --   },
+      -- },
 
       -- misc
       harper_ls = {},
