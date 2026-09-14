@@ -29,6 +29,7 @@ return {
       -- Leader mappings
       { "<leader>w", cmd("write"), desc = "[w]rite" },
       { "<leader>q", cmd("quit"), desc = "[q]uit" },
+      { "<leader>Q", cmd("quit!"), desc = "[Q]uit without saving" },
 
       -- bindings defined in ./snacks.lua
       { "<leader>t", group = "[t]oggle" },
@@ -41,7 +42,8 @@ return {
       -- bindings defined in ./lsp.lua
       { "<leader>l", group = "[l]sp" },
 
-      { "<leader>x", group = "debug" },
+      { "<leader>d", group = "[d]ebug/diagnostics" },
+      { "<leader>dd", vim.diagnostic.open_float, desc = "line [d]iagnostics" },
 
       -- bindings defined in treesitter.lua
       { "gw", group = "s[w]ap next" },
