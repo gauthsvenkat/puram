@@ -30,20 +30,17 @@ return {
         end
 
         -- start of keymapping block
-        map_if("textDocument/references", "gr", fzf.lsp_references, "[r]eferences")
-        map_if("textDocument/definition", "gd", fzf.lsp_definitions, "[d]efinitions")
-        map_if("textDocument/declaration", "gD", fzf.lsp_declarations, "[D]eclarations")
-        map_if("textDocument/typeDefinition", "gt", fzf.lsp_typedefs, "[t]ype definitions")
-        map_if("textDocument/implementation", "gI", fzf.lsp_implementations, "[I]mplementations")
-
-        map_if("callHierarchy/incomingCalls", "gi", fzf.lsp_incoming_calls, "[i]ncoming calls")
-        map_if("callHierarchy/outgoingCalls", "go", fzf.lsp_outgoing_calls, "[o]utgoing calls")
-
-        map_if("textDocument/documentSymbol", "<leader>ls", fzf.lsp_document_symbols, "[s]ymbols")
-        map_if("textDocument/hover", "<leader>lh", vim.lsp.buf.hover, "[h]over documentation")
-        map_if("workspace/symbol", "<leader>lS", fzf.lsp_workspace_symbols, "(workspace) [S]ymbols")
-        map_if("textDocument/rename", "<leader>lr", vim.lsp.buf.rename, "[r]ename")
-        map_if("textDocument/codeAction", "<leader>la", vim.lsp.buf.code_action, "code [a]ction")
+        -- Same keys as Neovim's defaults (:h lsp-defaults), routed through fzf-lua.
+        -- grn, gra, grx, K and <C-s> stay as Neovim provides them.
+        map_if("textDocument/references", "grr", fzf.lsp_references, "[r]eferences")
+        map_if("textDocument/definition", "grd", fzf.lsp_definitions, "[d]efinitions")
+        map_if("textDocument/declaration", "grD", fzf.lsp_declarations, "[D]eclarations")
+        map_if("textDocument/implementation", "gri", fzf.lsp_implementations, "[i]mplementations")
+        map_if("textDocument/typeDefinition", "grt", fzf.lsp_typedefs, "[t]ype definitions")
+        map_if("callHierarchy/incomingCalls", "grI", fzf.lsp_incoming_calls, "[I]ncoming calls")
+        map_if("callHierarchy/outgoingCalls", "grO", fzf.lsp_outgoing_calls, "[O]utgoing calls")
+        map_if("textDocument/documentSymbol", "gO", fzf.lsp_document_symbols, "document symb[O]ls")
+        map_if("workspace/symbol", "gW", fzf.lsp_live_workspace_symbols, "[W]orkspace symbols")
         map_if(
           "textDocument/formatting",
           "<leader>lf",
