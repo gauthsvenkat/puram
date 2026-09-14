@@ -57,10 +57,10 @@ return {
     }
 
     for _, obj in ipairs(swap_objects) do
-      vim.keymap.set("n", "gw" .. obj.key, function()
+      vim.keymap.set("n", "g>" .. obj.key, function()
         swap.swap_next(obj.query)
       end, { desc = "next " .. obj.desc })
-      vim.keymap.set("n", "gW" .. obj.key, function()
+      vim.keymap.set("n", "g<" .. obj.key, function()
         swap.swap_previous(obj.query)
       end, { desc = "prev " .. obj.desc })
     end
