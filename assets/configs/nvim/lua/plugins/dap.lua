@@ -38,7 +38,6 @@ return {
     "mfussenegger/nvim-dap",
     dependencies = { "rcarriga/nvim-dap-ui" },
     keys = {
-      -- Basic debugging commands with <leader>d prefix
       { "<leader>db", cmd("DapToggleBreakpoint"), desc = "toggle [b]reakpoint" },
       {
         "<leader>dB",

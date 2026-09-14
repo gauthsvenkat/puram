@@ -4,10 +4,6 @@ return {
     vim.g.nvim_surround_no_mappings = true
   end,
   keys = {
-    -- s -> Same line surround | Enter operator pending mode
-    -- ss -> Same line surround | Whole line
-    -- S -> Multi line surround | Enter operator pending mode
-    -- SS -> Multi line surround | Whole line
     { "gs", "<Plug>(nvim-surround-normal)", mode = "n" },
     { "gss", "<Plug>(nvim-surround-normal-cur)", mode = "n" },
     { "gS", "<Plug>(nvim-surround-normal-line)", mode = "n" },
