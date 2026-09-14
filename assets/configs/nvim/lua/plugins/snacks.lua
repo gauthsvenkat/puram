@@ -10,6 +10,7 @@ return {
     statuscolumn = { enabled = true },
     indent = { enabled = true, chunk = { enabled = true } },
     notifier = { enabled = true },
+    picker = { enabled = true },
     words = { enabled = true },
     toggle = { color = { disabled = "red" }, wk_desc = { enabled = "", disabled = "" } },
   },
@@ -43,6 +44,118 @@ return {
     -- end toggle keymaps
   end,
   keys = {
+    {
+      "<leader><leader>",
+      function()
+        Snacks.picker.resume()
+      end,
+      desc = "resume last search",
+    },
+    {
+      "<leader>sf",
+      function()
+        Snacks.picker.files()
+      end,
+      desc = "[f]iles",
+    },
+    {
+      "<leader>sb",
+      function()
+        Snacks.picker.buffers()
+      end,
+      desc = "[b]uffers",
+    },
+    {
+      "<leader>sq",
+      function()
+        Snacks.picker.qflist()
+      end,
+      desc = "[q]uickfix",
+    },
+    {
+      "<leader>sg",
+      function()
+        Snacks.picker.grep()
+      end,
+      desc = "live [g]rep",
+    },
+    {
+      "<leader>sh",
+      function()
+        Snacks.picker.help()
+      end,
+      desc = "[h]elptags",
+    },
+    {
+      "<leader>ss",
+      function()
+        Snacks.picker.pickers()
+      end,
+      desc = "[s]earch pickers",
+    },
+    {
+      "<leader>sr",
+      function()
+        Snacks.picker.registers()
+      end,
+      desc = "[r]egisters",
+    },
+    {
+      "<leader>sc",
+      function()
+        Snacks.picker.command_history()
+      end,
+      desc = "[c]ommand history",
+    },
+    {
+      "<leader>sm",
+      function()
+        Snacks.picker.marks()
+      end,
+      desc = "[m]arks",
+    },
+    {
+      "<leader>sj",
+      function()
+        Snacks.picker.jumps()
+      end,
+      desc = "[j]umps",
+    },
+    {
+      "<leader>sd",
+      function()
+        Snacks.picker.diagnostics_buffer()
+      end,
+      desc = "[d]iagnostics",
+    },
+    {
+      "<leader>sD",
+      function()
+        Snacks.picker.diagnostics()
+      end,
+      desc = "[D]iagnostics (workspace)",
+    },
+    {
+      "<leader>f",
+      function()
+        Snacks.picker.files()
+      end,
+      desc = "[f]iles",
+    },
+    {
+      "<leader>b",
+      function()
+        Snacks.picker.buffers()
+      end,
+      desc = "[b]uffers",
+    },
+    {
+      "<leader>/",
+      function()
+        Snacks.picker.grep()
+      end,
+      desc = "live grep",
+    },
     {
       "]w",
       function()
