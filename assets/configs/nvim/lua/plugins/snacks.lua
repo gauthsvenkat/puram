@@ -10,6 +10,7 @@ return {
     quickfile = { enabled = true },
     statuscolumn = { enabled = true },
     indent = { enabled = true, chunk = { enabled = true } },
+    notifier = { enabled = true },
     words = { enabled = true },
     toggle = { color = { disabled = "red" }, wk_desc = { enabled = "", disabled = "" } },
   },
@@ -97,6 +98,13 @@ return {
         Snacks.gitbrowse()
       end,
       desc = "[o]pen in browser",
+    },
+    {
+      "<leader>h",
+      function()
+        Snacks.notifier.show_history()
+      end,
+      desc = "notification [h]istory",
     },
     {
       "<C-\\>",
