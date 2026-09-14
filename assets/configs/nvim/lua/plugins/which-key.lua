@@ -42,6 +42,7 @@ return {
       -- bindings defined in ./lsp.lua
       { "<leader>l", group = "[l]sp" },
 
+      -- bindings defined in ./dap.lua
       { "<leader>d", group = "[d]ebug/diagnostics" },
       { "<leader>dd", vim.diagnostic.open_float, desc = "line [d]iagnostics" },
 

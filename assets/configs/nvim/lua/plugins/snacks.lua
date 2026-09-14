@@ -1,4 +1,3 @@
--- TODO: Bunch more toggle options that probably need to be defined here
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -34,7 +33,6 @@ return {
         end,
         set = function(enable)
           if enable then
-            -- NOTE: Keep following and ../config/options.lua in sync.
             vim.diagnostic.config({ virtual_text = { source = "if_many", spacing = 2 } })
           else
             vim.diagnostic.config({ virtual_text = false })

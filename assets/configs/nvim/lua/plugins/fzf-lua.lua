@@ -3,11 +3,7 @@ local cmd = require("utils").cmd
 return {
   "ibhagwan/fzf-lua",
   dependencies = { "nvim-tree/nvim-web-devicons" },
-  opts = {
-    { "telescope" },
-    -- NOTE: Need the following line to inherit defaults
-    actions = { files = { true } },
-  },
+  opts = { { "telescope" } },
   keys = {
     { "<leader><leader>", cmd("FzfLua resume"), desc = "resume last search" },
     { "<leader>sf", cmd("FzfLua files"), desc = "[f]iles" },

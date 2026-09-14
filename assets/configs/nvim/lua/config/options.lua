@@ -33,11 +33,9 @@ vim.opt.undofile = true
 vim.opt.undodir = os.getenv("HOME") .. "/.undodir"
 
 -- some reading and writing options
-vim.opt.backup = false
 vim.opt.writebackup = false
 
 -- fold options
-vim.opt.foldenable = true
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 
@@ -55,8 +53,6 @@ vim.diagnostic.config({
   severity_sort = true,
   float = { border = "rounded", source = "if_many" },
   underline = { severity = vim.diagnostic.severity.ERROR },
-  signs = true,
-  virtual_text = false,
   jump = {
     on_jump = function(_, bufnr)
       vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor", focus = false })
