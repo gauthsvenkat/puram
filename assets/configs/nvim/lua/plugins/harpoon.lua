@@ -4,7 +4,6 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
   opts = {},
 
-  -- NOTE: Using 'm,M' as harpoon is a glorified mark
   keys = {
     {
       "M",
