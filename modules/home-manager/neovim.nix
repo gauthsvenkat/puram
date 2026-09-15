@@ -9,16 +9,15 @@ in
 {
   home = {
     packages = with pkgs; [
-      bat # fzf-lua
       curl # blink.cmp
-      fd # fzf-lua
-      fzf # fzf-lua
+      fd # snacks.picker
       gcc # nvim-treesitter
-      git # blink.cmp, fzf-lua, lazy.nvim, nvim-treesitter
+      git # blink.cmp, snacks.picker, lazy.nvim, nvim-treesitter
       harper # harper_ls
       imagemagick # snacks.image
+      inotify-tools # vim.lsp file watching
       python3
-      ripgrep # fzf-lua
+      ripgrep # snacks.picker
       tree-sitter
     ];
 
