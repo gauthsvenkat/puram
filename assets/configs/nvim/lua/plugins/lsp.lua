@@ -66,16 +66,8 @@ return {
 
       -- python
       ruff = {},
-      rust_analyzer = {
-        settings = {
-          ["rust-analyzer"] = {
-            check = {
-              command = "clippy",
-            },
-          },
-        },
-      },
-      ty = {},
+      rust_analyzer = { settings = { ["rust-analyzer"] = { check = { command = "clippy" } } } },
+      ty = { capabilities = { workspace = { didChangeWatchedFiles = { dynamicRegistration = true } } } },
       -- pyrefly = {},
       -- basedpyright = {
       --   settings = {
