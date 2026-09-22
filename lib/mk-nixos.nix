@@ -1,10 +1,10 @@
 {
   allHostCfgs,
   inputs,
-  mkNixos,
+  evalNixos,
 }:
 name: system:
-mkNixos {
+evalNixos {
   inherit system;
   specialArgs = {
     inherit allHostCfgs inputs;

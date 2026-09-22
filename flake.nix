@@ -14,6 +14,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    dewclaw = {
+      url = "github:MakiseKurisu/dewclaw";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,12 +39,17 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    openwrt-imagebuilder = {
+      url = "github:astro/nix-openwrt-imagebuilder";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     { nixpkgs, ... }@inputs:
     let
-      mkNixos = import ./lib/patcher.nix {
+      evalNixos = import ./lib/patcher.nix {
         inherit nixpkgs;
         patches = [
           /*
@@ -59,16 +69,22 @@
       # :: { hostname -> hostCfg }
       allHostCfgs = nixpkgs.lib.mapAttrs (name: _: import ./hosts/${name}/hostCfg.nix) hostDirs;
 
-      mkHost = import ./lib/mk-host.nix { inherit allHostCfgs inputs mkNixos; };
+      mkNixos = import ./lib/mk-nixos.nix { inherit allHostCfgs inputs evalNixos; };
+      mkOpenwrt = import ./lib/mk-openwrt.nix { inherit allHostCfgs inputs; };
     in
     {
       nixosConfigurations = {
-        "thinkpad-t14s" = mkHost "thinkpad-t14s" "x86_64-linux";
-        "thinkpad-x1-carbon" = mkHost "thinkpad-x1-carbon" "x86_64-linux";
-        "thunderdome" = mkHost "thunderdome" "x86_64-linux";
-        "elitedesk" = mkHost "elitedesk" "x86_64-linux";
-        "raspi400" = mkHost "raspi400" "aarch64-linux";
-        "raspi5" = mkHost "raspi5" "aarch64-linux";
+        "thinkpad-t14s" = mkNixos "thinkpad-t14s" "x86_64-linux";
+        "thinkpad-x1-carbon" = mkNixos "thinkpad-x1-carbon" "x86_64-linux";
+        "thunderdome" = mkNixos "thunderdome" "x86_64-linux";
+        "elitedesk" = mkNixos "elitedesk" "x86_64-linux";
+        "raspi400" = mkNixos "raspi400" "aarch64-linux";
+        "raspi5" = mkNixos "raspi5" "aarch64-linux";
+      };
+
+      packages."x86_64-linux" = {
+        "archer-c7-image" = (mkOpenwrt "archer-c7").image;
+        "archer-c7-deploy" = (mkOpenwrt "archer-c7").deploy;
       };
 
       devShells."x86_64-linux".default =

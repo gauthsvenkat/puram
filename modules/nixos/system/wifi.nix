@@ -1,10 +1,21 @@
 { config, ... }:
 let
-  inherit (config.sops) secrets;
+  inherit (config.sops) placeholder;
 in
 {
+  sops = {
+    secrets = {
+      wifi_psk.sopsFile = ../../../secrets/router.yaml;
+      wifi_ssid.sopsFile = ../../../secrets/router.yaml;
+    };
+    templates.wifi.content = ''
+      WIFI_SSID=${placeholder.wifi_ssid}
+      WIFI_PASSWORD=${placeholder.wifi_psk}
+    '';
+  };
+
   networking.networkmanager.ensureProfiles = {
-    environmentFiles = [ secrets.wifi.path ];
+    environmentFiles = [ config.sops.templates.wifi.path ];
     profiles.home-wifi = {
       connection = {
         id = "home";
@@ -17,6 +28,4 @@ in
       };
     };
   };
-
-  sops.secrets.wifi.sopsFile = ../../../secrets/system.yaml;
 }
