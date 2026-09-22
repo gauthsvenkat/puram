@@ -4,10 +4,11 @@
 modules/          -- self-contained, reusable modules (MUST NOT import other modules)
   nixos/          -- NixOS system config (system/, hardware/, services/, kde-plasma/, niri/)
   home-manager/   -- user config, flat nix files
+  openwrt/        -- dewclaw modules for the router, flat nix files
 bases/            -- composable configs that import modules, flat (system, workstation, laptop, personal, server, kde, niri)
 hosts/            -- per-machine configs that import bases + host-specific modules
   <hostname>/     -- default.nix + hardware-configuration.nix (+ disko-config.nix if applicable)
-lib/              -- standalone helper functions, composed in flake.nix (mk-host, patcher)
+lib/              -- standalone helper functions, composed in flake.nix (mk-nixos, mk-openwrt, patcher)
 docs/             -- operational notes (setup-*, server-*, repo-*)
 assets/           -- non-nix assets (configs/, wallpapers/)
 secrets/          -- sops-nix encrypted secrets, split by scope (system, homeserver, infra); .sops.yaml is the access matrix

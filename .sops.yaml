@@ -33,3 +33,14 @@ creation_rules:
         - *thinkpad-t14s
         - *thinkpad-x1-carbon
         - *thunderdome
+
+  # the router's own root hash, and the wifi it serves that every machine connects to
+  - path_regex: secrets/router\.yaml$
+    key_groups:
+      - age:
+        - *elitedesk
+        - *raspi400
+        - *raspi5
+        - *thinkpad-t14s
+        - *thinkpad-x1-carbon
+        - *thunderdome
