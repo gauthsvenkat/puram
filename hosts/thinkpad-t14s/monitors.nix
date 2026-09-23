@@ -31,13 +31,13 @@ in
             {
               enable = true;
               mode = "best";
-              position = "0,0";
+              position = "1536,1033";
               scale = 1.0;
               search = "s=H000000000";
             }
             {
               enable = true;
-              position = "2560,330";
+              position = "0,1513";
               scale = 1.25;
               search = "n=eDP-1";
             }
