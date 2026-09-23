@@ -30,3 +30,7 @@
 - Don't pipe a fallible command through `head`/`tail` when the failure matters - it discards the exit code.
 - `prek` instead of `pre-commit`.
 - Use `nix-shell` to grab a tool or test quickly.
+
+# Local context
+
+If `~/.claude/local-context.md` exists, read it too.
