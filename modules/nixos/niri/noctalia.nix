@@ -81,10 +81,11 @@ in
                 enabled = true;
                 timeout = 600;
               };
+              # Counts from the lock, not from idle start.
               screen-off = {
                 action = "screen_off";
                 enabled = true;
-                timeout = 660;
+                timeout = 3600;
               };
             };
           };
