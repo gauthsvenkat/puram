@@ -1,5 +1,6 @@
 rec {
   hostname = "thunderdome";
+  system = "x86_64-linux";
   username = "ando";
   homeDirectory = "/home/${username}";
   gitEmail = "gauthsvenkat@gmail.com";
