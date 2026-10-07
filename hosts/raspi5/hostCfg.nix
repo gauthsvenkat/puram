@@ -1,5 +1,6 @@
 rec {
   hostname = "raspi5";
+  system = "aarch64-linux";
   username = "ando";
   homeDirectory = "/home/${username}";
   gitEmail = "gauthsvenkat@gmail.com";

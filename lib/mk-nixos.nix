@@ -3,12 +3,15 @@
   inputs,
   evalNixos,
 }:
-name: system:
+name:
+let
+  hostCfg = allHostCfgs.${name};
+  inherit (hostCfg) system;
+in
 evalNixos {
   inherit system;
   specialArgs = {
-    inherit allHostCfgs inputs;
-    hostCfg = allHostCfgs.${name};
+    inherit allHostCfgs hostCfg inputs;
   };
   modules = [ ../hosts/${name} ];
 }
