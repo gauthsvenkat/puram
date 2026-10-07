@@ -1,5 +1,6 @@
 rec {
   hostname = "thinkpad-t14s";
+  system = "x86_64-linux";
   username = "gautham";
   homeDirectory = "/home/${username}";
   gitEmail = "user@work.example";

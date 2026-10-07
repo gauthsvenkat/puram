@@ -74,12 +74,12 @@
     in
     {
       nixosConfigurations = {
-        "thinkpad-t14s" = mkNixos "thinkpad-t14s" "x86_64-linux";
-        "thinkpad-x1-carbon" = mkNixos "thinkpad-x1-carbon" "x86_64-linux";
-        "thunderdome" = mkNixos "thunderdome" "x86_64-linux";
-        "elitedesk" = mkNixos "elitedesk" "x86_64-linux";
-        "raspi400" = mkNixos "raspi400" "aarch64-linux";
-        "raspi5" = mkNixos "raspi5" "aarch64-linux";
+        "thinkpad-t14s" = mkNixos "thinkpad-t14s";
+        "thinkpad-x1-carbon" = mkNixos "thinkpad-x1-carbon";
+        "thunderdome" = mkNixos "thunderdome";
+        "elitedesk" = mkNixos "elitedesk";
+        "raspi400" = mkNixos "raspi400";
+        "raspi5" = mkNixos "raspi5";
       };
 
       packages."x86_64-linux" = {
