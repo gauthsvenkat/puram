@@ -63,29 +63,33 @@
         ];
       };
 
+      inherit (nixpkgs) lib;
+
       # :: { hostname -> filetype }
-      hostDirs = nixpkgs.lib.readDir ./hosts;
+      nixosHostDirs = lib.readDir ./hosts/nixos;
+      openwrtHostDirs = lib.readDir ./hosts/openwrt;
 
       # :: { hostname -> hostCfg }
-      allHostCfgs = nixpkgs.lib.mapAttrs (name: _: import ./hosts/${name}/hostCfg.nix) hostDirs;
+      allHostCfgs =
+        lib.mapAttrs (name: _: import ./hosts/nixos/${name}/hostCfg.nix) nixosHostDirs
+        // lib.mapAttrs (name: _: import ./hosts/openwrt/${name}/hostCfg.nix) openwrtHostDirs;
 
       mkNixos = import ./lib/mk-nixos.nix { inherit allHostCfgs inputs evalNixos; };
       mkOpenwrt = import ./lib/mk-openwrt.nix { inherit allHostCfgs inputs; };
     in
     {
-      nixosConfigurations = {
-        "thinkpad-t14s" = mkNixos "thinkpad-t14s";
-        "thinkpad-x1-carbon" = mkNixos "thinkpad-x1-carbon";
-        "thunderdome" = mkNixos "thunderdome";
-        "elitedesk" = mkNixos "elitedesk";
-        "raspi400" = mkNixos "raspi400";
-        "raspi5" = mkNixos "raspi5";
-      };
+      nixosConfigurations = lib.mapAttrs (name: _: mkNixos name) nixosHostDirs;
 
-      packages."x86_64-linux" = {
-        "archer-c7-image" = (mkOpenwrt "archer-c7").image;
-        "archer-c7-deploy" = (mkOpenwrt "archer-c7").deploy;
-      };
+      packages."x86_64-linux" = lib.concatMapAttrs (
+        name: _:
+        let
+          router = mkOpenwrt name;
+        in
+        {
+          "${name}-image" = router.image;
+          "${name}-deploy" = router.deploy;
+        }
+      ) openwrtHostDirs;
 
       devShells."x86_64-linux".default =
         let
