@@ -13,8 +13,8 @@ Workstations double as operators (they edit secrets and run opentofu), so they a
 
 Age keys are derived from SSH keys, but the key source differs by host type:
 
-- **Servers** use the SSH host key (`/etc/ssh/ssh_host_ed25519_key`), set in `bases/server.nix`.
-- **Workstations** use the user's SSH key (`~/.ssh/id_ed25519`), set in `bases/workstation.nix`.
+- **Servers** use the SSH host key (`/etc/ssh/ssh_host_ed25519_key`), set in `bases/nixos/server.nix`.
+- **Workstations** use the user's SSH key (`~/.ssh/id_ed25519`), set in `bases/nixos/workstation.nix`.
 
 ## Enrolling a new server
 

@@ -81,7 +81,7 @@ elitedesk carries `tag:server` (applied via `infra/tailscale.tf`), which disable
 |---|---|---|
 | `elitedesk` | server (Caddy + services) | yes |
 | `thunderdome` | desktop | yes |
-| Laptops (`thinkpad-x1-carbon`, etc.) | inherit via `bases/laptop.nix` | yes |
+| Laptops (`thinkpad-x1-carbon`, etc.) | inherit via `bases/nixos/laptop.nix` | yes |
 | `raspi400`, `raspi5` | bare servers, roles TBD | yes |
 | Phones, tablets | added manually from device | yes if you want named/HTTPS access |
 
@@ -120,7 +120,7 @@ Some services run inside a dedicated network namespace (`wg`) whose only
 egress is a WireGuard tunnel to Mullvad. If the tunnel drops, the
 namespace has no fallback route - confined services stall (kernel-
 enforced kill switch). Wired via the `vpn-confinement` flake input;
-the host-side entrypoint is `hosts/elitedesk/vpn.nix`, and the
+the host-side entrypoint is `hosts/nixos/elitedesk/vpn.nix`, and the
 `confined` list there is the source of truth for what's behind VPN.
 
 ```
@@ -171,7 +171,7 @@ explicit IPs (loopback won't traverse the namespace boundary):
 
 `secrets/homeserver.yaml` holds `mullvad_wg_private_key` and `mullvad_wg_address`;
 the full wg-quick config is assembled from them by
-`sops.templates.mullvad_wg_config` in `hosts/elitedesk/vpn.nix` (peer
+`sops.templates.mullvad_wg_config` in `hosts/nixos/elitedesk/vpn.nix` (peer
 endpoint and keys live there in plain nix). Generate new values at
 https://mullvad.net/en/account → WireGuard configuration.
 

@@ -17,7 +17,7 @@ you can reach the router without a cable. It skips itself on a router that is
 already configured.
 
 **Stage 2** replaces that with the real configuration from
-`hosts/archer-c7/default.nix`: the home wifi, the guest network, dhcp and the
+`hosts/openwrt/archer-c7/default.nix`: the home wifi, the guest network, dhcp and the
 firewall. This is also how every later change is applied - stage 1 is only for a
 fresh or upgraded router.
 

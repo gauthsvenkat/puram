@@ -4,7 +4,7 @@
     _module.args = { inherit hostCfg workstationKeys; };
 
     imports = [
-      ../../bases/router.nix
+      ../../../bases/openwrt/router.nix
 
       ./hardware-configuration.nix
     ];

@@ -5,9 +5,12 @@ modules/          -- self-contained, reusable modules (MUST NOT import other mod
   nixos/          -- NixOS system config (system/, hardware/, services/, kde-plasma/, niri/)
   home-manager/   -- user config, flat nix files
   openwrt/        -- dewclaw modules for the router, flat nix files
-bases/            -- composable configs that import modules, flat (system, workstation, laptop, personal, server, kde, niri)
-hosts/            -- per-machine configs that import bases + host-specific modules
-  <hostname>/     -- default.nix + hardware-configuration.nix (+ disko-config.nix if applicable)
+bases/            -- composable configs that import modules, split by platform
+  nixos/          -- system, workstation, laptop, personal, server, raspi, kde, niri
+  openwrt/        -- router
+hosts/            -- per-machine configs that import bases + host-specific modules, split by platform
+  nixos/<hostname>/    -- default.nix + hostCfg.nix + hardware-configuration.nix (+ disko-config.nix if applicable)
+  openwrt/<hostname>/  -- default.nix + hostCfg.nix + bootstrap.nix + hardware-configuration.nix
 lib/              -- standalone helper functions, composed in flake.nix (mk-nixos, mk-openwrt, patcher)
 docs/             -- operational notes (setup-*, server-*, repo-*)
 assets/           -- non-nix assets (configs/, wallpapers/)
@@ -17,7 +20,7 @@ justfile          -- task runner for common operations
 
 # Key concepts
 
-- `hostCfg` -- attribute set passed via `specialArgs`, defined per-host as a literal `rec { ... }` in `hosts/<hostname>/hostCfg.nix`. Bases and modules read from this instead of hardcoding paths/ports/image tags/env defaults. Flows to home-manager via `extraSpecialArgs`.
+- `hostCfg` -- attribute set passed via `specialArgs`, defined per-host as a literal `rec { ... }` in `hosts/<platform>/<hostname>/hostCfg.nix`. Bases and modules read from this instead of hardcoding paths/ports/image tags/env defaults. Flows to home-manager via `extraSpecialArgs`.
 - Single `nixpkgs` input (`nixos-unstable`); `home-manager`, `sops-nix`, `disko`, `plasma-manager`, and `niri` all follow it.
 - Base composition chain: host imports bases, bases import modules. E.g., `kde.nix` -> `personal.nix` -> `workstation.nix` -> `system.nix`.
 
@@ -62,7 +65,7 @@ justfile          -- task runner for common operations
 - Bare `inherit foo bar;` is only for re-exporting names already bound in the enclosing scope.
 - Inline `lib.getExe pkg` at the call site rather than `inherit (lib) getExe;` unless `getExe` is used 2+ times in the file.
 - `with` is allowed only inside package list literals (`with pkgs; [ ... ]`). Never `with lib;` or `with config;`.
-- `rec { ... }` is reserved for `hostCfg` definitions in `hosts/<hostname>/hostCfg.nix`. Don't introduce `rec` elsewhere.
+- `rec { ... }` is reserved for `hostCfg` definitions in `hosts/<platform>/<hostname>/hostCfg.nix`. Don't introduce `rec` elsewhere.
 - Function arguments use destructuring with `...`. Don't use `@args`.
 - If a module body uses no arguments at all, omit the function head entirely - write a bare attrset, not `{ ... }: { ... }`.
-- Auto-generated `hosts/*/hardware-configuration.nix` files are exempt - let `nixos-generate-config` own them.
+- Auto-generated `hosts/nixos/*/hardware-configuration.nix` files are exempt - let `nixos-generate-config` own them.

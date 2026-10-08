@@ -9,8 +9,8 @@ let
 in
 {
   imports = [
-    ../../bases/laptop.nix
-    ../../bases/niri.nix
+    ../../../bases/nixos/laptop.nix
+    ../../../bases/nixos/niri.nix
 
     ./disko-config.nix
     ./hardware-configuration.nix

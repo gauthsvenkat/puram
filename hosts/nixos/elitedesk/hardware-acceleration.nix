@@ -1,7 +1,7 @@
 { ... }:
 {
   imports = [
-    ../../modules/nixos/hardware/intel-transcoding.nix
+    ../../../modules/nixos/hardware/intel-transcoding.nix
   ];
 
   services = {

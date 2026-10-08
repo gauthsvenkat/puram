@@ -80,7 +80,7 @@ sudo sh -c 'echo ",+," | sfdisk -N2 --no-reread /dev/mmcblk0 && partprobe && res
 ## Automated installation ([nixos-anywhere](https://github.com/nix-community/nixos-anywhere))
 
 Make a partition scheme with [disko](https://github.com/nix-community/disko) in
-`hosts/<hostname>/disko-config.nix`, then boot the target from a live ISO with
+`hosts/nixos/<hostname>/disko-config.nix`, then boot the target from a live ISO with
 root ssh enabled and note its IP.
 
 The NixOS ISO doesn't boot from ventoy (neither normal nor grub2 mode). An Arch
@@ -132,7 +132,7 @@ nix run github:nix-community/nixos-anywhere -- --flake .#$hostname --vm-test
 read -rs passphrase # only for encrypted disks
 
 nix run github:nix-community/nixos-anywhere -- \
-  --generate-hardware-config nixos-generate-config ./hosts/$hostname/hardware-configuration.nix \
+  --generate-hardware-config nixos-generate-config ./hosts/nixos/$hostname/hardware-configuration.nix \
   --flake .#$hostname \
   --extra-files /tmp/extra-files/$hostname \
   --chown /home/$username 1000:100 \
