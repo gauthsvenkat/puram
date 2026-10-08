@@ -21,7 +21,7 @@ in
       target
       variant
       ;
-    files = import ../hosts/${name}/bootstrap.nix { inherit hostCfg pkgs workstationKeys; };
+    files = import ../hosts/openwrt/${name}/bootstrap.nix { inherit hostCfg pkgs workstationKeys; };
     packages = [
       "luci"
       "luci-ssl"
@@ -31,6 +31,6 @@ in
   deploy =
     (import inputs.dewclaw {
       inherit pkgs;
-      configuration = import ../hosts/${name} { inherit hostCfg workstationKeys; };
+      configuration = import ../hosts/openwrt/${name} { inherit hostCfg workstationKeys; };
     }).targets.${name};
 }

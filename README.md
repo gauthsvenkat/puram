@@ -12,7 +12,7 @@ These are the building blocks of my machines. Each component tries to handle one
 
 ### [bases](./bases/)
 
-These contain abstract hosts declarations, which put together multiple `modules/` to build a specialized machine. For e.g. a [KDE workstation](./bases/kde.nix) or a [server](./bases/server.nix).
+These contain abstract hosts declarations, which put together multiple `modules/` to build a specialized machine. For e.g. a [KDE workstation](./bases/nixos/kde.nix) or a [server](./bases/nixos/server.nix).
 
 ### [hosts](./hosts/)
 

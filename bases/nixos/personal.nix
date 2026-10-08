@@ -4,14 +4,14 @@ let
 in
 {
   imports = [
-    ../modules/nixos/services/mullvad-vpn.nix
-    ../modules/nixos/services/syncthing.nix
+    ../../modules/nixos/services/mullvad-vpn.nix
+    ../../modules/nixos/services/syncthing.nix
 
     ./workstation.nix
   ];
 
   home-manager.users.${username} = {
-    imports = [ ../modules/home-manager/personal-apps.nix ];
+    imports = [ ../../modules/home-manager/personal-apps.nix ];
 
     programs.firefox.policies = {
       Bookmarks = lib.mkBefore [

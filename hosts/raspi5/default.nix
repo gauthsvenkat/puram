@@ -1,3 +1,0 @@
-{
-  imports = [ ../../bases/raspi.nix ];
-}

@@ -7,7 +7,7 @@ let
 in
 {
   imports = [
-    ../../modules/nixos/services/sanoid.nix
+    ../../../modules/nixos/services/sanoid.nix
   ];
 
   services.sanoid.datasets = {

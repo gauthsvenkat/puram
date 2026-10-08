@@ -1,9 +1,9 @@
 { pkgs, ... }:
 {
   imports = [
-    ../../bases/laptop.nix
-    ../../bases/niri.nix
-    ../../bases/personal.nix
+    ../../../bases/nixos/laptop.nix
+    ../../../bases/nixos/niri.nix
+    ../../../bases/nixos/personal.nix
 
     ./disko-config.nix
     ./hardware-configuration.nix

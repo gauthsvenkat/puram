@@ -8,16 +8,16 @@ let
 in
 {
   imports = [
-    ../../bases/niri.nix
-    ../../bases/personal.nix
+    ../../../bases/nixos/niri.nix
+    ../../../bases/nixos/personal.nix
 
-    ../../modules/nixos/gaming.nix
+    ../../../modules/nixos/gaming.nix
 
-    ../../modules/nixos/hardware/nvidia.nix
+    ../../../modules/nixos/hardware/nvidia.nix
 
-    ../../modules/nixos/services/sanoid.nix
-    ../../modules/nixos/services/tailscale.nix
-    ../../modules/nixos/services/zfs.nix
+    ../../../modules/nixos/services/sanoid.nix
+    ../../../modules/nixos/services/tailscale.nix
+    ../../../modules/nixos/services/zfs.nix
 
     ./hardware-configuration.nix
   ];

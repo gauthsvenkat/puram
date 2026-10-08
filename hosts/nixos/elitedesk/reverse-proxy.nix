@@ -23,7 +23,7 @@ let
 in
 {
   imports = [
-    ../../modules/nixos/services/caddy.nix
+    ../../../modules/nixos/services/caddy.nix
   ];
 
   # Caddy serves speedtest-tracker via php_fastcgi; the phpfpm pool socket is
