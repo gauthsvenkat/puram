@@ -7,6 +7,7 @@
         forward = "REJECT";
         synflood_protect = true;
         flow_offloading = true;
+        flow_offloading_hw = true;
       }
     ];
 

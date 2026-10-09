@@ -4,25 +4,8 @@
   workstationKeys,
 }:
 let
-  inherit (hostCfg)
-    hostname
-    setup
-    switch
-    wan
-    ;
+  inherit (hostCfg) hostname setup wan;
   inherit (pkgs) lib;
-
-  switchVlans = lib.concatImapStrings (
-    i:
-    { vid, ports }:
-    ''
-      add network switch_vlan
-      set network.@switch_vlan[-1].device='${switch.name}'
-      set network.@switch_vlan[-1].vlan='${toString i}'
-      set network.@switch_vlan[-1].vid='${toString vid}'
-      set network.@switch_vlan[-1].ports='${ports}'
-    ''
-  ) switch.vlans;
 
   bootstrap = pkgs.writeText "${hostname}-bootstrap" ''
     #!/bin/sh
@@ -31,8 +14,6 @@ let
     # execution if that is the case.
     [ "$(uci -q get network.wan.proto)" = pppoe ] && exit 0
 
-    while uci -q delete network.@switch_vlan[0]; do :; done
-
     uci -q batch <<EOF
     set system.@system[0].hostname='${hostname}'
     set system.@system[0].zonename='Europe/Amsterdam'
@@ -40,8 +21,6 @@ let
 
     set dropbear.@dropbear[0].PasswordAuth='off'
     set dropbear.@dropbear[0].RootPasswordAuth='off'
-
-    ${switchVlans}
 
     delete network.wan6
 

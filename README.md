@@ -30,6 +30,7 @@ Pure helper functions used by `flake.nix`.
 
 - [setup-nixos](./docs/setup-nixos.md)
 - [setup-secrets](./docs/setup-secrets.md)
+- [setup-openwrt](./docs/setup-openwrt.md)
 - [server-zfs-pool](./docs/server-zfs-pool.md)
 - [server-homepage](./docs/server-homepage.md)
 - [repo-patches](./docs/repo-patches.md)
