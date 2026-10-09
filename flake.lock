@@ -222,11 +222,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1790083562,
-        "narHash": "sha256-8XuUOiRZPp3dI87ghZ5PBHtlqcQhMLzOlLiFp2V3DyE=",
+        "lastModified": 1791558887,
+        "narHash": "sha256-8+0AAs+xA3xqNv3yORGaHps8BNG1o5FrG91sPCD9Mgg=",
         "owner": "astro",
         "repo": "nix-openwrt-imagebuilder",
-        "rev": "b06c14009d224a7574c8a4ed8949f6b5e8a4c1e1",
+        "rev": "b7f8ed6383ad067bd8b96f6541ad216850ba141f",
         "type": "github"
       },
       "original": {
