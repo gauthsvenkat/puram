@@ -62,6 +62,13 @@ just deploy-router --reload   # no reboot; only for changes that cannot drop the
 The router reverts to its previous configuration if the deploy is not confirmed
 within two minutes, so a bad change repairs itself.
 
+## Backup router
+
+The Archer C7 config is kept under `hosts/openwrt/archer-c7/` as a cold spare.
+It is not deployed to; to bring it back, flash it and run the recipes with
+`just router=archer-c7 ...`. Keep its WAN unplugged otherwise, as both routers
+claim 192.168.1.1.
+
 ## Hardware
 
 - `lan1` and WAN are the 2.5 GbE ports; `lan2`-`lan5` are 1 GbE.
