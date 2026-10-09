@@ -9,7 +9,7 @@ in
         {
           name = "br-lan";
           type = "bridge";
-          ports = [ lan.device ];
+          inherit (lan) ports;
         }
       ];
 
