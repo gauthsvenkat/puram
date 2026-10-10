@@ -6,7 +6,8 @@
 }:
 let
   inherit (hostCfg) username;
-  # :: [ sshUserKey ]
+  # catAttrs :: String -> [ hostCfg ] -> [ String ]
+  # :: [ String ], one ssh public key per host that has one
   workstationKeys = lib.catAttrs "sshUserKey" (lib.attrValues allHostCfgs);
 in
 {

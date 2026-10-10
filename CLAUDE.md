@@ -41,7 +41,14 @@ justfile          -- task runner for common operations
 
 - Use kebab-case for filenames (e.g., `graphics-drivers.nix`)
 - Prefer `lib.*` over `builtins.*` whenever lib re-exports the function (it re-exports most of builtins); `builtins.*` only when lib has no counterpart
-- Name bindings so the shape is obvious; when a name can't carry it, add a terse type comment above the binding: `# :: { hostname -> hostCfg }`. Split pipelines with surprising intermediate types into named bindings
+- Name bindings so the shape is obvious. Split pipelines with surprising intermediate types into named bindings
+- A binding built with a collection-shaping `lib` function (`mapAttrs`, `filterAttrs`, `listToAttrs`, `imap1`, `catAttrs`, `concatMapAttrs`, `readDir`, `map`, ...) gets a type comment block above it: the function's signature as used here, a `where` line expanding every name in it, then the binding's own type after `# ::`. Primitives are `String`, `Int`, `Bool`, `Path`, `Derivation`; `[ T ]` is a list; `{ k1, k2 :: T }` a set with fixed keys; `{ String -> T }` a set keyed by arbitrary names; `a -> b` a function. Only `hostCfg` and `secret` (a dewclaw `{ _secret :: String }`) stay unexpanded. Example:
+  ```nix
+  # imap1 :: (Int -> String -> port) -> [ String ] -> [ port ]
+  #   where port = { id :: Int; name :: String; enable :: Bool }
+  # :: [ port ]
+  port = lib.imap1 (id: name: { inherit id name; enable = true; }) poe.ports;
+  ```
 - Collapse single-definition attribute sets using dot notation (e.g., `services.openssh.enable = true;`)
 - Group multiple definitions with common prefixes into a single attribute set
 - Sort lexicographically: package lists, imports, attribute definitions within groups

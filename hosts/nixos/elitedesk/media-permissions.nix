@@ -20,6 +20,8 @@ in
   # END-PRIVATE
   users.groups.${group}.gid = 169;
 
+  # listToAttrs :: [ { name :: String; value :: { group :: String } } ] -> { String -> { group :: String } }
+  # :: { String -> { group :: String } }, keyed by service name
   services = lib.listToAttrs (
     map (u: {
       name = u;
@@ -32,6 +34,9 @@ in
   # service creates. mkForce because servarr modules hardcode 0022 and
   # jellyfin hardcodes 0077. We trade jellyfin's defensive hardening
   # for a uniform stack-wide policy.
+  # listToAttrs :: [ { name :: String; value :: service } ] -> { String -> service }
+  #   where service = { serviceConfig :: { UMask :: String } }
+  # :: { String -> service }, keyed by service name
   # END-PRIVATE
   systemd.services = lib.listToAttrs (
     map (u: {

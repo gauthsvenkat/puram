@@ -46,6 +46,9 @@ in
     wireguardConfigFile = config.sops.templates.mullvad_wg_config.path;
     inherit bridgeAddress namespaceAddress;
     # portMappings is used to open ports in the namespace's INPUT firewall.
+    # map :: (String -> mapping) -> [ String ] -> [ mapping ]
+    #   where mapping = { from, to :: Int; protocol :: String }
+    # :: [ mapping ]
     portMappings = map (name: {
       from = hostCfg.ports.${name}.port;
       to = hostCfg.ports.${name}.port;
@@ -53,6 +56,9 @@ in
     }) confined;
   };
 
+  # listToAttrs :: [ { name :: String; value :: service } ] -> { String -> service }
+  #   where service = { vpnConfinement :: { enable :: Bool; vpnNamespace :: String } }
+  # :: { String -> service }, keyed by service name
   systemd.services = lib.listToAttrs (
     map (s: {
       name = s;

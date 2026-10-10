@@ -12,6 +12,9 @@ let
     ;
   inherit (pkgs) lib;
 
+  # concatImapStrings :: (Int -> vlan -> String) -> [ vlan ] -> String
+  #   where vlan = { vid :: Int; ports :: String }
+  # :: String, uci batch lines adding one switch_vlan section per vlan
   switchVlans = lib.concatImapStrings (
     i:
     { vid, ports }:
