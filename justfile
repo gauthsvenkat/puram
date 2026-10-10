@@ -2,7 +2,7 @@ alias a := apply
 alias c := check
 alias u := update
 
-router := "flint-2"
+device := "flint-2"
 
 apply action='switch':
     nh os {{ action }} .
@@ -31,11 +31,11 @@ upgrade:
 deploy hostname action='boot':
     nh os {{ action }} . --hostname {{ hostname }} --target-host {{ hostname }}-root
 
-build-router-image:
-    nom build .#{{ router }}-image --no-link --print-out-paths
+build-openwrt-image:
+    nom build .#{{ device }}-image --no-link --print-out-paths
 
-deploy-router *args:
-    nix run .#{{ router }}-deploy -- {{ args }}
+deploy-openwrt *args:
+    nix run .#{{ device }}-deploy -- {{ args }}
 
 tf *args:
     sops exec-env secrets/infra.yaml 'tofu -chdir=infra {{ args }}'
