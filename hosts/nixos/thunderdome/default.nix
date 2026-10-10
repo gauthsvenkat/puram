@@ -20,6 +20,7 @@ in
     ../../../modules/nixos/services/zfs.nix
 
     ./hardware-configuration.nix
+    ./monitors.nix
   ];
 
   boot = {
