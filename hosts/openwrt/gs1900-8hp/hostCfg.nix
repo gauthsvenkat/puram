@@ -1,0 +1,30 @@
+rec {
+  hostname = "gs1900-8hp";
+  profile = "zyxel_gs1900-8hp-b1";
+  release = "25.12.5";
+  target = "realtek";
+  variant = "rtl838x";
+
+  # The image ships firewall4; a switch inside the lan has nothing to filter.
+  disabledServices = [ "firewall" ];
+
+  lan = {
+    ip = "192.168.1.2";
+    gateway = "192.168.1.1";
+    ports = [
+      "lan1"
+      "lan2"
+      "lan3"
+      "lan4"
+      "lan5"
+      "lan6"
+      "lan7"
+      "lan8"
+    ];
+  };
+
+  poe = {
+    budget = 70;
+    inherit (lan) ports;
+  };
+}
