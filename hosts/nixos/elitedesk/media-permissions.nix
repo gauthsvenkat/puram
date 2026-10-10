@@ -8,6 +8,8 @@ in
 {
   users.groups.${group}.gid = 169;
 
+  # listToAttrs :: [ { name :: String; value :: { group :: String } } ] -> { String -> { group :: String } }
+  # :: { String -> { group :: String } }, keyed by service name
   services = lib.listToAttrs (
     map (u: {
       name = u;

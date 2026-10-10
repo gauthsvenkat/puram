@@ -8,7 +8,8 @@
 }:
 let
   inherit (hostCfg) username homeDirectory;
-  # :: { hostname -> hostCfg }
+  # filterAttrs :: (String -> hostCfg -> Bool) -> { String -> hostCfg } -> { String -> hostCfg }
+  # :: { String -> hostCfg }, hosts with an sshHostKey, keyed by hostname
   serverCfgs = lib.filterAttrs (_: hostCfg: hostCfg ? sshHostKey) allHostCfgs;
   tailnet = "tailnet.ts.net";
 in
@@ -24,6 +25,9 @@ in
   ];
 
   programs.ssh = {
+    # mapAttrs :: (String -> hostCfg -> knownHost) -> { String -> hostCfg } -> { String -> knownHost }
+    #   where knownHost = { extraHostNames :: [ String ]; publicKey :: String }
+    # :: { String -> knownHost }, keyed by hostname
     knownHosts = lib.mapAttrs (hostName: hostCfg: {
       extraHostNames = [ "${hostName}.${tailnet}" ];
       publicKey = hostCfg.sshHostKey;

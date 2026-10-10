@@ -65,11 +65,13 @@
 
       inherit (nixpkgs) lib;
 
-      # :: { hostname -> filetype }
+      # readDir :: Path -> { String -> String }
+      # :: { String -> String }, hostname -> file type, always "directory"
       nixosHostDirs = lib.readDir ./hosts/nixos;
       openwrtHostDirs = lib.readDir ./hosts/openwrt;
 
-      # :: { hostname -> hostCfg }
+      # mapAttrs :: (String -> String -> hostCfg) -> { String -> String } -> { String -> hostCfg }
+      # :: { String -> hostCfg }, keyed by hostname
       allHostCfgs =
         lib.mapAttrs (name: _: import ./hosts/nixos/${name}/hostCfg.nix) nixosHostDirs
         // lib.mapAttrs (name: _: import ./hosts/openwrt/${name}/hostCfg.nix) openwrtHostDirs;
@@ -78,8 +80,13 @@
       mkOpenwrt = import ./lib/mk-openwrt.nix { inherit allHostCfgs inputs; };
     in
     {
+      # mapAttrs :: (String -> String -> nixosSystem) -> { String -> String } -> { String -> nixosSystem }
+      #   where nixosSystem = result of lib.nixosSystem
+      # :: { String -> nixosSystem }, keyed by hostname
       nixosConfigurations = lib.mapAttrs (name: _: mkNixos name) nixosHostDirs;
 
+      # concatMapAttrs :: (String -> String -> { String -> Derivation }) -> { String -> String } -> { String -> Derivation }
+      # :: { String -> Derivation }, keyed "${hostname}-image" and "${hostname}-deploy"
       packages."x86_64-linux" = lib.concatMapAttrs (
         name: _:
         let

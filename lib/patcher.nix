@@ -1,6 +1,6 @@
 {
   nixpkgs,
-  # :: [ fetchpatch2 args ]
+  # :: [ { url, hash :: String } ], each passed to fetchpatch2
   patches ? [ ],
 }:
 {
