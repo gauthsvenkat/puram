@@ -21,6 +21,7 @@ in
       target
       variant
       ;
+    disabledServices = hostCfg.disabledServices or [ ];
     files = import ../hosts/openwrt/${name}/bootstrap.nix { inherit hostCfg pkgs workstationKeys; };
     packages = [
       "luci"

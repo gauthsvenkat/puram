@@ -5,7 +5,8 @@
     ../../modules/openwrt/dropbear.nix
     ../../modules/openwrt/firewall.nix
     ../../modules/openwrt/guest-wifi.nix
-    ../../modules/openwrt/lan.nix
+    ../../modules/openwrt/lan-bridge.nix
+    ../../modules/openwrt/lan-dhcp.nix
     ../../modules/openwrt/luci.nix
     ../../modules/openwrt/system.nix
     ../../modules/openwrt/wan.nix
