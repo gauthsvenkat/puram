@@ -1,30 +1,48 @@
 alias a := apply
-alias c := check
+alias c := check-fast
 alias u := update
 
 device := "flint-2"
 
+fast-build := "nix-fast-build" + \
+    " --skip-cached" + \
+    " --systems 'x86_64-linux aarch64-linux'" + \
+    " --option cores 4" + \
+    " -j 4"
+toplevels := "configs: builtins.mapAttrs (_: c: c.config.system.build.toplevel) configs"
+
 apply action='switch':
     nh os {{ action }} .
 
-check:
+check-fast:
     nix flake check
+
+check-full:
+    {{ fast-build }} --flake '.#nixosConfigurations' --select '{{ toplevels }}'
+    # openwrt images stop evaluating whenever upstream's package index goes stale
+    # {{ fast-build }} --flake '.#packages.x86_64-linux'
+    {{ fast-build }} --flake '.#devShells.x86_64-linux'
 
 update input="":
     nix flake update {{ input }}
 
 upgrade:
     #!/usr/bin/env bash
-    set -euo pipefail
+    set -euEo pipefail
 
     # Ask for password upfront
     sudo -v
     # Keep-alive: update existing sudo timestamp until script finishes
     while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+    trap 'git checkout HEAD -- flake.lock' ERR
+
     just update
     git add flake.lock
-    just apply boot || (git checkout HEAD -- flake.lock && exit 1)
+    just check-full
+    just apply boot
+
+    trap - ERR
     git commit -m "chore(flake): update inputs"
 
 # NOTE: The target needs to already be on the tailnet.
