@@ -9,7 +9,8 @@ let
     variant
     ;
   pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux";
-  # :: [ sshUserKey ]
+  # catAttrs :: String -> [ hostCfg ] -> [ String ]
+  # :: [ String ], one ssh public key per host that has one
   workstationKeys = pkgs.lib.catAttrs "sshUserKey" (pkgs.lib.attrValues allHostCfgs);
 in
 {
