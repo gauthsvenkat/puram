@@ -3,26 +3,43 @@ let
   inherit (hostCfg) username;
 in
 {
-  home-manager.users.${username}.programs.niri.settings.outputs = {
-    "Samsung Electric Company LC32G5xT H000000000" = {
-      mode = {
-        width = 2560;
-        height = 1440;
-        refresh = 144.0;
-      };
-      position = {
-        x = 0;
-        y = 0;
-      };
-      scale = 1.0;
-    };
-
-    "eDP-1" = {
-      position = {
-        x = 2560;
-        y = 330;
-      };
-      scale = 2.5;
-    };
+  home-manager.users.${username}.services.shikane = {
+    enable = true;
+    settings.profile = [
+      {
+        name = "undocked";
+        output = [
+          {
+            enable = true;
+            position = "0,0";
+            scale = 2.5;
+            search = "n=eDP-1";
+          }
+        ];
+      }
+      {
+        name = "home";
+        output = [
+          {
+            enable = true;
+            mode = "best";
+            position = "0,0";
+            scale = 1.0;
+            search = "s=H000000000";
+          }
+          {
+            enable = true;
+            mode = "best";
+            position = "2560,300";
+            scale = 1.0;
+            search = "s=UPB4DK9P";
+          }
+          {
+            enable = false;
+            search = "n=eDP-1";
+          }
+        ];
+      }
+    ];
   };
 }
