@@ -7,6 +7,6 @@ in
   services.bazarr = {
     enable = true;
     dataDir = "${paths.config}/bazarr";
-    listenPort = port;
+    settings.general.port = port;
   };
 }
