@@ -47,6 +47,7 @@ in
               {
                 id = "status";
                 members = [
+                  "privacy"
                   "notifications"
                   "clipboard"
                   "network"
