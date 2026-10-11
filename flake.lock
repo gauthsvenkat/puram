@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789206134,
-        "narHash": "sha256-BD+RggDtJHRgQC/47/aPdZc620AgjGZa41pu19crNpE=",
+        "lastModified": 1790229174,
+        "narHash": "sha256-p1JJTadMucydZn/wHKpeR+NpdJOUTcb/NxRdeeCg8UQ=",
         "owner": "MakiseKurisu",
         "repo": "dewclaw",
-        "rev": "8f8c28acaa4a0a98439c0a669dbcf04e94195541",
+        "rev": "4ef68ba1ab5afaafe1a22217f7a6beb005bb6ecd",
         "type": "github"
       },
       "original": {
@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1781152676,
-        "narHash": "sha256-RxWs5ND31KzTG7wvMM+PMfUjyNpmIEr999lqNARaM5o=",
+        "lastModified": 1789770686,
+        "narHash": "sha256-uZkBR7yHdIKUFB5SZdfgh1qkGfI3XmYmI/lTiquxbck=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "ff8702b4de27f72b4c78573dfb89ec74e36abdf1",
+        "rev": "725ea35e410ad83be4931d1bff7e090eacaf3563",
         "type": "github"
       },
       "original": {
@@ -90,11 +90,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788487777,
-        "narHash": "sha256-Ro/e1N4ZR8/XaFF+sF9SgfPK79HM5YNEppzFj8p+0Ak=",
+        "lastModified": 1791642191,
+        "narHash": "sha256-0bK0A59rVUn1SRZzo4cNi4VSqAe7vR1gL2/MZl53Frw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "693e8ce0fb240a73c116a03cfd7b19269c87af88",
+        "rev": "c58f54c733a7894d84fa2fdff26cc12088c4b78c",
         "type": "github"
       },
       "original": {
@@ -163,11 +163,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1791456040,
-        "narHash": "sha256-gRZ/s8WQJ2CsXdhcDVQH34qxuL0MuMCOs3aBiK1Prsw=",
-        "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+        "lastModified": 1791594108,
+        "narHash": "sha256-V0WmebqwEeAVZMqxfv7Dq7hpKkPPM19W50xQf3D1Kf4=",
+        "rev": "6510408d147d8c5e6d76043e899e9251756f6a75",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1087755.e7439b6b14ad/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1089111.6510408d147d/nixexprs.tar.xz"
       },
       "original": {
         "type": "tarball",
@@ -197,11 +197,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788600693,
-        "narHash": "sha256-rFFsGcRc7B1GdwpFk/2VCSWL+vpMXi8EFgmWuKJd9I0=",
+        "lastModified": 1791701131,
+        "narHash": "sha256-mBCtcZPGgBLfEYxFvBRsc0KeDz0JtN2BMhcIWGoMk94=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "f81c030d6403edeaae1a0953ee60ad43f334e300",
+        "rev": "45084cf764f08c1f00e0c7e7432732f225105b7e",
         "type": "github"
       },
       "original": {
@@ -219,11 +219,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1791558887,
-        "narHash": "sha256-8+0AAs+xA3xqNv3yORGaHps8BNG1o5FrG91sPCD9Mgg=",
+        "lastModified": 1791642893,
+        "narHash": "sha256-mcywOSZyTfQIh0bysKJoRchMTiQhddjmNNdbpuFSFyQ=",
         "owner": "astro",
         "repo": "nix-openwrt-imagebuilder",
-        "rev": "b7f8ed6383ad067bd8b96f6541ad216850ba141f",
+        "rev": "0af6dff75e2502f7afe1752dc57d2b8d62758eda",
         "type": "github"
       },
       "original": {
