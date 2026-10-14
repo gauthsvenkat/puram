@@ -18,7 +18,7 @@ in
     {
       programs.niri.settings.binds = {
         # apps
-        "Mod+B".action.spawn = lib.getExe (
+        "Mod+I".action.spawn = lib.getExe (
           if config.programs.firefox.enable then config.programs.firefox.finalPackage else pkgs.firefox
         );
         "Mod+T".action.spawn = lib.getExe pkgs.wezterm;
@@ -40,6 +40,11 @@ in
         "Mod+Shift+L".action = actions.move-column-right;
 
         # monitors: arrows focus, shift moves the column across
+        "Mod+B".action = actions.focus-monitor-previous;
+        "Mod+N".action = actions.focus-monitor-next;
+        "Mod+Shift+B".action = actions.move-column-to-monitor-previous;
+        "Mod+Shift+N".action = actions.move-column-to-monitor-next;
+
         "Mod+Left".action = actions.focus-monitor-left;
         "Mod+Down".action = actions.focus-monitor-down;
         "Mod+Up".action = actions.focus-monitor-up;
@@ -54,10 +59,8 @@ in
         "Mod+Ctrl+Shift+J".action = actions.move-workspace-down;
         "Mod+Ctrl+Shift+K".action = actions.move-workspace-up;
 
-        "Mod+Ctrl+Shift+Left".action = actions.move-workspace-to-monitor-left;
-        "Mod+Ctrl+Shift+Down".action = actions.move-workspace-to-monitor-down;
-        "Mod+Ctrl+Shift+Up".action = actions.move-workspace-to-monitor-up;
-        "Mod+Ctrl+Shift+Right".action = actions.move-workspace-to-monitor-right;
+        "Mod+Ctrl+Shift+B".action = actions.move-workspace-to-monitor-previous;
+        "Mod+Ctrl+Shift+N".action = actions.move-workspace-to-monitor-next;
 
         # sizing
         "Mod+F".action = actions.maximize-column;
