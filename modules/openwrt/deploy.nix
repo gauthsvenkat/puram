@@ -1,4 +1,9 @@
-{ hostCfg, ... }:
+{
+  hostCfg,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (hostCfg) lan;
 in
@@ -14,5 +19,19 @@ in
     };
   };
 
-  sopsSecrets = ../../secrets/router.yaml;
+  # sopsSecrets only takes one file; we need system.yaml and wifi.yaml, so we merge them ourselves.
+  secretsCommand = lib.getExe (
+    pkgs.writeShellApplication {
+      name = "router-secrets";
+      runtimeInputs = with pkgs; [
+        jq
+        sops
+      ];
+      text = ''
+        jq -s add \
+          <(sops --output-type json -d ${../../secrets/system.yaml}) \
+          <(sops --output-type json -d ${../../secrets/wifi.yaml})
+      '';
+    }
+  );
 }
