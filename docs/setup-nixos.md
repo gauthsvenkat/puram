@@ -41,7 +41,7 @@ nix run nixpkgs#ssh-to-age -- -i /tmp/extra-files/$hostname/etc/ssh/ssh_host_ed2
 ```
 
 Add the printed age key to [`.sops.yaml`](../.sops.yaml) under the
-`secrets/system.yaml` rule, then `just secrets-rekey`. Without this, first
+`secrets/system.yaml` and `secrets/wifi.yaml` rules, then `just secrets-rekey`. Without this, first
 boot has no wifi and no user password.
 
 ### 2. Build and flash
@@ -66,7 +66,7 @@ udisksctl unmount -b /dev/disk/by-label/NIXOS_SD
 ### 4. First boot
 
 Headless: the pi joins the home wifi via the `home-wifi` NetworkManager
-profile (credentials in `secrets/system.yaml`) and starts sshd. Find its IP on
+profile (credentials in `secrets/wifi.yaml`) and starts sshd. Find its IP on
 the router or AdGuard, log in as the user, then `sudo tailscale up`.
 
 Known issue: `expand-root-partition.service` fails on first boot

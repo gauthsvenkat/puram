@@ -4,10 +4,10 @@ This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing 
 
 | File | Decryptable by | Holds |
 |---|---|---|
-| `system.yaml` | every machine | the login password hash (pinned via `sopsFile` in `modules/nixos/system/user.nix`) |
+| `system.yaml` | every machine | the login password hash, also the router's root password (pinned via `sopsFile` in `modules/nixos/system/user.nix`) |
 | `homeserver.yaml` | elitedesk + workstations | elitedesk's runtime service secrets (its `sops.defaultSopsFile`) |
 | `infra.yaml` | workstations only | opentofu provider credentials + state passphrase; no server identity can decrypt these |
-| `router.yaml` | every machine | the router's root password hash plus the home and guest wifi credentials; machines connect with them (`modules/nixos/system/wifi.nix`), the router serves them (dewclaw decrypts the file on the workstation at deploy time) |
+| `wifi.yaml` | every machine | the home and guest wifi credentials; machines connect with them (`modules/nixos/system/wifi.nix`), the router serves them |
 
 Workstations double as operators (they edit secrets and run opentofu), so they appear in every file's recipient list. `.sops.yaml` is the access-control matrix. Secrets declared outside elitedesk must pin `sopsFile` explicitly - only elitedesk sets a `defaultSopsFile`.
 

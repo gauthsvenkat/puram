@@ -168,8 +168,8 @@ claim 192.168.1.1.
 - **`scp -O`** is required; the router has no sftp server.
 - **A failing build with a hash mismatch** means the OpenWrt download servers
   moved: `just update openwrt-imagebuilder`.
-- **Secrets** (wifi, guest wifi, root password) come from `secrets/router.yaml`,
-  decrypted on your machine at deploy time. See
+- **Secrets** (wifi, guest wifi, root password) come from `secrets/wifi.yaml` (the root password is `hashedPassword` in
+  `secrets/system.yaml`), merged and decrypted on your machine at deploy time. See
   [setup-secrets.md](setup-secrets.md).
 - **TLS errors from the package step** right after a fresh flash are most likely the
   clock: the router has no battery clock and NTP may not have synced yet. The
