@@ -12,6 +12,7 @@ let
   # :: { String -> hostCfg }, hosts with an sshHostKey, keyed by hostname
   serverCfgs = lib.filterAttrs (_: hostCfg: hostCfg ? sshHostKey) allHostCfgs;
   tailnet = "tailnet.ts.net";
+  router = allHostCfgs.flint-2;
 in
 {
   imports = [
@@ -108,6 +109,11 @@ in
             };
           }) serverCfgs
           // {
+            ${router.hostname} = {
+              HostName = router.lan.ip;
+              HostKeyAlias = router.hostname;
+              User = "root";
+            };
             # Reuse one connection for consecutive git operations.
             "github.com" = {
               ControlMaster = "auto";
