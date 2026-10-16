@@ -96,6 +96,8 @@ in
             longitude = 4.3571;
           };
 
+          lockscreen.transition_duration = 500;
+
           nightlight.enabled = true;
 
           shell.lang = "en";
