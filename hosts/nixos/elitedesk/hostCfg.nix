@@ -8,6 +8,7 @@ rec {
 
   zpool = "dontdie";
   domain = "example.com";
+  tailnetIp = "100.64.0.1";
   paths = rec {
     config = "/var/lib";
     postgres = "${config}/postgresql";
