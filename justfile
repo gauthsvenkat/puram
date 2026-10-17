@@ -19,9 +19,10 @@ check-fast:
 
 check-full:
     {{ fast-build }} --flake '.#nixosConfigurations' --select '{{ toplevels }}'
-    # openwrt images stop evaluating whenever upstream's package index goes stale
-    # {{ fast-build }} --flake '.#packages.x86_64-linux'
     {{ fast-build }} --flake '.#devShells.x86_64-linux'
+    # TODO: OpenWrt images stop evaluating whenever upstream's package index goes stale.
+    # Keep following check commented out until it is resolved.
+    # {{ fast-build }} --flake '.#packages.x86_64-linux'
 
 update input="":
     nix flake update {{ input }}

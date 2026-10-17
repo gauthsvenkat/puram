@@ -24,8 +24,8 @@ in
     };
   };
 
-  # Force Go's pure-Go DNS resolver. The upstream module's sandbox strips
-  # AF_NETLINK, which glibc's getaddrinfo() needs; pure-Go bypasses libc
-  # and talks to the nameserver directly via AF_INET.
+  # HACK: Force Go's pure-Go DNS resolver. The upstream module's sandbox
+  # strips `AF_NETLINK`, which glibc's `getaddrinfo()` needs; pure-Go bypasses
+  # libc and talks to the nameserver directly via `AF_INET`.
   systemd.services.bitmagnet.environment.GODEBUG = "netdns=go";
 }

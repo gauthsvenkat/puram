@@ -24,15 +24,15 @@ in
   networking.firewall.trustedInterfaces = [ "${namespace}-br" ];
 
   sops.secrets = {
-    mullvad_wg_address = { };
-    mullvad_wg_private_key = { };
+    "mullvad_wg_address" = { };
+    "mullvad_wg_private_key" = { };
   };
 
-  # Device: Bright Pug
-  sops.templates.mullvad_wg_config.content = ''
+  # Mullvad device: Bright Pug
+  sops.templates."mullvad_wg_config".content = ''
     [Interface]
-    PrivateKey = ${placeholder.mullvad_wg_private_key}
-    Address = ${placeholder.mullvad_wg_address}
+    PrivateKey = ${placeholder."mullvad_wg_private_key"}
+    Address = ${placeholder."mullvad_wg_address"}
     DNS = 10.64.0.1
 
     [Peer]
@@ -43,9 +43,9 @@ in
 
   vpnNamespaces.${namespace} = {
     enable = true;
-    wireguardConfigFile = config.sops.templates.mullvad_wg_config.path;
+    wireguardConfigFile = config.sops.templates."mullvad_wg_config".path;
     inherit (targetCfg.vpn) bridgeAddress namespaceAddress;
-    # portMappings is used to open ports in the namespace's INPUT firewall.
+    # `portMappings` is used to open ports in the namespace's INPUT firewall.
     # map :: (serviceName::String -> mapping) -> [ serviceName::String ] -> [ mapping ]
     #   where mapping = { from, to :: Int; protocol :: String }
     portMappings = map (name: {

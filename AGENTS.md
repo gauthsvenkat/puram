@@ -63,11 +63,21 @@ justfile          -- task runner: flake-wide recipes, plus one module per platfo
 - Group multiple definitions with common prefixes into a single attribute set
 - Sort lexicographically: package lists, imports, attribute definitions within groups
 - Use `lib.getExe`/`lib.getExe'` instead of `"${pkg}/bin/name"` interpolation
+- Quote user-chosen attribute names, both where defined and where referenced: `sops.secrets."wifi_psk"`, `placeholder."wifi_psk"`, `allTargetCfgs."elitedesk"`, terraform instance names, disko devices, own systemd units. Leave bare: `targetCfg` keys, upstream or schema names (`systemd.services.postgresql`, uci `lan`/`wan`/`loopback`), and `${}` names.
+
+## Comments
+
+Don't add comments (type comments excepted). These rules are for reviewing the ones I write:
+
+- Flag comments that only repeat the code.
+- Tags: `TODO:` work left to do, `HACK:` workaround for an upstream problem (remove when fixed), `NOTE:` warning to read before changing the code.
+- Backtick code references: options, attributes, systemd directives, env vars, paths, commands, file modes. Write literal values as the code does (`` `"pppoe"` ``). Product and package names stay plain.
+- Write option paths as they read in the enclosing block (`zfs.forceImportRoot` inside `boot = { ... }`).
 
 ## let / inherit
 
 - Top-level `let` is reserved for bindings that depend on `targetCfg` or `config`. Other helpers go in the lowest scope where they're used (often inside an attribute value).
-- Never inline `targetCfg.<field>` or `config.<field>` in module bodies. Pull them into the top-level `let` so the module's surface area is visible upfront. Exception: a field used once, by a bare `inherit`, is inherited at the call site instead (`inherit (targetCfg.ports.seerr) port;`).
+- Never inline `targetCfg.<field>` or `config.<field>` in module bodies. Pull them into the top-level `let` so the module's surface area is visible upfront. Exception: a field used once, by a bare `inherit`, is inherited at the call site instead (`inherit (targetCfg.ports.jellyfin) port;`).
 - Top-level `let` order, top to bottom: `inherit (targetCfg) ...;`, `cfg = config.services.X;` (or `cfg_<name>` when more than one), `inherit (config.sops) secrets;`, then derived bindings (`vhost`, `dataRoot`, ...). Example:
   ```nix
   let

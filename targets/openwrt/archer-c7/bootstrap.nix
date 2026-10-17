@@ -29,9 +29,7 @@ let
 
   bootstrap = pkgs.writeText "${hostname}-bootstrap" ''
     #!/bin/sh
-    # Runs after every flash. We assume that only a configured
-    # router has 'pppoe' (default is 'dhcp'), and stop script
-    # execution if that is the case.
+    # Runs after every flash. Stops if the router is already configured (only then is `wan` set to `"pppoe"`).
     [ "$(uci -q get network.wan.proto)" = pppoe ] && exit 0
 
     while uci -q delete network.@switch_vlan[0]; do :; done

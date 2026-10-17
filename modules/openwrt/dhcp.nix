@@ -1,4 +1,4 @@
-# dnsmasq also answers DNS for LAN clients; the upstream resolvers live in wan.nix.
+# dnsmasq also answers DNS for LAN clients; the upstream resolvers live in `wan.nix`.
 {
   uci.settings.dhcp = {
     dnsmasq = [

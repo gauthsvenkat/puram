@@ -19,7 +19,7 @@ in
     };
   };
 
-  # sopsSecrets only takes one file; we need system.yaml and wifi.yaml, so we merge them ourselves.
+  # `sopsSecrets` only takes one file; we need `system.yaml` and `wifi.yaml`, so we merge them ourselves.
   secretsCommand = lib.getExe (
     pkgs.writeShellApplication {
       name = "router-secrets";

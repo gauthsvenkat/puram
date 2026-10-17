@@ -4,14 +4,14 @@ let
   inherit (config.sops) secrets;
 in
 {
-  sops.secrets.hashedPassword = {
+  sops.secrets."hashedPassword" = {
     neededForUsers = true;
     sopsFile = ../../../secrets/system.yaml;
   };
 
   users.users.${username} = {
     isNormalUser = true;
-    hashedPasswordFile = secrets.hashedPassword.path;
+    hashedPasswordFile = secrets."hashedPassword".path;
     extraGroups = [ "wheel" ];
   };
 }

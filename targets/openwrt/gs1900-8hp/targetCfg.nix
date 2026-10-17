@@ -5,7 +5,7 @@ rec {
   target = "realtek";
   variant = "rtl838x";
 
-  # The image ships firewall4; a switch inside the lan has nothing to filter.
+  # The image ships `firewall4`; a switch inside the lan has nothing to filter.
   disabledServices = [ "firewall" ];
 
   lan = {

@@ -33,20 +33,15 @@ rec {
       dht_port = 3334;
     };
     # END-PRIVATE
-    # Cosmetic - Caddy hardcodes its admin API on 127.0.0.1:2019.
-    # Tracked here for documentation.
+    # Caddy hardcodes its admin API port; this only mirrors it.
     caddy.admin_port = 2019;
     # BEGIN-PRIVATE
     flaresolverr.port = 8191;
     # END-PRIVATE
     homepage.port = 7575;
     immich.port = 2283;
-    # Cosmetic - services.jellyfin hardcodes 8096/8920 TCP and 1900/7359 UDP via
-    # openFirewall. Tracked here for documentation.
-    jellyfin = {
-      port = 8096;
-      https_port = 8920;
-    };
+    # `services.jellyfin` hardcodes this port; this only mirrors it.
+    jellyfin.port = 8096;
     paperless = {
       port = 8000;
       gotenberg_port = 3030;

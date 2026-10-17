@@ -17,12 +17,12 @@
         type = "vaapi";
         device = "/dev/dri/renderD128";
       };
-      # NixOS owns encoding.xml; existing file from the cloned dataset is
-      # backed up to encoding.xml.backup-<timestamp> on first boot.
+      # NixOS owns `encoding.xml`; existing file from the cloned dataset is
+      # backed up to `encoding.xml.backup-<timestamp>` on first boot.
       forceEncodingConfig = true;
       transcoding = {
         enableHardwareEncoding = true;
-        # Codec list verified via vainfo on elitedesk's Skylake-era iGPU.
+        # Codec list verified via `vainfo` on elitedesk's Skylake-era iGPU.
         # No VP9 / AV1 / HEVC Main10 support; HEVC encode is 8-bit Main only.
         hardwareDecodingCodecs = {
           h264 = true;
@@ -40,8 +40,8 @@
   };
 
   # Neither the jellyfin nor immich modules add their service user to the
-  # render/video groups; DeviceAllow grants cgroup-level access but POSIX
-  # permissions on /dev/dri/renderD128 (mode 0660 root:render) still gate it.
+  # render/video groups; `DeviceAllow` grants cgroup-level access but POSIX
+  # permissions on `/dev/dri/renderD128` (mode `0660 root:render`) still gate it.
   users.users =
     let
       extraGroups = [

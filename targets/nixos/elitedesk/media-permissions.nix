@@ -29,9 +29,9 @@ in
   );
 
   # BEGIN-PRIVATE
-  # UMask=0002 keeps group-write on files (0664) and dirs (0775) the
-  # service creates. mkForce because servarr modules hardcode 0022 and
-  # jellyfin hardcodes 0077. We trade jellyfin's defensive hardening
+  # `UMask=0002` keeps group-write on files (`0664`) and dirs (`0775`) the
+  # service creates. `mkForce` because servarr modules hardcode `0022` and
+  # jellyfin hardcodes `0077`. We trade jellyfin's defensive hardening
   # for a uniform stack-wide policy.
   # listToAttrs :: [ { name :: String; value :: service } ] -> { serviceName::String -> service }
   #   where service = { serviceConfig :: { UMask :: String } }

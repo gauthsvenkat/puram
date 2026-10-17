@@ -4,19 +4,19 @@ let
   inherit (config.sops) secrets;
 in
 {
-  sops.secrets.radarr_api_key.restartUnits = [ "recyclarr.service" ];
-  sops.secrets.sonarr_api_key.restartUnits = [ "recyclarr.service" ];
+  sops.secrets."radarr_api_key".restartUnits = [ "recyclarr.service" ];
+  sops.secrets."sonarr_api_key".restartUnits = [ "recyclarr.service" ];
 
   services.recyclarr = {
     enable = true;
     # TRaSH penalises x265 (HD) at -10000 and stacks WEB-source bonuses, so any
     # WEB release outscores an existing x265 BluRay rip and trips an upgrade.
-    # upgrade.allowed = false freezes existing files; the custom_formats overrides
+    # `upgrade.allowed = false` freezes existing files; the `custom_formats` overrides
     # neutralise the x265 penalty so x265 stays eligible for fresh grabs.
     configuration = {
       radarr.movies = {
         base_url = "http://127.0.0.1:${toString radarr.port}";
-        api_key._secret = secrets.radarr_api_key.path;
+        api_key._secret = secrets."radarr_api_key".path;
         delete_old_custom_formats = true;
         quality_definition.type = "movie";
         quality_profiles = [
@@ -43,7 +43,7 @@ in
       };
       sonarr.tv = {
         base_url = "http://127.0.0.1:${toString sonarr.port}";
-        api_key._secret = secrets.sonarr_api_key.path;
+        api_key._secret = secrets."sonarr_api_key".path;
         delete_old_custom_formats = true;
         quality_definition.type = "series";
         quality_profiles = [

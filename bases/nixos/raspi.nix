@@ -10,8 +10,9 @@
 
   boot = {
     loader.systemd-boot.enable = false;
-    # Silences the 26.11 default-change warning.
-    zfs.forceImportRoot = false;
+    # The sd-card image turns on ZFS, which warns about `zfs.forceImportRoot`
+    # if we don't explicitly turn it off.
+    supportedFilesystems.zfs = false;
   };
 
   # Spare the microsd the write-per-read of atime updates.
