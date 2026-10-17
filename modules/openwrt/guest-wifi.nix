@@ -35,8 +35,7 @@ in
       key._secret = "guest_wifi_psk";
       # Guests cannot see each other.
       isolate = true;
-      # Off by default; enable in LuCI when needed.
-      disabled = true;
+      disabled = false;
     };
 
     firewall = {
