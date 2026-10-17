@@ -2,6 +2,7 @@
   description = "One flake to rule them all";
 
   inputs = {
+    # NixOS
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     disko = {
       url = "github:nix-community/disko";
@@ -29,6 +30,7 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    # OpenWrt
     openwrt-imagebuilder = {
       url = "github:astro/nix-openwrt-imagebuilder";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,6 +40,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # terranix
     terranix = {
       url = "github:terranix/terranix";
       inputs.nixpkgs.follows = "nixpkgs";
