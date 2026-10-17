@@ -56,7 +56,8 @@ deploy-openwrt *args:
     nix run .#{{ device }}-deploy -- {{ args }}
 
 tf *args:
-    sops exec-env secrets/infra.yaml 'tofu -chdir=infra {{ args }}'
+    mkdir -p .tofu && nix build .#infra-config -o .tofu/config.tf.json
+    cd .tofu && sops exec-env ../secrets/infra.yaml 'tofu init -input=false -upgrade >/dev/null && tofu {{ args }}'
 
 secrets-edit name="homeserver":
     sops edit secrets/{{ name }}.yaml

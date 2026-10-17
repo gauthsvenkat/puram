@@ -41,15 +41,9 @@ repos:
       language: system
       types: [lua]
 
-    - id: tofu-fmt
-      name: tofu fmt
-      entry: tofu fmt
-      language: system
-      types: [terraform]
-
     - id: tofu-validate
       name: tofu validate
-      entry: tofu -chdir=infra validate
+      entry: just tf validate
       language: system
       pass_filenames: false
-      files: ^infra/
+      files: ^(modules|bases|hosts)/terranix/

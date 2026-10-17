@@ -5,16 +5,19 @@ modules/          -- self-contained, reusable modules (MUST NOT import other mod
   nixos/          -- NixOS system config (system/, hardware/, services/, kde-plasma/, niri/)
   home-manager/   -- user config, flat nix files
   openwrt/        -- dewclaw modules for the router, flat nix files
+  terranix/       -- terranix modules for opentofu, one per provider
 bases/            -- composable configs that import modules, split by platform
   nixos/          -- system, workstation, laptop, personal, server, raspi, kde, niri
   openwrt/        -- router
+  terranix/       -- opentofu
 hosts/            -- per-machine configs that import bases + host-specific modules, split by platform
   nixos/<hostname>/    -- default.nix + hostCfg.nix + hardware-configuration.nix (+ disko-config.nix if applicable)
   openwrt/<hostname>/  -- default.nix + hostCfg.nix + bootstrap.nix + hardware-configuration.nix
-lib/              -- standalone helper functions, composed in flake.nix (mk-nixos, mk-openwrt, patcher)
+  terranix/infra/      -- default.nix + hostCfg.nix; not a machine, renders config.tf.json for `just tf`
+lib/              -- standalone helper functions, composed in flake.nix (mk-nixos, mk-openwrt, mk-terranix, patcher)
 docs/             -- operational notes (setup-*, server-*, repo-*)
 assets/           -- non-nix assets (configs/, wallpapers/)
-secrets/          -- sops-nix encrypted secrets, split by scope (system, homeserver, infra); .sops.yaml is the access matrix
+secrets/          -- sops-nix encrypted secrets, split by scope (system, homeserver, infra), plus the tofu-encrypted terraform.tfstate; .sops.yaml is the access matrix
 justfile          -- task runner for common operations
 ```
 
@@ -36,6 +39,7 @@ justfile          -- task runner for common operations
 - Update inputs: `just update` (or `just u`) -- optionally pass a single input name
 - Upgrade: `just upgrade` -- updates flake lock, rebuilds, and commits
 - Deploy: `just deploy <hostname>` -- builds locally, deploys to remote host
+- Infra: `just tf <args>` -- renders the terranix config and runs opentofu on it (plan, apply, ...)
 
 # Code style
 

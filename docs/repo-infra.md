@@ -1,16 +1,16 @@
 # External infra: OpenTofu
 
-What `infra/` manages, how to operate it, and how to bootstrap it from nothing.
+What the terranix config in `hosts/terranix/infra/` manages, how to operate it, and how to bootstrap it from nothing.
 
 ## Scope
 
 | Provider | Managed | Deliberately not managed |
 |---|---|---|
-| Tailscale | admin DNS panel (`infra/tailscale.tf`), ACL policy file (`infra/tailnet-acl.hujson`), `tag:server` on elitedesk | device enrollment (manual SSO), auth keys, OAuth clients |
-| Cloudflare | zone `gauthsvenkat.dev`, wildcard A record, Caddy's ACME token, opentofu's own token policy (`infra/cloudflare.tf`) | zone settings, registrar, `*.myrthe.gauthsvenkat.dev` (ad-hoc) |
-| Scaleway | `elitedesk-backup` bucket + multipart-abort lifecycle rule, IAM trios (application/policy/api key) for restic and opentofu itself (`infra/scaleway.tf`) | default org policies (Administrators, Editors, ...) |
+| Tailscale | admin DNS panel, ACL policy, `tag:server` on elitedesk (`modules/terranix/tailscale.nix`) | device enrollment (manual SSO), auth keys, OAuth clients |
+| Cloudflare | zone `gauthsvenkat.dev`, wildcard A record, Caddy's ACME token, opentofu's own token policy (`modules/terranix/cloudflare.nix`) | zone settings, registrar, `*.myrthe.gauthsvenkat.dev` (ad-hoc) |
+| Scaleway | `elitedesk-backup` bucket + multipart-abort lifecycle rule, IAM trios (application/policy/api key) for restic and opentofu itself (`modules/terranix/scaleway.nix`) | default org policies (Administrators, Editors, ...) |
 
-`local.tailnet_ip` in `infra/tailscale.tf` is the single source for elitedesk's tailnet IP - it feeds both the Cloudflare wildcard record and the tailnet's primary nameserver. If the IP ever changes, edit that one line and apply.
+`tailnetIp` in `hosts/nixos/elitedesk/hostCfg.nix` is the single source for elitedesk's tailnet IP - it feeds both the Cloudflare wildcard record and the tailnet's primary nameserver. If the IP ever changes, edit that one line and apply.
 
 ## Operating
 
@@ -19,15 +19,15 @@ just tf plan
 just tf apply
 ```
 
-The recipe wraps `sops exec-env secrets/infra.yaml 'tofu -chdir=infra ...'` - provider credentials and the state passphrase exist only in that process's environment. `tofu` itself comes from the flake devshell (direnv) with providers pinned from nixpkgs; `init` never touches a registry.
+The recipe builds `.#infra-config` (terranix renders the Nix modules to `config.tf.json`) into the gitignored `.tofu/`, runs `tofu init` there, then the given command - all under `sops exec-env secrets/infra.yaml`, so provider credentials and the state passphrase exist only in that process's environment. `tofu` itself comes from the flake devshell (direnv) with providers from nixpkgs, the list derived from `required_providers`; `init` never touches a registry.
 
-- After every `apply`, commit `infra/terraform.tfstate`.
-- After a flake update bumps a provider, `plan` fails on a lock mismatch; run `just tf init -upgrade` and commit `.terraform.lock.hcl`.
-- Fresh checkout: `just tf init` once (offline), then plan.
+- After every `apply`, commit `secrets/terraform.tfstate`.
+- A flake update can bump a provider; `init -upgrade` accepts it, and `plan` shows what the new version changes (typically new attributes). The provider lock file lives in `.tofu/` and is never committed.
+- Fresh checkout: nothing to set up, `just tf plan` works.
 
 ## State
 
-Local state, committed to git, encrypted client-side (AES-GCM, key derived via PBKDF2). `enforced = true` in `infra/providers.tf` makes tofu refuse to read or write plaintext state. The passphrase lives in `secrets/infra.yaml`:
+Local state at `secrets/terraform.tfstate`, committed to git, encrypted client-side by tofu (AES-GCM, key derived via PBKDF2), not by sops. `enforced = true` in `modules/terranix/opentofu.nix` makes tofu refuse to read or write plaintext state. The passphrase lives in `secrets/infra.yaml`:
 
 ```yaml
 TF_ENCRYPTION: '{"key_provider":{"pbkdf2":{"passphrase":{"passphrase":"<random, 16+ chars>"}}}}'
@@ -49,19 +49,21 @@ Tailscale OAuth client scopes are fixed at creation - a scope change means a new
 
 ## File layout
 
-One file per provider, sections in order: `provider` block (if the provider needs config), `locals`, resources from big scope to small (infrastructure first, then credential trios application → policy → key, with opentofu's own credentials last), `output`s, and `import` blocks at the end grouped by date, mirroring resource order. `data` blocks are not a section - each sits directly above its first consumer.
+Same shape as the other platforms: `hosts/terranix/infra/default.nix` imports `bases/terranix/opentofu.nix` (the `terraform` block: providers, encryption, state path) and one module per provider from `modules/terranix/`. `hosts/terranix/infra/hostCfg.nix` holds the account and org IDs. Values shared with a NixOS host (`domain`, `tailnetIp`) live in that host's `hostCfg` and the modules read them through `allHostCfgs`.
+
+Inside a module, resources are grouped by type and sorted lexicographically like any other Nix file. Cross-resource references are `lib.tf.ref "<address>"` strings. The provider's nested blocks (`rule`, `nameservers`, `lifecycle_rule`) are lists of attrsets. There are no `import` blocks; everything is in state.
 
 ## Quirks
 
-- **Tailscale nameserver order**: the API returns the list unordered, so `ignore_changes = [nameservers]` suppresses phantom reorder diffs. To change the list deliberately, comment out the `lifecycle` block for one apply.
-- **ACL is whole-file**: applying replaces the entire console policy with `tailnet-acl.hujson`. Console-side ACL edits get clobbered on the next apply.
+- **Tailscale nameserver order**: the API returns the list unordered, so `ignore_changes = [nameservers]` suppresses phantom reorder diffs. To change the list deliberately, comment out the `lifecycle.ignore_changes` line for one apply.
+- **ACL is whole-policy**: applying replaces the entire console policy with the attrset in `tailscale.nix`. Console-side ACL edits get clobbered on the next apply.
 - **Backup bucket**: never add object expiration to the lifecycle rules - restic owns all deletion, age-based expiry corrupts the repository. `force_destroy = false` makes tofu refuse to destroy the bucket while it holds objects.
 - **elitedesk re-enrollment**: a wiped/re-enrolled device gets a new node ID; the `tailscale_device` data source re-resolves by hostname, so the next apply re-tags it. Tagging disables key expiry automatically.
 - **Cloudflare token families**: tokens are either user-owned (`/user/tokens`, My Profile) or account-owned (`/accounts/{id}/tokens`). Everything here is account-owned; the provider's `cloudflare_api_token` resource is for user tokens and does not apply.
 
 ## Rotating the Caddy token
 
-1. Add (once) a sensitive output for `cloudflare_account_token.caddy_dns.value`.
+1. Add (once) a sensitive output in `cloudflare.nix`: `output.caddy_dns_token = { value = lib.tf.ref "cloudflare_account_token.caddy_dns.value"; sensitive = true; };`.
 2. `just tf apply -replace=cloudflare_account_token.caddy_dns` - the old token dies here.
 3. `just tf output -raw caddy_dns_token`, then `just secrets-edit`: `cloudflare_dns_token: CLOUDFLARE_API_TOKEN=<new value>`.
 4. `just deploy elitedesk` - re-renders Caddy's env file and restarts it.
@@ -72,7 +74,7 @@ Between steps 2 and 4 Caddy holds a dead token; only cert issuance in that windo
 
 Both API keys expire: restic on **2027-07-30**, opentofu on **2027-08-25**. Rotate before then - an expired restic key silently kills offsite backups.
 
-- restic: add (once) a sensitive output for `scaleway_iam_api_key.restic.secret_key`, then `just tf apply -replace=scaleway_iam_api_key.restic`, read access + secret via `just tf output`, update `scaleway_backups_access_key` / `scaleway_backups_secret_key` in sops (both change), `just deploy elitedesk`, verify the next backup run.
+- restic: add (once) a sensitive output for `scaleway_iam_api_key.restic.secret_key` (same shape as the Caddy one), then `just tf apply -replace=scaleway_iam_api_key.restic`, read access + secret via `just tf output`, update `scaleway_backups_access_key` / `scaleway_backups_secret_key` in sops (both change), `just deploy elitedesk`, verify the next backup run.
 - opentofu's own key: same replace flow (`create_before_destroy` mints the successor before revoking the old key), then update `SCW_ACCESS_KEY` / `SCW_SECRET_KEY` in sops immediately - a wrong paste here locks opentofu out until fixed from state or the console.
 
 ## Disaster recovery

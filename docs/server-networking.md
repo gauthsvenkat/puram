@@ -39,11 +39,11 @@ The domain was purchased through Cloudflare, so Cloudflare is both registrar and
 
 A single wildcard A record covers every subdomain (`jellyfin`, `immich`, `paperless`, …). Adding a new vhost in Caddy needs no DNS change.
 
-The record is managed by opentofu (`infra/cloudflare.tf`, see `repo-infra.md`). The zone also holds an unmanaged ad-hoc record (`*.myrthe.gauthsvenkat.dev`).
+The record is managed by opentofu (`modules/terranix/cloudflare.nix`, see `repo-infra.md`). The zone also holds an unmanaged ad-hoc record (`*.myrthe.gauthsvenkat.dev`).
 
 Do **not** turn on Cloudflare's HTTP proxy (orange cloud): the tailnet IP is unroutable from the public internet, and proxying breaks the off-LAN path.
 
-If elitedesk's tailnet IP ever shifts (rare; only on tailnet recreate or device deletion), edit `local.tailnet_ip` in `infra/tailscale.tf` and `just tf apply` - it updates this record and the tailnet nameserver together.
+If elitedesk's tailnet IP ever shifts (rare; only on tailnet recreate or device deletion), edit `tailnetIp` in `hosts/nixos/elitedesk/hostCfg.nix` and `just tf apply` - it updates this record and the tailnet nameserver together.
 
 ### ACME API token
 
@@ -53,7 +53,7 @@ Caddy needs a token to perform Let's Encrypt DNS-01 challenges. Stored in sops a
 cloudflare_dns_token: CLOUDFLARE_API_TOKEN=<token>
 ```
 
-The token itself (`caddy-acme-elitedesk`, account-owned) is managed by opentofu as `cloudflare_account_token.caddy_dns` in `infra/cloudflare.tf`: `Zone Read` + `DNS Write`, scoped to the `gauthsvenkat.dev` zone only.
+The token itself (`caddy-acme-elitedesk`, account-owned) is managed by opentofu as `cloudflare_account_token.caddy_dns` in `modules/terranix/cloudflare.nix`: `Zone Read` + `DNS Write`, scoped to the `gauthsvenkat.dev` zone only.
 
 Rotation: opentofu replaces the token and sops gets the new value by hand - runbook in `repo-infra.md`.
 
@@ -73,7 +73,7 @@ Opens a browser auth URL; sign in via Google. Device shows up in the tailnet adm
 
 No auth-key file is wired in - Tailscale auth keys expire after 90 days, and the rebuild cadence doesn't justify rotating them.
 
-elitedesk carries `tag:server` (applied via `infra/tailscale.tf`), which disables its node-key expiry - the server never silently drops off the tailnet.
+elitedesk carries `tag:server` (applied via `modules/terranix/tailscale.nix`), which disables its node-key expiry - the server never silently drops off the tailnet.
 
 ### Hosts in the tailnet
 
@@ -105,7 +105,7 @@ Caveat: Tailscale does not guarantee nameserver order (https://tailscale.com/doc
 
 AdGuard binds `0.0.0.0:53` (`modules/nixos/services/adguard-home.nix`), so the tailnet interface is covered without extra config. Allowed-clients defaults to permissive - any tailnet peer can query - so no allowlist tweak is needed.
 
-This config is encoded in `infra/tailscale.tf` (along with the ACL policy file) and applied with `just tf apply` - a fresh tailnet gets it back from the repo, not by hand. See `repo-infra.md`.
+This config is encoded in `modules/terranix/tailscale.nix` (along with the ACL policy) and applied with `just tf apply` - a fresh tailnet gets it back from the repo, not by hand. See `repo-infra.md`.
 
 ## Router / WAN posture
 
@@ -204,7 +204,7 @@ ACME state - account, registered keys, per-vhost certs - lives at `/var/lib/cadd
 5. `sudo tailscale up` → authorize device in browser.
 6. Wait ~60s - Caddy issues certs for every declared vhost via DNS-01.
 7. Verify: `curl https://homarr.gauthsvenkat.dev` from any tailnet device.
-8. If `tailscale ip -4` on elitedesk returns something other than `100.103.236.120`, edit `local.tailnet_ip` in `infra/tailscale.tf` and `just tf apply` - it updates the Cloudflare record and the tailnet nameserver together (the nameserver change needs the `ignore_changes` block lifted for that one apply, see `repo-infra.md`).
+8. If `tailscale ip -4` on elitedesk returns something other than `100.103.236.120`, edit `tailnetIp` in `hosts/nixos/elitedesk/hostCfg.nix` and `just tf apply` - it updates the Cloudflare record and the tailnet nameserver together (the nameserver change needs the `ignore_changes` line lifted for that one apply, see `repo-infra.md`).
 9. Redo the per-service runtime config above (qBittorrent server domains, sabnzbd host whitelist) - the configs live in service state, not in nix.
 
 ## See also
