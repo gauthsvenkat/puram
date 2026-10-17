@@ -1,11 +1,11 @@
 {
-  hostCfg,
+  targetCfg,
   lib,
   pkgs,
   ...
 }:
 let
-  inherit (hostCfg) homeDirectory;
+  inherit (targetCfg) homeDirectory;
 in
 {
   programs = {

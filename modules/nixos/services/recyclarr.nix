@@ -1,6 +1,6 @@
-{ hostCfg, config, ... }:
+{ targetCfg, config, ... }:
 let
-  inherit (hostCfg.ports) radarr sonarr;
+  inherit (targetCfg.ports) radarr sonarr;
   inherit (config.sops) secrets;
 in
 {

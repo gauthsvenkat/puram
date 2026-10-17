@@ -1,6 +1,6 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg.ports) adguard;
+  inherit (targetCfg.ports) adguard;
 in
 {
   services.adguardhome = {

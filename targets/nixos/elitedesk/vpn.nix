@@ -1,12 +1,12 @@
 {
   config,
-  hostCfg,
+  targetCfg,
   inputs,
   lib,
   ...
 }:
 let
-  inherit (hostCfg.vpn) namespace bridgeAddress namespaceAddress;
+  inherit (targetCfg.vpn) namespace bridgeAddress namespaceAddress;
   inherit (config.sops) placeholder;
   confined = [
     "bitmagnet"
@@ -50,8 +50,8 @@ in
     #   where mapping = { from, to :: Int; protocol :: String }
     # :: [ mapping ]
     portMappings = map (name: {
-      from = hostCfg.ports.${name}.port;
-      to = hostCfg.ports.${name}.port;
+      from = targetCfg.ports.${name}.port;
+      to = targetCfg.ports.${name}.port;
       protocol = "tcp";
     }) confined;
   };

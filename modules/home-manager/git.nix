@@ -1,6 +1,6 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) gitEmail;
+  inherit (targetCfg) gitEmail;
 in
 {
   programs = {

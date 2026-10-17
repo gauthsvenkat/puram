@@ -1,9 +1,9 @@
 {
-  hostCfg,
+  targetCfg,
   ...
 }:
 let
-  inherit (hostCfg.ports.bitmagnet) port dht_port;
+  inherit (targetCfg.ports.bitmagnet) port dht_port;
 in
 {
   services.bitmagnet = {

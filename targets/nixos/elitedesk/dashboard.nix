@@ -1,11 +1,11 @@
 {
   config,
-  hostCfg,
+  targetCfg,
   ...
 }:
 let
-  inherit (hostCfg) domain hostname zpool;
-  inherit (hostCfg.ports)
+  inherit (targetCfg) domain hostname zpool;
+  inherit (targetCfg.ports)
     adguard
     # BEGIN-PRIVATE
     bazarr
@@ -25,7 +25,7 @@ let
     vikunja
     ;
   # BEGIN-PRIVATE
-  inherit (hostCfg.vpn) namespaceAddress;
+  inherit (targetCfg.vpn) namespaceAddress;
   # END-PRIVATE
   inherit (config.sops) placeholder;
 in

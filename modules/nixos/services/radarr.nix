@@ -1,7 +1,7 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) paths;
-  inherit (hostCfg.ports.radarr) port;
+  inherit (targetCfg) paths;
+  inherit (targetCfg.ports.radarr) port;
 in
 {
   services.radarr = {

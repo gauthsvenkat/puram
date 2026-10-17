@@ -1,9 +1,9 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) domain;
-  inherit (hostCfg.paths) usenet;
-  inherit (hostCfg.ports.sabnzbd) port;
-  inherit (hostCfg.vpn) namespaceAddress;
+  inherit (targetCfg) domain;
+  inherit (targetCfg.paths) usenet;
+  inherit (targetCfg.ports.sabnzbd) port;
+  inherit (targetCfg.vpn) namespaceAddress;
 in
 {
   services.sabnzbd = {

@@ -1,6 +1,6 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) guest;
+  inherit (targetCfg) guest;
 in
 {
   uci.settings = {

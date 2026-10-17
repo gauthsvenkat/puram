@@ -1,6 +1,6 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg.ports.flaresolverr) port;
+  inherit (targetCfg.ports.flaresolverr) port;
 in
 {
   services.flaresolverr = {

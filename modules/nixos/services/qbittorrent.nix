@@ -1,6 +1,6 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg.ports.qbittorrent) port;
+  inherit (targetCfg.ports.qbittorrent) port;
 in
 {
   services.qbittorrent = {

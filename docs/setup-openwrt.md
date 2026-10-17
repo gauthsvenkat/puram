@@ -28,7 +28,7 @@ Flashing is only needed for an OpenWrt release upgrade or to start clean.
 Before flashing new hardware, the GL.iNet stock firmware is itself OpenWrt and
 accepts `ssh root@192.168.8.1` with the admin password set in its wizard.
 `cat /etc/board.json` and `ls /sys/class/leds` there confirm the port and LED
-names used in `hostCfg.nix`. It cannot confirm wifi paths; stock runs the closed
+names used in `targetCfg.nix`. It cannot confirm wifi paths; stock runs the closed
 MediaTek driver.
 
 ```sh

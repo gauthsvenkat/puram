@@ -1,17 +1,17 @@
 {
-  allHostCfgs,
+  allTargetCfgs,
   inputs,
   evalNixos,
 }:
 name:
 let
-  hostCfg = allHostCfgs.${name};
-  inherit (hostCfg) system;
+  targetCfg = allTargetCfgs.${name};
+  inherit (targetCfg) system;
 in
 evalNixos {
   inherit system;
   specialArgs = {
-    inherit allHostCfgs hostCfg inputs;
+    inherit allTargetCfgs targetCfg inputs;
   };
   modules = [ ../targets/nixos/${name} ];
 }

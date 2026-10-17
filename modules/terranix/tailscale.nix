@@ -1,6 +1,6 @@
-{ allHostCfgs, lib, ... }:
+{ allTargetCfgs, lib, ... }:
 let
-  inherit (allHostCfgs.elitedesk) tailnetIp;
+  inherit (allTargetCfgs.elitedesk) tailnetIp;
 in
 {
   data.tailscale_device.elitedesk.hostname = "elitedesk";

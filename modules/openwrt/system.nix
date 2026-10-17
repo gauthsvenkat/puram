@@ -1,6 +1,6 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) hostname;
+  inherit (targetCfg) hostname;
 in
 {
   users.root.hashedPasswordSecret = "hashedPassword"; # refers to the secret in sops.

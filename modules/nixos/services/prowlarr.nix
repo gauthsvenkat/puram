@@ -1,12 +1,12 @@
 {
   config,
-  hostCfg,
+  targetCfg,
   lib,
   ...
 }:
 let
-  inherit (hostCfg) paths;
-  inherit (hostCfg.ports.prowlarr) port;
+  inherit (targetCfg) paths;
+  inherit (targetCfg.ports.prowlarr) port;
   dataDir = "${paths.config}/prowlarr";
   user = "prowlarr";
   group = "prowlarr";

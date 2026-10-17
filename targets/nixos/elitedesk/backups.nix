@@ -1,12 +1,12 @@
 {
   config,
-  hostCfg,
+  targetCfg,
   lib,
   pkgs,
   ...
 }:
 let
-  inherit (hostCfg) paths;
+  inherit (targetCfg) paths;
   inherit (config.sops) placeholder secrets;
 in
 {

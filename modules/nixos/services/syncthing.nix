@@ -1,6 +1,6 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) username homeDirectory;
+  inherit (targetCfg) username homeDirectory;
 in
 {
   services.syncthing = {

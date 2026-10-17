@@ -1,11 +1,11 @@
 {
-  hostCfg,
+  targetCfg,
   config,
   ...
 }:
 let
-  inherit (hostCfg) domain;
-  inherit (hostCfg.ports)
+  inherit (targetCfg) domain;
+  inherit (targetCfg.ports)
     adguard
     # BEGIN-PRIVATE
     bazarr
@@ -26,7 +26,7 @@ let
     vikunja
     ;
   # BEGIN-PRIVATE
-  inherit (hostCfg.vpn) namespaceAddress;
+  inherit (targetCfg.vpn) namespaceAddress;
   # END-PRIVATE
   cfg_st = config.services.speedtest-tracker;
   cfg_caddy = config.services.caddy;

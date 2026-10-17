@@ -1,10 +1,10 @@
 {
-  hostCfg,
+  targetCfg,
   pkgs,
   ...
 }:
 let
-  inherit (hostCfg) username;
+  inherit (targetCfg) username;
 in
 {
   home-manager.users.${username} =

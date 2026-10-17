@@ -1,6 +1,6 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg.ports.seerr) port;
+  inherit (targetCfg.ports.seerr) port;
 in
 {
   # configDir is intentionally left at the upstream default. Custom

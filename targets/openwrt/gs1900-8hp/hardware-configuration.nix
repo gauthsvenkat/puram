@@ -1,6 +1,6 @@
-{ hostCfg, lib, ... }:
+{ targetCfg, lib, ... }:
 let
-  inherit (hostCfg) poe;
+  inherit (targetCfg) poe;
 in
 {
   uci.settings.poe = {

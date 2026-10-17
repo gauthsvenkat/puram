@@ -1,7 +1,7 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) paths;
-  inherit (hostCfg.ports.bazarr) port;
+  inherit (targetCfg) paths;
+  inherit (targetCfg.ports.bazarr) port;
 in
 {
   services.bazarr = {

@@ -1,7 +1,7 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) paths;
-  inherit (hostCfg.ports.sonarr) port;
+  inherit (targetCfg) paths;
+  inherit (targetCfg.ports.sonarr) port;
 in
 {
   services.sonarr = {
