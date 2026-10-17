@@ -17,7 +17,7 @@ you can reach the router without a cable. It skips itself on a router that is
 already configured.
 
 **Stage 2** replaces that with the real configuration from
-`hosts/openwrt/flint-2/default.nix`: the home wifi, the guest network, dhcp and the
+`targets/openwrt/flint-2/default.nix`: the home wifi, the guest network, dhcp and the
 firewall. This is also how every later change is applied - stage 1 is only for a
 fresh or upgraded router.
 
@@ -150,7 +150,7 @@ If it keeps booting the initramfs after sysupgrade, the active slot was 1:
 
 ## Backup router
 
-The Archer C7 config is kept under `hosts/openwrt/archer-c7/` as a cold spare.
+The Archer C7 config is kept under `targets/openwrt/archer-c7/` as a cold spare.
 It is not deployed to; to bring it back, flash it and run the recipes with
 `just device=archer-c7 ...`. Keep its WAN unplugged otherwise, as both routers
 claim 192.168.1.1.

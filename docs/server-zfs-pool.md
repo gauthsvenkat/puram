@@ -7,13 +7,13 @@ Canonical reference for the homeserver data pool. Layout, property choices, and 
 ```
 dontdie/
 ├── services/                 mountpoint=none (organizational)
-│   └── backups*              nightly Postgres dumps + service-state mirror (hosts/nixos/elitedesk/backups.nix)
+│   └── backups*              nightly Postgres dumps + service-state mirror (targets/nixos/elitedesk/backups.nix)
 └── data/                     mountpoint=none (organizational)
     ├── immich*               photos
     ├── paperless-ngx*        documents
     └── entertainment         media library + downloaders (shared root for *arr hardlinks)
 
-* = encrypted, see `hosts/nixos/elitedesk/zfs-encryption.nix`
+* = encrypted, see `targets/nixos/elitedesk/zfs-encryption.nix`
 ```
 
 Hot service state (sqlite app dirs, the shared Postgres cluster, Jellyfin's dataDir) lives on the internal SSD under `/var/lib` since 2026-07 -- see [Why service state moved off the pool](#why-service-state-moved-off-the-pool-2026-07). The pool keeps bulk data and receives nightly backups of that state, so it remains the complete, host-portable copy.
@@ -121,6 +121,6 @@ Sonarr/Radarr/qBittorrent/SABnzbd hardlink across `media/` (final library) and `
 
 The pool's disks are 2.5" USB SMR drives on the legacy `usb-storage` protocol (queue depth 1). Random sync writes -- sqlite fsyncs from the *arr apps and seerr, Postgres page writes and checkpoints -- are their pathological workload: once the drives' internal CMR cache overflows, per-op latency hits hundreds of ms and every fsync on the pool queues behind it. Symptoms observed before the migration: sonarr `database is locked` storms, seerr taking tens of seconds to open, Jellyfin playback stutter, Postgres start/stop checkpoint timeouts, IO PSI pinned at 80-90%.
 
-The fix: all hot state (sqlite app dirs, the shared Postgres cluster at `/var/lib/postgresql`, Jellyfin's dataDir and cache) lives on the internal SSD; the pool serves the workload SMR handles fine -- sequential media reads/writes -- plus one nightly backup burst. `hosts/nixos/elitedesk/backups.nix` writes `pg_dumpall` output and an rsync mirror of the state dirs to `services/backups`, so the pool remains the complete copy to carry to a new host (dumps restore across Postgres versions; the SSD is just the hot working set).
+The fix: all hot state (sqlite app dirs, the shared Postgres cluster at `/var/lib/postgresql`, Jellyfin's dataDir and cache) lives on the internal SSD; the pool serves the workload SMR handles fine -- sequential media reads/writes -- plus one nightly backup burst. `targets/nixos/elitedesk/backups.nix` writes `pg_dumpall` output and an rsync mirror of the state dirs to `services/backups`, so the pool remains the complete copy to carry to a new host (dumps restore across Postgres versions; the SSD is just the hot working set).
 
 Retired datasets from the pre-migration layout -- `services/config`, `services/databases`, `cache` (and the `/dontdie/data/vikunja` dir) -- are kept through a rollback window, then destroyed.

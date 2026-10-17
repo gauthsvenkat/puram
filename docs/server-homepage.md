@@ -1,6 +1,6 @@
 # Homepage Dashboard
 
-Out-of-repo bits for the elitedesk homepage at `https://homepage.gauthsvenkat.dev`. Everything else (services, layout, widgets, theming) is fully declared in `hosts/nixos/elitedesk/default.nix`.
+Out-of-repo bits for the elitedesk homepage at `https://homepage.gauthsvenkat.dev`. Everything else (services, layout, widgets, theming) is fully declared in `targets/nixos/elitedesk/default.nix`.
 
 ## What's in nix vs. out
 
@@ -52,7 +52,7 @@ The dashboard renders fine if a value is missing - the affected tile just shows 
 | `QBIT_USER` / `QBIT_PASS` | The Web UI login credentials for `https://qbittorrent.gauthsvenkat.dev` (Tools → Options → Web UI → Authentication) |
 | `ADGUARD_USER` / `ADGUARD_PASS` | The login credentials for `https://adguard.gauthsvenkat.dev` |
 
-To add or remove vars, edit the placeholder in `hosts/nixos/elitedesk/default.nix`, then add/remove the matching `HOMEPAGE_VAR_*` line via `just secrets-edit`.
+To add or remove vars, edit the placeholder in `targets/nixos/elitedesk/default.nix`, then add/remove the matching `HOMEPAGE_VAR_*` line via `just secrets-edit`.
 
 ## Icons
 

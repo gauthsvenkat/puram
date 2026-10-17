@@ -14,7 +14,7 @@ chosen pattern.
 | Mode bits | `UMask=0002` per unit → new files `0664`, new dirs `0775` (group-writable) |
 | Tree mode | `2775` on every directory under `entertainment/`, `0664` on every regular file. The leading `2` is SGID - non-stack processes that drop a file in the tree still see it land in `media` |
 
-All three layers live in `hosts/nixos/elitedesk/media-permissions.nix`. The
+All three layers live in `targets/nixos/elitedesk/media-permissions.nix`. The
 upstream `services.{sonarr,radarr}` and `services.jellyfin` modules
 hardcode their own `UMask` (`0022` for the servarr family, `0077` for
 jellyfin) as defensive hardening, so the override uses `lib.mkForce`.
@@ -46,7 +46,7 @@ Notes:
 Two edits:
 
 1. Append the service name to `members` in
-   `hosts/nixos/elitedesk/media-permissions.nix`.
+   `targets/nixos/elitedesk/media-permissions.nix`.
 2. If the service has its own state dir under `/var/lib/`, re-chown that
    one-shot too: `sudo chgrp -R media /var/lib/<svc>` (mode 0700 ignores
    the group anyway, but keeps `stat` output tidy).

@@ -43,7 +43,7 @@ The record is managed by opentofu (`modules/terranix/cloudflare.nix`, see `repo-
 
 Do **not** turn on Cloudflare's HTTP proxy (orange cloud): the tailnet IP is unroutable from the public internet, and proxying breaks the off-LAN path.
 
-If elitedesk's tailnet IP ever shifts (rare; only on tailnet recreate or device deletion), edit `tailnetIp` in `hosts/nixos/elitedesk/hostCfg.nix` and `just tf apply` - it updates this record and the tailnet nameserver together.
+If elitedesk's tailnet IP ever shifts (rare; only on tailnet recreate or device deletion), edit `tailnetIp` in `targets/nixos/elitedesk/hostCfg.nix` and `just tf apply` - it updates this record and the tailnet nameserver together.
 
 ### ACME API token
 
@@ -120,7 +120,7 @@ Some services run inside a dedicated network namespace (`wg`) whose only
 egress is a WireGuard tunnel to Mullvad. If the tunnel drops, the
 namespace has no fallback route - confined services stall (kernel-
 enforced kill switch). Wired via the `vpn-confinement` flake input;
-the host-side entrypoint is `hosts/nixos/elitedesk/vpn.nix`, and the
+the host-side entrypoint is `targets/nixos/elitedesk/vpn.nix`, and the
 `confined` list there is the source of truth for what's behind VPN.
 
 ```
@@ -171,7 +171,7 @@ explicit IPs (loopback won't traverse the namespace boundary):
 
 `secrets/homeserver.yaml` holds `mullvad_wg_private_key` and `mullvad_wg_address`;
 the full wg-quick config is assembled from them by
-`sops.templates.mullvad_wg_config` in `hosts/nixos/elitedesk/vpn.nix` (peer
+`sops.templates.mullvad_wg_config` in `targets/nixos/elitedesk/vpn.nix` (peer
 endpoint and keys live there in plain nix). Generate new values at
 https://mullvad.net/en/account → WireGuard configuration.
 
@@ -204,7 +204,7 @@ ACME state - account, registered keys, per-vhost certs - lives at `/var/lib/cadd
 5. `sudo tailscale up` → authorize device in browser.
 6. Wait ~60s - Caddy issues certs for every declared vhost via DNS-01.
 7. Verify: `curl https://homarr.gauthsvenkat.dev` from any tailnet device.
-8. If `tailscale ip -4` on elitedesk returns something other than `100.103.236.120`, edit `tailnetIp` in `hosts/nixos/elitedesk/hostCfg.nix` and `just tf apply` - it updates the Cloudflare record and the tailnet nameserver together (the nameserver change needs the `ignore_changes` line lifted for that one apply, see `repo-infra.md`).
+8. If `tailscale ip -4` on elitedesk returns something other than `100.103.236.120`, edit `tailnetIp` in `targets/nixos/elitedesk/hostCfg.nix` and `just tf apply` - it updates the Cloudflare record and the tailnet nameserver together (the nameserver change needs the `ignore_changes` line lifted for that one apply, see `repo-infra.md`).
 9. Redo the per-service runtime config above (qBittorrent server domains, sabnzbd host whitelist) - the configs live in service state, not in nix.
 
 ## See also

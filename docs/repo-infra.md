@@ -1,6 +1,6 @@
 # External infra: OpenTofu
 
-What the terranix config in `hosts/terranix/infra/` manages, how to operate it, and how to bootstrap it from nothing.
+What the terranix config in `targets/terranix/infra/` manages, how to operate it, and how to bootstrap it from nothing.
 
 ## Scope
 
@@ -10,7 +10,7 @@ What the terranix config in `hosts/terranix/infra/` manages, how to operate it, 
 | Cloudflare | zone `gauthsvenkat.dev`, wildcard A record, Caddy's ACME token, opentofu's own token policy (`modules/terranix/cloudflare.nix`) | zone settings, registrar, `*.myrthe.gauthsvenkat.dev` (ad-hoc) |
 | Scaleway | `elitedesk-backup` bucket + multipart-abort lifecycle rule, IAM trios (application/policy/api key) for restic and opentofu itself (`modules/terranix/scaleway.nix`) | default org policies (Administrators, Editors, ...) |
 
-`tailnetIp` in `hosts/nixos/elitedesk/hostCfg.nix` is the single source for elitedesk's tailnet IP - it feeds both the Cloudflare wildcard record and the tailnet's primary nameserver. If the IP ever changes, edit that one line and apply.
+`tailnetIp` in `targets/nixos/elitedesk/hostCfg.nix` is the single source for elitedesk's tailnet IP - it feeds both the Cloudflare wildcard record and the tailnet's primary nameserver. If the IP ever changes, edit that one line and apply.
 
 ## Operating
 
@@ -49,7 +49,7 @@ Tailscale OAuth client scopes are fixed at creation - a scope change means a new
 
 ## File layout
 
-Same shape as the other platforms: `hosts/terranix/infra/default.nix` imports `bases/terranix/opentofu.nix` (the `terraform` block: providers, encryption, state path) and one module per provider from `modules/terranix/`. `hosts/terranix/infra/hostCfg.nix` holds the account and org IDs. Values shared with a NixOS host (`domain`, `tailnetIp`) live in that host's `hostCfg` and the modules read them through `allHostCfgs`.
+Same shape as the other platforms: `targets/terranix/infra/default.nix` imports `bases/terranix/opentofu.nix` (the `terraform` block: providers, encryption, state path) and one module per provider from `modules/terranix/`. `targets/terranix/infra/hostCfg.nix` holds the account and org IDs. Values shared with a NixOS host (`domain`, `tailnetIp`) live in that host's `hostCfg` and the modules read them through `allHostCfgs`.
 
 Inside a module, resources are grouped by type and sorted lexicographically like any other Nix file. Cross-resource references are `lib.tf.ref "<address>"` strings. The provider's nested blocks (`rule`, `nameservers`, `lifecycle_rule`) are lists of attrsets. There are no `import` blocks; everything is in state.
 
