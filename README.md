@@ -37,4 +37,3 @@ Pure helper functions used by `flake.nix`.
 - [server-media-permissions](./docs/server-media-permissions.md)
 <!-- END-PRIVATE -->
 - [server-homepage](./docs/server-homepage.md)
-- [repo-patches](./docs/repo-patches.md)

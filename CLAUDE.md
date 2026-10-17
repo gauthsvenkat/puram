@@ -14,7 +14,7 @@ targets/          -- deployable units that import bases + target-specific module
   nixos/<hostname>/    -- default.nix + targetCfg.nix + hardware-configuration.nix (+ disko-config.nix if applicable)
   openwrt/<hostname>/  -- default.nix + targetCfg.nix + bootstrap.nix + hardware-configuration.nix
   terranix/infra/      -- default.nix + targetCfg.nix; not a machine, renders config.tf.json for `just tf`
-lib/              -- standalone helper functions, composed in flake.nix (mk-nixos, mk-openwrt, mk-terranix, patcher)
+flake/            -- flake outputs split by platform (nixos, openwrt, terranix), merged in flake.nix
 docs/             -- operational notes (setup-*, server-*, repo-*)
 assets/           -- non-nix assets (configs/, wallpapers/)
 secrets/          -- sops-nix encrypted secrets, split by scope (system, homeserver, infra), plus the tofu-encrypted terraform.tfstate; .sops.yaml is the access matrix
