@@ -15,17 +15,11 @@ let
     name:
     let
       targetCfg = allTargetCfgs.${name};
-      inherit (targetCfg)
-        profile
-        release
-        target
-        variant
-        ;
     in
     {
       image = inputs.openwrt-imagebuilder.lib.build {
-        inherit
-          pkgs
+        inherit pkgs;
+        inherit (targetCfg)
           profile
           release
           target

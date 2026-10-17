@@ -1,6 +1,6 @@
 { targetCfg, inputs, ... }:
 let
-  inherit (targetCfg) username wallpaper;
+  inherit (targetCfg) username;
 in
 {
   home-manager.users.${username} = {
@@ -22,7 +22,7 @@ in
       workspace = {
         colorScheme = "BreezeDark";
         lookAndFeel = "org.kde.breezedark.desktop";
-        inherit wallpaper;
+        inherit (targetCfg) wallpaper;
       };
 
       configFile."plasmaparc".General.AudioFeedback = false;
