@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (targetCfg.vpn) namespace bridgeAddress namespaceAddress;
+  inherit (targetCfg.vpn) namespace;
   inherit (config.sops) placeholder;
   confined = [
     "bitmagnet"
@@ -44,7 +44,7 @@ in
   vpnNamespaces.${namespace} = {
     enable = true;
     wireguardConfigFile = config.sops.templates.mullvad_wg_config.path;
-    inherit bridgeAddress namespaceAddress;
+    inherit (targetCfg.vpn) bridgeAddress namespaceAddress;
     # portMappings is used to open ports in the namespace's INPUT firewall.
     # map :: (serviceName::String -> mapping) -> [ serviceName::String ] -> [ mapping ]
     #   where mapping = { from, to :: Int; protocol :: String }

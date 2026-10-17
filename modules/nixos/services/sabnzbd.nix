@@ -2,7 +2,6 @@
 let
   inherit (targetCfg) domain;
   inherit (targetCfg.paths) usenet;
-  inherit (targetCfg.ports.sabnzbd) port;
   inherit (targetCfg.vpn) namespaceAddress;
 in
 {
@@ -12,7 +11,7 @@ in
     allowConfigWrite = true;
     settings.misc = {
       host = namespaceAddress;
-      inherit port;
+      inherit (targetCfg.ports.sabnzbd) port;
       # Caddy proxies as `sabnzbd.<domain>`; direct sonarr/radarr hits land
       # as `<namespaceAddress>:<port>`. Both must be in the whitelist.
       host_whitelist = "sabnzbd.${domain},${namespaceAddress}";

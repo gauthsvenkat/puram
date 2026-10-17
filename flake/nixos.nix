@@ -10,10 +10,9 @@ let
     name:
     let
       targetCfg = allTargetCfgs.${name};
-      inherit (targetCfg) system;
     in
     lib.nixosSystem {
-      inherit system;
+      inherit (targetCfg) system;
       specialArgs = {
         inherit allTargetCfgs targetCfg inputs;
       };

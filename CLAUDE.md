@@ -67,7 +67,7 @@ justfile          -- task runner: flake-wide recipes, plus one module per platfo
 ## let / inherit
 
 - Top-level `let` is reserved for bindings that depend on `targetCfg` or `config`. Other helpers go in the lowest scope where they're used (often inside an attribute value).
-- Never inline `targetCfg.<field>` or `config.<field>` in module bodies. Pull them into the top-level `let` so the module's surface area is visible upfront. The body references only bound names.
+- Never inline `targetCfg.<field>` or `config.<field>` in module bodies. Pull them into the top-level `let` so the module's surface area is visible upfront. Exception: a field used once, by a bare `inherit`, is inherited at the call site instead (`inherit (targetCfg.ports.seerr) port;`).
 - Top-level `let` order, top to bottom: `inherit (targetCfg) ...;`, `cfg = config.services.X;` (or `cfg_<name>` when more than one), `inherit (config.sops) secrets;`, then derived bindings (`vhost`, `dataRoot`, ...). Example:
   ```nix
   let
