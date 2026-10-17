@@ -5,7 +5,6 @@
 }:
 let
   inherit (targetCfg) domain;
-  inherit (targetCfg.ports.vikunja) port;
   cfg = config.services.vikunja;
   inherit (config.sops) placeholder;
 in
@@ -22,7 +21,7 @@ in
   services = {
     vikunja = {
       enable = true;
-      inherit port;
+      inherit (targetCfg.ports.vikunja) port;
       frontendScheme = "https";
       frontendHostname = "vikunja.${domain}";
       database = {

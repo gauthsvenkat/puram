@@ -1,14 +1,11 @@
 { targetCfg, ... }:
-let
-  inherit (targetCfg) hostname;
-in
 {
   users.root.hashedPasswordSecret = "hashedPassword"; # refers to the secret in sops.
 
   uci.settings.system = {
     system = [
       {
-        inherit hostname;
+        inherit (targetCfg) hostname;
         timezone = "CET-1CEST,M3.5.0,M10.5.0/3";
         zonename = "Europe/Amsterdam";
       }
