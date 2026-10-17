@@ -33,4 +33,3 @@ Pure helper functions used by `flake.nix`.
 - [setup-openwrt](./docs/setup-openwrt.md)
 - [server-zfs-pool](./docs/server-zfs-pool.md)
 - [server-homepage](./docs/server-homepage.md)
-- [repo-patches](./docs/repo-patches.md)
