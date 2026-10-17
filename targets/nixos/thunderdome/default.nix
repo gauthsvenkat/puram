@@ -1,10 +1,10 @@
 {
-  hostCfg,
+  targetCfg,
   pkgs,
   ...
 }:
 let
-  inherit (hostCfg) username zpool;
+  inherit (targetCfg) username zpool;
 in
 {
   imports = [

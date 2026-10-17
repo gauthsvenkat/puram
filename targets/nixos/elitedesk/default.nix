@@ -1,9 +1,9 @@
 {
-  hostCfg,
+  targetCfg,
   ...
 }:
 let
-  inherit (hostCfg) zpool;
+  inherit (targetCfg) zpool;
 in
 {
   imports = [

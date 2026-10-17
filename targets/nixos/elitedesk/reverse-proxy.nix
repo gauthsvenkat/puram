@@ -1,11 +1,11 @@
 {
-  hostCfg,
+  targetCfg,
   config,
   ...
 }:
 let
-  inherit (hostCfg) domain;
-  inherit (hostCfg.ports)
+  inherit (targetCfg) domain;
+  inherit (targetCfg.ports)
     adguard
     homepage
     immich

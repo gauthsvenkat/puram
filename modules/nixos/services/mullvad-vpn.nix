@@ -1,10 +1,10 @@
 {
-  hostCfg,
+  targetCfg,
   config,
   ...
 }:
 let
-  inherit (hostCfg) username;
+  inherit (targetCfg) username;
   cfg = config.services.mullvad-vpn;
 in
 {

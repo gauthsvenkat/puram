@@ -1,6 +1,6 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) wan;
+  inherit (targetCfg) wan;
 in
 {
   uci.settings = {

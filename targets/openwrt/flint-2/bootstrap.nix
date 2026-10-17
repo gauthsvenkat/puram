@@ -1,10 +1,10 @@
 {
-  hostCfg,
+  targetCfg,
   pkgs,
   workstationKeys,
 }:
 let
-  inherit (hostCfg) hostname setup wan;
+  inherit (targetCfg) hostname setup wan;
   inherit (pkgs) lib;
 
   bootstrap = pkgs.writeText "${hostname}-bootstrap" ''

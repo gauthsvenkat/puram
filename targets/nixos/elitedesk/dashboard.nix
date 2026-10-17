@@ -1,11 +1,11 @@
 {
   config,
-  hostCfg,
+  targetCfg,
   ...
 }:
 let
-  inherit (hostCfg) domain hostname zpool;
-  inherit (hostCfg.ports)
+  inherit (targetCfg) domain hostname zpool;
+  inherit (targetCfg.ports)
     adguard
     caddy
     immich

@@ -1,6 +1,6 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) lan;
+  inherit (targetCfg) lan;
 in
 {
   uci.settings.network.interface.lan = {

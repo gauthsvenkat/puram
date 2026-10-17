@@ -75,18 +75,18 @@
       nixosTargetDirs = lib.readDir ./targets/nixos;
       openwrtTargetDirs = lib.readDir ./targets/openwrt;
 
-      # mapAttrs :: (String -> String -> hostCfg) -> { String -> String } -> { String -> hostCfg }
-      # :: { String -> hostCfg }, keyed by hostname
-      allHostCfgs =
-        lib.mapAttrs (name: _: import ./targets/nixos/${name}/hostCfg.nix) nixosTargetDirs
-        // lib.mapAttrs (name: _: import ./targets/openwrt/${name}/hostCfg.nix) openwrtTargetDirs
+      # mapAttrs :: (String -> String -> targetCfg) -> { String -> String } -> { String -> targetCfg }
+      # :: { String -> targetCfg }, keyed by hostname
+      allTargetCfgs =
+        lib.mapAttrs (name: _: import ./targets/nixos/${name}/targetCfg.nix) nixosTargetDirs
+        // lib.mapAttrs (name: _: import ./targets/openwrt/${name}/targetCfg.nix) openwrtTargetDirs
         // {
-          infra = import ./targets/terranix/infra/hostCfg.nix;
+          infra = import ./targets/terranix/infra/targetCfg.nix;
         };
 
-      mkNixos = import ./lib/mk-nixos.nix { inherit allHostCfgs inputs evalNixos; };
-      mkOpenwrt = import ./lib/mk-openwrt.nix { inherit allHostCfgs inputs; };
-      mkTerranix = import ./lib/mk-terranix.nix { inherit allHostCfgs inputs; };
+      mkNixos = import ./lib/mk-nixos.nix { inherit allTargetCfgs inputs evalNixos; };
+      mkOpenwrt = import ./lib/mk-openwrt.nix { inherit allTargetCfgs inputs; };
+      mkTerranix = import ./lib/mk-terranix.nix { inherit allTargetCfgs inputs; };
       infraConfig = mkTerranix "infra";
     in
     {

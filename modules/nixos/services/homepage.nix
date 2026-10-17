@@ -1,7 +1,7 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) domain;
-  inherit (hostCfg.ports) homepage;
+  inherit (targetCfg) domain;
+  inherit (targetCfg.ports) homepage;
 in
 {
   services.homepage-dashboard = {

@@ -1,6 +1,6 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) username homeDirectory;
+  inherit (targetCfg) username homeDirectory;
 in
 {
   home-manager = {
@@ -17,7 +17,7 @@ in
     backupFileExtension = "backup";
 
     extraSpecialArgs = {
-      inherit hostCfg;
+      inherit targetCfg;
     };
   };
 }

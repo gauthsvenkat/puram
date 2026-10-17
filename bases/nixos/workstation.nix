@@ -1,18 +1,18 @@
 {
-  allHostCfgs,
+  allTargetCfgs,
   config,
-  hostCfg,
+  targetCfg,
   lib,
   pkgs,
   ...
 }:
 let
-  inherit (hostCfg) username homeDirectory;
-  # filterAttrs :: (String -> hostCfg -> Bool) -> { String -> hostCfg } -> { String -> hostCfg }
-  # :: { String -> hostCfg }, hosts with an sshHostKey, keyed by hostname
-  serverCfgs = lib.filterAttrs (_: hostCfg: hostCfg ? sshHostKey) allHostCfgs;
+  inherit (targetCfg) username homeDirectory;
+  # filterAttrs :: (String -> targetCfg -> Bool) -> { String -> targetCfg } -> { String -> targetCfg }
+  # :: { String -> targetCfg }, hosts with an sshHostKey, keyed by hostname
+  serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfgs;
   tailnet = "tailnet.ts.net";
-  router = allHostCfgs.flint-2;
+  router = allTargetCfgs.flint-2;
 in
 {
   imports = [
@@ -26,12 +26,12 @@ in
   ];
 
   programs.ssh = {
-    # mapAttrs :: (String -> hostCfg -> knownHost) -> { String -> hostCfg } -> { String -> knownHost }
+    # mapAttrs :: (String -> targetCfg -> knownHost) -> { String -> targetCfg } -> { String -> knownHost }
     #   where knownHost = { extraHostNames :: [ String ]; publicKey :: String }
     # :: { String -> knownHost }, keyed by hostname
-    knownHosts = lib.mapAttrs (hostName: hostCfg: {
+    knownHosts = lib.mapAttrs (hostName: targetCfg: {
       extraHostNames = [ "${hostName}.${tailnet}" ];
-      publicKey = hostCfg.sshHostKey;
+      publicKey = targetCfg.sshHostKey;
     }) serverCfgs;
     startAgent = true;
   };
@@ -98,10 +98,10 @@ in
         enable = true;
         enableDefaultConfig = false;
         settings =
-          lib.concatMapAttrs (hostName: hostCfg: {
+          lib.concatMapAttrs (hostName: targetCfg: {
             ${hostName} = {
               HostName = "${hostName}.${tailnet}";
-              User = hostCfg.username;
+              User = targetCfg.username;
             };
             "${hostName}-root" = {
               HostName = "${hostName}.${tailnet}";

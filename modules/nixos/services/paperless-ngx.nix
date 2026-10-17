@@ -1,10 +1,10 @@
 {
-  hostCfg,
+  targetCfg,
   ...
 }:
 let
-  inherit (hostCfg) domain paths;
-  inherit (hostCfg.ports) paperless;
+  inherit (targetCfg) domain paths;
+  inherit (targetCfg.ports) paperless;
   dataRoot = "${paths.data}/paperless-ngx";
   vhost = "paperless.${domain}";
 in

@@ -1,9 +1,9 @@
 {
-  hostCfg,
+  targetCfg,
   ...
 }:
 let
-  inherit (hostCfg) paths;
+  inherit (targetCfg) paths;
 in
 {
   services.postgresql.dataDir = paths.postgres;

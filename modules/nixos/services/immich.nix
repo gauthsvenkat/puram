@@ -1,10 +1,10 @@
 {
-  hostCfg,
+  targetCfg,
   ...
 }:
 let
-  inherit (hostCfg) paths;
-  inherit (hostCfg.ports.immich) port;
+  inherit (targetCfg) paths;
+  inherit (targetCfg.ports.immich) port;
 in
 {
   services.immich = {

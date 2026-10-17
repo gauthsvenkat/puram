@@ -1,14 +1,14 @@
 {
-  allHostCfgs,
-  hostCfg,
+  allTargetCfgs,
+  targetCfg,
   lib,
   ...
 }:
 let
-  inherit (hostCfg) username;
-  # catAttrs :: String -> [ hostCfg ] -> [ String ]
+  inherit (targetCfg) username;
+  # catAttrs :: String -> [ targetCfg ] -> [ String ]
   # :: [ String ], one ssh public key per host that has one
-  workstationKeys = lib.catAttrs "sshUserKey" (lib.attrValues allHostCfgs);
+  workstationKeys = lib.catAttrs "sshUserKey" (lib.attrValues allTargetCfgs);
 in
 {
   imports = [ ./system.nix ];

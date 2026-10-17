@@ -1,12 +1,12 @@
 {
-  allHostCfgs,
-  hostCfg,
+  allTargetCfgs,
+  targetCfg,
   lib,
   ...
 }:
 let
-  inherit (allHostCfgs.elitedesk) domain tailnetIp;
-  inherit (hostCfg.cloudflare) accountId;
+  inherit (allTargetCfgs.elitedesk) domain tailnetIp;
+  inherit (targetCfg.cloudflare) accountId;
   zoneId = lib.tf.ref "cloudflare_zone.example_com.id";
 in
 {

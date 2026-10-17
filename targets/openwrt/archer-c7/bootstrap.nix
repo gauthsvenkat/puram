@@ -1,10 +1,10 @@
 {
-  hostCfg,
+  targetCfg,
   pkgs,
   workstationKeys,
 }:
 let
-  inherit (hostCfg)
+  inherit (targetCfg)
     hostname
     setup
     switch

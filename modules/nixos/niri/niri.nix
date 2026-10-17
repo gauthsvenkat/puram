@@ -1,11 +1,11 @@
 {
-  hostCfg,
+  targetCfg,
   inputs,
   pkgs,
   ...
 }:
 let
-  inherit (hostCfg) username;
+  inherit (targetCfg) username;
 in
 {
   imports = [ inputs.niri.nixosModules.niri ];
