@@ -1,6 +1,0 @@
-[default.extend-words]
-HAX = "HAX"
-ACI = "ACI"
-
-[default.extend-identifiers]
-UPnP = "UPnP"

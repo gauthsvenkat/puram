@@ -8,12 +8,6 @@ repos:
       exclude: ^secrets/
     - id: check-merge-conflict
 
-- repo: https://github.com/crate-ci/typos
-  rev: v1.32.0
-  hooks:
-    - id: typos
-      exclude: ^secrets/
-
 - repo: local
   hooks:
     - id: deadnix
