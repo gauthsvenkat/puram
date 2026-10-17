@@ -9,7 +9,7 @@ in
     user = username;
     dataDir = homeDirectory;
 
-    # LAN-only sync: skip global discovery, relays, and UOnP NAT punching.
+    # LAN-only sync: skip global discovery, relays, and UPnP NAT punching.
     # https://docs.syncthing.net/users/config.html#config-option-options.globalannounceenabled
     settings.options = {
       globalAnnounceEnabled = false;

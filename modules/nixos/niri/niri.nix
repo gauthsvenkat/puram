@@ -12,7 +12,7 @@ in
 
   niri-flake.cache.enable = false;
 
-  # niri-flake enables gnome-keyring, whose gcr-ssh-agent conflicts with programs.ssh.startAgent
+  # HACK: niri-flake enables gnome-keyring, whose `gcr-ssh-agent` conflicts with `programs.ssh.startAgent`
   services.gnome.gcr-ssh-agent.enable = false;
 
   programs.niri = {
@@ -44,7 +44,7 @@ in
       environment = {
         NIXOS_OZONE_WL = "1";
         # Load the KDE platform theme so qt apps pick up
-        # the kdeglobals color scheme outside plasma
+        # the `kdeglobals` color scheme outside plasma
         QT_QPA_PLATFORMTHEME = "kde";
       };
 

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (allTargetCfgs.elitedesk) domain tailnetIp;
+  inherit (allTargetCfgs."elitedesk") domain tailnetIp;
   inherit (targetCfg.cloudflare) accountId;
   zoneId = lib.tf.ref "cloudflare_zone.example_com.id";
 in
@@ -27,7 +27,7 @@ in
         };
       in
       {
-        caddy_dns = {
+        "caddy_dns" = {
           account_id = accountId;
           name = "caddy-acme-elitedesk";
           policies = [
@@ -42,7 +42,7 @@ in
           ];
         };
 
-        opentofu = {
+        "opentofu" = {
           account_id = accountId;
           name = "opentofu-infra";
           policies = [
@@ -60,13 +60,12 @@ in
               resources = scopes.zone;
             }
           ];
-          # replacing this token must create the successor before revoking the
-          # credential the apply itself is running on
+          # The apply runs on this token, so create its successor before revoking it.
           lifecycle.create_before_destroy = true;
         };
       };
 
-    cloudflare_dns_record.wildcard = {
+    cloudflare_dns_record."wildcard" = {
       zone_id = zoneId;
       name = "*.${domain}";
       type = "A";
@@ -75,7 +74,7 @@ in
       ttl = 1;
     };
 
-    cloudflare_zone.example_com = {
+    cloudflare_zone."example_com" = {
       account.id = accountId;
       name = domain;
       type = "full";

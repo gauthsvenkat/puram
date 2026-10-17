@@ -5,18 +5,18 @@ in
 {
   sops = {
     secrets = {
-      wifi_psk.sopsFile = ../../../secrets/wifi.yaml;
-      wifi_ssid.sopsFile = ../../../secrets/wifi.yaml;
+      "wifi_psk".sopsFile = ../../../secrets/wifi.yaml;
+      "wifi_ssid".sopsFile = ../../../secrets/wifi.yaml;
     };
-    templates.wifi.content = ''
-      WIFI_SSID=${placeholder.wifi_ssid}
-      WIFI_PASSWORD=${placeholder.wifi_psk}
+    templates."wifi".content = ''
+      WIFI_SSID=${placeholder."wifi_ssid"}
+      WIFI_PASSWORD=${placeholder."wifi_psk"}
     '';
   };
 
   networking.networkmanager.ensureProfiles = {
-    environmentFiles = [ config.sops.templates.wifi.path ];
-    profiles.home-wifi = {
+    environmentFiles = [ config.sops.templates."wifi".path ];
+    profiles."home-wifi" = {
       connection = {
         id = "home";
         type = "wifi";

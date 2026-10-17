@@ -26,8 +26,8 @@ in
     ../../../modules/nixos/services/caddy.nix
   ];
 
-  # Caddy serves speedtest-tracker via php_fastcgi; the phpfpm pool socket is
-  # mode 0660 owned by the speedtest user/group, so caddy needs the group.
+  # Caddy serves speedtest-tracker via `php_fastcgi`; the phpfpm pool socket is
+  # mode `0660` owned by the speedtest user/group, so caddy needs the group.
   users.users.${cfg_caddy.user}.extraGroups = [ cfg_st.group ];
 
   services.caddy.virtualHosts = {

@@ -31,9 +31,10 @@ in
     STOP_CHARGE_THRESH_BAT0 = 80;
   };
 
-  # Reload wifi driver after resume to clear degraded rx; remove when fixed upstream:
-  # https://bugzilla.kernel.org/show_bug.cgi?id=220438
-  systemd.services.ath11k-resume =
+  # Resume after sleep degrades rx in wifi driver.
+  # HACK: Reload wifi driver after resume to clear degraded rx.
+  # remove when fixed upstream: https://bugzilla.kernel.org/show_bug.cgi?id=220438
+  systemd.services."ath11k-resume" =
     let
       modprobe = lib.getExe' pkgs.kmod "modprobe";
     in

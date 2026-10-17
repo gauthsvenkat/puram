@@ -12,7 +12,7 @@ let
   # :: { hostname::String -> targetCfg }, hosts with an sshHostKey
   serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfgs;
   tailnet = "tailnet.ts.net";
-  router = allTargetCfgs.flint-2;
+  router = allTargetCfgs."flint-2";
 in
 {
   imports = [
