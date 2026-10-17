@@ -77,7 +77,6 @@ in
       ];
     };
   };
-  # DNS ports needs explicit allow in firewall
   networking.firewall.allowedTCPPorts = [ adguard.dns_port ];
   networking.firewall.allowedUDPPorts = [ adguard.dns_port ];
 }

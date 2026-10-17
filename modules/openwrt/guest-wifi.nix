@@ -12,14 +12,14 @@ in
         }
       ];
 
-      interface.guest = {
+      interface."guest" = {
         device = "br-guest";
         proto = "static";
         ipaddr = [ "${guest.ip}/24" ];
       };
     };
 
-    dhcp.dhcp.guest = {
+    dhcp.dhcp."guest" = {
       interface = "guest";
       start = 100;
       limit = 150;

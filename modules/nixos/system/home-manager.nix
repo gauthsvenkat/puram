@@ -8,7 +8,6 @@ in
       stateVersion = "26.05";
       inherit username;
       inherit (targetCfg) homeDirectory;
-      # to add ~/.local/bin to $PATH
       sessionPath = [ "$HOME/.local/bin" ];
     };
 

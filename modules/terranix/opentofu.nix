@@ -20,8 +20,8 @@
     };
 
     encryption = {
-      key_provider.pbkdf2.passphrase = { };
-      method.aes_gcm.main.keys = "key_provider.pbkdf2.passphrase";
+      key_provider.pbkdf2."passphrase" = { };
+      method.aes_gcm."main".keys = "key_provider.pbkdf2.passphrase";
       state = {
         method = "method.aes_gcm.main";
         enforced = true;

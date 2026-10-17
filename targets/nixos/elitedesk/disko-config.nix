@@ -3,13 +3,13 @@
   imports = [ inputs.disko.nixosModules.disko ];
 
   disko.devices = {
-    disk.main = {
+    disk."main" = {
       device = "/dev/sda";
       type = "disk";
       content = {
         type = "gpt";
         partitions = {
-          ESP = {
+          "ESP" = {
             type = "EF00";
             size = "500M";
             content = {
@@ -19,7 +19,7 @@
               mountOptions = [ "umask=0077" ];
             };
           };
-          root = {
+          "root" = {
             size = "100%";
             content = {
               type = "filesystem";

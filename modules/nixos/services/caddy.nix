@@ -8,11 +8,11 @@ let
   inherit (config.sops) placeholder;
 in
 {
-  sops.secrets.cloudflare_dns_token = { };
+  sops.secrets."cloudflare_dns_token" = { };
 
-  sops.templates.cloudflare_env = {
+  sops.templates."cloudflare_env" = {
     restartUnits = [ "caddy.service" ];
-    content = "CLOUDFLARE_API_TOKEN=${placeholder.cloudflare_dns_token}\n";
+    content = "CLOUDFLARE_API_TOKEN=${placeholder."cloudflare_dns_token"}\n";
     owner = cfg.user;
     inherit (cfg) group;
   };
@@ -29,7 +29,7 @@ in
     '';
   };
 
-  systemd.services.caddy.serviceConfig.EnvironmentFile = config.sops.templates.cloudflare_env.path;
+  systemd.services.caddy.serviceConfig.EnvironmentFile = config.sops.templates."cloudflare_env".path;
 
   networking.firewall.allowedTCPPorts = [
     80

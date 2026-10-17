@@ -1,6 +1,6 @@
 { targetCfg, ... }:
 {
-  users.root.hashedPasswordSecret = "hashedPassword"; # refers to the secret in sops.
+  users.root.hashedPasswordSecret = "hashedPassword";
 
   uci.settings.system = {
     system = [

@@ -20,20 +20,20 @@ in
   };
 
   sops.secrets = {
-    restic_password = { };
-    scaleway_backups_access_key = { };
-    scaleway_backups_secret_key = { };
+    "restic_password" = { };
+    "scaleway_backups_access_key" = { };
+    "scaleway_backups_secret_key" = { };
   };
 
-  sops.templates.restic_offsite_env.content = ''
-    AWS_ACCESS_KEY_ID=${placeholder.scaleway_backups_access_key}
-    AWS_SECRET_ACCESS_KEY=${placeholder.scaleway_backups_secret_key}
+  sops.templates."restic_offsite_env".content = ''
+    AWS_ACCESS_KEY_ID=${placeholder."scaleway_backups_access_key"}
+    AWS_SECRET_ACCESS_KEY=${placeholder."scaleway_backups_secret_key"}
   '';
 
-  services.restic.backups.offsite = {
+  services.restic.backups."offsite" = {
     repository = "s3:https://s3.nl-ams.scw.cloud/backups";
-    environmentFile = config.sops.templates.restic_offsite_env.path;
-    passwordFile = secrets.restic_password.path;
+    environmentFile = config.sops.templates."restic_offsite_env".path;
+    passwordFile = secrets."restic_password".path;
     initialize = true;
     paths = [
       "${paths.backups}/postgres"
@@ -59,7 +59,7 @@ in
     };
   };
 
-  systemd.services.state-backup = {
+  systemd.services."state-backup" = {
     serviceConfig.Type = "oneshot";
     script =
       let
@@ -76,7 +76,7 @@ in
       '';
   };
 
-  systemd.timers.state-backup = {
+  systemd.timers."state-backup" = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "*-*-* 04:15:00";
