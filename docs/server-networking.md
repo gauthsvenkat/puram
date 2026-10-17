@@ -200,7 +200,7 @@ ACME state - account, registered keys, per-vhost certs - lives at `/var/lib/cadd
 1. NixOS install + import `dontdie` (see `server-zfs-pool.md`).
 2. Restore `~/.ssh/id_ed25519` so sops can decrypt.
 3. Confirm `cloudflare_dns_token`, `mullvad_wg_private_key`, and `mullvad_wg_address` are in `secrets/homeserver.yaml` (regenerate at https://mullvad.net/en/account if not).
-4. `just apply`.
+4. `just a`.
 5. `sudo tailscale up` → authorize device in browser.
 6. Wait ~60s - Caddy issues certs for every declared vhost via DNS-01.
 7. Verify: `curl https://homarr.gauthsvenkat.dev` from any tailnet device.

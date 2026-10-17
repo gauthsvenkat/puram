@@ -52,7 +52,7 @@ The dashboard renders fine if a value is missing - the affected tile just shows 
 | `QBIT_USER` / `QBIT_PASS` | The Web UI login credentials for `https://qbittorrent.gauthsvenkat.dev` (Tools → Options → Web UI → Authentication) |
 | `ADGUARD_USER` / `ADGUARD_PASS` | The login credentials for `https://adguard.gauthsvenkat.dev` |
 
-To add or remove vars, edit the placeholder in `targets/nixos/elitedesk/default.nix`, then add/remove the matching `HOMEPAGE_VAR_*` line via `just secrets-edit`.
+To add or remove vars, edit the placeholder in `targets/nixos/elitedesk/default.nix`, then add/remove the matching `HOMEPAGE_VAR_*` line via `just secrets edit`.
 
 ## Icons
 
@@ -62,7 +62,7 @@ To check whether an icon exists: try `https://cdn.jsdelivr.net/gh/walkxcode/dash
 
 ## Disaster recovery
 
-After a fresh elitedesk install, homepage comes up empty (every widget shows "API Error") until `homepage_env` is populated. Walk the table above against each service's web UI and paste keys back in via `just secrets-edit`. No homepage-side state to restore.
+After a fresh elitedesk install, homepage comes up empty (every widget shows "API Error") until `homepage_env` is populated. Walk the table above against each service's web UI and paste keys back in via `just secrets edit`. No homepage-side state to restore.
 
 ## See also
 

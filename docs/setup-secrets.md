@@ -67,14 +67,14 @@ Reinstalling a server regenerates its host key - re-enroll and rekey afterwards.
 - Rekey existing secrets so the new host can decrypt them:
 
   ```sh
-  just secrets-rekey
+  just secrets rekey
   ```
 
 ## Editing secrets
 
 ```sh
-just secrets-edit           # defaults to homeserver
-just secrets-edit infra
+just secrets edit           # defaults to homeserver
+just secrets edit infra
 ```
 
 Opens `secrets/<name>.yaml` in `$EDITOR` via `sops edit`. On save, sops re-encrypts under the keys of that file's creation rule.

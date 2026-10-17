@@ -32,7 +32,7 @@ names used in `targetCfg.nix`. It cannot confirm wifi paths; stock runs the clos
 MediaTek driver.
 
 ```sh
-just build-openwrt-image
+just openwrt build
 scp -O <store-path>/openwrt-*-sysupgrade.bin root@192.168.1.1:/tmp/
 ssh root@192.168.1.1 'sysupgrade -n -v /tmp/openwrt-*-sysupgrade.bin'
 ```
@@ -55,8 +55,7 @@ ssh-keygen -R 192.168.1.1
 ## Deploy
 
 ```sh
-just deploy-openwrt            # reboots the router
-just deploy-openwrt --reload   # no reboot; only for changes that cannot drop the link
+just openwrt deploy            # reboots the router
 ```
 
 The router reverts to its previous configuration if the deploy is not confirmed
@@ -117,7 +116,7 @@ inside the namespace has internet, so fetch tools into the store first.
    real. `sudo` runs ssh as root, hence the explicit key:
 
    ```sh
-   just device=gs1900-8hp build-openwrt-image
+   just openwrt build gs1900-8hp
    sudo ip netns exec lab scp -O -i ~/.ssh/id_ed25519 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no <store-path>/openwrt-*-sysupgrade.bin root@192.168.1.1:/tmp/sysupgrade.bin
    sudo ip netns exec lab ssh -i ~/.ssh/id_ed25519 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@192.168.1.1 'sysupgrade -n -v /tmp/sysupgrade.bin'
    ```
@@ -131,7 +130,7 @@ inside the namespace has internet, so fetch tools into the store first.
    namespace; the port only returns once every process in it is gone, and the
    lab browser leaves dbus and portal helpers behind, so kill those or reboot.
    Plug the switch into the lan and run
-   `just device=gs1900-8hp deploy-openwrt`. Every deploy restarts the PoE
+   `just openwrt deploy gs1900-8hp`. Every deploy restarts the PoE
    daemon, which briefly cuts power to PoE devices.
 
 **Failsafe**, if the switch boots but is unreachable: power cycle, ignore the

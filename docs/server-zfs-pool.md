@@ -88,7 +88,7 @@ Two edits land the pool in NixOS:
 1. `boot.zfs.extraPools = [ "dontdie" ];` -- import on boot.
 2. `services.sanoid.datasets` -- snapshot retention.
 
-Apply with `just apply`. First boot will mount all datasets and arm the sanoid timer.
+Apply with `just a`. First boot will mount all datasets and arm the sanoid timer.
 
 #### Services with a custom dataDir
 

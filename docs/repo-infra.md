@@ -65,8 +65,8 @@ Inside a module, resources are grouped by type and sorted lexicographically like
 
 1. Add (once) a sensitive output in `cloudflare.nix`: `output.caddy_dns_token = { value = lib.tf.ref "cloudflare_account_token.caddy_dns.value"; sensitive = true; };`.
 2. `just tf apply -replace=cloudflare_account_token.caddy_dns` - the old token dies here.
-3. `just tf output -raw caddy_dns_token`, then `just secrets-edit`: `cloudflare_dns_token: CLOUDFLARE_API_TOKEN=<new value>`.
-4. `just deploy elitedesk` - re-renders Caddy's env file and restarts it.
+3. `just tf output -raw caddy_dns_token`, then `just secrets edit`: `cloudflare_dns_token: CLOUDFLARE_API_TOKEN=<new value>`.
+4. `just nixos deploy elitedesk` - re-renders Caddy's env file and restarts it.
 
 Between steps 2 and 4 Caddy holds a dead token; only cert issuance in that window would notice.
 
@@ -74,7 +74,7 @@ Between steps 2 and 4 Caddy holds a dead token; only cert issuance in that windo
 
 Both API keys expire: restic on **2027-07-30**, opentofu on **2027-08-25**. Rotate before then - an expired restic key silently kills offsite backups.
 
-- restic: add (once) a sensitive output for `scaleway_iam_api_key.restic.secret_key` (same shape as the Caddy one), then `just tf apply -replace=scaleway_iam_api_key.restic`, read access + secret via `just tf output`, update `scaleway_backups_access_key` / `scaleway_backups_secret_key` in sops (both change), `just deploy elitedesk`, verify the next backup run.
+- restic: add (once) a sensitive output for `scaleway_iam_api_key.restic.secret_key` (same shape as the Caddy one), then `just tf apply -replace=scaleway_iam_api_key.restic`, read access + secret via `just tf output`, update `scaleway_backups_access_key` / `scaleway_backups_secret_key` in sops (both change), `just nixos deploy elitedesk`, verify the next backup run.
 - opentofu's own key: same replace flow (`create_before_destroy` mints the successor before revoking the old key), then update `SCW_ACCESS_KEY` / `SCW_SECRET_KEY` in sops immediately - a wrong paste here locks opentofu out until fixed from state or the console.
 
 ## Disaster recovery

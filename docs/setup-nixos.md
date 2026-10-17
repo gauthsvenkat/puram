@@ -41,7 +41,7 @@ nix run nixpkgs#ssh-to-age -- -i /tmp/extra-files/$hostname/etc/ssh/ssh_host_ed2
 ```
 
 Add the printed age key to [`.sops.yaml`](../.sops.yaml) under the
-`secrets/system.yaml` and `secrets/wifi.yaml` rules, then `just secrets-rekey`. Without this, first
+`secrets/system.yaml` and `secrets/wifi.yaml` rules, then `just secrets rekey`. Without this, first
 boot has no wifi and no user password.
 
 ### 2. Build and flash
@@ -117,7 +117,7 @@ ssh-keygen -t ed25519 -N "" -f $root/etc/ssh/ssh_host_ed25519_key
 nix run nixpkgs#ssh-to-age -- -i <generated key>.pub
 ```
 
-Add the printed age key to [`.sops.yaml`](../.sops.yaml), then `just secrets-rekey`.
+Add the printed age key to [`.sops.yaml`](../.sops.yaml), then `just secrets rekey`.
 Without this, first boot has no secrets and therefore no user password.
 
 ### 3. Test the disk layout (optional)

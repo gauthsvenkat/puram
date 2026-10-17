@@ -18,7 +18,7 @@ flake/            -- flake outputs split by platform (nixos, openwrt, terranix),
 docs/             -- operational notes (setup-*, server-*, repo-*)
 assets/           -- non-nix assets (configs/, wallpapers/)
 secrets/          -- sops-nix encrypted secrets, split by scope (system, homeserver, infra), plus the tofu-encrypted terraform.tfstate; .sops.yaml is the access matrix
-justfile          -- task runner for common operations
+justfile          -- task runner: flake-wide recipes, plus one module per platform in recipes/*.just
 ```
 
 # Key concepts
@@ -34,12 +34,14 @@ justfile          -- task runner for common operations
 
 # Workflow
 
-- Apply: `just apply` (or `just a`). Defaults to `switch`, accepts action arg (e.g., `just apply test`)
-- Check: `just check` (or `just c`) -- runs `nix flake check`
-- Update inputs: `just update` (or `just u`) -- optionally pass a single input name
-- Upgrade: `just upgrade` -- updates flake lock, rebuilds, and commits
-- Deploy: `just deploy <hostname>` -- builds locally, deploys to remote host
-- Infra: `just tf <args>` -- renders the terranix config and runs opentofu on it (plan, apply, ...)
+- Apply: `just nixos apply` (or `just a`). Defaults to `switch`, accepts action arg (e.g., `just a test`)
+- Check: `just check-fast` (or `just c`) -- runs `nix flake check`
+- Update inputs: `just update` -- optionally pass a single input name
+- Upgrade: `just upgrade` -- updates flake lock, runs check-full, and commits; apply separately
+- Deploy: `just nixos deploy <hostname>` -- builds locally, deploys to remote host
+- Infra: `just terranix tf <args>` (or `just tf`) -- renders the terranix config and runs opentofu on it (plan, apply, ...)
+- Secrets: `just secrets edit|view|rekey`
+- OpenWrt: `just openwrt build|deploy`
 
 # Code style
 
