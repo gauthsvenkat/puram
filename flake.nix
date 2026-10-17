@@ -44,6 +44,11 @@
       url = "github:astro/nix-openwrt-imagebuilder";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    terranix = {
+      url = "github:terranix/terranix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -74,10 +79,15 @@
       # :: { String -> hostCfg }, keyed by hostname
       allHostCfgs =
         lib.mapAttrs (name: _: import ./hosts/nixos/${name}/hostCfg.nix) nixosHostDirs
-        // lib.mapAttrs (name: _: import ./hosts/openwrt/${name}/hostCfg.nix) openwrtHostDirs;
+        // lib.mapAttrs (name: _: import ./hosts/openwrt/${name}/hostCfg.nix) openwrtHostDirs
+        // {
+          infra = import ./hosts/terranix/infra/hostCfg.nix;
+        };
 
       mkNixos = import ./lib/mk-nixos.nix { inherit allHostCfgs inputs evalNixos; };
       mkOpenwrt = import ./lib/mk-openwrt.nix { inherit allHostCfgs inputs; };
+      mkTerranix = import ./lib/mk-terranix.nix { inherit allHostCfgs inputs; };
+      infraConfig = mkTerranix "infra";
     in
     {
       # mapAttrs :: (String -> String -> nixosSystem) -> { String -> String } -> { String -> nixosSystem }
@@ -86,30 +96,37 @@
       nixosConfigurations = lib.mapAttrs (name: _: mkNixos name) nixosHostDirs;
 
       # concatMapAttrs :: (String -> String -> { String -> Derivation }) -> { String -> String } -> { String -> Derivation }
-      # :: { String -> Derivation }, keyed "${hostname}-image" and "${hostname}-deploy"
-      packages."x86_64-linux" = lib.concatMapAttrs (
-        name: _:
-        let
-          router = mkOpenwrt name;
-        in
-        {
-          "${name}-image" = router.image;
-          "${name}-deploy" = router.deploy;
-        }
-      ) openwrtHostDirs;
+      # :: { String -> Derivation }, keyed "${hostname}-image" and "${hostname}-deploy", plus "infra-config"
+      packages."x86_64-linux" =
+        lib.concatMapAttrs (
+          name: _:
+          let
+            router = mkOpenwrt name;
+          in
+          {
+            "${name}-image" = router.image;
+            "${name}-deploy" = router.deploy;
+          }
+        ) openwrtHostDirs
+        // {
+          infra-config = infraConfig;
+        };
 
       devShells."x86_64-linux".default =
         let
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          # map :: (provider -> String) -> [ provider ] -> [ String ]
+          #   where provider = { source :: String; version :: String }
+          # :: [ String ], nixpkgs attribute name of each required provider, "owner_name"
+          providerNames = map (provider: lib.replaceStrings [ "/" ] [ "_" ] provider.source) (
+            lib.attrValues infraConfig.config.terraform.required_providers
+          );
+          tofu = pkgs.opentofu.withPlugins (lib.attrVals providerNames);
         in
         pkgs.mkShell {
-          packages = with pkgs; [
-            (opentofu.withPlugins (p: [
-              p.cloudflare_cloudflare
-              p.scaleway_scaleway
-              p.tailscale_tailscale
-            ]))
-            sops
+          packages = [
+            tofu
+            pkgs.sops
           ];
         };
     };
