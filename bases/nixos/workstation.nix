@@ -8,8 +8,8 @@
 }:
 let
   inherit (targetCfg) username homeDirectory;
-  # filterAttrs :: (String -> targetCfg -> Bool) -> { String -> targetCfg } -> { String -> targetCfg }
-  # :: { String -> targetCfg }, hosts with an sshHostKey, keyed by hostname
+  # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
+  # :: { hostname::String -> targetCfg }, hosts with an sshHostKey
   serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfgs;
   tailnet = "tailnet.ts.net";
   router = allTargetCfgs.flint-2;
@@ -26,9 +26,8 @@ in
   ];
 
   programs.ssh = {
-    # mapAttrs :: (String -> targetCfg -> knownHost) -> { String -> targetCfg } -> { String -> knownHost }
+    # mapAttrs :: (hostname::String -> targetCfg -> knownHost) -> { hostname::String -> targetCfg } -> { hostname::String -> knownHost }
     #   where knownHost = { extraHostNames :: [ String ]; publicKey :: String }
-    # :: { String -> knownHost }, keyed by hostname
     knownHosts = lib.mapAttrs (hostName: targetCfg: {
       extraHostNames = [ "${hostName}.${tailnet}" ];
       publicKey = targetCfg.sshHostKey;

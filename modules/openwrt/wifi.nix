@@ -3,10 +3,10 @@ let
   inherit (targetCfg) radios;
 in
 {
-  # mapAttrs' :: (String -> radio -> { name :: String; value :: iface }) -> { String -> radio } -> { String -> iface }
+  # mapAttrs' :: (radioName::String -> radio -> { name :: String; value :: iface }) -> { radioName::String -> radio } -> { ifaceName::String -> iface }
   #   where radio = { path, band, htmode :: String; channel :: Int }
   #         iface = { device, mode, network, encryption :: String; ssid, key :: secret }
-  # :: { String -> iface }, keyed "default_${radioName}"
+  # :: { ifaceName::String -> iface }, keyed "default_${radioName}"
   uci.settings.wireless.wifi-iface = lib.mapAttrs' (
     name: _:
     lib.nameValuePair "default_${name}" {

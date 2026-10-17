@@ -49,14 +49,12 @@
     let
       inherit (nixpkgs) lib;
 
-      # readDir :: Path -> { String -> String }, directory name -> file type, always "directory"
-      # attrNames :: { String -> String } -> [ String ]
-      # :: [ String ], hostnames, one per directory
+      # readDir :: Path -> { hostname::String -> fileType::String }, always "directory"
+      # attrNames :: { hostname::String -> fileType::String } -> [ hostname::String ]
       nixosTargets = lib.attrNames (lib.readDir ./targets/nixos);
       openwrtTargets = lib.attrNames (lib.readDir ./targets/openwrt);
 
-      # genAttrs :: [ String ] -> (String -> targetCfg) -> { String -> targetCfg }
-      # :: { String -> targetCfg }, keyed by hostname
+      # genAttrs :: [ hostname::String ] -> (hostname::String -> targetCfg) -> { hostname::String -> targetCfg }
       allTargetCfgs =
         lib.genAttrs nixosTargets (name: import ./targets/nixos/${name}/targetCfg.nix)
         // lib.genAttrs openwrtTargets (name: import ./targets/openwrt/${name}/targetCfg.nix)
