@@ -13,5 +13,5 @@ evalNixos {
   specialArgs = {
     inherit allHostCfgs hostCfg inputs;
   };
-  modules = [ ../hosts/nixos/${name} ];
+  modules = [ ../targets/nixos/${name} ];
 }

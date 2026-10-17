@@ -7,5 +7,5 @@ in
 inputs.terranix.lib.terranixConfiguration {
   inherit pkgs;
   extraArgs = { inherit allHostCfgs hostCfg; };
-  modules = [ ../hosts/terranix/${name} ];
+  modules = [ ../targets/terranix/${name} ];
 }

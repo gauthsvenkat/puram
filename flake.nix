@@ -72,16 +72,16 @@
 
       # readDir :: Path -> { String -> String }
       # :: { String -> String }, hostname -> file type, always "directory"
-      nixosHostDirs = lib.readDir ./hosts/nixos;
-      openwrtHostDirs = lib.readDir ./hosts/openwrt;
+      nixosTargetDirs = lib.readDir ./targets/nixos;
+      openwrtTargetDirs = lib.readDir ./targets/openwrt;
 
       # mapAttrs :: (String -> String -> hostCfg) -> { String -> String } -> { String -> hostCfg }
       # :: { String -> hostCfg }, keyed by hostname
       allHostCfgs =
-        lib.mapAttrs (name: _: import ./hosts/nixos/${name}/hostCfg.nix) nixosHostDirs
-        // lib.mapAttrs (name: _: import ./hosts/openwrt/${name}/hostCfg.nix) openwrtHostDirs
+        lib.mapAttrs (name: _: import ./targets/nixos/${name}/hostCfg.nix) nixosTargetDirs
+        // lib.mapAttrs (name: _: import ./targets/openwrt/${name}/hostCfg.nix) openwrtTargetDirs
         // {
-          infra = import ./hosts/terranix/infra/hostCfg.nix;
+          infra = import ./targets/terranix/infra/hostCfg.nix;
         };
 
       mkNixos = import ./lib/mk-nixos.nix { inherit allHostCfgs inputs evalNixos; };
@@ -93,7 +93,7 @@
       # mapAttrs :: (String -> String -> nixosSystem) -> { String -> String } -> { String -> nixosSystem }
       #   where nixosSystem = result of lib.nixosSystem
       # :: { String -> nixosSystem }, keyed by hostname
-      nixosConfigurations = lib.mapAttrs (name: _: mkNixos name) nixosHostDirs;
+      nixosConfigurations = lib.mapAttrs (name: _: mkNixos name) nixosTargetDirs;
 
       # concatMapAttrs :: (String -> String -> { String -> Derivation }) -> { String -> String } -> { String -> Derivation }
       # :: { String -> Derivation }, keyed "${hostname}-image" and "${hostname}-deploy", plus "infra-config"
@@ -107,7 +107,7 @@
             "${name}-image" = router.image;
             "${name}-deploy" = router.deploy;
           }
-        ) openwrtHostDirs
+        ) openwrtTargetDirs
         // {
           infra-config = infraConfig;
         };
