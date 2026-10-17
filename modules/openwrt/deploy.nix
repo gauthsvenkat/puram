@@ -1,11 +1,11 @@
 {
-  hostCfg,
+  targetCfg,
   lib,
   pkgs,
   ...
 }:
 let
-  inherit (hostCfg) lan;
+  inherit (targetCfg) lan;
 in
 {
   deploy = {

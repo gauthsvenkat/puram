@@ -1,6 +1,6 @@
-{ config, hostCfg, ... }:
+{ config, targetCfg, ... }:
 let
-  inherit (hostCfg) domain paths;
+  inherit (targetCfg) domain paths;
   cfg = config.services.speedtest-tracker;
   inherit (config.sops) secrets;
 in

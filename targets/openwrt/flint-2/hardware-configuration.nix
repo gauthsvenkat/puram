@@ -1,6 +1,6 @@
-{ hostCfg, lib, ... }:
+{ targetCfg, lib, ... }:
 let
-  inherit (hostCfg) radios;
+  inherit (targetCfg) radios;
 in
 {
   # mapAttrs :: (String -> radio -> wifiDevice) -> { String -> radio } -> { String -> wifiDevice }

@@ -1,6 +1,6 @@
-{ hostCfg, ... }:
+{ targetCfg, ... }:
 let
-  inherit (hostCfg) username;
+  inherit (targetCfg) username;
 in
 {
   home-manager.users.${username}.programs.plasma.shortcuts = {

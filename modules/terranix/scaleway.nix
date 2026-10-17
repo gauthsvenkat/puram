@@ -1,6 +1,6 @@
-{ hostCfg, lib, ... }:
+{ targetCfg, lib, ... }:
 let
-  inherit (hostCfg.scaleway) orgId;
+  inherit (targetCfg.scaleway) orgId;
 in
 {
   provider.scaleway = {

@@ -1,6 +1,6 @@
-{ hostCfg, lib, ... }:
+{ targetCfg, lib, ... }:
 let
-  inherit (hostCfg) radios switch;
+  inherit (targetCfg) radios switch;
 in
 {
   uci.settings = {

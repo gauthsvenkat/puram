@@ -1,6 +1,6 @@
-{ config, hostCfg, ... }:
+{ config, targetCfg, ... }:
 let
-  inherit (hostCfg) username;
+  inherit (targetCfg) username;
   inherit (config.sops) secrets;
 in
 {

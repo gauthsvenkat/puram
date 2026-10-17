@@ -1,11 +1,11 @@
 {
   config,
-  hostCfg,
+  targetCfg,
   ...
 }:
 let
-  inherit (hostCfg) domain;
-  inherit (hostCfg.ports.vikunja) port;
+  inherit (targetCfg) domain;
+  inherit (targetCfg.ports.vikunja) port;
   cfg = config.services.vikunja;
   inherit (config.sops) placeholder;
 in

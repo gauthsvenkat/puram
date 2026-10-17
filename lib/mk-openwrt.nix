@@ -1,17 +1,17 @@
-{ allHostCfgs, inputs }:
+{ allTargetCfgs, inputs }:
 name:
 let
-  hostCfg = allHostCfgs.${name};
-  inherit (hostCfg)
+  targetCfg = allTargetCfgs.${name};
+  inherit (targetCfg)
     profile
     release
     target
     variant
     ;
   pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux";
-  # catAttrs :: String -> [ hostCfg ] -> [ String ]
+  # catAttrs :: String -> [ targetCfg ] -> [ String ]
   # :: [ String ], one ssh public key per host that has one
-  workstationKeys = pkgs.lib.catAttrs "sshUserKey" (pkgs.lib.attrValues allHostCfgs);
+  workstationKeys = pkgs.lib.catAttrs "sshUserKey" (pkgs.lib.attrValues allTargetCfgs);
 in
 {
   image = inputs.openwrt-imagebuilder.lib.build {
@@ -22,8 +22,8 @@ in
       target
       variant
       ;
-    disabledServices = hostCfg.disabledServices or [ ];
-    files = import ../targets/openwrt/${name}/bootstrap.nix { inherit hostCfg pkgs workstationKeys; };
+    disabledServices = targetCfg.disabledServices or [ ];
+    files = import ../targets/openwrt/${name}/bootstrap.nix { inherit targetCfg pkgs workstationKeys; };
     packages = [
       "luci"
       "luci-ssl"
@@ -33,6 +33,6 @@ in
   deploy =
     (import inputs.dewclaw {
       inherit pkgs;
-      configuration = import ../targets/openwrt/${name} { inherit hostCfg workstationKeys; };
+      configuration = import ../targets/openwrt/${name} { inherit targetCfg workstationKeys; };
     }).targets.${name};
 }

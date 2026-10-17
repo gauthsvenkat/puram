@@ -1,6 +1,6 @@
-{ hostCfg, lib, ... }:
+{ targetCfg, lib, ... }:
 let
-  inherit (hostCfg) username;
+  inherit (targetCfg) username;
 in
 {
   imports = [
