@@ -13,10 +13,9 @@ in
         }
       ];
 
-      # imap1 :: (Int -> vlan -> switchVlan) -> [ vlan ] -> [ switchVlan ]
+      # imap1 :: (index::Int -> vlan -> switchVlan) -> [ vlan ] -> [ switchVlan ]
       #   where vlan = { vid :: Int; ports :: String }
       #         switchVlan = vlan // { device :: String; vlan :: Int }
-      # :: [ switchVlan ]
       switch_vlan = lib.imap1 (
         i:
         { vid, ports }:
@@ -28,10 +27,9 @@ in
       ) switch.vlans;
     };
 
-    # mapAttrs :: (String -> radio -> wifiDevice) -> { String -> radio } -> { String -> wifiDevice }
+    # mapAttrs :: (radioName::String -> radio -> wifiDevice) -> { radioName::String -> radio } -> { radioName::String -> wifiDevice }
     #   where radio = { path, band, htmode :: String; channel :: Int }
     #         wifiDevice = radio // { type, country :: String }
-    # :: { String -> wifiDevice }, keyed by radio name
     wireless.wifi-device = lib.mapAttrs (_: radio: {
       type = "mac80211";
       country = "NL";

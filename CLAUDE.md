@@ -46,13 +46,17 @@ justfile          -- task runner for common operations
 - Use kebab-case for filenames (e.g., `graphics-drivers.nix`)
 - Prefer `lib.*` over `builtins.*` whenever lib re-exports the function (it re-exports most of builtins); `builtins.*` only when lib has no counterpart
 - Name bindings so the shape is obvious. Split pipelines with surprising intermediate types into named bindings
-- A binding built with a collection-shaping `lib` function (`mapAttrs`, `filterAttrs`, `listToAttrs`, `imap1`, `catAttrs`, `concatMapAttrs`, `readDir`, `map`, ...) gets a type comment block above it: the function's signature as used here, a `where` line expanding every name in it, then the binding's own type after `# ::`. Primitives are `String`, `Int`, `Bool`, `Path`, `Derivation`; `[ T ]` is a list; `{ k1, k2 :: T }` a set with fixed keys; `{ String -> T }` a set keyed by arbitrary names; `a -> b` a function. Only `targetCfg` and `secret` (a dewclaw `{ _secret :: String }`) stay unexpanded. Example:
+- A binding built with a collection-shaping `lib` function (`mapAttrs`, `filterAttrs`, `listToAttrs`, `imap1`, `catAttrs`, `concatMapAttrs`, `readDir`, `map`, ...) gets a type comment block above it: the function's signature as used here, a `where` line expanding every name in it, then, only when there is something the signature cannot say (a filter, a key pattern, a constraint), the binding's own type after `# ::` followed by that clause. Omit the `# ::` line when it would only repeat the return type. Primitives are `String`, `Int`, `Bool`, `Path`, `Derivation`; `[ T ]` is a list; `{ k1, k2 :: T }` a set with fixed keys; `{ String -> T }` a set keyed by arbitrary names; `a -> b` a function. Only `targetCfg` and `secret` (a dewclaw `{ _secret :: String }`) stay unexpanded. Example:
   ```nix
-  # imap1 :: (Int -> String -> port) -> [ String ] -> [ port ]
+  # imap1 :: (id::Int -> name::String -> port) -> [ name::String ] -> [ port ]
   #   where port = { id :: Int; name :: String; enable :: Bool }
-  # :: [ port ]
   port = lib.imap1 (id: name: { inherit id name; enable = true; }) poe.ports;
+
+  # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
+  # :: { hostname::String -> targetCfg }, hosts with an sshHostKey
+  serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfgs;
   ```
+- A primitive carries a role label, `role::Type`, whenever the value means something the type alone does not say: `hostname::String`, `orgId::String`, `port::Int`. The label is lowerCamel like a binding name. Use it instead of a trailing clause explaining a primitive and instead of a bare role name; never label a non-primitive, those have a `where` line. Fixed keys in a `where` line keep the spaced form `id :: Int`; the unspaced `role::Type` is only for labels. Keep the same label for the same value along a pipeline so it can be followed: `readDir :: Path -> { hostname::String -> fileType::String }`, then `attrNames :: ... -> [ hostname::String ]`. A primitive with no role beyond its type stays bare: `Bool`, `Derivation`.
 - Collapse single-definition attribute sets using dot notation (e.g., `services.openssh.enable = true;`)
 - Group multiple definitions with common prefixes into a single attribute set
 - Sort lexicographically: package lists, imports, attribute definitions within groups

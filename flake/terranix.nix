@@ -16,9 +16,9 @@ let
 
   infraConfig = mkTerranix "infra";
 
-  # map :: (provider -> String) -> [ provider ] -> [ String ]
+  # map :: (provider -> providerName::String) -> [ provider ] -> [ providerName::String ]
   #   where provider = { source :: String; version :: String }
-  # :: [ String ], nixpkgs attribute name of each required provider, "owner_name"
+  # :: [ providerName::String ], nixpkgs attribute name of each required provider, "owner_name"
   providerNames = map (provider: lib.replaceStrings [ "/" ] [ "_" ] provider.source) (
     lib.attrValues infraConfig.config.terraform.required_providers
   );

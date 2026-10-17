@@ -21,8 +21,6 @@ let
     };
 in
 {
-  # genAttrs :: [ String ] -> (String -> nixosSystem) -> { String -> nixosSystem }
-  #   where nixosSystem = result of lib.nixosSystem
-  # :: { String -> nixosSystem }, keyed by hostname
+  # genAttrs :: [ hostname::String ] -> (hostname::String -> nixosSystem) -> { hostname::String -> nixosSystem }
   nixosConfigurations = lib.genAttrs nixosTargets mkNixos;
 }
