@@ -46,4 +46,4 @@ repos:
       entry: just tf validate
       language: system
       pass_filenames: false
-      files: ^(modules|bases|hosts)/terranix/
+      files: ^(modules|bases|targets)/terranix/
