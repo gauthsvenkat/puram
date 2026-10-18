@@ -1,3 +1,5 @@
+default_install_hook_types: [pre-commit, commit-msg]
+
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v5.0.0
@@ -47,3 +49,15 @@ repos:
       language: system
       pass_filenames: false
       files: ^(modules|bases|targets)/terranix/
+
+    - id: author-identity
+      name: author identity
+      entry: >-
+        sh -c 'id="Gautham Venkataraman <gauthsvenkat@gmail.com>";
+        for v in GIT_AUTHOR_IDENT GIT_COMMITTER_IDENT; do
+          [ "$(git var $v | sed "s/ [0-9]* [-+][0-9]*$//")" = "$id" ] || { echo "$v is not $id"; exit 1; };
+        done;
+        ! grep -qi "^co-authored-by:" "$1" || { echo "no Co-authored-by allowed"; exit 1; }' --
+      language: system
+      stages: [commit-msg]
+      always_run: true
