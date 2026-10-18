@@ -16,6 +16,12 @@ repos:
       language: system
       types: [nix]
 
+    - id: lychee
+      name: lychee
+      entry: lychee --offline --include-fragments --no-progress
+      language: system
+      types: [markdown]
+
     - id: nixfmt
       name: nixfmt
       entry: nixfmt

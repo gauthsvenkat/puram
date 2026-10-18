@@ -11,6 +11,8 @@ let
 in
 {
   resource = {
+    # The resource `cloudflare_api_token` only manages user-owned ones.
+    # So, we use resource `cloudflare_account_token`.
     cloudflare_account_token =
       let
         permissionGroups = {
@@ -42,6 +44,7 @@ in
           ];
         };
 
+        # NOTE: tofu's own credentials.
         "opentofu" = {
           account_id = accountId;
           name = "opentofu-infra";
@@ -70,6 +73,7 @@ in
       name = "*.${domain}";
       type = "A";
       content = tailnetIp;
+      # NOTE: Never proxy (orange cloud); the tailnet IP is unreachable from the public internet.
       proxied = false;
       ttl = 1;
     };

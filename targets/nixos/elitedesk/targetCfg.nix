@@ -62,6 +62,8 @@ rec {
   };
 # BEGIN-PRIVATE
 
+  # Loopback does not cross the namespace: host to confined service uses `namespaceAddress`,
+  # confined service to host uses `bridgeAddress`.
   vpn = {
     namespace = "wg";
     bridgeAddress = "192.168.15.5";

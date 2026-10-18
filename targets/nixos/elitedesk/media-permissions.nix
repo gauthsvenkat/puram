@@ -16,6 +16,12 @@ let
 in
 {
   # BEGIN-PRIVATE
+  # NOTE: After a fresh install, fix the existing tree once, then restart `members`:
+  #   chgrp -R media /dontdie/data/entertainment
+  #   chmod 2775 /dontdie/data/entertainment  (`fd` skips its search root)
+  #   fd -HI -t d . /dontdie/data/entertainment -X chmod 2775
+  #   fd -HI -t f . /dontdie/data/entertainment -X chmod 0664
+
   # gid 169 follows nixarr's convention.
   # END-PRIVATE
   users.groups.${group}.gid = 169;
