@@ -42,7 +42,7 @@ let
 in
 {
   # mergeAttrsList :: [ { packageName::String -> Derivation } ] -> { packageName::String -> Derivation }
-  # :: { packageName::String -> Derivation }, keyed "${hostname}-image" and "${hostname}-deploy"
+  # :: { packageName::String -> Derivation }, keyed "${hostname}-openwrt-image" and "${hostname}-deploy"
   packages."x86_64-linux" = lib.mergeAttrsList (
     map (
       name:
@@ -50,7 +50,7 @@ in
         router = mkOpenwrt name;
       in
       {
-        "${name}-image" = router.image;
+        "${name}-openwrt-image" = router.image;
         "${name}-deploy" = router.deploy;
       }
     ) openwrtTargets
