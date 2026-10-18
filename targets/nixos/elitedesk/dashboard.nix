@@ -178,6 +178,8 @@ in
             }
             {
               "Speedtest" = {
+                # `sh-` prefix pulls the icon from selfh.st;
+                # dashboard-icons has no speedtest-tracker.
                 icon = icon "sh-speedtest-tracker";
                 href = href "speedtest";
                 widget = {

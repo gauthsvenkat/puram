@@ -8,6 +8,7 @@
     gnumake
     jq
     libqalculate
+    lychee
     ripgrep
     unzip
     wget

@@ -10,6 +10,7 @@ in
       serverTag = "tag:server";
     in
     {
+      # NOTE: Applying replaces the whole console policy; console edits get overwritten.
       tailscale_acl."tailnet".acl = lib.toJSON {
         # Allow all connections by default.
         grants = [
@@ -44,6 +45,7 @@ in
         magic_dns = true;
         override_local_dns = true;
         search_paths = [ ];
+        # TODO: Clients query these in parallel, so the public resolvers can bypass AdGuard.
         nameservers = [
           { address = tailnetIp; }
           { address = "1.1.1.1"; }
