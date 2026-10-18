@@ -6,6 +6,19 @@ return {
   config = function()
     local ts = require("nvim-treesitter")
 
+    -- HACK: tree-sitter-just can't parse `mod::recipe` in aliases and dependencies.
+    -- Use the parser and queries from https://github.com/casey/tree-sitter-just/pull/204.
+    -- Remove once it's merged and nvim-treesitter bumps its pin.
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "TSUpdate",
+      callback = function()
+        local info = require("nvim-treesitter.parsers").just.install_info
+        info.url = "https://github.com/tkatter/tree-sitter-just"
+        info.revision = "912ac5a7b763af3ac488dbfaafb05fde7e926ece"
+        info.queries = "queries/just"
+      end,
+    })
+
     ts.install({
       "c",
       "lua",
