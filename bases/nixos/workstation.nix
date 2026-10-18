@@ -1,6 +1,5 @@
 {
   allTargetCfgs,
-  config,
   targetCfg,
   lib,
   pkgs,
@@ -8,6 +7,7 @@
 }:
 let
   inherit (targetCfg) username homeDirectory;
+  sshKey = "${homeDirectory}/.ssh/id_ed25519";
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
   # :: { hostname::String -> targetCfg }, hosts with an sshHostKey
   serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfgs;
@@ -89,7 +89,7 @@ in
         # Required for neovim clipboard integration on linux.
         wl-clipboard
       ];
-      sessionVariables.SOPS_AGE_KEY_FILE = config.sops.age.keyFile;
+      sessionVariables.SOPS_AGE_KEY_CMD = "${lib.getExe pkgs.ssh-to-age} -private-key -i ${sshKey}";
     };
 
     programs = {
@@ -140,9 +140,5 @@ in
     xdg.autostart.enable = true;
   };
 
-  sops.age = {
-    generateKey = true;
-    keyFile = "${homeDirectory}/.config/sops/age/keys.txt";
-    sshKeyPaths = [ "${homeDirectory}/.ssh/id_ed25519" ];
-  };
+  sops.age.sshKeyPaths = [ sshKey ];
 }
