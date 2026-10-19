@@ -27,6 +27,7 @@ secrets/
 .sops.yaml
 
 how-to/redact.md
+redact/redact.just
 redact/rules/
 
 # NOTE: keep last. A drop matches the name a file has at that point, so the

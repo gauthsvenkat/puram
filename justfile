@@ -2,6 +2,9 @@ mod nixos 'recipes/nixos.just'
 mod openwrt 'recipes/openwrt.just'
 mod secrets 'recipes/secrets.just'
 mod terranix 'recipes/terranix.just'
+# BEGIN-PRIVATE
+mod redact 'redact/redact.just'
+# END-PRIVATE
 
 alias a := nixos::apply
 alias c := check-fast
