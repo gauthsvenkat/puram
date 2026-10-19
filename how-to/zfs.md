@@ -29,11 +29,11 @@ zfs create -o mountpoint=none dontdie/data
 zfs create -o mountpoint=/dontdie/services/backups    $ENC dontdie/services/backups
 zfs create -o mountpoint=/dontdie/data/immich         $ENC dontdie/data/immich
 zfs create -o mountpoint=/dontdie/data/paperless-ngx  $ENC dontdie/data/paperless-ngx
-# BEGIN-PRIVATE
-
-zfs create -o mountpoint=/dontdie/data/entertainment dontdie/data/entertainment
-# END-PRIVATE
 ```
 <!-- BEGIN-PRIVATE -->
-`data/entertainment` is one dataset because the *arr apps hardlink between `media/` and the download dirs, and hardlinks only work within one filesystem.
+`data/entertainment` is one dataset because the *arr apps hardlink between `media/` and the download dirs, and hardlinks only work within one filesystem:
+
+```
+zfs create -o mountpoint=/dontdie/data/entertainment dontdie/data/entertainment
+```
 <!-- END-PRIVATE -->

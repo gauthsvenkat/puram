@@ -25,23 +25,19 @@ in
     script =
       let
         stateDirs = [
-          # BEGIN-PRIVATE
-          "/var/lib/bazarr"
-          # END-PRIVATE
           "/var/lib/jellyfin"
           "/var/lib/private/AdGuardHome"
-          # BEGIN-PRIVATE
-          "/var/lib/private/seerr"
-          # END-PRIVATE
           "/var/lib/private/vikunja"
+          "/var/lib/speedtest-tracker"
           # BEGIN-PRIVATE
+          "/var/lib/bazarr"
+          "/var/lib/private/seerr"
           "/var/lib/prowlarr"
           "/var/lib/qBittorrent"
           "/var/lib/radarr"
           "/var/lib/sabnzbd"
           "/var/lib/sonarr"
           # END-PRIVATE
-          "/var/lib/speedtest-tracker"
         ];
       in
       ''

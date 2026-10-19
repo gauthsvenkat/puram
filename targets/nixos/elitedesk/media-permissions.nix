@@ -2,11 +2,9 @@
 let
   group = "media";
   members = [
-    # BEGIN-PRIVATE
-    "bazarr"
-    # END-PRIVATE
     "jellyfin"
     # BEGIN-PRIVATE
+    "bazarr"
     "qbittorrent"
     "radarr"
     "sabnzbd"

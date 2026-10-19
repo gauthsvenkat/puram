@@ -7,25 +7,23 @@ let
   inherit (targetCfg) domain;
   inherit (targetCfg.ports)
     adguard
-    # BEGIN-PRIVATE
-    bazarr
-    bitmagnet
-    # END-PRIVATE
     homepage
     immich
     jellyfin
     paperless
-    # BEGIN-PRIVATE
+    vikunja
+    ;
+  # BEGIN-PRIVATE
+  inherit (targetCfg.ports)
+    bazarr
+    bitmagnet
     prowlarr
     qbittorrent
     radarr
     sabnzbd
     seerr
     sonarr
-    # END-PRIVATE
-    vikunja
     ;
-  # BEGIN-PRIVATE
   inherit (targetCfg.vpn) namespaceAddress;
   # END-PRIVATE
   cfg_st = config.services.speedtest-tracker;

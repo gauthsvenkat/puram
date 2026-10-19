@@ -7,24 +7,22 @@ let
   inherit (targetCfg) domain hostname zpool;
   inherit (targetCfg.ports)
     adguard
-    # BEGIN-PRIVATE
-    bazarr
-    # END-PRIVATE
     caddy
     immich
     jellyfin
     paperless
-    # BEGIN-PRIVATE
+    vikunja
+    ;
+  # BEGIN-PRIVATE
+  inherit (targetCfg.ports)
+    bazarr
     prowlarr
     qbittorrent
     radarr
     sabnzbd
     seerr
     sonarr
-    # END-PRIVATE
-    vikunja
     ;
-  # BEGIN-PRIVATE
   inherit (targetCfg.vpn) namespaceAddress;
   # END-PRIVATE
   inherit (config.sops) placeholder;
@@ -33,20 +31,18 @@ in
   sops.secrets = {
     "adguard_password" = { };
     "adguard_username" = { };
-    # BEGIN-PRIVATE
-    "bazarr_api_key" = { };
-    # END-PRIVATE
     "immich_api_key" = { };
     "jellyfin_api_key" = { };
     "paperless_api_key" = { };
+    "vikunja_api_key" = { };
     # BEGIN-PRIVATE
+    "bazarr_api_key" = { };
     "prowlarr_api_key" = { };
     "qbittorrent_password" = { };
     "qbittorrent_username" = { };
     "sabnzbd_api_key" = { };
     "seerr_api_key" = { };
     # END-PRIVATE
-    "vikunja_api_key" = { };
   };
 
   sops.templates."homepage_env" = {
@@ -54,13 +50,12 @@ in
     content = ''
       HOMEPAGE_VAR_ADGUARD_PASS=${placeholder."adguard_password"}
       HOMEPAGE_VAR_ADGUARD_USER=${placeholder."adguard_username"}
-      # BEGIN-PRIVATE
-      HOMEPAGE_VAR_BAZARR_KEY=${placeholder."bazarr_api_key"}
-      # END-PRIVATE
       HOMEPAGE_VAR_IMMICH_KEY=${placeholder."immich_api_key"}
       HOMEPAGE_VAR_JELLYFIN_KEY=${placeholder."jellyfin_api_key"}
       HOMEPAGE_VAR_PAPERLESS_KEY=${placeholder."paperless_api_key"}
+      HOMEPAGE_VAR_VIKUNJA_KEY=${placeholder."vikunja_api_key"}
       # BEGIN-PRIVATE
+      HOMEPAGE_VAR_BAZARR_KEY=${placeholder."bazarr_api_key"}
       HOMEPAGE_VAR_PROWLARR_KEY=${placeholder."prowlarr_api_key"}
       HOMEPAGE_VAR_QBIT_PASS=${placeholder."qbittorrent_password"}
       HOMEPAGE_VAR_QBIT_USER=${placeholder."qbittorrent_username"}
@@ -69,7 +64,6 @@ in
       HOMEPAGE_VAR_SEERR_KEY=${placeholder."seerr_api_key"}
       HOMEPAGE_VAR_SONARR_KEY=${placeholder."sonarr_api_key"}
       # END-PRIVATE
-      HOMEPAGE_VAR_VIKUNJA_KEY=${placeholder."vikunja_api_key"}
     '';
   };
 
