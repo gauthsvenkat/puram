@@ -144,7 +144,7 @@ sudo sh -c 'echo ",+," | sfdisk -N2 --no-reread /dev/mmcblk0 && partprobe && res
   - (Optional) Remove old keys if they exist.
 - Using the configuration
   - (If it exists) move or delete `/etc/nixos/`.
-  - Clone this repository by running `sudo nix-shell -p git --run "git clone git@github.com:gauthsvenkat/flake.git /etc/nixos"`.
+  - Clone this repository by running `sudo nix-shell -p git --run "git clone git@github.com:gauthsvenkat/agam.git /etc/nixos"`.
   - Own the directory by `sudo chown -R <user> /etc/nixos`.
   - (If not installed through nixos-anywhere) Switch to the new configuration `sudo nixos-rebuild switch`.
 - Post configuration steps for workstations
