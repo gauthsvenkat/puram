@@ -1,0 +1,1 @@
+regex:(?ms)\n+^BEGIN-PRIVATE\n.*?^END-PRIVATE\n?==>\n

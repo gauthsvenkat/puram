@@ -1,0 +1,34 @@
+# arr stack, every historical location
+glob:*/sonarr.*
+glob:*/radarr.*
+glob:*/prowlarr.*
+glob:*/bazarr.*
+glob:*/qbittorrent.*
+glob:*/sabnzbd.*
+glob:*/recyclarr.*
+glob:*/bitmagnet.*
+glob:*/flaresolverr.*
+glob:*/seerr.*
+glob:*/gluetun.*
+modules/nixos/services/media-stack/
+
+# vpn confinement
+glob:*/elitedesk/vpn.nix
+
+# old docs and notes
+docs/
+tasks.md
+CLAUDE.md
+
+# secrets, replaced by redact/stubs/
+glob:*.tfstate
+secrets.yaml
+secrets/
+.sops.yaml
+
+how-to/redact.md
+redact/rules/
+
+# NOTE: keep last. A drop matches the name a file has at that point, so the
+# stubs must move into place after secrets/ and .sops.yaml are dropped.
+redact/stubs/==>

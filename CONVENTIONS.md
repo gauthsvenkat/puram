@@ -33,6 +33,9 @@ serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfg
 ## Comments
 
 - No comments that only repeat the code.
+<!-- BEGIN-PRIVATE -->
+- Private markers are allowed; see [`how-to/redact.md`](./how-to/redact.md).
+<!-- END-PRIVATE -->
 - Tags only for actionable items: `TODO:` work left to do, `HACK:` workaround for an upstream problem (remove when fixed), `NOTE:` something significant to know before a related action, e.g. changing the code or running a step. Other comments have no tag.
 - Backticks around code references: options, attributes, systemd directives, env vars, paths, commands, file modes. Literal values as the code writes them (`` `"pppoe"` ``). Product and package names stay plain.
 - Option paths as they read in the enclosing block (`zfs.forceImportRoot` inside `boot = { ... }`).

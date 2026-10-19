@@ -1,0 +1,47 @@
+gauthsvenkat/flake.git==>gauthsvenkat/puram.git
+gauthsvenkat/agam.git==>gauthsvenkat/puram.git
+
+myrthe.gauthsvenkat.dev==>toshiba.example.com
+gauthsvenkat_dev==>example_com
+gauthsvenkat.dev==>example.com
+
+gautham@dexterenergy.ai==>user@work.example
+dexterenergyservices.com==>work.example
+dexterenergy.ai==>work.example
+dexterenergy.atlassian.net==>work.atlassian.net
+projects/CORE/boards/2==>projects/WORK/boards/1
+dexter-general==>work-project
+core-services==>work-services
+core-api==>work-api
+
+taile02742.ts.net==>tailnet.ts.net
+100.103.236.120==>100.64.0.1
+
+5d05105b8bc3e8b4050195862def62f3==>00000000000000000000000000000000
+0e5143f7efda9cf2fe586f686716b46e==>00000000000000000000000000000001
+10445a5a9799680bc63b661afe02250f==>00000000000000000000000000000002
+943ee1261f2ab06ae847c858a00d5aea==>00000000000000000000000000000003
+a20df74d1f12ef836cede6af20378be7==>00000000000000000000000000000004
+49f36768-efc3-4a06-8c8e-0f66f870d0c4==>00000000-0000-0000-0000-000000000000
+2d397e28-c35a-4f98-b383-bc30716f2a04==>00000000-0000-0000-0000-000000000001
+d7d6258b-deca-4c90-9274-9e6dcb9fdbce==>00000000-0000-0000-0000-000000000002
+7107efed-d115-427b-9854-99a2c0470cdb==>00000000-0000-0000-0000-000000000003
+ca001cf8-4f61-48bc-aae7-cce879df35cd==>00000000-0000-0000-0000-000000000004
+SCW3Q7GNXDV4D9WPDH9H==>SCW00000000000000000
+SCWV8MQQDAATNF6Z0YFA==>SCW00000000000000001
+elitedesk-backup==>backups
+
+/dev/disk/by-id/nvme-KXG8AZNV1T02_LA_KIOXIA_83BFC0FXF6HU==>/dev/nvme0n1
+/dev/disk/by-id/nvme-PM951_NVMe_SAMSUNG_512GB_______S29PNXAH207005==>/dev/nvme0n1
+83BFC0FXF6HU==>000000000000
+S29PNXAH207005==>S0000000000000
+HNTT303506==>H000000000
+s=0x000819B9==>s=0x00000000
+
+user = "gauthsvenkat";==>user = "Anonymous";
+
+regex:(?ms)^[ \t]*# BEGIN-PRIVATE\n.*?^[ \t]*# END-PRIVATE\n==>
+regex:(?ms)^<!-- BEGIN-PRIVATE -->\n.*?^<!-- END-PRIVATE -->\n==>
+
+regex:,\n {8}"vpn-confinement": "vpn-confinement"==>
+regex:(?s),\n {4}"vpn-confinement": \{\n.*?\n {4}\}==>
