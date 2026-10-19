@@ -1,4 +1,4 @@
-# One flake to rule them all!
+# Puram
 
 A flake monorepo for everything I run:
 
@@ -6,6 +6,9 @@ A flake monorepo for everything I run:
 - my [OpenWrt](https://openwrt.org) router and switch, with [nix-openwrt-imagebuilder](https://github.com/astro/nix-openwrt-imagebuilder) and [dewclaw](https://github.com/MakiseKurisu/dewclaw)
 - external infra (Cloudflare, Scaleway, Tailscale), with [terranix](https://terranix.org) and [OpenTofu](https://opentofu.org)
 - secrets for all of the above, with [sops-nix](https://github.com/Mic92/sops-nix)
+
+> [!NOTE]
+> Agam (அகம், "interior") and puram (புறம், "exterior") are the two genres of classical Tamil poetry: private life and public life. Unless you're me, you're reading *puram*, the redacted public copy.
 
 ## Organization
 
