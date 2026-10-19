@@ -39,9 +39,9 @@ in
   # service creates. `mkForce` because servarr modules hardcode `0022` and
   # jellyfin hardcodes `0077`. We trade jellyfin's defensive hardening
   # for a uniform stack-wide policy.
+  # END-PRIVATE
   # listToAttrs :: [ { name :: String; value :: service } ] -> { serviceName::String -> service }
   #   where service = { serviceConfig :: { UMask :: String } }
-  # END-PRIVATE
   systemd.services = lib.listToAttrs (
     map (u: {
       name = u;

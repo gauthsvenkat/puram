@@ -34,7 +34,6 @@ zfs create -o mountpoint=/dontdie/data/paperless-ngx  $ENC dontdie/data/paperles
 zfs create -o mountpoint=/dontdie/data/entertainment dontdie/data/entertainment
 # END-PRIVATE
 ```
-
 <!-- BEGIN-PRIVATE -->
 `data/entertainment` is one dataset because the *arr apps hardlink between `media/` and the download dirs, and hardlinks only work within one filesystem.
 <!-- END-PRIVATE -->
