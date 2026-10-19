@@ -5,6 +5,7 @@
     curl
     duf
     fd
+    git-filter-repo
     gnumake
     jq
     libqalculate
