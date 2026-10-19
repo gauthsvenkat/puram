@@ -40,6 +40,8 @@ s=0x000819B9==>s=0x00000000
 
 user = "gauthsvenkat";==>user = "Anonymous";
 
+regex:(?m)^# Agam$==># Puram
+
 regex:(?ms)^[ \t]*# BEGIN-PRIVATE\n.*?^[ \t]*# END-PRIVATE\n==>
 regex:(?ms)^<!-- BEGIN-PRIVATE -->\n.*?^<!-- END-PRIVATE -->\n==>
 
