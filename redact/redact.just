@@ -11,4 +11,4 @@ build:
         --replace-message {{ justfile_directory() }}/redact/rules/commit-messages.txt
 
 push:
-    cd {{ out }} && git push git@github.com:gauthsvenkat/puram.git main:main
+    cd {{ out }} && git push git@github.com:gauthsvenkat/puram.git main
