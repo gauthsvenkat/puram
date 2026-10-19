@@ -16,6 +16,8 @@ in
     }) members
   );
 
+  # listToAttrs :: [ { name :: String; value :: service } ] -> { serviceName::String -> service }
+  #   where service = { serviceConfig :: { UMask :: String } }
   systemd.services = lib.listToAttrs (
     map (u: {
       name = u;
