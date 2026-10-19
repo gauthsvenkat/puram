@@ -30,4 +30,3 @@ zfs create -o mountpoint=/dontdie/services/backups    $ENC dontdie/services/back
 zfs create -o mountpoint=/dontdie/data/immich         $ENC dontdie/data/immich
 zfs create -o mountpoint=/dontdie/data/paperless-ngx  $ENC dontdie/data/paperless-ngx
 ```
-
