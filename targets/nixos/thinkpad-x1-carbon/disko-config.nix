@@ -40,7 +40,7 @@
     };
 
     # disko's test framework formats the disk with the dummy passphrase `"secretsecret"`
-    # https://github.com/nix-community/disko/blob/master/lib/tests.nix
+    # https://github.com/nix-community/disko/blob/725ea35/lib/tests.nix#L364
     tests.bootCommands = ''
       machine.wait_for_console_text("passphrase for disk")
       machine.send_console("secretsecret\n")
