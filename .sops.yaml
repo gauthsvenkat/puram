@@ -2,6 +2,7 @@ keys:
   - &elitedesk age1x5fkemnqjf5ta60q83s04pjllrpk35lfjxg2v4jeuhky385emc9svrc6au
   - &raspi400 age172kl6q88tfp87p838cj49ghhq2nhewlet0j8n92ys9gpkfg99cmqrkl0wd
   - &raspi5 age1yp4wd48rxsal7qupvgcj88wf99d3nfe33v6jgglqqudgue6wt4uq2qgwp5
+  - &sandisk-ultra age1ly69rtyrdq9d22krwyyqeunqsvavf0ke0vudxjuvhua6urhgdg9sru7myg
   - &thinkpad-t14s age1dp79srrk65336pja4f9h7ss3n33cma7l4u7spwkm0avtk63ttsfs6cql0z
   - &thinkpad-x1-carbon age1awzy9trqped05z2yc4eaaz6wn3ddmqcn8tnvxctfach47wrkecnqwyau7z
   - &thunderdome age17fetz7rj5rkc89ts5l2qde3cpwswy5pkgs52czaykv8en5lw6cuqf3pa9s
@@ -13,6 +14,7 @@ creation_rules:
         - *elitedesk
         - *raspi400
         - *raspi5
+        - *sandisk-ultra
         - *thinkpad-t14s
         - *thinkpad-x1-carbon
         - *thunderdome
@@ -41,6 +43,7 @@ creation_rules:
         - *elitedesk
         - *raspi400
         - *raspi5
+        - *sandisk-ultra
         - *thinkpad-t14s
         - *thinkpad-x1-carbon
         - *thunderdome

@@ -124,6 +124,29 @@
         "type": "github"
       }
     },
+    "impermanence": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792503832,
+        "narHash": "sha256-WsqPR04nPS1bi5bYva04cJJcJyHw7x/rbaJmoXMzF04=",
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "rev": "936ced36ecd25fcbd9b4789184b88aa2e4c2a901",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "type": "github"
+      }
+    },
     "import-tree": {
       "locked": {
         "lastModified": 1784254960,
@@ -296,6 +319,7 @@
         "dewclaw": "dewclaw",
         "disko": "disko",
         "home-manager": "home-manager",
+        "impermanence": "impermanence",
         "niri": "niri",
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
