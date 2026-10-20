@@ -9,11 +9,7 @@ The layout is in [README.md](./README.md); how-to guides are in [`how-to/`](./ho
 # Workflow
 
 - `just --list --list-submodules` shows all recipes; plain `--list` hides the platform modules.
-- Check that the flake evaluates with `just check-fast` (`nix flake check`).
-
-# Known issues
-
-- `just check-fast` can fail on the OpenWrt images with a hash mismatch when OpenWrt republished its package index. This is expected and not caused by your change; see the HACK in [`justfile`](./justfile).
+- Check that the flake evaluates with `just check`. It skips the OpenWrt images; see the HACK in [`justfile`](./justfile).
 
 # Conventions
 
