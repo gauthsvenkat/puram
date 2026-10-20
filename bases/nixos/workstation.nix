@@ -11,7 +11,7 @@ let
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
   # :: { hostname::String -> targetCfg }, hosts with an sshHostKey
   serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfgs;
-  tailnet = "tailnet.ts.net";
+  tailnet = allTargetCfgs."infra".tailscale.dnsName;
   router = allTargetCfgs."flint-2";
 in
 {
@@ -29,7 +29,10 @@ in
     # mapAttrs :: (hostname::String -> targetCfg -> knownHost) -> { hostname::String -> targetCfg } -> { hostname::String -> knownHost }
     #   where knownHost = { extraHostNames :: [ String ]; publicKey :: String }
     knownHosts = lib.mapAttrs (hostName: targetCfg: {
-      extraHostNames = [ "${hostName}.${tailnet}" ];
+      extraHostNames = [
+        "${hostName}.lan"
+        "${hostName}.${tailnet}"
+      ];
       publicKey = targetCfg.sshHostKey;
     }) serverCfgs;
     startAgent = true;
@@ -97,16 +100,26 @@ in
         enable = true;
         enableDefaultConfig = false;
         settings =
-          lib.concatMapAttrs (hostName: targetCfg: {
-            ${hostName} = {
-              HostName = "${hostName}.${tailnet}";
-              User = targetCfg.username;
-            };
-            "${hostName}-root" = {
-              HostName = "${hostName}.${tailnet}";
-              User = "root";
-            };
-          }) serverCfgs
+          let
+            # concatMapAttrs :: (hostname::String -> targetCfg -> { alias::String -> sshHost }) -> { hostname::String -> targetCfg } -> { alias::String -> sshHost }
+            #   where sshHost = { HostName :: String; User :: String }
+            # :: { alias::String -> sshHost }, `<hostname>`, `<hostname>-root` and `<hostname>-ts` per server
+            serverAliases = lib.concatMapAttrs (hostName: targetCfg: {
+              ${hostName} = {
+                HostName = "${hostName}.lan";
+                User = targetCfg.username;
+              };
+              "${hostName}-root" = {
+                HostName = "${hostName}.lan";
+                User = "root";
+              };
+              "${hostName}-ts" = {
+                HostName = "${hostName}.${tailnet}";
+                User = targetCfg.username;
+              };
+            }) serverCfgs;
+          in
+          serverAliases
           // {
             ${router.hostname} = {
               HostName = router.lan.ip;
