@@ -147,5 +147,3 @@ sudo sh -c 'echo ",+," | sfdisk -N2 --no-reread /dev/mmcblk0 && partprobe && res
   - Clone this repository by running `sudo nix-shell -p git --run "git clone git@github.com:gauthsvenkat/puram.git /etc/nixos"`.
   - Own the directory by `sudo chown -R <user> /etc/nixos`.
   - (If not installed through nixos-anywhere) Switch to the new configuration `sudo nixos-rebuild switch`.
-- Post configuration steps for workstations
-  - Clone neovim configuration: `git clone git@github.com:gauthsvenkat/nvim.git ~/.config/nvim/`.
