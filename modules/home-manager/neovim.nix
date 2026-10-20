@@ -1,9 +1,11 @@
 {
+  config,
   lib,
   pkgs,
   ...
 }:
 let
+  inherit (config.lib.file) mkOutOfStoreSymlink;
   pkg = pkgs.neovim;
 in
 {
@@ -27,9 +29,11 @@ in
   programs = {
     neovim = {
       enable = true;
-      # Avoid writing `init.lua` to `~/.config/nvim/` - managed imperatively via a separate git repo.
+      # Avoid writing `init.lua` to `~/.config/nvim/`, which links to `assets/configs/nvim/`.
       sideloadInitLua = true;
     };
     zsh.shellAliases."v" = lib.getExe pkg;
   };
+
+  xdg.configFile."nvim".source = mkOutOfStoreSymlink "/etc/nixos/assets/configs/nvim";
 }
