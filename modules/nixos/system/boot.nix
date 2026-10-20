@@ -3,8 +3,8 @@
   boot.loader = {
     systemd-boot = {
       enable = lib.mkDefault true;
-      configurationLimit = 3;
+      configurationLimit = lib.mkDefault 3;
     };
-    efi.canTouchEfiVariables = true;
+    efi.canTouchEfiVariables = lib.mkDefault true;
   };
 }
