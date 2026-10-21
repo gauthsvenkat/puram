@@ -31,12 +31,8 @@ sudo nix run github:nix-community/disko/725ea35#disko-install -- \
   --extra-files /tmp/extra-files/sandisk-ultra/nix/persist/etc/ssh /nix/persist/etc/ssh
 
 # NOTE: disko-install seems to leave the LUKS mapping open; close it before unplugging.
-sudo nix run nixpkgs#cryptsetup -- close decrypted
+sudo nix run nixpkgs#cryptsetup -- close sandisk-decrypted
 sudo rm /tmp/secret.key
 ```
 
 The stick is slow at small writes, so copying the store takes a while.
-
-## TODO
-
-- Try f2fs instead of ext4 for `/nix`; benchmark both with fio first.
