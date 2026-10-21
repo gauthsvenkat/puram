@@ -1,6 +1,7 @@
 { allTargetCfgs, lib, ... }:
 let
   inherit (allTargetCfgs."elitedesk") tailnetIp;
+  router = allTargetCfgs."flint-2";
 in
 {
   data.tailscale_device."elitedesk".hostname = "elitedesk";
@@ -50,6 +51,12 @@ in
           { address = tailnetIp; }
           { address = "1.1.1.1"; }
           { address = "9.9.9.9"; }
+        ];
+        split_dns = [
+          {
+            domain = "lan";
+            nameservers = [ { address = router.lan.ip; } ];
+          }
         ];
         # API returns `nameservers` as an unordered set; ignore phantom reorder diffs.
         # NOTE: To change the list deliberately: comment this out for one apply.
