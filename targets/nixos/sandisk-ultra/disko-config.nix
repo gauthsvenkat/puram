@@ -26,12 +26,12 @@
                 type = "luks";
                 # decrypted device is mapped at `/dev/mapper/<name>`
                 # https://man7.org/linux/man-pages/man8/cryptsetup-open.8.html
-                name = "decrypted";
+                name = "sandisk-decrypted";
                 passwordFile = "/tmp/secret.key";
                 settings.allowDiscards = true;
                 content = {
                   type = "filesystem";
-                  format = "ext4";
+                  format = "f2fs";
                   mountpoint = "/nix";
                 };
               };
