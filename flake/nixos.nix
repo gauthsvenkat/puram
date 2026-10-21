@@ -16,7 +16,18 @@ let
       specialArgs = {
         inherit allTargetCfgs targetCfg inputs;
       };
-      modules = [ ../targets/nixos/${name} ];
+      modules = [
+        ../targets/nixos/${name}
+        {
+          # HACK: Distrust the roots of the compromised eMudhra intermediates
+          # (https://emudhra.we-have-a-problem.com/). Remove once `pkgs.cacert`
+          # is NSS 3.131.1 or later.
+          security.pki.caCertificateBlacklist = [
+            "Comodo AAA Services root"
+            "emSign ECC Root CA - G3"
+          ];
+        }
+      ];
     };
 in
 {
