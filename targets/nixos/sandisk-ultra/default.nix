@@ -21,12 +21,14 @@ in
   ];
 
   environment.systemPackages = with pkgs; [
+    e2fsprogs
     fio
     gsmartcontrol
     lshw
     memtester
     smartmontools
     stress-ng
+    tmux
     usbutils
   ];
 
