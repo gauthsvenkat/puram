@@ -12,10 +12,6 @@ in
       password = "internet";
       ipv6 = "auto";
       peerdns = false;
-      dns = [
-        "9.9.9.9"
-        "1.1.1.1"
-      ];
     };
 
     dhcp.dhcp.wan = {

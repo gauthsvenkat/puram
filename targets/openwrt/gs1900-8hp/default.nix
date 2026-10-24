@@ -1,4 +1,4 @@
-{ targetCfg, workstationKeys }:
+{ targetCfg, workstationKeys, ... }:
 {
   openwrt.${targetCfg.hostname} = {
     _module.args = { inherit targetCfg workstationKeys; };
