@@ -25,17 +25,21 @@ in
     ./system.nix
   ];
 
-  programs.ssh = {
-    # mapAttrs :: (hostname::String -> targetCfg -> knownHost) -> { hostname::String -> targetCfg } -> { hostname::String -> knownHost }
-    #   where knownHost = { extraHostNames :: [ String ]; publicKey :: String }
-    knownHosts = lib.mapAttrs (hostName: targetCfg: {
-      extraHostNames = [
-        "${hostName}.lan"
-        "${hostName}.${tailnet}"
-      ];
-      publicKey = targetCfg.sshHostKey;
-    }) serverCfgs;
-    startAgent = true;
+  programs = {
+    localsend.enable = true;
+
+    ssh = {
+      # mapAttrs :: (hostname::String -> targetCfg -> knownHost) -> { hostname::String -> targetCfg } -> { hostname::String -> knownHost }
+      #   where knownHost = { extraHostNames :: [ String ]; publicKey :: String }
+      knownHosts = lib.mapAttrs (hostName: targetCfg: {
+        extraHostNames = [
+          "${hostName}.lan"
+          "${hostName}.${tailnet}"
+        ];
+        publicKey = targetCfg.sshHostKey;
+      }) serverCfgs;
+      startAgent = true;
+    };
   };
 
   services = {
