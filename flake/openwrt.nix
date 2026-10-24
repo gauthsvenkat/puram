@@ -36,7 +36,9 @@ let
       deploy =
         (import inputs.dewclaw {
           inherit pkgs;
-          configuration = import ../targets/openwrt/${name} { inherit targetCfg workstationKeys; };
+          configuration = import ../targets/openwrt/${name} {
+            inherit allTargetCfgs targetCfg workstationKeys;
+          };
         }).targets.${name};
     };
 in

@@ -46,21 +46,13 @@ in
         magic_dns = true;
         override_local_dns = true;
         search_paths = [ ];
-        # TODO: Clients query these in parallel, so the public resolvers can bypass AdGuard.
-        nameservers = [
-          { address = tailnetIp; }
-          { address = "1.1.1.1"; }
-          { address = "9.9.9.9"; }
-        ];
+        nameservers = [ { address = tailnetIp; } ];
         split_dns = [
           {
             domain = "lan";
             nameservers = [ { address = router.lan.ip; } ];
           }
         ];
-        # API returns `nameservers` as an unordered set; ignore phantom reorder diffs.
-        # NOTE: To change the list deliberately: comment this out for one apply.
-        lifecycle.ignore_changes = [ "nameservers" ];
       };
     };
 }

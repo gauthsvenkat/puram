@@ -9,6 +9,10 @@ rec {
   zpool = "dontdie";
   domain = "gauthsvenkat.dev";
   tailnetIp = "100.103.236.120";
+  lan = {
+    ip = "192.168.1.3";
+    mac = "ac:e2:d3:14:d9:27";
+  };
   paths = rec {
     config = "/var/lib";
     postgres = "${config}/postgresql";

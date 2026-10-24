@@ -5,6 +5,8 @@ myrthe.gauthsvenkat.dev==>toshiba.example.com
 gauthsvenkat_dev==>example_com
 gauthsvenkat.dev==>example.com
 
+ac:e2:d3:14:d9:27==>00:00:5e:00:53:01
+
 gautham@dexterenergy.ai==>user@work.example
 dexterenergyservices.com==>work.example
 dexterenergy.ai==>work.example
