@@ -4,7 +4,7 @@
   ...
 }:
 let
-  inherit (targetCfg) username zpool;
+  inherit (targetCfg) username;
 in
 {
   imports = [
@@ -15,9 +15,7 @@ in
 
     ../../../modules/nixos/hardware/nvidia.nix
 
-    ../../../modules/nixos/services/sanoid.nix
     ../../../modules/nixos/services/tailscale.nix
-    ../../../modules/nixos/services/zfs.nix
 
     ./hardware-configuration.nix
     ./monitors.nix
@@ -34,8 +32,6 @@ in
       "nvidia_modeset"
       "nvidia_uvm"
     ];
-
-    zfs.extraPools = [ zpool ];
   };
 
   services = {
@@ -45,15 +41,6 @@ in
         user = username;
       };
       defaultSession = "niri";
-    };
-
-    sanoid.datasets = {
-      "${zpool}" = {
-        recursive = true;
-        process_children_only = true;
-        use_template = [ "default" ];
-      };
-      "${zpool}/cache".autosnap = false;
     };
     ratbagd.enable = true;
   };
