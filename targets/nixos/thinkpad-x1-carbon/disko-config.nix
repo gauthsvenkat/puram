@@ -1,4 +1,7 @@
-{ inputs, ... }:
+{ inputs, targetCfg, ... }:
+let
+  inherit (targetCfg) hostname;
+in
 {
   imports = [ inputs.disko.nixosModules.disko ];
 
@@ -25,7 +28,7 @@
               type = "luks";
               # decrypted device is mapped at `/dev/mapper/<name>`
               # https://man7.org/linux/man-pages/man8/cryptsetup-open.8.html
-              name = "decrypted";
+              name = "decrypted-${hostname}";
               passwordFile = "/tmp/secret.key";
               settings.allowDiscards = true;
               content = {
