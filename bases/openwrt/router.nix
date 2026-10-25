@@ -9,6 +9,7 @@
     ../../modules/openwrt/lan-dhcp.nix
     ../../modules/openwrt/luci.nix
     ../../modules/openwrt/system.nix
+    ../../modules/openwrt/tang.nix
     ../../modules/openwrt/wan.nix
     ../../modules/openwrt/wifi.nix
   ];
