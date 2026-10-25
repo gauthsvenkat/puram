@@ -5,7 +5,8 @@
 {
   home.packages = with pkgs; [
     age
-    rpi-imager
     jellyfin-desktop
+    rpi-imager
+    signal-desktop
   ];
 }
