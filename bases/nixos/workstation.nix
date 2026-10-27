@@ -9,13 +9,12 @@
   ...
 }:
 let
-  inherit (flakeCfg) lanDomain router tailnetDomain;
+  inherit (flakeCfg) lanDomain tailnetDomain;
   inherit (targetCfg) username homeDirectory;
   sshKey = "${homeDirectory}/.ssh/id_ed25519";
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
   # :: { hostname::String -> targetCfg }, hosts with an sshHostKey
   serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) targetCfgs.nixos;
-  routerCfg = targetCfgs.openwrt.${router};
 in
 {
   imports = [
@@ -125,14 +124,18 @@ in
                 User = targetCfg.username;
               };
             }) serverCfgs;
+
+            # mapAttrs :: (hostname::String -> targetCfg -> sshHost) -> { hostname::String -> targetCfg } -> { hostname::String -> sshHost }
+            #   where sshHost = { HostName, HostKeyAlias, User :: String }
+            networkDeviceAliases = lib.mapAttrs (hostName: targetCfg: {
+              HostName = targetCfg.lan.ip;
+              HostKeyAlias = hostName;
+              User = "root";
+            }) targetCfgs.openwrt;
           in
           serverAliases
+          // networkDeviceAliases
           // {
-            ${router} = {
-              HostName = routerCfg.lan.ip;
-              HostKeyAlias = router;
-              User = "root";
-            };
             # Reuse one connection for consecutive git operations.
             "github.com" = {
               ControlMaster = "auto";
