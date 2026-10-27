@@ -16,7 +16,7 @@ The organization was originally inspired by the [polylith](https://polylith.gitb
 
 - [modules](./modules/): are the building blocks. Each module handles one related set of configurations and never imports another module from this repo.
   - Usually one module per program or service, e.g. [`services/caddy.nix`](./modules/nixos/services/caddy.nix) for `services.caddy`.
-  - Some group by topic instead, e.g. [`system/`](./modules/nixos/system/) or the [`openwrt`](./modules/openwrt/) ones.
+  - Some group by topic instead, e.g. [`system/`](./modules/nixos/system/).
   - Bigger setups get a folder split by concern, so downstream can pick parts, e.g. [`niri/`](./modules/nixos/niri/).
 - [bases](./bases/): glue that imports related `modules/` and adds config shared by one or more `targets/`, e.g. a [niri workstation](./bases/nixos/niri.nix) or a [server](./bases/nixos/server.nix).
 - [targets](./targets/): are the deployable units, corresponding to my machines, network devices and external infrastructure. Each one imports one or more bases and declares its own options in its `targetCfg.nix`.
