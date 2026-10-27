@@ -1,10 +1,12 @@
 {
+  openwrtCfg,
   targetCfg,
   pkgs,
   workstationKeys,
 }:
 let
   inherit (targetCfg) hostname lan;
+  inherit (openwrtCfg) timezone zonename;
   inherit (pkgs) lib;
 
   bootstrap = pkgs.writeText "${hostname}-bootstrap" ''
@@ -14,8 +16,8 @@ let
 
     uci -q batch <<EOF
     set system.@system[0].hostname='${hostname}'
-    set system.@system[0].zonename='Europe/Amsterdam'
-    set system.@system[0].timezone='CET-1CEST,M3.5.0,M10.5.0/3'
+    set system.@system[0].zonename='${zonename}'
+    set system.@system[0].timezone='${timezone}'
 
     set dropbear.@dropbear[0].PasswordAuth='off'
     set dropbear.@dropbear[0].RootPasswordAuth='off'

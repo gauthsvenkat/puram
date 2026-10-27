@@ -1,15 +1,14 @@
-{ targetCfg, ... }:
+{ openwrtCfg, targetCfg, ... }:
 let
   inherit (targetCfg) wan;
+  inherit (openwrtCfg) pppoe;
 in
 {
   uci.settings = {
-    # KPN accepts any credentials; `internet` is their documented placeholder.
     network.interface.wan = {
-      inherit (wan) device;
+      device = "${wan.device}.${toString pppoe.vid}";
+      inherit (pppoe) password username;
       proto = "pppoe";
-      username = "internet";
-      password = "internet";
       ipv6 = "auto";
       peerdns = false;
     };

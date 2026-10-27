@@ -1,7 +1,3 @@
-{ allTargetCfgs, ... }:
-let
-  elitedesk = allTargetCfgs."elitedesk".lan;
-in
 {
   uci.settings = {
     network.interface.lan.ip6assign = 60;
@@ -20,13 +16,5 @@ in
         "other-config"
       ];
     };
-
-    # static leases
-    dhcp.host = [
-      {
-        name = "elitedesk";
-        inherit (elitedesk) ip mac;
-      }
-    ];
   };
 }
