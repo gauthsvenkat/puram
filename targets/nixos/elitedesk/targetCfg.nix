@@ -10,7 +10,7 @@ rec {
   offsiteBucket = "backups";
   tailnetIp = "100.64.0.1";
   staticLease = {
-    ip = "192.168.1.3";
+    ip = "192.168.20.3";
     mac = "00:00:5e:00:53:01";
   };
   paths = rec {
