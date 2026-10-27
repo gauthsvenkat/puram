@@ -1,7 +1,9 @@
 {
-  config,
-  targetCfg,
   inputs,
+
+  targetCfg,
+
+  config,
   lib,
   ...
 }:

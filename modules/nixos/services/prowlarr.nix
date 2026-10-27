@@ -1,6 +1,7 @@
 {
-  config,
   targetCfg,
+
+  config,
   lib,
   ...
 }:

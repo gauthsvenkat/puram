@@ -1,4 +1,4 @@
-{ config, targetCfg, ... }:
+{ targetCfg, config, ... }:
 let
   inherit (targetCfg) username;
   inherit (config.sops) secrets;
