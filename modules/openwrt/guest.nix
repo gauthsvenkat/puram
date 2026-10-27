@@ -26,8 +26,8 @@ in
       leasetime = "1h";
     };
 
-    wireless.wifi-iface."guest_${guest.radio}" = {
-      device = guest.radio;
+    wireless.wifi-iface."guest_radio1" = {
+      device = "radio1"; # The 5 GHz radio.
       mode = "ap";
       network = "guest";
       ssid._secret = "guest_wifi_ssid";

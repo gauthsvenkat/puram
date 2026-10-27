@@ -1,14 +1,11 @@
-rec {
+{
   hostname = "flint-2";
-  profile = "glinet_gl-mt6000";
-  release = "25.12.5";
-  target = "mediatek";
-  variant = "filogic";
 
-  setup = rec {
-    radio = "radio0"; # 2.4Ghz
-    ssid = "${hostname}-setup";
-    psk = ssid;
+  image = {
+    profile = "glinet_gl-mt6000";
+    release = "25.12.5";
+    target = "mediatek";
+    variant = "filogic";
   };
 
   lan = {
@@ -22,13 +19,7 @@ rec {
     ];
   };
 
-  wan = rec {
-    vid = 6;
-    device = "eth1.${toString vid}";
-  };
+  wan.device = "eth1";
 
-  guest = {
-    ip = "192.168.30.1";
-    radio = "radio1"; # 5Ghz
-  };
+  guest.ip = "192.168.30.1";
 }

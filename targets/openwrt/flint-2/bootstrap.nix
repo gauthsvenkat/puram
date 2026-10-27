@@ -1,11 +1,14 @@
 {
+  openwrtCfg,
   targetCfg,
   pkgs,
   workstationKeys,
 }:
 let
-  inherit (targetCfg) hostname setup wan;
+  inherit (targetCfg) hostname wan;
+  inherit (openwrtCfg) pppoe timezone zonename;
   inherit (pkgs) lib;
+  setupSsid = "${hostname}-setup";
 
   bootstrap = pkgs.writeText "${hostname}-bootstrap" ''
     #!/bin/sh
@@ -14,24 +17,24 @@ let
 
     uci -q batch <<EOF
     set system.@system[0].hostname='${hostname}'
-    set system.@system[0].zonename='Europe/Amsterdam'
-    set system.@system[0].timezone='CET-1CEST,M3.5.0,M10.5.0/3'
+    set system.@system[0].zonename='${zonename}'
+    set system.@system[0].timezone='${timezone}'
 
     set dropbear.@dropbear[0].PasswordAuth='off'
     set dropbear.@dropbear[0].RootPasswordAuth='off'
 
     delete network.wan6
 
-    set network.wan.device='${wan.device}'
+    set network.wan.device='${wan.device}.${toString pppoe.vid}'
     set network.wan.proto='pppoe'
-    set network.wan.username='internet'
-    set network.wan.password='internet'
+    set network.wan.username='${pppoe.username}'
+    set network.wan.password='${pppoe.password}'
     set network.wan.ipv6='auto'
 
-    set wireless.default_${setup.radio}.disabled='0'
-    set wireless.default_${setup.radio}.ssid='${setup.ssid}'
-    set wireless.default_${setup.radio}.encryption='psk2'
-    set wireless.default_${setup.radio}.key='${setup.psk}'
+    set wireless.default_radio0.disabled='0'
+    set wireless.default_radio0.ssid='${setupSsid}'
+    set wireless.default_radio0.encryption='psk2'
+    set wireless.default_radio0.key='${setupSsid}'
 
     commit
     EOF
