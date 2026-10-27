@@ -14,6 +14,8 @@ let
       password = "internet";
       vid = 6;
     };
+    country = "NL";
+    release = "25.12.5";
     timezone = "CET-1CEST,M3.5.0,M10.5.0/3";
     zonename = "Europe/Amsterdam";
   };
@@ -32,6 +34,7 @@ let
         targetCfg.image
         // {
           inherit pkgs;
+          inherit (openwrtCfg) release;
           files = import ../targets/openwrt/${name}/bootstrap.nix {
             inherit
               openwrtCfg
