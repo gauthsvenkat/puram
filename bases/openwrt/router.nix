@@ -1,6 +1,7 @@
 {
   imports = [
     ../../modules/openwrt/guest.nix
+    ../../modules/openwrt/homelab.nix
     ../../modules/openwrt/lan/dhcp.nix
     ../../modules/openwrt/lan/firewall.nix
     ../../modules/openwrt/lan/wifi.nix

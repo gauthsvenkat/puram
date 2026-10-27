@@ -5,12 +5,12 @@
     profile = "zyxel_gs1900-8hp-b1";
     target = "realtek";
     variant = "rtl838x";
-    # The image ships `firewall4`; a switch inside the lan has nothing to filter.
+    # The image ships `firewall4`; a switch has nothing to filter.
     disabledServices = [ "firewall" ];
   };
 
   lan = {
-    ip = "192.168.1.2";
+    ip = "192.168.20.2";
     ports = [
       "lan1"
       "lan2"

@@ -15,7 +15,8 @@ let
       vid = 6;
     };
     country = "NL";
-    gateway = targetCfgs.openwrt.${flakeCfg.router}.lan.ip;
+    # The router's address on the network the switch is on.
+    gateway = targetCfgs.openwrt.${flakeCfg.router}.homelab.ip;
     release = "25.12.5";
     timezone = "CET-1CEST,M3.5.0,M10.5.0/3";
     zonename = flakeCfg.timezone;
