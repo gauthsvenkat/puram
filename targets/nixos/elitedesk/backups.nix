@@ -1,14 +1,14 @@
 {
-  allTargetCfgs,
   config,
   targetCfg,
+  targetCfgs,
   lib,
   pkgs,
   ...
 }:
 let
   inherit (targetCfg) offsiteBucket paths;
-  inherit (allTargetCfgs."infra".scaleway) region;
+  inherit (targetCfgs.terranix."infra".scaleway) region;
   inherit (config.sops) placeholder secrets;
 in
 {

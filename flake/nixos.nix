@@ -1,8 +1,7 @@
 {
-  allTargetCfgs,
-  flakeCfg,
   inputs,
-  nixosTargets,
+  flakeCfg,
+  targetCfgs,
 }:
 let
   inherit (inputs.nixpkgs) lib;
@@ -14,17 +13,19 @@ let
   mkNixos =
     name:
     let
-      targetCfg = allTargetCfgs.${name};
+      targetCfg = targetCfgs.nixos.${name};
     in
     lib.nixosSystem {
       inherit (targetCfg) system;
       specialArgs = {
         inherit
-          allTargetCfgs
+          inputs
+
           flakeCfg
           nixosCfg
           targetCfg
-          inputs
+
+          targetCfgs
           ;
       };
       modules = [
@@ -42,6 +43,6 @@ let
     };
 in
 {
-  # genAttrs :: [ hostname::String ] -> (hostname::String -> nixosSystem) -> { hostname::String -> nixosSystem }
-  nixosConfigurations = lib.genAttrs nixosTargets mkNixos;
+  # mapAttrs :: (hostname::String -> targetCfg -> nixosSystem) -> { hostname::String -> targetCfg } -> { hostname::String -> nixosSystem }
+  nixosConfigurations = lib.mapAttrs (name: _: mkNixos name) targetCfgs.nixos;
 }

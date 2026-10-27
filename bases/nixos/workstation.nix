@@ -1,7 +1,7 @@
 {
-  allTargetCfgs,
   flakeCfg,
   targetCfg,
+  targetCfgs,
   lib,
   pkgs,
   ...
@@ -12,8 +12,8 @@ let
   sshKey = "${homeDirectory}/.ssh/id_ed25519";
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
   # :: { hostname::String -> targetCfg }, hosts with an sshHostKey
-  serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfgs;
-  routerCfg = allTargetCfgs.${router};
+  serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) targetCfgs.nixos;
+  routerCfg = targetCfgs.openwrt.${router};
 in
 {
   imports = [

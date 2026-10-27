@@ -1,6 +1,6 @@
 {
-  allTargetCfgs,
   targetCfg,
+  targetCfgs,
   lib,
   ...
 }:
@@ -73,7 +73,7 @@ in
     };
 
     scaleway_object_bucket."elitedesk_backup" = {
-      name = allTargetCfgs."elitedesk".offsiteBucket;
+      name = targetCfgs.nixos."elitedesk".offsiteBucket;
       force_destroy = false;
       # NOTE: Only clean up uploads that never completed (interrupted restic runs).
       # Never add object expiration: restic owns deletion, and age-based expiry
