@@ -3,7 +3,6 @@
 
   image = {
     profile = "zyxel_gs1900-8hp-b1";
-    release = "25.12.5";
     target = "realtek";
     variant = "rtl838x";
     # The image ships `firewall4`; a switch inside the lan has nothing to filter.

@@ -3,7 +3,6 @@
 
   image = {
     profile = "glinet_gl-mt6000";
-    release = "25.12.5";
     target = "mediatek";
     variant = "filogic";
   };
