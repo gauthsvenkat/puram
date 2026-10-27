@@ -1,7 +1,7 @@
 {
-  allTargetCfgs,
   flakeCfg,
   lib,
+  targetCfgs,
   ...
 }:
 let
@@ -40,6 +40,6 @@ in
     host = lib.mapAttrsToList (name: targetCfg: {
       inherit name;
       inherit (targetCfg.staticLease) ip mac;
-    }) (lib.filterAttrs (_: targetCfg: targetCfg ? staticLease) allTargetCfgs);
+    }) (lib.filterAttrs (_: targetCfg: targetCfg ? staticLease) targetCfgs.nixos);
   };
 }

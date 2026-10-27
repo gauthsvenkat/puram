@@ -1,8 +1,7 @@
 {
-  allTargetCfgs,
-  flakeCfg,
   inputs,
-  openwrtTargets,
+  flakeCfg,
+  targetCfgs,
 }:
 let
   pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux";
@@ -16,7 +15,7 @@ let
       vid = 6;
     };
     country = "NL";
-    gateway = allTargetCfgs.${flakeCfg.router}.lan.ip;
+    gateway = targetCfgs.openwrt.${flakeCfg.router}.lan.ip;
     release = "25.12.5";
     timezone = "CET-1CEST,M3.5.0,M10.5.0/3";
     zonename = flakeCfg.timezone;
@@ -25,7 +24,7 @@ let
   mkOpenwrt =
     name:
     let
-      targetCfg = allTargetCfgs.${name};
+      targetCfg = targetCfgs.openwrt.${name};
     in
     {
       image = inputs.openwrt-imagebuilder.lib.build (
@@ -37,8 +36,9 @@ let
             inherit
               flakeCfg
               openwrtCfg
-              pkgs
               targetCfg
+
+              pkgs
               ;
           };
           packages = [
@@ -53,10 +53,11 @@ let
           inherit pkgs;
           configuration = import ../targets/openwrt/${name} {
             inherit
-              allTargetCfgs
               flakeCfg
               openwrtCfg
               targetCfg
+
+              targetCfgs
               ;
           };
         }).targets.${name};
@@ -69,12 +70,12 @@ in
     map (
       name:
       let
-        router = mkOpenwrt name;
+        networkDevice = mkOpenwrt name;
       in
       {
-        "${name}-openwrt-image" = router.image;
-        "${name}-deploy" = router.deploy;
+        "${name}-openwrt-image" = networkDevice.image;
+        "${name}-deploy" = networkDevice.deploy;
       }
-    ) openwrtTargets
+    ) (lib.attrNames targetCfgs.openwrt)
   );
 }

@@ -1,13 +1,13 @@
 {
-  allTargetCfgs,
   flakeCfg,
   targetCfg,
+  targetCfgs,
   lib,
   ...
 }:
 let
   inherit (flakeCfg) domain homeserver;
-  inherit (allTargetCfgs.${homeserver}) tailnetIp;
+  inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
   inherit (targetCfg.cloudflare) accountId;
   zoneId = lib.tf.ref "cloudflare_zone.example_com.id";
 in

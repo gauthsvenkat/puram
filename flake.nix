@@ -58,25 +58,26 @@
       inherit (nixpkgs) lib;
 
       # readDir :: Path -> { hostname::String -> fileType::String }, always "directory"
-      # attrNames :: { hostname::String -> fileType::String } -> [ hostname::String ]
-      nixosTargets = lib.attrNames (lib.readDir ./targets/nixos);
-      openwrtTargets = lib.attrNames (lib.readDir ./targets/openwrt);
-
-      # genAttrs :: [ hostname::String ] -> (hostname::String -> targetCfg) -> { hostname::String -> targetCfg }
-      allTargetCfgs =
-        lib.genAttrs nixosTargets (name: import ./targets/nixos/${name}/targetCfg.nix)
-        // lib.genAttrs openwrtTargets (name: import ./targets/openwrt/${name}/targetCfg.nix)
-        // {
-          infra = import ./targets/terranix/infra/targetCfg.nix;
-        };
+      # mapAttrs :: (hostname::String -> fileType::String -> targetCfg) -> { hostname::String -> fileType::String } -> { hostname::String -> targetCfg }
+      targetCfgs = {
+        nixos = lib.mapAttrs (name: _: import ./targets/nixos/${name}/targetCfg.nix) (
+          lib.readDir ./targets/nixos
+        );
+        openwrt = lib.mapAttrs (name: _: import ./targets/openwrt/${name}/targetCfg.nix) (
+          lib.readDir ./targets/openwrt
+        );
+        terranix = lib.mapAttrs (name: _: import ./targets/terranix/${name}/targetCfg.nix) (
+          lib.readDir ./targets/terranix
+        );
+      };
 
       flakeCfg = rec {
         router = "flint-2";
         homeserver = "elitedesk";
 
         dns = {
-          lanIp = allTargetCfgs.${homeserver}.staticLease.ip;
-          inherit (allTargetCfgs.${homeserver}) tailnetIp;
+          lanIp = targetCfgs.nixos.${homeserver}.staticLease.ip;
+          inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
         };
 
         domain = "example.com";
@@ -88,7 +89,7 @@
 
         # catAttrs :: attrName::String -> [ targetCfg ] -> [ sshUserKey::String ]
         # :: [ sshUserKey::String ], one per host that has one
-        workstationKeys = lib.catAttrs "sshUserKey" (lib.attrValues allTargetCfgs);
+        workstationKeys = lib.catAttrs "sshUserKey" (lib.attrValues targetCfgs.nixos);
       };
 
       # recursiveUpdate :: outputs -> outputs -> outputs
@@ -97,21 +98,25 @@
       parts = [
         (import ./flake/nixos.nix {
           inherit
-            allTargetCfgs
-            flakeCfg
             inputs
-            nixosTargets
+            flakeCfg
+            targetCfgs
             ;
         })
         (import ./flake/openwrt.nix {
           inherit
-            allTargetCfgs
-            flakeCfg
             inputs
-            openwrtTargets
+            flakeCfg
+            targetCfgs
             ;
         })
-        (import ./flake/terranix.nix { inherit allTargetCfgs flakeCfg inputs; })
+        (import ./flake/terranix.nix {
+          inherit
+            inputs
+            flakeCfg
+            targetCfgs
+            ;
+        })
       ];
     in
     lib.foldl' lib.recursiveUpdate { } parts;
