@@ -1,7 +1,7 @@
 {
-  allTargetCfgs,
-  flakeCfg,
   inputs,
+  flakeCfg,
+  targetCfgs,
 }:
 let
   pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux";
@@ -10,11 +10,18 @@ let
   mkTerranix =
     name:
     let
-      targetCfg = allTargetCfgs.${name};
+      targetCfg = targetCfgs.terranix.${name};
     in
     inputs.terranix.lib.terranixConfiguration {
       inherit pkgs;
-      extraArgs = { inherit allTargetCfgs flakeCfg targetCfg; };
+      extraArgs = {
+        inherit
+          flakeCfg
+          targetCfg
+
+          targetCfgs
+          ;
+      };
       modules = [ ../targets/terranix/${name} ];
     };
 

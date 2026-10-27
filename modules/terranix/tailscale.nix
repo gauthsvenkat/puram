@@ -1,7 +1,7 @@
 {
-  allTargetCfgs,
   flakeCfg,
   lib,
+  targetCfgs,
   ...
 }:
 let
@@ -11,7 +11,7 @@ let
     lanDomain
     router
     ;
-  routerCfg = allTargetCfgs.${router};
+  routerCfg = targetCfgs.openwrt.${router};
 in
 {
   data.tailscale_device.${homeserver}.hostname = homeserver;

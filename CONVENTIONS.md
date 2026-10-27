@@ -11,7 +11,7 @@ Formatting, dead code and statix lints are enforced by the pre-commit hooks.
 - Multiple definitions with a common prefix grouped into a single attribute set
 - Lexicographic order for package lists, imports and attribute definitions within groups
 - `lib.getExe`/`lib.getExe'` instead of `"${pkg}/bin/name"` interpolation
-- Quoted user-chosen attribute names, both where defined and where referenced: `sops.secrets."wifi_psk"`, `placeholder."wifi_psk"`, `allTargetCfgs."elitedesk"`, terraform instance names, disko devices, own systemd units. Leave bare: `targetCfg` keys, upstream or schema names (`systemd.services.postgresql`, uci `lan`/`wan`/`loopback`), and `${}` names.
+- Quoted user-chosen attribute names, both where defined and where referenced: `sops.secrets."wifi_psk"`, `placeholder."wifi_psk"`, `targetCfgs.nixos."elitedesk"`, terraform instance names, disko devices, own systemd units. Leave bare: `targetCfg` keys, platform names (`targetCfgs.nixos`), upstream or schema names (`systemd.services.postgresql`, uci `lan`/`wan`/`loopback`), and `${}` names.
 
 ## Type comments
 
@@ -27,7 +27,7 @@ port = lib.imap1 (id: name: { inherit id name; enable = true; }) poe.ports;
 
 # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
 # :: { hostname::String -> targetCfg }, hosts with an sshHostKey
-serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfgs;
+serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) targetCfgs.nixos;
 ```
 
 ## Comments
@@ -42,7 +42,7 @@ serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfg
 
 - Plain attrsets, defined in `flake.nix` (`flakeCfg`), `flake/<platform>.nix` (`<platform>Cfg`) and `targets/<platform>/<hostname>/targetCfg.nix` (`targetCfg`), and passed down as module arguments.
 - A value lives in the narrowest Cfg that covers all its readers: one target reads it, `targetCfg`; one platform, `<platform>Cfg`; more than one platform, `flakeCfg`. A new reader on another platform moves it up.
-- Facts about one target stay in its `targetCfg`, even when other targets read them through `allTargetCfgs`. Higher Cfgs point at the target by name (`router = "flint-2"`) rather than copy its values.
+- Facts about one target stay in its `targetCfg`, even when other targets read them through `targetCfgs.<platform>.<hostname>`. Higher Cfgs point at the target by name (`router = "flint-2"`) rather than copy its values.
 
 ## let / inherit
 
@@ -64,5 +64,21 @@ serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfg
 - `with` is allowed only inside package list literals (`with pkgs; [ ... ]`). Never `with lib;` or `with config;`.
 - `rec { ... }` only in Cfg definitions (`targetCfg.nix`, `flakeCfg`, `<platform>Cfg`), where fields derive from each other; elsewhere, helpers are `let` bindings.
 - Function arguments use destructuring with `...`, no `@args`.
+- Function arguments, and the `inherit` lists that pass them on (`specialArgs`, `_module.args`, `extraArgs`), are grouped in this order: `inputs`; the Cfgs, broadest first (`flakeCfg`, `<platform>Cfg`, `targetCfg`); `targetCfgs`; module-system arguments (`config`, `lib`, `pkgs`, ...). A blank line separates the groups, unless every group has a single item.
+  ```nix
+  {
+    inputs,
+
+    flakeCfg,
+    nixosCfg,
+    targetCfg,
+
+    targetCfgs,
+
+    config,
+    lib,
+    ...
+  }:
+  ```
 - A module body that uses no arguments is a bare attrset, not `{ ... }: { ... }`.
 - Generated files like `hardware-configuration.nix` follow the conventions too, as long as the derivation stays the same.
