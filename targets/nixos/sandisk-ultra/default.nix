@@ -18,6 +18,7 @@ in
     ../../../bases/nixos/server.nix
 
     ../../../modules/nixos/services/kanata.nix
+    ../../../modules/nixos/system/wifi.nix
 
     ./disko-config.nix
   ];
