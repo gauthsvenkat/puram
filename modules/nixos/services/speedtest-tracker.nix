@@ -1,7 +1,8 @@
 {
-  config,
   flakeCfg,
   targetCfg,
+
+  config,
   ...
 }:
 let

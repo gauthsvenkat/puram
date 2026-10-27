@@ -1,7 +1,9 @@
 {
-  config,
   targetCfg,
+
   targetCfgs,
+
+  config,
   lib,
   pkgs,
   ...

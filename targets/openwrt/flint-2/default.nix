@@ -2,6 +2,7 @@
   flakeCfg,
   openwrtCfg,
   targetCfg,
+
   targetCfgs,
 }:
 {
@@ -11,6 +12,7 @@
         flakeCfg
         openwrtCfg
         targetCfg
+
         targetCfgs
         ;
     };
