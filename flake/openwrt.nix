@@ -7,6 +7,17 @@ let
   pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux";
   inherit (pkgs) lib;
 
+  openwrtCfg = {
+    # KPN accepts any credentials; `internet` is their documented placeholder.
+    pppoe = {
+      username = "internet";
+      password = "internet";
+      vid = 6;
+    };
+    timezone = "CET-1CEST,M3.5.0,M10.5.0/3";
+    zonename = "Europe/Amsterdam";
+  };
+
   # catAttrs :: attrName::String -> [ targetCfg ] -> [ sshUserKey::String ]
   # :: [ sshUserKey::String ], one per host that has one
   workstationKeys = lib.catAttrs "sshUserKey" (lib.attrValues allTargetCfgs);
@@ -17,27 +28,35 @@ let
       targetCfg = allTargetCfgs.${name};
     in
     {
-      image = inputs.openwrt-imagebuilder.lib.build {
-        inherit pkgs;
-        inherit (targetCfg)
-          profile
-          release
-          target
-          variant
-          ;
-        disabledServices = targetCfg.disabledServices or [ ];
-        files = import ../targets/openwrt/${name}/bootstrap.nix { inherit targetCfg pkgs workstationKeys; };
-        packages = [
-          "luci"
-          "luci-ssl"
-        ];
-      };
+      image = inputs.openwrt-imagebuilder.lib.build (
+        targetCfg.image
+        // {
+          inherit pkgs;
+          files = import ../targets/openwrt/${name}/bootstrap.nix {
+            inherit
+              openwrtCfg
+              pkgs
+              targetCfg
+              workstationKeys
+              ;
+          };
+          packages = [
+            "luci"
+            "luci-ssl"
+          ];
+        }
+      );
 
       deploy =
         (import inputs.dewclaw {
           inherit pkgs;
           configuration = import ../targets/openwrt/${name} {
-            inherit allTargetCfgs targetCfg workstationKeys;
+            inherit
+              allTargetCfgs
+              openwrtCfg
+              targetCfg
+              workstationKeys
+              ;
           };
         }).targets.${name};
     };

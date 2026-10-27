@@ -1,4 +1,4 @@
-{ targetCfg, ... }:
+{ openwrtCfg, targetCfg, ... }:
 {
   users.root.hashedPasswordSecret = "hashedPassword";
 
@@ -6,8 +6,7 @@
     system = [
       {
         inherit (targetCfg) hostname;
-        timezone = "CET-1CEST,M3.5.0,M10.5.0/3";
-        zonename = "Europe/Amsterdam";
+        inherit (openwrtCfg) timezone zonename;
       }
     ];
 

@@ -9,7 +9,7 @@ rec {
   zpool = "dontdie";
   domain = "gauthsvenkat.dev";
   tailnetIp = "100.103.236.120";
-  lan = {
+  staticLease = {
     ip = "192.168.1.3";
     mac = "ac:e2:d3:14:d9:27";
   };
