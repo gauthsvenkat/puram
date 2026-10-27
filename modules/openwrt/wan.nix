@@ -1,7 +1,7 @@
 { openwrtCfg, targetCfg, ... }:
 let
-  inherit (targetCfg) wan;
   inherit (openwrtCfg) pppoe;
+  inherit (targetCfg) wan;
 in
 {
   uci.settings = {

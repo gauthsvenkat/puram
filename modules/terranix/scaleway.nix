@@ -1,10 +1,15 @@
-{ targetCfg, lib, ... }:
+{
+  allTargetCfgs,
+  targetCfg,
+  lib,
+  ...
+}:
 let
   inherit (targetCfg.scaleway) orgId;
 in
 {
   provider.scaleway = {
-    region = "nl-ams";
+    inherit (targetCfg.scaleway) region;
     project_id = orgId;
   };
 
@@ -68,7 +73,7 @@ in
     };
 
     scaleway_object_bucket."elitedesk_backup" = {
-      name = "backups";
+      name = allTargetCfgs."elitedesk".offsiteBucket;
       force_destroy = false;
       # NOTE: Only clean up uploads that never completed (interrupted restic runs).
       # Never add object expiration: restic owns deletion, and age-based expiry

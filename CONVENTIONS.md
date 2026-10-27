@@ -38,14 +38,21 @@ serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfg
 - Option paths as they read in the enclosing block (`zfs.forceImportRoot` inside `boot = { ... }`).
 - In docs, relative links to other repo files: ``[`.sops.yaml`](../.sops.yaml)`` from `how-to/`, not a bare `.sops.yaml`.
 
+## Cfgs
+
+- Plain attrsets, defined in `flake.nix` (`flakeCfg`), `flake/<platform>.nix` (`<platform>Cfg`) and `targets/<platform>/<hostname>/targetCfg.nix` (`targetCfg`), and passed down as module arguments.
+- A value lives in the narrowest Cfg that covers all its readers: one target reads it, `targetCfg`; one platform, `<platform>Cfg`; more than one platform, `flakeCfg`. A new reader on another platform moves it up.
+- Facts about one target stay in its `targetCfg`, even when other targets read them through `allTargetCfgs`. Higher Cfgs point at the target by name (`router = "flint-2"`) rather than copy its values.
+
 ## let / inherit
 
-- Top-level `let` is reserved for bindings that depend on `targetCfg` or `config`. Other helpers go in the lowest scope where they're used (often inside an attribute value).
-- No inline `targetCfg.<field>` or `config.<field>` in module bodies; they are pulled into the top-level `let` so the module's surface area is visible upfront. Exception: a field used once, by a bare `inherit`, is inherited at the call site instead (`inherit (targetCfg.ports.jellyfin) port;`).
-- Top-level `let` order, top to bottom: `inherit (targetCfg) ...;`, `cfg = config.services.X;` (or `cfg_<name>` when more than one), `inherit (config.sops) secrets;`, then derived bindings (`vhost`, `dataRoot`, ...). Example:
+- Top-level `let` is reserved for bindings that depend on a Cfg (`flakeCfg`, `<platform>Cfg`, `targetCfg`) or `config`. Other helpers go in the lowest scope where they're used (often inside an attribute value).
+- No inline `<any>Cfg.<field>` or `config.<field>` in module bodies; they are pulled into the top-level `let` so the module's surface area is visible upfront. Exception: a field used once, by a bare `inherit`, is inherited at the call site instead (`inherit (targetCfg.ports.jellyfin) port;`).
+- Top-level `let` order, top to bottom: `inherit` from the Cfgs, broadest first (`flakeCfg`, `<platform>Cfg`, `targetCfg`), `cfg = config.services.X;` (or `cfg_<name>` when more than one), `inherit (config.sops) secrets;`, then derived bindings (`vhost`, `dataRoot`, ...). Example:
   ```nix
   let
-    inherit (targetCfg) domain paths;
+    inherit (flakeCfg) domain;
+    inherit (targetCfg) paths;
     inherit (targetCfg.ports) paperless;
     cfg = config.services.paperless;
     inherit (config.sops) secrets;
@@ -55,7 +62,7 @@ serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfg
 - Bare `inherit foo bar;` is only for re-exporting names already bound in the enclosing scope.
 - `lib.getExe pkg` inline at the call site rather than `inherit (lib) getExe;`, unless `getExe` is used 2+ times in the file.
 - `with` is allowed only inside package list literals (`with pkgs; [ ... ]`). Never `with lib;` or `with config;`.
-- `rec { ... }` only in `targetCfg.nix`, where fields derive from each other; elsewhere, helpers are `let` bindings.
+- `rec { ... }` only in Cfg definitions (`targetCfg.nix`, `flakeCfg`, `<platform>Cfg`), where fields derive from each other; elsewhere, helpers are `let` bindings.
 - Function arguments use destructuring with `...`, no `@args`.
 - A module body that uses no arguments is a bare attrset, not `{ ... }: { ... }`.
 - Generated files like `hardware-configuration.nix` follow the conventions too, as long as the derivation stays the same.

@@ -1,6 +1,11 @@
-{ allTargetCfgs, lib, ... }:
+{
+  allTargetCfgs,
+  flakeCfg,
+  lib,
+  ...
+}:
 let
-  elitedesk = allTargetCfgs."elitedesk".staticLease;
+  inherit (flakeCfg) dns lanDomain;
 in
 {
   uci.settings.dhcp = {
@@ -8,19 +13,19 @@ in
       {
         authoritative = true;
         cachesize = 1000;
-        # dnsmasq answers `.lan` itself and forwards the rest to AdGuard Home on elitedesk.
-        domain = "lan";
+        # dnsmasq answers `lanDomain` itself and forwards the rest to AdGuard Home.
+        domain = lanDomain;
         domainneeded = true;
         expandhosts = true;
-        local = "/lan/";
+        local = "/${lanDomain}/";
         localise_queries = true;
         localservice = true;
         noresolv = true;
         readethers = true;
         rebind_localhost = true;
-        # The public resolvers only answer if elitedesk is down.
+        # The public resolvers only answer if AdGuard Home is down.
         server = [
-          elitedesk.ip
+          dns.lanIp
           "9.9.9.9"
           "1.1.1.1"
         ];

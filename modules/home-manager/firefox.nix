@@ -1,3 +1,7 @@
+{ flakeCfg, ... }:
+let
+  inherit (flakeCfg) domain;
+in
 {
   programs.firefox = {
     enable = true;
@@ -57,7 +61,7 @@
         }
         {
           Title = "Homepage";
-          URL = "https://homepage.example.com/";
+          URL = "https://homepage.${domain}/";
           Placement = "toolbar";
         }
         {

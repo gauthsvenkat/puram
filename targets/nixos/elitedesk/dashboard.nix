@@ -1,10 +1,12 @@
 {
   config,
+  flakeCfg,
   targetCfg,
   ...
 }:
 let
-  inherit (targetCfg) domain hostname zpool;
+  inherit (flakeCfg) domain;
+  inherit (targetCfg) hostname zpool;
   inherit (targetCfg.ports)
     adguard
     caddy

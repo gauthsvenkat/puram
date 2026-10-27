@@ -7,7 +7,7 @@ rec {
   sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHgbm/atBI4qLsSPhlb8pnA4BpMe2WetWXkomjNwoWIL root@elitedesk";
 
   zpool = "dontdie";
-  domain = "example.com";
+  offsiteBucket = "backups";
   tailnetIp = "100.64.0.1";
   staticLease = {
     ip = "192.168.1.3";
