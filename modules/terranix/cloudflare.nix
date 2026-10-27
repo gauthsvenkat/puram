@@ -1,11 +1,13 @@
 {
   allTargetCfgs,
+  flakeCfg,
   targetCfg,
   lib,
   ...
 }:
 let
-  inherit (allTargetCfgs."elitedesk") domain tailnetIp;
+  inherit (flakeCfg) domain homeserver;
+  inherit (allTargetCfgs.${homeserver}) tailnetIp;
   inherit (targetCfg.cloudflare) accountId;
   zoneId = lib.tf.ref "cloudflare_zone.example_com.id";
 in
@@ -31,7 +33,7 @@ in
       {
         "caddy_dns" = {
           account_id = accountId;
-          name = "caddy-acme-elitedesk";
+          name = "caddy-acme-${homeserver}";
           policies = [
             {
               effect = "allow";

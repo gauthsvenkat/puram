@@ -1,6 +1,6 @@
-{ targetCfg, ... }:
+{ flakeCfg, targetCfg, ... }:
 let
-  inherit (targetCfg) domain;
+  inherit (flakeCfg) domain;
   inherit (targetCfg.ports) homepage;
 in
 {

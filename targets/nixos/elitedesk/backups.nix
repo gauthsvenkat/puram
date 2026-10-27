@@ -1,4 +1,5 @@
 {
+  allTargetCfgs,
   config,
   targetCfg,
   lib,
@@ -6,7 +7,8 @@
   ...
 }:
 let
-  inherit (targetCfg) paths;
+  inherit (targetCfg) offsiteBucket paths;
+  inherit (allTargetCfgs."infra".scaleway) region;
   inherit (config.sops) placeholder secrets;
 in
 {
@@ -57,7 +59,7 @@ in
   '';
 
   services.restic.backups."offsite" = {
-    repository = "s3:https://s3.nl-ams.scw.cloud/backups";
+    repository = "s3:https://s3.${region}.scw.cloud/${offsiteBucket}";
     environmentFile = config.sops.templates."restic_offsite_env".path;
     passwordFile = secrets."restic_password".path;
     initialize = true;
@@ -69,7 +71,7 @@ in
       "${paths.data}/paperless-ngx/media/documents/originals"
     ];
     extraOptions = [
-      "s3.region=nl-ams"
+      "s3.region=${region}"
       "s3.storage-class=ONEZONE_IA"
     ];
     pruneOpts = [

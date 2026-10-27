@@ -1,10 +1,10 @@
-{ targetCfg, ... }:
+{ openwrtCfg, ... }:
 let
-  inherit (targetCfg) lan;
+  inherit (openwrtCfg) gateway;
 in
 {
   uci.settings.network.interface.lan = {
-    inherit (lan) gateway;
-    dns = [ lan.gateway ];
+    inherit gateway;
+    dns = [ gateway ];
   };
 }

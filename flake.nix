@@ -70,13 +70,48 @@
           infra = import ./targets/terranix/infra/targetCfg.nix;
         };
 
+      flakeCfg = rec {
+        router = "flint-2";
+        homeserver = "elitedesk";
+
+        dns = {
+          lanIp = allTargetCfgs.${homeserver}.staticLease.ip;
+          inherit (allTargetCfgs.${homeserver}) tailnetIp;
+        };
+
+        domain = "example.com";
+
+        lanDomain = "lan";
+        tailnetDomain = "tailnet.ts.net";
+
+        timezone = "Europe/Amsterdam";
+
+        # catAttrs :: attrName::String -> [ targetCfg ] -> [ sshUserKey::String ]
+        # :: [ sshUserKey::String ], one per host that has one
+        workstationKeys = lib.catAttrs "sshUserKey" (lib.attrValues allTargetCfgs);
+      };
+
       # recursiveUpdate :: outputs -> outputs -> outputs
       #   where outputs = { nixosConfigurations, packages, devShells :: { String -> Derivation } }
       # :: outputs, the three parts merged; parts must not share leaf names
       parts = [
-        (import ./flake/nixos.nix { inherit allTargetCfgs inputs nixosTargets; })
-        (import ./flake/openwrt.nix { inherit allTargetCfgs inputs openwrtTargets; })
-        (import ./flake/terranix.nix { inherit allTargetCfgs inputs; })
+        (import ./flake/nixos.nix {
+          inherit
+            allTargetCfgs
+            flakeCfg
+            inputs
+            nixosTargets
+            ;
+        })
+        (import ./flake/openwrt.nix {
+          inherit
+            allTargetCfgs
+            flakeCfg
+            inputs
+            openwrtTargets
+            ;
+        })
+        (import ./flake/terranix.nix { inherit allTargetCfgs flakeCfg inputs; })
       ];
     in
     lib.foldl' lib.recursiveUpdate { } parts;

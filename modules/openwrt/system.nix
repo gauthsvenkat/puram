@@ -5,8 +5,8 @@
   uci.settings.system = {
     system = [
       {
-        inherit (targetCfg) hostname;
         inherit (openwrtCfg) timezone zonename;
+        inherit (targetCfg) hostname;
       }
     ];
 

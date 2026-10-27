@@ -1,12 +1,13 @@
 {
+  flakeCfg,
   openwrtCfg,
   targetCfg,
   pkgs,
-  workstationKeys,
 }:
 let
-  inherit (targetCfg) hostname wan;
+  inherit (flakeCfg) workstationKeys;
   inherit (openwrtCfg) pppoe timezone zonename;
+  inherit (targetCfg) hostname wan;
   inherit (pkgs) lib;
   setupSsid = "${hostname}-setup";
 

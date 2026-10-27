@@ -1,17 +1,17 @@
 {
   allTargetCfgs,
+  flakeCfg,
   openwrtCfg,
   targetCfg,
-  workstationKeys,
 }:
 {
   openwrt.${targetCfg.hostname} = {
     _module.args = {
       inherit
         allTargetCfgs
+        flakeCfg
         openwrtCfg
         targetCfg
-        workstationKeys
         ;
     };
 

@@ -1,9 +1,11 @@
 {
+  flakeCfg,
   targetCfg,
   ...
 }:
 let
-  inherit (targetCfg) domain paths;
+  inherit (flakeCfg) domain;
+  inherit (targetCfg) paths;
   inherit (targetCfg.ports) paperless;
   dataRoot = "${paths.data}/paperless-ngx";
   vhost = "paperless.${domain}";

@@ -1,12 +1,13 @@
 {
+  flakeCfg,
   openwrtCfg,
   targetCfg,
   pkgs,
-  workstationKeys,
 }:
 let
+  inherit (flakeCfg) workstationKeys;
+  inherit (openwrtCfg) gateway timezone zonename;
   inherit (targetCfg) hostname lan;
-  inherit (openwrtCfg) timezone zonename;
   inherit (pkgs) lib;
 
   bootstrap = pkgs.writeText "${hostname}-bootstrap" ''
@@ -23,8 +24,8 @@ let
     set dropbear.@dropbear[0].RootPasswordAuth='off'
 
     set network.lan.ipaddr='${lan.ip}/24'
-    set network.lan.gateway='${lan.gateway}'
-    set network.lan.dns='${lan.gateway}'
+    set network.lan.gateway='${gateway}'
+    set network.lan.dns='${gateway}'
     delete network.lan.ip6assign
 
     commit

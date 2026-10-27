@@ -1,5 +1,6 @@
 {
   allTargetCfgs,
+  flakeCfg,
   inputs,
   openwrtTargets,
 }:
@@ -15,14 +16,11 @@ let
       vid = 6;
     };
     country = "NL";
+    gateway = allTargetCfgs.${flakeCfg.router}.lan.ip;
     release = "25.12.5";
     timezone = "CET-1CEST,M3.5.0,M10.5.0/3";
-    zonename = "Europe/Amsterdam";
+    zonename = flakeCfg.timezone;
   };
-
-  # catAttrs :: attrName::String -> [ targetCfg ] -> [ sshUserKey::String ]
-  # :: [ sshUserKey::String ], one per host that has one
-  workstationKeys = lib.catAttrs "sshUserKey" (lib.attrValues allTargetCfgs);
 
   mkOpenwrt =
     name:
@@ -37,10 +35,10 @@ let
           inherit (openwrtCfg) release;
           files = import ../targets/openwrt/${name}/bootstrap.nix {
             inherit
+              flakeCfg
               openwrtCfg
               pkgs
               targetCfg
-              workstationKeys
               ;
           };
           packages = [
@@ -56,9 +54,9 @@ let
           configuration = import ../targets/openwrt/${name} {
             inherit
               allTargetCfgs
+              flakeCfg
               openwrtCfg
               targetCfg
-              workstationKeys
               ;
           };
         }).targets.${name};

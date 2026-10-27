@@ -1,6 +1,12 @@
-{ config, targetCfg, ... }:
+{
+  config,
+  flakeCfg,
+  targetCfg,
+  ...
+}:
 let
-  inherit (targetCfg) domain paths;
+  inherit (flakeCfg) domain;
+  inherit (targetCfg) paths;
   cfg = config.services.speedtest-tracker;
   inherit (config.sops) secrets;
 in

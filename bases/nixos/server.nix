@@ -1,14 +1,11 @@
 {
-  allTargetCfgs,
+  flakeCfg,
   targetCfg,
-  lib,
   ...
 }:
 let
+  inherit (flakeCfg) workstationKeys;
   inherit (targetCfg) username;
-  # catAttrs :: attrName::String -> [ targetCfg ] -> [ sshUserKey::String ]
-  # :: [ sshUserKey::String ], one per host that has one
-  workstationKeys = lib.catAttrs "sshUserKey" (lib.attrValues allTargetCfgs);
 in
 {
   imports = [ ./system.nix ];

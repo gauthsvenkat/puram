@@ -1,10 +1,11 @@
 {
-  targetCfg,
   config,
+  flakeCfg,
+  targetCfg,
   ...
 }:
 let
-  inherit (targetCfg) domain;
+  inherit (flakeCfg) domain;
   inherit (targetCfg.ports)
     adguard
     homepage
