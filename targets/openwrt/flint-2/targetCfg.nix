@@ -31,19 +31,4 @@ rec {
     ip = "192.168.30.1";
     radio = "radio1"; # 5Ghz
   };
-
-  radios = {
-    radio0 = {
-      path = "platform/soc/18000000.wifi";
-      band = "2g";
-      channel = 1;
-      htmode = "HE20";
-    };
-    radio1 = {
-      path = "platform/soc/18000000.wifi+1";
-      band = "5g";
-      channel = 36;
-      htmode = "HE80";
-    };
-  };
 }
