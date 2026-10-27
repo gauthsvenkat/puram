@@ -1,10 +1,11 @@
 {
   config,
+  flakeCfg,
   targetCfg,
   ...
 }:
 let
-  inherit (targetCfg) domain;
+  inherit (flakeCfg) domain;
   cfg = config.services.vikunja;
   inherit (config.sops) placeholder;
 in

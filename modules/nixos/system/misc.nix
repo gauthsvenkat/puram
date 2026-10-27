@@ -1,3 +1,7 @@
+{ flakeCfg, nixosCfg, ... }:
+let
+  inherit (flakeCfg) timezone;
+in
 {
   programs.nix-ld.enable = true;
 
@@ -7,7 +11,7 @@
 
   services.fwupd.enable = true;
 
-  time.timeZone = "Europe/Amsterdam";
+  time.timeZone = timezone;
 
-  system.stateVersion = "26.05";
+  system = { inherit (nixosCfg) stateVersion; };
 }

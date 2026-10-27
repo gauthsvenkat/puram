@@ -1,12 +1,12 @@
 {
+  flakeCfg,
   openwrtCfg,
   targetCfg,
-  workstationKeys,
   ...
 }:
 {
   openwrt.${targetCfg.hostname} = {
-    _module.args = { inherit openwrtCfg targetCfg workstationKeys; };
+    _module.args = { inherit flakeCfg openwrtCfg targetCfg; };
 
     imports = [
       ../../../bases/openwrt/switch.nix

@@ -1,10 +1,20 @@
-{ allTargetCfgs, lib, ... }:
+{
+  allTargetCfgs,
+  flakeCfg,
+  lib,
+  ...
+}:
 let
-  inherit (allTargetCfgs."elitedesk") tailnetIp;
-  router = allTargetCfgs."flint-2";
+  inherit (flakeCfg)
+    dns
+    homeserver
+    lanDomain
+    router
+    ;
+  routerCfg = allTargetCfgs.${router};
 in
 {
-  data.tailscale_device."elitedesk".hostname = "elitedesk";
+  data.tailscale_device.${homeserver}.hostname = homeserver;
 
   resource =
     let
@@ -37,8 +47,8 @@ in
         tagOwners.${serverTag} = [ "autogroup:admin" ];
       };
 
-      tailscale_device_tags."elitedesk" = {
-        device_id = lib.tf.ref "data.tailscale_device.elitedesk.node_id";
+      tailscale_device_tags.${homeserver} = {
+        device_id = lib.tf.ref "data.tailscale_device.${homeserver}.node_id";
         tags = [ serverTag ];
       };
 
@@ -46,11 +56,11 @@ in
         magic_dns = true;
         override_local_dns = true;
         search_paths = [ ];
-        nameservers = [ { address = tailnetIp; } ];
+        nameservers = [ { address = dns.tailnetIp; } ];
         split_dns = [
           {
-            domain = "lan";
-            nameservers = [ { address = router.lan.ip; } ];
+            domain = lanDomain;
+            nameservers = [ { address = routerCfg.lan.ip; } ];
           }
         ];
       };

@@ -1,10 +1,15 @@
 {
   allTargetCfgs,
+  flakeCfg,
   inputs,
   nixosTargets,
 }:
 let
   inherit (inputs.nixpkgs) lib;
+
+  nixosCfg = {
+    stateVersion = "26.05";
+  };
 
   mkNixos =
     name:
@@ -14,7 +19,13 @@ let
     lib.nixosSystem {
       inherit (targetCfg) system;
       specialArgs = {
-        inherit allTargetCfgs targetCfg inputs;
+        inherit
+          allTargetCfgs
+          flakeCfg
+          nixosCfg
+          targetCfg
+          inputs
+          ;
       };
       modules = [
         ../targets/nixos/${name}

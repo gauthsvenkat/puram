@@ -1,6 +1,6 @@
-{ targetCfg, ... }:
+{ flakeCfg, targetCfg, ... }:
 let
-  inherit (targetCfg) domain;
+  inherit (flakeCfg) domain;
   inherit (targetCfg.paths) usenet;
   inherit (targetCfg.vpn) namespaceAddress;
 in

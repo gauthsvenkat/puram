@@ -1,18 +1,19 @@
 {
   allTargetCfgs,
+  flakeCfg,
   targetCfg,
   lib,
   pkgs,
   ...
 }:
 let
+  inherit (flakeCfg) lanDomain router tailnetDomain;
   inherit (targetCfg) username homeDirectory;
   sshKey = "${homeDirectory}/.ssh/id_ed25519";
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
   # :: { hostname::String -> targetCfg }, hosts with an sshHostKey
   serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) allTargetCfgs;
-  tailnet = allTargetCfgs."infra".tailscale.dnsName;
-  router = allTargetCfgs."flint-2";
+  routerCfg = allTargetCfgs.${router};
 in
 {
   imports = [
@@ -33,8 +34,8 @@ in
       #   where knownHost = { extraHostNames :: [ String ]; publicKey :: String }
       knownHosts = lib.mapAttrs (hostName: targetCfg: {
         extraHostNames = [
-          "${hostName}.lan"
-          "${hostName}.${tailnet}"
+          "${hostName}.${lanDomain}"
+          "${hostName}.${tailnetDomain}"
         ];
         publicKey = targetCfg.sshHostKey;
       }) serverCfgs;
@@ -110,24 +111,24 @@ in
             # :: { alias::String -> sshHost }, `<hostname>`, `<hostname>-root` and `<hostname>-ts` per server
             serverAliases = lib.concatMapAttrs (hostName: targetCfg: {
               ${hostName} = {
-                HostName = "${hostName}.lan";
+                HostName = "${hostName}.${lanDomain}";
                 User = targetCfg.username;
               };
               "${hostName}-root" = {
-                HostName = "${hostName}.lan";
+                HostName = "${hostName}.${lanDomain}";
                 User = "root";
               };
               "${hostName}-ts" = {
-                HostName = "${hostName}.${tailnet}";
+                HostName = "${hostName}.${tailnetDomain}";
                 User = targetCfg.username;
               };
             }) serverCfgs;
           in
           serverAliases
           // {
-            ${router.hostname} = {
-              HostName = router.lan.ip;
-              HostKeyAlias = router.hostname;
+            ${router} = {
+              HostName = routerCfg.lan.ip;
+              HostKeyAlias = router;
               User = "root";
             };
             # Reuse one connection for consecutive git operations.
