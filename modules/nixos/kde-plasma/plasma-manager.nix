@@ -1,4 +1,4 @@
-{ targetCfg, inputs, ... }:
+{ inputs, targetCfg, ... }:
 let
   inherit (targetCfg) username;
 in

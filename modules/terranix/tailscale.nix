@@ -1,7 +1,7 @@
 {
   flakeCfg,
-  lib,
   targetCfgs,
+  lib,
   ...
 }:
 let

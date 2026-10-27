@@ -1,6 +1,8 @@
 {
-  targetCfg,
   inputs,
+
+  targetCfg,
+
   lib,
   pkgs,
   ...
