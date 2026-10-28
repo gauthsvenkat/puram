@@ -23,28 +23,29 @@ in
     {
       # NOTE: Applying replaces the whole console policy; console edits get overwritten.
       tailscale_acl."tailnet".acl = lib.toJSON {
-        # Allow all connections by default.
         grants = [
           {
-            src = [ "*" ];
+            src = [ "autogroup:owner" ];
             dst = [ "*" ];
             ip = [ "*" ];
           }
-        ];
-        # Allow all users to SSH into their own devices in check mode.
-        ssh = [
           {
-            action = "check";
             src = [ "autogroup:member" ];
             dst = [ "autogroup:self" ];
-            users = [
-              "autogroup:nonroot"
-              "root"
+            ip = [ "*" ];
+          }
+          {
+            src = [ "autogroup:member" ];
+            dst = [ serverTag ];
+            ip = [
+              "tcp:53"
+              "tcp:80"
+              "tcp:443"
+              "udp:53"
             ];
           }
         ];
-        # Tags and who may apply them (admins can always apply any tag).
-        tagOwners.${serverTag} = [ "autogroup:admin" ];
+        tagOwners.${serverTag} = [ "autogroup:owner" ];
       };
 
       tailscale_device_tags.${homeserver} = {
