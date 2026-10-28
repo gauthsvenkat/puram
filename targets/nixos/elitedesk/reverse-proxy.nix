@@ -8,7 +8,6 @@
 let
   inherit (flakeCfg) domain;
   inherit (targetCfg.ports)
-    adguard
     homepage
     immich
     jellyfin
@@ -37,7 +36,6 @@ in
     "jellyfin.${domain}".extraConfig = proxy jellyfin.port;
     "immich.${domain}".extraConfig = proxy immich.port;
     "paperless.${domain}".extraConfig = proxy paperless.port;
-    "adguard.${domain}".extraConfig = proxy adguard.web_port;
     "vikunja.${domain}".extraConfig = proxy vikunja.port;
     # Speedtest-tracker is a Laravel app; Caddy serves static assets directly
     # and hands PHP off to a phpfpm pool. The doc-root and socket come from
