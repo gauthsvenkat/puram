@@ -1,11 +1,15 @@
 {
   flakeCfg,
+  targetCfg,
+
   targetCfgs,
+
   lib,
   ...
 }:
 let
-  inherit (flakeCfg) dns lanDomain;
+  inherit (flakeCfg) lanDomain;
+  inherit (targetCfg.ports) adguard;
 in
 {
   uci.settings.dhcp = {
@@ -25,7 +29,7 @@ in
         rebind_localhost = true;
         # The public resolvers only answer if AdGuard Home is down.
         server = [
-          dns.lanIp
+          "127.0.0.1#${toString adguard.dns_port}"
           "9.9.9.9"
           "1.1.1.1"
         ];
