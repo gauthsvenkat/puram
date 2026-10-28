@@ -87,4 +87,23 @@ in
       ];
     };
   };
+
+  output = {
+    scaleway_backups_access_key = {
+      value = lib.tf.ref "scaleway_iam_api_key.restic.access_key";
+      sensitive = true;
+    };
+    scaleway_backups_secret_key = {
+      value = lib.tf.ref "scaleway_iam_api_key.restic.secret_key";
+      sensitive = true;
+    };
+    scw_access_key = {
+      value = lib.tf.ref "scaleway_iam_api_key.opentofu.access_key";
+      sensitive = true;
+    };
+    scw_secret_key = {
+      value = lib.tf.ref "scaleway_iam_api_key.opentofu.secret_key";
+      sensitive = true;
+    };
+  };
 }
