@@ -9,6 +9,7 @@
     ../../modules/openwrt/services/dnsmasq.nix
     ../../modules/openwrt/services/firewall.nix
     ../../modules/openwrt/services/odhcpd.nix
+    ../../modules/openwrt/services/tailscale.nix
     ../../modules/openwrt/services/tang.nix
     ../../modules/openwrt/wan.nix
 
