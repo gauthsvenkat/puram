@@ -9,6 +9,8 @@ let
   inherit (targetCfg) homeDirectory;
 in
 {
+  home.sessionVariables.CLAUDE_CONFIG_DIR = "${homeDirectory}/.claude";
+
   programs = {
     claude-code = {
       enable = true;
