@@ -88,4 +88,15 @@ in
       type = "full";
     };
   };
+
+  output = {
+    cloudflare_api_token = {
+      value = lib.tf.ref "cloudflare_account_token.opentofu.value";
+      sensitive = true;
+    };
+    cloudflare_dns_token = {
+      value = lib.tf.ref "cloudflare_account_token.caddy_dns.value";
+      sensitive = true;
+    };
+  };
 }
