@@ -26,6 +26,7 @@ The device reboots. If a deploy breaks it, it [rolls back](https://github.com/Ma
 
 ## Notes
 
+- **Joining the tailnet** is a one-time manual step after the first deploy: `ssh root@$ip 'tailscale up --accept-dns=false --advertise-tags=tag:router'`, then open the login URL it prints. `tag:router` must already be in the policy. Joining tagged disables key expiry; tagging later does not. `--accept-dns=false` because the router is the tailnet's nameserver; it must not send its own queries to itself through Tailscale.
 - **Deploys need internet.** Every deploy refreshes the package lists first.
 - **A build failing with a hash mismatch** means OpenWrt republished its package index: `just update openwrt-imagebuilder`. Upstream's hashes can lag by up to a day, so it may still fail right after the update.
 - **TLS errors from the package step** right after a flash are most likely the clock: NTP may not have synced yet. The deploy still completes, and the next one runs clean.

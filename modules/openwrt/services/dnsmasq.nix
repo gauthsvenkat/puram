@@ -23,7 +23,7 @@ in
         expandhosts = true;
         local = "/${lanDomain}/";
         localise_queries = true;
-        localservice = true;
+        localservice = false;
         noresolv = true;
         readethers = true;
         rebind_localhost = true;
