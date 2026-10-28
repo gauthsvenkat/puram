@@ -21,6 +21,11 @@
 
   guest.ip = "192.168.30.1";
 
+  ports.adguard = {
+    dns_port = 5353;
+    web_port = 3000;
+  };
+
   homelab = {
     ip = "192.168.20.1";
     # The gs1900-8hp switch; everything behind it is a server.
