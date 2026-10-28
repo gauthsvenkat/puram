@@ -30,7 +30,6 @@ in
       let
         stateDirs = [
           "/var/lib/jellyfin"
-          "/var/lib/private/AdGuardHome"
           "/var/lib/private/vikunja"
           "/var/lib/speedtest-tracker"
         ];

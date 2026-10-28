@@ -9,7 +9,6 @@ let
   inherit (flakeCfg) domain;
   inherit (targetCfg) hostname zpool;
   inherit (targetCfg.ports)
-    adguard
     caddy
     immich
     jellyfin
@@ -20,8 +19,6 @@ let
 in
 {
   sops.secrets = {
-    "adguard_password" = { };
-    "adguard_username" = { };
     "immich_api_key" = { };
     "jellyfin_api_key" = { };
     "paperless_api_key" = { };
@@ -31,8 +28,6 @@ in
   sops.templates."homepage_env" = {
     restartUnits = [ "homepage-dashboard.service" ];
     content = ''
-      HOMEPAGE_VAR_ADGUARD_PASS=${placeholder."adguard_password"}
-      HOMEPAGE_VAR_ADGUARD_USER=${placeholder."adguard_username"}
       HOMEPAGE_VAR_IMMICH_KEY=${placeholder."immich_api_key"}
       HOMEPAGE_VAR_JELLYFIN_KEY=${placeholder."jellyfin_api_key"}
       HOMEPAGE_VAR_PAPERLESS_KEY=${placeholder."paperless_api_key"}
@@ -167,18 +162,6 @@ in
         }
         {
           "Utilities" = [
-            {
-              "AdGuard Home" = {
-                icon = icon "adguard-home";
-                href = href "adguard";
-                widget = {
-                  type = "adguard";
-                  url = loopback adguard.web_port;
-                  username = envVar "ADGUARD_USER";
-                  password = envVar "ADGUARD_PASS";
-                };
-              };
-            }
             {
               "Speedtest" = {
                 # `sh-` prefix pulls the icon from selfh.st;
