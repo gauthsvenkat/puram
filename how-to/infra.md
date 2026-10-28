@@ -8,9 +8,9 @@ Create tofu's own credentials by hand and put them in [`secrets/infra.yaml`](../
 
 - Cloudflare: an **account-owned** token with `Zone Read` + `DNS Write` on the zone and `Account API Tokens Write`.
 - Scaleway: an API key for an [IAM application](https://www.scaleway.com/en/docs/iam/concepts/) with `ObjectStorageBucketsRead`, `ObjectStorageBucketsWrite` and `ObjectStorageObjectsRead` on the Project, and `IAMManager` on the Organization.
-- Tailscale: an OAuth client tagged `tag:infra`, with `dns`, `policy_file` and `devices:core` write. `tag:infra` owns every device tag, so the client can apply them. On a new tailnet, add `"tag:infra": ["autogroup:owner"]` to `tagOwners` in the console first; a client can only be created with a tag that exists. Scopes are fixed at creation; changing them needs a new OAuth client.
+- Tailscale: an OAuth client tagged `tag:infra`, with `dns`, `policy_file`, `devices:core` and `oauth_keys` write. `tag:infra` owns every device tag, so the client can apply them. On a new tailnet, add `"tag:infra": ["autogroup:owner"]` to `tagOwners` in the console first; a client can only be created with a tag that exists. Scopes are fixed at creation; changing them needs a new OAuth client.
 
-Then `just tf apply`. tofu creates its own Cloudflare and Scaleway credentials; copy those into [`secrets/infra.yaml`](../secrets/infra.yaml) (see the outputs under "Rotating keys").
+Then `just tf apply`. tofu creates its own Cloudflare, Scaleway and Tailscale credentials; copy those into [`secrets/infra.yaml`](../secrets/infra.yaml) (see the outputs under "Rotating keys").
 
 ## Rotating keys
 
