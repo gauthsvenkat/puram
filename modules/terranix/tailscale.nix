@@ -18,6 +18,7 @@ in
 
   resource =
     let
+      infraTag = "tag:infra";
       serverTag = "tag:server";
     in
     {
@@ -45,7 +46,13 @@ in
             ];
           }
         ];
-        tagOwners.${serverTag} = [ "autogroup:owner" ];
+        tagOwners = {
+          ${infraTag} = [ "autogroup:owner" ];
+          ${serverTag} = [
+            "autogroup:owner"
+            infraTag
+          ];
+        };
       };
 
       tailscale_device_tags.${homeserver} = {
