@@ -74,14 +74,9 @@
         );
       };
 
-      flakeCfg = rec {
+      flakeCfg = {
         router = "flint-2";
         homeserver = "elitedesk";
-
-        dns = {
-          lanIp = targetCfgs.nixos.${homeserver}.staticLease.ip;
-          inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
-        };
 
         domain = "gauthsvenkat.dev";
 
