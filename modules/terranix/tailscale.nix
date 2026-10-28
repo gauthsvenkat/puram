@@ -72,5 +72,29 @@ in
           }
         ];
       };
+
+      # NOTE: tofu's own credentials.
+      tailscale_oauth_client."opentofu" = {
+        description = "opentofu";
+        scopes = [
+          "devices:core"
+          "dns"
+          "oauth_keys"
+          "policy_file"
+        ];
+        tags = [ infraTag ];
+        lifecycle.create_before_destroy = true;
+      };
     };
+
+  output = {
+    tailscale_oauth_client_id = {
+      value = lib.tf.ref "tailscale_oauth_client.opentofu.id";
+      sensitive = true;
+    };
+    tailscale_oauth_client_secret = {
+      value = lib.tf.ref "tailscale_oauth_client.opentofu.key";
+      sensitive = true;
+    };
+  };
 }
