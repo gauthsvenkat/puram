@@ -1,24 +1,17 @@
-{
-  flakeCfg,
-  targetCfgs,
-  lib,
-  ...
-}:
+{ flakeCfg, lib, ... }:
 let
-  inherit (flakeCfg)
-    dns
-    homeserver
-    lanDomain
-    router
-    ;
-  routerCfg = targetCfgs.openwrt.${router};
+  inherit (flakeCfg) homeserver router;
 in
 {
-  data.tailscale_device.${homeserver}.hostname = homeserver;
+  data.tailscale_device = {
+    ${homeserver}.hostname = homeserver;
+    ${router}.hostname = router;
+  };
 
   resource =
     let
       infraTag = "tag:infra";
+      routerTag = "tag:router";
       serverTag = "tag:server";
     in
     {
@@ -37,17 +30,27 @@ in
           }
           {
             src = [ "autogroup:member" ];
-            dst = [ serverTag ];
+            dst = [ routerTag ];
             ip = [
               "tcp:53"
+              "udp:53"
+            ];
+          }
+          {
+            src = [ "autogroup:member" ];
+            dst = [ serverTag ];
+            ip = [
               "tcp:80"
               "tcp:443"
-              "udp:53"
             ];
           }
         ];
         tagOwners = {
           ${infraTag} = [ "autogroup:owner" ];
+          ${routerTag} = [
+            "autogroup:owner"
+            infraTag
+          ];
           ${serverTag} = [
             "autogroup:owner"
             infraTag
@@ -55,22 +58,22 @@ in
         };
       };
 
-      tailscale_device_tags.${homeserver} = {
-        device_id = lib.tf.ref "data.tailscale_device.${homeserver}.node_id";
-        tags = [ serverTag ];
+      tailscale_device_tags = {
+        ${homeserver} = {
+          device_id = lib.tf.ref "data.tailscale_device.${homeserver}.node_id";
+          tags = [ serverTag ];
+        };
+        ${router} = {
+          device_id = lib.tf.ref "data.tailscale_device.${router}.node_id";
+          tags = [ routerTag ];
+        };
       };
 
       tailscale_dns_configuration."tailnet" = {
         magic_dns = true;
         override_local_dns = true;
         search_paths = [ ];
-        nameservers = [ { address = dns.tailnetIp; } ];
-        split_dns = [
-          {
-            domain = lanDomain;
-            nameservers = [ { address = routerCfg.lan.ip; } ];
-          }
-        ];
+        nameservers = [ { address = lib.tf.ref "data.tailscale_device.${router}.addresses[0]"; } ];
       };
 
       # NOTE: tofu's own credentials.
