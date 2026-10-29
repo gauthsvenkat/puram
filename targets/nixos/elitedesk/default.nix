@@ -33,4 +33,7 @@ in
   boot.zfs.extraPools = [ zpool ];
 
   sops.defaultSopsFile = ../../../secrets/homeserver.yaml;
+
+  # Every `resolv.conf` rewrite restarts nscd; at boot dhcpcd and Tailscale do more than the default 5 in 10s.
+  systemd.services.nscd.startLimitBurst = 20;
 }
