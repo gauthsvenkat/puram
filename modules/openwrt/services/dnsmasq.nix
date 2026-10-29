@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) lanDomain;
+  inherit (flakeCfg) domain lanDomain;
   inherit (targetCfg.ports) adguard;
 in
 {
@@ -26,6 +26,7 @@ in
         localservice = false;
         noresolv = true;
         readethers = true;
+        rebind_domain = [ domain ];
         rebind_localhost = true;
         # The public resolvers only answer if AdGuard Home is down.
         server = [
