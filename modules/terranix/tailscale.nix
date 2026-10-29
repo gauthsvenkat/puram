@@ -29,7 +29,10 @@ in
             ip = [ "*" ];
           }
           {
-            src = [ "autogroup:member" ];
+            src = [
+              "autogroup:member"
+              serverTag
+            ];
             dst = [ routerTag ];
             ip = [
               "tcp:53"
