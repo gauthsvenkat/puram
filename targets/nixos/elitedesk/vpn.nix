@@ -38,9 +38,9 @@ in
     DNS = 10.64.0.1
 
     [Peer]
-    PublicKey = Vh3Y2LsBG1yN4kDeebOr3J6dFooGJIBTftzVqlWhiD4=
+    PublicKey = ywfkKYdoVAnjsSYW145ACtrw3DV8xTzFS1hlIO7QRD4=
     AllowedIPs = 0.0.0.0/0,::0/0
-    Endpoint = 185.209.199.17:51820
+    Endpoint = 185.209.199.12:51820
   '';
 
   vpnNamespaces.${namespace} = {
