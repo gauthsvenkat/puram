@@ -11,6 +11,7 @@
     ../../modules/openwrt/services/odhcpd.nix
     ../../modules/openwrt/services/tailscale.nix
     ../../modules/openwrt/services/tang.nix
+    ../../modules/openwrt/wunlock.nix
     ../../modules/openwrt/wan.nix
 
     ./device.nix

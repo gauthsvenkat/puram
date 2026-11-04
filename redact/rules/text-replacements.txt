@@ -6,6 +6,7 @@ gauthsvenkat_dev==>example_com
 gauthsvenkat.dev==>example.com
 
 ac:e2:d3:14:d9:27==>00:00:5e:00:53:01
+unlockmedaddy==>wunlock-password
 
 gautham@dexterenergy.ai==>user@work.example
 dexterenergyservices.com==>work.example
