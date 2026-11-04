@@ -34,6 +34,14 @@ creation_rules:
         - *thinkpad-x1-carbon
         - *thunderdome
 
+  # the router's ddns token, decrypted by the workstation that deploys it
+  - path_regex: secrets/ddns\.yaml$
+    key_groups:
+      - age:
+        - *thinkpad-t14s
+        - *thinkpad-x1-carbon
+        - *thunderdome
+
   # the wifi that every machine connects to and the router serves
   - path_regex: secrets/wifi\.yaml$
     key_groups:

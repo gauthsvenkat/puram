@@ -8,7 +8,12 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain homeserver;
+  inherit (flakeCfg)
+    ddnsName
+    domain
+    homeserver
+    router
+    ;
   inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
   inherit (targetCfg.cloudflare) accountId;
   zoneId = lib.tf.ref "cloudflare_zone.example_com.id";
@@ -48,6 +53,21 @@ in
           ];
         };
 
+        "ddns" = {
+          account_id = accountId;
+          name = "ddns-${router}";
+          policies = [
+            {
+              effect = "allow";
+              permission_groups = [
+                permissionGroups.dnsWrite
+                permissionGroups.zoneRead
+              ];
+              resources = scopes.zone;
+            }
+          ];
+        };
+
         # NOTE: tofu's own credentials.
         "opentofu" = {
           account_id = accountId;
@@ -72,12 +92,23 @@ in
         };
       };
 
+    cloudflare_dns_record."${ddnsName}" = {
+      zone_id = zoneId;
+      name = "${ddnsName}.${domain}";
+      type = "A";
+      # Placeholder IP; the router's DDNS updates it, so tofu must ignore changes to it.
+      content = "192.0.2.1";
+      proxied = false;
+      ttl = 1;
+      lifecycle.ignore_changes = [ "content" ];
+    };
+
     cloudflare_dns_record."wildcard" = {
       zone_id = zoneId;
       name = "*.${domain}";
       type = "A";
       content = tailnetIp;
-      # NOTE: Never proxy (orange cloud); the tailnet IP is unreachable from the public internet.
+      # Never proxy (orange cloud); the tailnet IP is unreachable from the public internet.
       proxied = false;
       ttl = 1;
     };
@@ -92,6 +123,10 @@ in
   output = {
     cloudflare_api_token = {
       value = lib.tf.ref "cloudflare_account_token.opentofu.value";
+      sensitive = true;
+    };
+    cloudflare_ddns_token = {
+      value = lib.tf.ref "cloudflare_account_token.ddns.value";
       sensitive = true;
     };
     cloudflare_dns_token = {
