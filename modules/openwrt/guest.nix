@@ -31,7 +31,7 @@ in
       mode = "ap";
       network = "guest";
       ssid._secret = "guest_wifi_ssid";
-      encryption = "psk2";
+      encryption = "sae-mixed";
       key._secret = "guest_wifi_psk";
       # Guests cannot see each other.
       isolate = true;
