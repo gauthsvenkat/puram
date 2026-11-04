@@ -10,6 +10,9 @@ The layout is in [README.md](./README.md); how-to guides are in [`how-to/`](./ho
 
 - `just --list --list-submodules` shows all recipes; plain `--list` hides the platform modules.
 - Check that the flake evaluates with `just check`. It skips the OpenWrt images; see the HACK in [`justfile`](./justfile).
+<!-- BEGIN-PRIVATE -->
+- Keep private values (the domain, IPs, ids) out of commit messages. [`how-to/redact.md`](./how-to/redact.md) scrubs files with `text-replacements.txt`, but messages only with `commit-messages.txt`.
+<!-- END-PRIVATE -->
 
 # Conventions
 
