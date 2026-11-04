@@ -20,7 +20,7 @@ in
     };
   };
 
-  # `sopsSecrets` only takes one file; we need `system.yaml` and `wifi.yaml`, so we merge them ourselves.
+  # `sopsSecrets` only takes one file; we need several, so we merge them ourselves.
   secretsCommand = lib.getExe (
     pkgs.writeShellApplication {
       name = "router-secrets";
@@ -30,6 +30,7 @@ in
       ];
       text = ''
         jq -s add \
+          <(sops --output-type json -d ${../../secrets/ddns.yaml}) \
           <(sops --output-type json -d ${../../secrets/system.yaml}) \
           <(sops --output-type json -d ${../../secrets/wifi.yaml})
       '';

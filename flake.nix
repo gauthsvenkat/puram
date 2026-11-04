@@ -78,6 +78,7 @@
         router = "flint-2";
         homeserver = "elitedesk";
 
+        ddnsName = "apartment";
         domain = "gauthsvenkat.dev";
 
         lanDomain = "lan";
