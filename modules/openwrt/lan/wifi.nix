@@ -5,7 +5,7 @@
         mode = "ap";
         network = "lan";
         ssid._secret = "wifi_ssid";
-        encryption = "psk2";
+        encryption = "sae-mixed";
         key._secret = "wifi_psk";
       };
     in
