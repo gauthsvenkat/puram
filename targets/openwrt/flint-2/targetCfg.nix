@@ -10,7 +10,6 @@
   lan = {
     ip = "192.168.1.1";
     ports = [
-      "lan2"
       "lan3"
       "lan4"
       "lan5"
@@ -24,7 +23,7 @@
   homelab = {
     ip = "192.168.20.1";
     # The gs1900-8hp switch; everything behind it is a server.
-    ports = [ "lan1" ];
+    ports = [ "lan2" ];
   };
 
   wunlock = {
