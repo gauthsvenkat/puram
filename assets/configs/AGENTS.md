@@ -22,6 +22,9 @@
 - Default commit style: Conventional Commits (`feat/fix/refactor/chore/docs/test/ci`, `!` for breaking), lowercase, focused.
 - Commit messages: title plus a sentence or two at most; omit the body if the title says it all.
 - MR/PR descriptions: 2 sentences max.
+- Large change: first propose a list of logical commits. Then do one at a time: write the change, leave it uncommitted, and stop. Go to the next one only after I say "commit".
+- "Replay": rebuild a branch (for example, an autonomous PoC) on a new branch from `main` as logical commits, with my changes. Use the same one-at-a-time flow.
+- Done: suggest a fast-forward, a squash, or a partial squash then a fast-forward. Wait for my choice. Then merge into `main` with `--ff-only` and delete the branch, local and remote.
 
 # Tools
 
