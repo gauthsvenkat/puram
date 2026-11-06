@@ -13,10 +13,6 @@
     forwarding = [
       {
         src = "lan";
-        dest = "homelab";
-      }
-      {
-        src = "lan";
         dest = "wan";
       }
     ];
