@@ -69,8 +69,6 @@ in
               }
               zoneDnsPolicy
             ];
-            # The apply runs on this token, so create its successor before revoking it.
-            lifecycle.create_before_destroy = true;
           };
         };
 
@@ -103,10 +101,6 @@ in
     };
 
   output = {
-    cloudflare_api_token_tofu = {
-      value = lib.tf.ref "cloudflare_account_token.opentofu.value";
-      sensitive = true;
-    };
     cloudflare_dns_token_homeserver = {
       value = lib.tf.ref "cloudflare_account_token.caddy_dns.value";
       sensitive = true;
