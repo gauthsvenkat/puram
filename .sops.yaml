@@ -7,7 +7,6 @@ keys:
   - &thinkpad-x1-carbon age1awzy9trqped05z2yc4eaaz6wn3ddmqcn8tnvxctfach47wrkecnqwyau7z
   - &thunderdome age17fetz7rj5rkc89ts5l2qde3cpwswy5pkgs52czaykv8en5lw6cuqf3pa9s
 creation_rules:
-  # every machine
   - path_regex: secrets/system\.yaml$
     key_groups:
       - age:
@@ -19,7 +18,6 @@ creation_rules:
         - *thinkpad-x1-carbon
         - *thunderdome
 
-  # elitedesk runtime secrets, editable from the workstations
   - path_regex: secrets/homeserver\.yaml$
     key_groups:
       - age:
@@ -28,7 +26,6 @@ creation_rules:
         - *thinkpad-x1-carbon
         - *thunderdome
 
-  # workstations only
   - path_regex: secrets/infra\.yaml$
     key_groups:
       - age:
@@ -44,13 +41,9 @@ creation_rules:
         - *thinkpad-x1-carbon
         - *thunderdome
 
-  # the wifi that every machine connects to and the router serves
   - path_regex: secrets/wifi\.yaml$
     key_groups:
       - age:
-        - *elitedesk
-        - *raspi400
-        - *raspi5
         - *sandisk-ultra
         - *thinkpad-t14s
         - *thinkpad-x1-carbon

@@ -104,7 +104,7 @@ mkdir -p /tmp/extra-files/$hostname/etc/ssh
 ssh-keygen -t ed25519 -N "" -f /tmp/extra-files/$hostname/etc/ssh/ssh_host_ed25519_key
 ```
 
-[Enroll](./secrets.md#enrolling-a-host) the `.pub` key for [`secrets/system.yaml`](../secrets/system.yaml) and [`secrets/wifi.yaml`](../secrets/wifi.yaml). Without this, first boot has no wifi and no user password.
+[Enroll](./secrets.md#enrolling-a-host) the `.pub` key for [`secrets/system.yaml`](../secrets/system.yaml) (and [`secrets/wifi.yaml`](../secrets/wifi.yaml) if the host connects through wifi). Without this, first boot has no user password.
 
 ### 2. Build and flash the image on a flash drive.
 
@@ -126,8 +126,6 @@ nix-shell -p udisks --run "udisksctl unmount -b /dev/disk/by-label/NIXOS_SD"
 ```
 
 ### 4. First boot
-
-Headless: the pi joins the home wifi via the `home-wifi` NetworkManager profile (credentials in [`secrets/wifi.yaml`](../secrets/wifi.yaml)) and starts sshd. Find its IP on the router, log in as the user, then `sudo tailscale up`.
 
 Known issue: `expand-root-partition.service` [fails on first boot](https://github.com/NixOS/nixpkgs/issues/554294), leaving the root filesystem at the built image size (~5G). It only runs on first boot, so fix it by hand:
 
