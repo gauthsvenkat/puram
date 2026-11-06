@@ -13,16 +13,14 @@ nixos-toplevels := "configs: builtins.mapAttrs (_: c: c.config.system.build.topl
 # republishes its package index and the hashes pinned by nix-openwrt-imagebuilder
 # go stale, which is quite often. See
 # https://github.com/astro/nix-openwrt-imagebuilder#refreshing-hashes
-skip-openwrt-image-drvs := "pkgs: builtins.removeAttrs pkgs" + \
-    " (builtins.filter (name: builtins.match \".*-openwrt-image\" name != null)" + \
-    " (builtins.attrNames pkgs))"
+skip-openwrt-image-drvs := '''
+    pkgs: builtins.removeAttrs pkgs
+      (builtins.filter (name: builtins.match ".*-openwrt-image" name != null)
+      (builtins.attrNames pkgs))
+'''
 
 # We use `nix-fast-build` to evaluate and build all derivations in parallel.
-fast-build := "nix-fast-build" + \
-    " --skip-cached" + \
-    " --systems 'x86_64-linux aarch64-linux'" + \
-    " --option cores 4" + \
-    " -j 4"
+fast-build := "nix-fast-build --skip-cached --systems 'x86_64-linux aarch64-linux' --option cores 4 -j 4"
 
 # Basically `nix flake check` but skips OpenWrt images.
 @check:

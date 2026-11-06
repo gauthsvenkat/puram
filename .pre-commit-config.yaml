@@ -18,6 +18,12 @@ repos:
       language: system
       types: [nix]
 
+    - id: just-fmt
+      name: just fmt
+      entry: sh -ec 'for f; do just --fmt --justfile "$f"; done' --
+      language: system
+      files: (^justfile|\.just)$
+
     - id: lychee
       name: lychee
       entry: lychee --offline --include-fragments --no-progress
