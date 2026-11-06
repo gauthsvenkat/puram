@@ -36,37 +36,24 @@ in
           account = lib.toJSON { "com.cloudflare.api.account.${accountId}" = "*"; };
           zone = lib.toJSON { "com.cloudflare.api.account.zone.${zoneId}" = "*"; };
         };
+        zoneDnsPolicy = {
+          effect = "allow";
+          permission_groups = [
+            permissionGroups.dnsWrite
+            permissionGroups.zoneRead
+          ];
+          resources = scopes.zone;
+        };
+        mkDnsToken = name: {
+          account_id = accountId;
+          inherit name;
+          policies = [ zoneDnsPolicy ];
+        };
       in
       {
-        "caddy_dns" = {
-          account_id = accountId;
-          name = "caddy-acme-${homeserver}";
-          policies = [
-            {
-              effect = "allow";
-              permission_groups = [
-                permissionGroups.dnsWrite
-                permissionGroups.zoneRead
-              ];
-              resources = scopes.zone;
-            }
-          ];
-        };
+        "caddy_dns" = mkDnsToken "caddy-acme-${homeserver}";
 
-        "ddns" = {
-          account_id = accountId;
-          name = "ddns-${router}";
-          policies = [
-            {
-              effect = "allow";
-              permission_groups = [
-                permissionGroups.dnsWrite
-                permissionGroups.zoneRead
-              ];
-              resources = scopes.zone;
-            }
-          ];
-        };
+        "ddns" = mkDnsToken "ddns-${router}";
 
         # NOTE: tofu's own credentials.
         "opentofu" = {
@@ -78,14 +65,7 @@ in
               permission_groups = [ permissionGroups.accountApiTokensWrite ];
               resources = scopes.account;
             }
-            {
-              effect = "allow";
-              permission_groups = [
-                permissionGroups.dnsWrite
-                permissionGroups.zoneRead
-              ];
-              resources = scopes.zone;
-            }
+            zoneDnsPolicy
           ];
           # The apply runs on this token, so create its successor before revoking it.
           lifecycle.create_before_destroy = true;
