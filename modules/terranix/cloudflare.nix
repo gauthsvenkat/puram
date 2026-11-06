@@ -101,16 +101,16 @@ in
   };
 
   output = {
-    cloudflare_api_token = {
+    cloudflare_api_token_tofu = {
       value = lib.tf.ref "cloudflare_account_token.opentofu.value";
       sensitive = true;
     };
-    cloudflare_ddns_token = {
-      value = lib.tf.ref "cloudflare_account_token.ddns.value";
+    cloudflare_dns_token_homeserver = {
+      value = lib.tf.ref "cloudflare_account_token.caddy_dns.value";
       sensitive = true;
     };
-    cloudflare_dns_token = {
-      value = lib.tf.ref "cloudflare_account_token.caddy_dns.value";
+    cloudflare_dns_token_router = {
+      value = lib.tf.ref "cloudflare_account_token.ddns.value";
       sensitive = true;
     };
   };

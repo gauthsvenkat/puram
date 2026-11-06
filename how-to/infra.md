@@ -14,8 +14,8 @@ Then `just tf apply`. tofu creates its own credentials; copy those into [`secret
 
 ## Rotating keys
 
-Every key tofu creates has a sensitive output named after its sops key, in lowercase (`CLOUDFLARE_API_TOKEN` is `cloudflare_api_token`). A new key needs one too.
+Every key tofu creates has a sensitive output. A new key needs one too.
 
 1. `just tf apply -replace=<address>`. The old key stops working here, unless the resource has `create_before_destroy`.
-2. `just tf output -raw <output>`, then put the new value in sops with `just secrets edit`.
+2. `just tf output -raw <key>_<file>`, then put the new value under `<key>` with `just secrets edit <file>`.
 3. `just nixos deploy elitedesk` for keys that Caddy or restic use. For opentofu's own keys, update [`secrets/tofu.yaml`](../secrets/tofu.yaml) right away; a wrong value locks tofu out.
