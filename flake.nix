@@ -57,19 +57,21 @@
     let
       inherit (nixpkgs) lib;
 
+      platforms = [
+        "nixos"
+        "openwrt"
+        "terranix"
+      ];
+
+      # genAttrs :: [ platform::String ] -> (platform::String -> { hostname::String -> targetCfg }) -> { platform::String -> { hostname::String -> targetCfg } }
       # readDir :: Path -> { hostname::String -> fileType::String }, always "directory"
       # mapAttrs :: (hostname::String -> fileType::String -> targetCfg) -> { hostname::String -> fileType::String } -> { hostname::String -> targetCfg }
-      targetCfgs = {
-        nixos = lib.mapAttrs (name: _: import ./targets/nixos/${name}/targetCfg.nix) (
-          lib.readDir ./targets/nixos
-        );
-        openwrt = lib.mapAttrs (name: _: import ./targets/openwrt/${name}/targetCfg.nix) (
-          lib.readDir ./targets/openwrt
-        );
-        terranix = lib.mapAttrs (name: _: import ./targets/terranix/${name}/targetCfg.nix) (
-          lib.readDir ./targets/terranix
-        );
-      };
+      targetCfgs = lib.genAttrs platforms (
+        platform:
+        lib.mapAttrs (name: _: import ./targets/${platform}/${name}/targetCfg.nix) (
+          lib.readDir ./targets/${platform}
+        )
+      );
 
       flakeCfg = {
         router = "flint-2";
@@ -88,32 +90,20 @@
         workstationKeys = lib.catAttrs "sshUserKey" (lib.attrValues targetCfgs.nixos);
       };
 
+      # map :: (platform::String -> outputs) -> [ platform::String ] -> [ outputs ]
       # recursiveUpdate :: outputs -> outputs -> outputs
       #   where outputs = { nixosConfigurations, packages, devShells :: { String -> Derivation } }
-      # :: outputs, the three parts merged; parts must not share leaf names
-      parts = [
-        (import ./flake/nixos.nix {
+      # :: outputs, one part per platform merged; parts must not share leaf names
+      parts = map (
+        platform:
+        import ./flake/${platform}.nix {
           inherit
             inputs
             flakeCfg
             targetCfgs
             ;
-        })
-        (import ./flake/openwrt.nix {
-          inherit
-            inputs
-            flakeCfg
-            targetCfgs
-            ;
-        })
-        (import ./flake/terranix.nix {
-          inherit
-            inputs
-            flakeCfg
-            targetCfgs
-            ;
-        })
-      ];
+        }
+      ) platforms;
     in
     lib.foldl' lib.recursiveUpdate { } parts;
 }
