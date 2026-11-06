@@ -32,7 +32,7 @@ in
         application_id = lib.tf.ref "scaleway_iam_application.restic.id";
         default_project_id = orgId;
         description = "For restic backups from elitedesk";
-        # NOTE: Rotate before this; the offsite backup unit will fails otherwise.
+        # NOTE: Rotate before this; the offsite backup unit fails otherwise.
         expires_at = "2027-07-30T15:11:28Z";
       };
     };
@@ -46,7 +46,6 @@ in
     };
 
     scaleway_iam_policy = {
-      # NOTE: tofu's own credentials.
       "opentofu" = {
         name = "opentofu";
         application_id = lib.tf.ref "scaleway_iam_application.opentofu.id";

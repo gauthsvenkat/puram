@@ -1,7 +1,7 @@
 {
   boot = {
     supportedFilesystems = [ "zfs" ];
-    # NOTE: The default stays true as long as `stateVersion` is older than 26.11.
+    # NOTE: Keep while `stateVersion` is older than 26.11; the default is `true` until then.
     zfs.forceImportRoot = false;
   };
 

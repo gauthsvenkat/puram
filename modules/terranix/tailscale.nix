@@ -79,7 +79,6 @@ in
         nameservers = [ { address = lib.tf.ref "data.tailscale_device.${router}.addresses[0]"; } ];
       };
 
-      # NOTE: tofu's own credentials.
       tailscale_oauth_client."opentofu" = {
         description = "opentofu";
         scopes = [
