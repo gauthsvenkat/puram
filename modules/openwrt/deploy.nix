@@ -30,9 +30,9 @@ in
       ];
       text = ''
         jq -s add \
-          <(sops --output-type json -d ${../../secrets/ddns.yaml}) \
-          <(sops --output-type json -d ${../../secrets/system.yaml}) \
-          <(sops --output-type json -d ${../../secrets/wifi.yaml})
+          <(sops --output-type json -d ${../../secrets/home-wifi.yaml}) \
+          <(sops --output-type json -d ${../../secrets/router.yaml}) \
+          <(sops --output-type json -d ${../../secrets/user.yaml})
       '';
     }
   );

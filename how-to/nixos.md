@@ -104,7 +104,7 @@ mkdir -p /tmp/extra-files/$hostname/etc/ssh
 ssh-keygen -t ed25519 -N "" -f /tmp/extra-files/$hostname/etc/ssh/ssh_host_ed25519_key
 ```
 
-[Enroll](./secrets.md#enrolling-a-host) the `.pub` key for [`secrets/system.yaml`](../secrets/system.yaml) (and [`secrets/wifi.yaml`](../secrets/wifi.yaml) if the host connects through wifi). Without this, first boot has no user password.
+[Enroll](./secrets.md#enrolling-a-host) the `.pub` key for [`secrets/user.yaml`](../secrets/user.yaml) (and [`secrets/home-wifi.yaml`](../secrets/home-wifi.yaml) if the host connects through wifi). Without this, first boot has no user password.
 
 ### 2. Build and flash the image on a flash drive.
 

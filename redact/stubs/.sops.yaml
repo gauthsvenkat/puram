@@ -6,7 +6,7 @@ keys:
   - &thinkpad-x1-carbon age133h0ltupa6ffzf5jswzvw0e6m2nue74gld6ftn7s8fzhkvtvsgdqemukdk
   - &thunderdome age1nvka08nfv4jtwu4yld86n57rqlh8lyf8a47j7s37ruqw2afcts0qf3mvjx
 creation_rules:
-  - path_regex: secrets/system\.yaml$
+  - path_regex: secrets/user\.yaml$
     key_groups:
       - age:
         - *elitedesk
@@ -24,22 +24,22 @@ creation_rules:
         - *thinkpad-x1-carbon
         - *thunderdome
 
-  - path_regex: secrets/infra\.yaml$
+  - path_regex: secrets/tofu\.yaml$
     key_groups:
       - age:
         - *thinkpad-t14s
         - *thinkpad-x1-carbon
         - *thunderdome
 
-  # the router's ddns token, decrypted by the workstation that deploys it
-  - path_regex: secrets/ddns\.yaml$
+  # the router's secrets, decrypted by the workstation that deploys it
+  - path_regex: secrets/router\.yaml$
     key_groups:
       - age:
         - *thinkpad-t14s
         - *thinkpad-x1-carbon
         - *thunderdome
 
-  - path_regex: secrets/wifi\.yaml$
+  - path_regex: secrets/home-wifi\.yaml$
     key_groups:
       - age:
         - *thinkpad-t14s
