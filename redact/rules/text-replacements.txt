@@ -5,7 +5,6 @@ myrthe.gauthsvenkat.dev==>toshiba.example.com
 gauthsvenkat_dev==>example_com
 gauthsvenkat.dev==>example.com
 
-ac:e2:d3:14:d9:27==>00:00:5e:00:53:01
 unlockmedaddy==>wunlock-password
 
 gautham@dexterenergy.ai==>user@work.example
@@ -52,3 +51,4 @@ regex:(?ms)^<!-- BEGIN-PRIVATE -->\n.*?^<!-- END-PRIVATE -->\n==>
 
 regex:,\n {8}"vpn-confinement": "vpn-confinement"==>
 regex:(?s),\n {4}"vpn-confinement": \{\n.*?\n {4}\}==>
+regex:(?<![0-9a-fA-F:])(?:[0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}(?![0-9a-fA-F:])==>00:00:5e:00:53:01
