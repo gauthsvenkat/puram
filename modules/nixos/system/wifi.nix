@@ -5,8 +5,8 @@ in
 {
   sops = {
     secrets = {
-      "wifi_psk".sopsFile = ../../../secrets/wifi.yaml;
-      "wifi_ssid".sopsFile = ../../../secrets/wifi.yaml;
+      "wifi_psk".sopsFile = ../../../secrets/home-wifi.yaml;
+      "wifi_ssid".sopsFile = ../../../secrets/home-wifi.yaml;
     };
     templates."wifi".content = ''
       WIFI_SSID=${placeholder."wifi_ssid"}

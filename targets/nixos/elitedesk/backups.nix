@@ -50,13 +50,13 @@ in
 
   sops.secrets = {
     "restic_password" = { };
-    "scaleway_backups_access_key" = { };
-    "scaleway_backups_secret_key" = { };
+    "scaleway_access_key" = { };
+    "scaleway_secret_key" = { };
   };
 
   sops.templates."restic_offsite_env".content = ''
-    AWS_ACCESS_KEY_ID=${placeholder."scaleway_backups_access_key"}
-    AWS_SECRET_ACCESS_KEY=${placeholder."scaleway_backups_secret_key"}
+    AWS_ACCESS_KEY_ID=${placeholder."scaleway_access_key"}
+    AWS_SECRET_ACCESS_KEY=${placeholder."scaleway_secret_key"}
   '';
 
   services.restic.backups."offsite" = {

@@ -1,6 +1,6 @@
 { openwrtCfg, targetCfg, ... }:
 {
-  users.root.hashedPasswordSecret = "hashedPassword";
+  users.root.hashedPasswordSecret = "user_hashed_password";
 
   uci.settings.system = {
     system = [
