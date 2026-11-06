@@ -2,7 +2,7 @@
   services.kanata = {
     enable = true;
     keyboards."laptop" = {
-      # NOTE: Make sure that the devices are present in the host.
+      # NOTE: Device paths are host-specific; check `/dev/input/by-path/` before enabling this on another host.
       devices = [
         "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
       ];

@@ -58,7 +58,6 @@ in
 
           "ddns" = mkDnsToken "ddns-${router}";
 
-          # NOTE: tofu's own credentials.
           "opentofu" = {
             account_id = accountId;
             name = "opentofu-infra";

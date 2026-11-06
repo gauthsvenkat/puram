@@ -48,7 +48,7 @@ return {
         )
         -- end of keymapping block
 
-        -- NOTE: Not gonna bother unbinding the keymaps when LspDetach.
+        -- Not gonna bother unbinding the keymaps when LspDetach.
       end,
       -- end custom-lsp-attach callback
     })
