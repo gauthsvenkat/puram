@@ -19,88 +19,35 @@
 
         window_background_opacity = 0.9;
 
-        keys = [
-          # tabs
-          {
-            key = "t";
-            mods = "CTRL|ALT";
-            action = mkLuaInline ''wezterm.action.SpawnTab("DefaultDomain")'';
-          }
-          {
-            key = "n";
-            mods = "CTRL|ALT";
-            action = mkLuaInline "wezterm.action.ActivateTabRelative(1)";
-          }
-          {
-            key = "b";
-            mods = "CTRL|ALT";
-            action = mkLuaInline "wezterm.action.ActivateTabRelative(-1)";
-          }
-          {
-            key = "n";
-            mods = "CTRL|ALT|SHIFT";
-            action = mkLuaInline "wezterm.action.MoveTabRelative(1)";
-          }
-          {
-            key = "b";
-            mods = "CTRL|ALT|SHIFT";
-            action = mkLuaInline "wezterm.action.MoveTabRelative(-1)";
-          }
+        keys =
+          let
+            mkKey = mods: key: action: {
+              inherit key mods;
+              action = mkLuaInline "wezterm.action.${action}";
+            };
+          in
+          [
+            # tabs
+            (mkKey "CTRL|ALT" "t" ''SpawnTab("DefaultDomain")'')
+            (mkKey "CTRL|ALT" "n" "ActivateTabRelative(1)")
+            (mkKey "CTRL|ALT" "b" "ActivateTabRelative(-1)")
+            (mkKey "CTRL|ALT|SHIFT" "n" "MoveTabRelative(1)")
+            (mkKey "CTRL|ALT|SHIFT" "b" "MoveTabRelative(-1)")
 
-          # panes
-          {
-            key = "s";
-            mods = "CTRL|ALT";
-            action = mkLuaInline ''wezterm.action.SplitPane({ direction = "Down", size = { Percent = 40 } })'';
-          }
-          {
-            key = "v";
-            mods = "CTRL|ALT";
-            action = mkLuaInline ''wezterm.action.SplitPane({ direction = "Right" })'';
-          }
-          {
-            key = "h";
-            mods = "CTRL|ALT";
-            action = mkLuaInline ''wezterm.action.ActivatePaneDirection("Left")'';
-          }
-          {
-            key = "j";
-            mods = "CTRL|ALT";
-            action = mkLuaInline ''wezterm.action.ActivatePaneDirection("Down")'';
-          }
-          {
-            key = "k";
-            mods = "CTRL|ALT";
-            action = mkLuaInline ''wezterm.action.ActivatePaneDirection("Up")'';
-          }
-          {
-            key = "l";
-            mods = "CTRL|ALT";
-            action = mkLuaInline ''wezterm.action.ActivatePaneDirection("Right")'';
-          }
-          {
-            key = "f";
-            mods = "CTRL|ALT";
-            action = mkLuaInline ''wezterm.action.PaneSelect({ mode = "Activate" })'';
-          }
-          {
-            key = "d";
-            mods = "CTRL|ALT";
-            action = mkLuaInline "wezterm.action.CloseCurrentPane({ confirm = true })";
-          }
-          {
-            key = "f";
-            mods = "CTRL|ALT|SHIFT";
-            action = mkLuaInline ''wezterm.action.PaneSelect({ mode = "SwapWithActive" })'';
-          }
+            # panes
+            (mkKey "CTRL|ALT" "s" ''SplitPane({ direction = "Down", size = { Percent = 40 } })'')
+            (mkKey "CTRL|ALT" "v" ''SplitPane({ direction = "Right" })'')
+            (mkKey "CTRL|ALT" "h" ''ActivatePaneDirection("Left")'')
+            (mkKey "CTRL|ALT" "j" ''ActivatePaneDirection("Down")'')
+            (mkKey "CTRL|ALT" "k" ''ActivatePaneDirection("Up")'')
+            (mkKey "CTRL|ALT" "l" ''ActivatePaneDirection("Right")'')
+            (mkKey "CTRL|ALT" "f" ''PaneSelect({ mode = "Activate" })'')
+            (mkKey "CTRL|ALT" "d" "CloseCurrentPane({ confirm = true })")
+            (mkKey "CTRL|ALT|SHIFT" "f" ''PaneSelect({ mode = "SwapWithActive" })'')
 
-          # misc
-          {
-            key = "Enter";
-            mods = "CTRL|ALT";
-            action = mkLuaInline "wezterm.action.ActivateCommandPalette";
-          }
-        ];
+            # misc
+            (mkKey "CTRL|ALT" "Enter" "ActivateCommandPalette")
+          ];
 
         mouse_bindings = [
           {
