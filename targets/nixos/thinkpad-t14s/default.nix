@@ -78,33 +78,20 @@ in
 
     programs = {
       firefox.policies = {
-        Bookmarks = lib.mkAfter [
-          {
-            Title = "GitLab";
-            URL = "https://gitlab.com/";
-            Placement = "toolbar";
-          }
-          {
-            Title = "Vault";
-            URL = "https://vault.work.example/ui/";
-            Placement = "toolbar";
-          }
-          {
-            Title = "Jira";
-            URL = "https://work.atlassian.net/jira/software/projects/WORK/boards/1";
-            Placement = "toolbar";
-          }
-          {
-            Title = "ArgoCD";
-            URL = "https://argocd.work.example/applications?proj=work-services";
-            Placement = "toolbar";
-          }
-          {
-            Title = "Cloud console";
-            URL = "https://console.cloud.google.com/welcome?project=work-project";
-            Placement = "toolbar";
-          }
-        ];
+        Bookmarks =
+          let
+            mkToolbar = Title: URL: {
+              inherit Title URL;
+              Placement = "toolbar";
+            };
+          in
+          lib.mkAfter [
+            (mkToolbar "GitLab" "https://gitlab.com/")
+            (mkToolbar "Vault" "https://vault.work.example/ui/")
+            (mkToolbar "Jira" "https://work.atlassian.net/jira/software/projects/WORK/boards/1")
+            (mkToolbar "ArgoCD" "https://argocd.work.example/applications?proj=work-services")
+            (mkToolbar "Cloud console" "https://console.cloud.google.com/welcome?project=work-project")
+          ];
 
         ExtensionSettings."{d634138d-c276-4fc8-924b-40a0ea21d284}" = {
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi";

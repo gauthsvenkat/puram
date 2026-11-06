@@ -44,38 +44,21 @@ in
       ];
     };
 
-    filters = [
-      {
-        id = 1;
-        name = "AdGuard DNS filter";
-        url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt";
-        enabled = true;
-      }
-      {
-        id = 8;
-        name = "NoCoin Filter List";
-        url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_8.txt";
-        enabled = true;
-      }
-      {
-        id = 11;
-        name = "Malicious URL Blocklist (URLHaus)";
-        url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt";
-        enabled = true;
-      }
-      {
-        id = 27;
-        name = "OISD Blocklist Big";
-        url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_27.txt";
-        enabled = true;
-      }
-      {
-        id = 31;
-        name = "Stalkerware Indicators List";
-        url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_31.txt";
-        enabled = true;
-      }
-    ];
+    filters =
+      let
+        mkFilter = id: name: {
+          inherit id name;
+          url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_${toString id}.txt";
+          enabled = true;
+        };
+      in
+      [
+        (mkFilter 1 "AdGuard DNS filter")
+        (mkFilter 8 "NoCoin Filter List")
+        (mkFilter 11 "Malicious URL Blocklist (URLHaus)")
+        (mkFilter 27 "OISD Blocklist Big")
+        (mkFilter 31 "Stalkerware Indicators List")
+      ];
 
     http.address = "${lan.ip}:${toString adguard.web_port}";
 
