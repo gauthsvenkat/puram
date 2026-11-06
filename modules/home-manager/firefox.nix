@@ -43,33 +43,20 @@ in
           "uBlock0@raymondhill.net" = amo "ublock-origin";
         };
 
-      Bookmarks = [
-        {
-          Title = "Calendar";
-          URL = "https://calendar.google.com/calendar/u/0/r";
-          Placement = "toolbar";
-        }
-        {
-          Title = "Claude";
-          URL = "https://claude.ai/new";
-          Placement = "toolbar";
-        }
-        {
-          Title = "Gmail";
-          URL = "https://mail.google.com/mail/u/0/#inbox";
-          Placement = "toolbar";
-        }
-        {
-          Title = "Homepage";
-          URL = "https://homepage.${domain}/";
-          Placement = "toolbar";
-        }
-        {
-          Title = "NixOS Packages";
-          URL = "https://search.nixos.org/packages";
-          Placement = "toolbar";
-        }
-      ];
+      Bookmarks =
+        let
+          mkToolbar = Title: URL: {
+            inherit Title URL;
+            Placement = "toolbar";
+          };
+        in
+        [
+          (mkToolbar "Calendar" "https://calendar.google.com/calendar/u/0/r")
+          (mkToolbar "Claude" "https://claude.ai/new")
+          (mkToolbar "Gmail" "https://mail.google.com/mail/u/0/#inbox")
+          (mkToolbar "Homepage" "https://homepage.${domain}/")
+          (mkToolbar "NixOS Packages" "https://search.nixos.org/packages")
+        ];
     };
   };
 }
