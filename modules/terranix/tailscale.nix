@@ -94,11 +94,11 @@ in
     };
 
   output = {
-    tailscale_oauth_client_id = {
+    tailscale_oauth_client_id_tofu = {
       value = lib.tf.ref "tailscale_oauth_client.opentofu.id";
       sensitive = true;
     };
-    tailscale_oauth_client_secret = {
+    tailscale_oauth_client_secret_tofu = {
       value = lib.tf.ref "tailscale_oauth_client.opentofu.key";
       sensitive = true;
     };

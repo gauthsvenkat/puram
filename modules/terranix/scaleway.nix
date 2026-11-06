@@ -89,19 +89,19 @@ in
   };
 
   output = {
-    scaleway_backups_access_key = {
+    scaleway_access_key_homeserver = {
       value = lib.tf.ref "scaleway_iam_api_key.restic.access_key";
       sensitive = true;
     };
-    scaleway_backups_secret_key = {
+    scaleway_secret_key_homeserver = {
       value = lib.tf.ref "scaleway_iam_api_key.restic.secret_key";
       sensitive = true;
     };
-    scw_access_key = {
+    scw_access_key_tofu = {
       value = lib.tf.ref "scaleway_iam_api_key.opentofu.access_key";
       sensitive = true;
     };
-    scw_secret_key = {
+    scw_secret_key_tofu = {
       value = lib.tf.ref "scaleway_iam_api_key.opentofu.secret_key";
       sensitive = true;
     };

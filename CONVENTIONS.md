@@ -44,6 +44,11 @@ serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) targetCfgs.n
 - A value lives in the narrowest Cfg that covers all its readers: one target reads it, `targetCfg`; one platform, `<platform>Cfg`; more than one platform, `flakeCfg`. A new reader on another platform moves it up.
 - Facts about one target stay in its `targetCfg`, even when other targets read them through `targetCfgs.<platform>.<hostname>`. Higher Cfgs point at the target by name (`router = "flint-2"`) rather than copy its values.
 
+## Secrets
+
+- Sops files are named after their consumer's role (`router.yaml`), or their topic when shared (`home-wifi.yaml`).
+- Keys are `<service>_<field>`; tofu outputs for them are `<key>_<file>`.
+
 ## let / inherit
 
 - Top-level `let` is reserved for bindings that depend on a Cfg (`flakeCfg`, `<platform>Cfg`, `targetCfg`) or `config`. Other helpers go in the lowest scope where they're used (often inside an attribute value).
