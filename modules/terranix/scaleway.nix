@@ -1,11 +1,16 @@
 {
+  flakeCfg,
   targetCfg,
+
   targetCfgs,
+
   lib,
   ...
 }:
 let
+  inherit (flakeCfg) homeserver;
   inherit (targetCfg.scaleway) orgId;
+  inherit (targetCfgs.nixos.${homeserver}) offsiteBucket;
 in
 {
   provider.scaleway = {
@@ -73,7 +78,7 @@ in
     };
 
     scaleway_object_bucket."elitedesk_backup" = {
-      name = targetCfgs.nixos."elitedesk".offsiteBucket;
+      name = offsiteBucket;
       force_destroy = false;
       # NOTE: Only clean up uploads that never completed (interrupted restic runs).
       # Never add object expiration: restic owns deletion, and age-based expiry
