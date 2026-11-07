@@ -1,5 +1,6 @@
 {
   imports = [
+    ../../modules/nixos/system/lid-switch.nix
     ../../modules/nixos/system/wifi.nix
 
     ../../modules/nixos/services/kanata.nix
@@ -8,9 +9,4 @@
 
     ./workstation.nix
   ];
-
-  services.logind.settings.Login = {
-    HandleLidSwitch = "suspend";
-    HandleLidSwitchExternalPower = "ignore";
-  };
 }

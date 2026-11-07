@@ -22,6 +22,8 @@ in
 
   environment.systemPackages = [ pkgs.xwayland-satellite ];
 
+  services.displayManager.ly.enable = true;
+
   xdg.portal = {
     config.niri = {
       default = [

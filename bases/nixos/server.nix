@@ -1,16 +1,14 @@
-{
-  flakeCfg,
-  targetCfg,
-  ...
-}:
+{ targetCfg, ... }:
 let
-  inherit (flakeCfg) workstationKeys;
   inherit (targetCfg) username;
 in
 {
-  imports = [ ./system.nix ];
+  imports = [
+    ../../modules/nixos/ssh/server.nix
+    ../../modules/nixos/system/panic.nix
 
-  boot.kernel.sysctl."kernel.panic" = 10;
+    ./system.nix
+  ];
 
   home-manager.users.${username} = {
     imports = [
@@ -29,20 +27,5 @@ in
     ];
 
     programs.starship.presets = [ "pure-preset" ];
-  };
-
-  services.openssh = {
-    enable = true;
-    settings = {
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-    };
-  };
-
-  systemd.settings.Manager.RuntimeWatchdogSec = "30s";
-
-  users.users = {
-    root.openssh.authorizedKeys.keys = workstationKeys;
-    ${username}.openssh.authorizedKeys.keys = workstationKeys;
   };
 }
