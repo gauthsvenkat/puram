@@ -21,6 +21,7 @@ in
       python3
       ripgrep # snacks.picker
       tree-sitter
+      wl-clipboard
     ];
 
     sessionVariables.EDITOR = lib.getExe pkg;

@@ -181,4 +181,6 @@ in
         ];
       };
     };
+
+  services.upower.enable = true;
 }
