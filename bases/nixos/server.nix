@@ -37,6 +37,8 @@ in
     };
   };
 
+  systemd.settings.Manager.RuntimeWatchdogSec = "30s";
+
   users.users = {
     root.openssh.authorizedKeys.keys = workstationKeys;
     ${username}.openssh.authorizedKeys.keys = workstationKeys;
