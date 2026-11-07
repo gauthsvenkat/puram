@@ -1,5 +1,7 @@
 {
   targetCfg,
+
+  pkgs,
   ...
 }:
 let
@@ -31,6 +33,8 @@ in
   ];
 
   boot.zfs.extraPools = [ zpool ];
+
+  services.postgresql.package = pkgs.postgresql_17;
 
   sops.defaultSopsFile = ../../../secrets/homeserver.yaml;
 

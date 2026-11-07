@@ -1,9 +1,5 @@
 {
-  boot = {
-    supportedFilesystems = [ "zfs" ];
-    # NOTE: Keep while `stateVersion` is older than 26.11; the default is `true` until then.
-    zfs.forceImportRoot = false;
-  };
+  boot.supportedFilesystems = [ "zfs" ];
 
   # ZFS requires `networking.hostId` to be set
   networking.hostId = "0c0ffee0";
