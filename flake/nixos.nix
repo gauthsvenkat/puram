@@ -7,7 +7,7 @@ let
   inherit (inputs.nixpkgs) lib;
 
   nixosCfg = {
-    stateVersion = "26.05";
+    stateVersion = "26.11";
   };
 
   mkNixos =
