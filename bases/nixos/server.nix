@@ -10,6 +10,8 @@ in
 {
   imports = [ ./system.nix ];
 
+  boot.kernel.sysctl."kernel.panic" = 10;
+
   home-manager.users.${username} = {
     imports = [
       ../../modules/home-manager/atuin.nix
