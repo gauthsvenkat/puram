@@ -13,5 +13,7 @@ in
 
   time.timeZone = timezone;
 
+  zramSwap.enable = true;
+
   system = { inherit (nixosCfg) stateVersion; };
 }
