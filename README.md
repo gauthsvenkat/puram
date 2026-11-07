@@ -24,6 +24,7 @@ The organization was originally inspired by the [polylith](https://polylith.gitb
 - [assets](./assets/): non-nix files tracked in the repo, e.g. wallpapers and config files.
 - [secrets](./secrets/): contain encrypted secrets, split by who needs them; [`.sops.yaml`](./.sops.yaml) says which host can decrypt which file. Also holds the tofu-encrypted infra state.
 - [how-to](./how-to/)
+  - [headscale](./how-to/headscale.md)
   - [infra](./how-to/infra.md)
   - [nixos](./how-to/nixos.md)
   - [openwrt](./how-to/openwrt.md)

@@ -9,6 +9,7 @@
 }:
 let
   inherit (flakeCfg)
+    controlServer
     ddnsName
     domain
     homeserver
@@ -56,6 +57,8 @@ in
         {
           "caddy_dns" = mkDnsToken "caddy-acme-${homeserver}";
 
+          "caddy_dns_headscale" = mkDnsToken "caddy-acme-${controlServer}";
+
           "ddns" = mkDnsToken "ddns-${router}";
 
           "opentofu" = {
@@ -72,25 +75,36 @@ in
           };
         };
 
-      cloudflare_dns_record."${ddnsName}" = {
-        zone_id = zoneId;
-        name = "${ddnsName}.${domain}";
-        type = "A";
-        # Placeholder IP; the router's DDNS updates it, so tofu must ignore changes to it.
-        content = "192.0.2.1";
-        proxied = false;
-        ttl = 1;
-        lifecycle.ignore_changes = [ "content" ];
-      };
+      cloudflare_dns_record = {
+        "${ddnsName}" = {
+          zone_id = zoneId;
+          name = "${ddnsName}.${domain}";
+          type = "A";
+          # Placeholder IP; the router's DDNS updates it, so tofu must ignore changes to it.
+          content = "192.0.2.1";
+          proxied = false;
+          ttl = 1;
+          lifecycle.ignore_changes = [ "content" ];
+        };
 
-      cloudflare_dns_record."wildcard" = {
-        zone_id = zoneId;
-        name = "*.${domain}";
-        type = "A";
-        content = tailnetIp;
-        # Never proxy (orange cloud); the tailnet IP is unreachable from the public internet.
-        proxied = false;
-        ttl = 1;
+        "headscale" = {
+          zone_id = zoneId;
+          name = "headscale.${domain}";
+          type = "CNAME";
+          content = "${ddnsName}.${domain}";
+          proxied = false;
+          ttl = 1;
+        };
+
+        "wildcard" = {
+          zone_id = zoneId;
+          name = "*.${domain}";
+          type = "A";
+          content = tailnetIp;
+          # Never proxy (orange cloud); the tailnet IP is unreachable from the public internet.
+          proxied = false;
+          ttl = 1;
+        };
       };
 
       cloudflare_zone."example_com" = {
@@ -103,6 +117,10 @@ in
   output = {
     cloudflare_dns_token_homeserver = {
       value = lib.tf.ref "cloudflare_account_token.caddy_dns.value";
+      sensitive = true;
+    };
+    cloudflare_dns_token_headscale = {
+      value = lib.tf.ref "cloudflare_account_token.caddy_dns_headscale.value";
       sensitive = true;
     };
     cloudflare_dns_token_router = {

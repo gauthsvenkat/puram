@@ -20,6 +20,11 @@
 
   guest.ip = "192.168.30.1";
 
+  headscale = {
+    ip = "192.168.10.1";
+    ports = [ "lan1" ];
+  };
+
   homelab = {
     ip = "192.168.20.1";
     # The gs1900-8hp switch; everything behind it is a server.

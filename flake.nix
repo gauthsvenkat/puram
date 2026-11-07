@@ -75,6 +75,7 @@
 
       flakeCfg = {
         router = "flint-2";
+        controlServer = "raspi400";
         homeserver = "elitedesk";
 
         ddnsName = "apartment";
