@@ -218,6 +218,12 @@ in
         {
           "Utilities" = [
             {
+              "AdGuard Home" = {
+                icon = icon "adguard-home";
+                href = href "adguard";
+              };
+            }
+            {
               "Speedtest" = {
                 # `sh-` prefix pulls the icon from selfh.st;
                 # dashboard-icons has no speedtest-tracker.

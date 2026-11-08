@@ -1,6 +1,5 @@
 {
   flakeCfg,
-  targetCfg,
 
   targetCfgs,
 
@@ -8,8 +7,8 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain lanDomain;
-  inherit (targetCfg.ports) adguard;
+  inherit (flakeCfg) domain homeserver lanDomain;
+  homeserverIp = targetCfgs.nixos.${homeserver}.staticLease.ip;
 in
 {
   uci.settings.dhcp = {
@@ -30,7 +29,7 @@ in
         rebind_localhost = true;
         # The public resolvers only answer if AdGuard Home is down.
         server = [
-          "127.0.0.1#${toString adguard.dns_port}"
+          homeserverIp
           "9.9.9.9"
           "1.1.1.1"
         ];
