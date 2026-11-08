@@ -5,5 +5,6 @@ rec {
   homeDirectory = "/home/${username}";
   gitEmail = "gauthsvenkat@gmail.com";
   sshUserKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINyRTUCgazY6gGUf76EMhgroZ1fFPFMHcX0UkpkPJkDk ando@thunderdome";
+  syncthingId = "AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA-AAAAAAA";
   wallpaper = "${homeDirectory}/Pictures/wallpapers/astronaut.jpg";
 }
