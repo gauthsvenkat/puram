@@ -39,11 +39,12 @@ in
 
     # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
     # mapAttrsToList :: (hostname::String -> targetCfg -> host) -> { hostname::String -> targetCfg } -> [ host ]
-    #   where host = { name, ip, mac :: String }
+    #   where host = { name, ip, mac :: String; dns :: Bool }
     # :: [ host ], one per target with a staticLease
     host = lib.mapAttrsToList (name: targetCfg: {
       inherit name;
       inherit (targetCfg.staticLease) ip mac;
+      dns = true;
     }) (lib.filterAttrs (_: targetCfg: targetCfg ? staticLease) targetCfgs.nixos);
   };
 }
