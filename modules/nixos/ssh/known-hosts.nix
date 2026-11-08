@@ -7,7 +7,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) lanDomain tailnetDomain;
+  inherit (flakeCfg) headnetDomain lanDomain;
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
   # :: { hostname::String -> targetCfg }, hosts with an sshHostKey
   serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) targetCfgs.nixos;
@@ -18,7 +18,7 @@ in
   programs.ssh.knownHosts = lib.mapAttrs (hostName: targetCfg: {
     extraHostNames = [
       "${hostName}.${lanDomain}"
-      "${hostName}.${tailnetDomain}"
+      "${hostName}.${headnetDomain}"
     ];
     publicKey = targetCfg.sshHostKey;
   }) serverCfgs;

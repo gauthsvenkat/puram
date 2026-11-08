@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) lanDomain tailnetDomain;
+  inherit (flakeCfg) headnetDomain lanDomain;
   inherit (targetCfg) username;
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
   # :: { hostname::String -> targetCfg }, hosts with an sshHostKey
@@ -19,7 +19,7 @@ in
     let
       # concatMapAttrs :: (hostname::String -> targetCfg -> { alias::String -> sshHost }) -> { hostname::String -> targetCfg } -> { alias::String -> sshHost }
       #   where sshHost = { HostName :: String; User :: String }
-      # :: { alias::String -> sshHost }, `<hostname>`, `<hostname>-root` and `<hostname>-ts` per server
+      # :: { alias::String -> sshHost }, `<hostname>`, `<hostname>-root` and `<hostname>-hs` per server
       serverAliases = lib.concatMapAttrs (hostName: targetCfg: {
         ${hostName} = {
           HostName = "${hostName}.${lanDomain}";
@@ -29,8 +29,8 @@ in
           HostName = "${hostName}.${lanDomain}";
           User = "root";
         };
-        "${hostName}-ts" = {
-          HostName = "${hostName}.${tailnetDomain}";
+        "${hostName}-hs" = {
+          HostName = "${hostName}.${headnetDomain}";
           User = targetCfg.username;
         };
       }) serverCfgs;
