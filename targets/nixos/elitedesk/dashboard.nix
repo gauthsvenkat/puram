@@ -339,12 +339,6 @@ in
                 };
               };
             }
-            {
-              "Tailscale" = {
-                icon = icon "tailscale";
-                href = "https://login.tailscale.com/admin/machines";
-              };
-            }
           ];
         }
       ];
