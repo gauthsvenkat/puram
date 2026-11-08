@@ -29,20 +29,11 @@ in
             ip = [ "*" ];
           }
           {
-            src = [
-              "autogroup:member"
-              serverTag
-            ];
-            dst = [ routerTag ];
-            ip = [
-              "tcp:53"
-              "udp:53"
-            ];
-          }
-          {
             src = [ "autogroup:member" ];
             dst = [ serverTag ];
             ip = [
+              "tcp:53"
+              "udp:53"
               "tcp:80"
               "tcp:443"
             ];
@@ -76,7 +67,7 @@ in
         magic_dns = true;
         override_local_dns = true;
         search_paths = [ ];
-        nameservers = [ { address = lib.tf.ref "data.tailscale_device.${router}.addresses[0]"; } ];
+        nameservers = [ { address = lib.tf.ref "data.tailscale_device.${homeserver}.addresses[0]"; } ];
       };
 
       tailscale_oauth_client."opentofu" = {
