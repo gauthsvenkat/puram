@@ -4,6 +4,5 @@
 
     ../../../modules/terranix/cloudflare.nix
     ../../../modules/terranix/scaleway.nix
-    ../../../modules/terranix/tailscale.nix
   ];
 }
