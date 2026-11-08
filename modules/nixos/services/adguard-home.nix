@@ -54,10 +54,10 @@ in
         in
         [
           (mkFilter 1 "AdGuard DNS filter")
-          (mkFilter 8 "NoCoin Filter List")
           (mkFilter 11 "Malicious URL Blocklist (URLHaus)")
-          (mkFilter 27 "OISD Blocklist Big")
           (mkFilter 31 "Stalkerware Indicators List")
+          (mkFilter 44 "HaGeZi's Threat Intelligence Feeds")
+          (mkFilter 48 "HaGeZi's Pro Blocklist")
         ];
 
       querylog = {
