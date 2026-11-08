@@ -22,7 +22,7 @@ ssh root@$ip 'sysupgrade -n -v /tmp/openwrt-*-sysupgrade.bin'
 just openwrt deploy $device
 ```
 
-The device reboots. If a deploy breaks it, it [rolls back](https://github.com/MakiseKurisu/dewclaw/blob/main/openwrt/default.nix) to the previous configuration within two minutes.
+The device reloads the changed services; `just openwrt deploy $device reboot` reboots it instead. If a deploy breaks it, it [rolls back](https://github.com/MakiseKurisu/dewclaw/blob/main/openwrt/default.nix) to the previous configuration within two minutes.
 
 ## Notes
 
