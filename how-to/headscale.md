@@ -64,3 +64,11 @@ iOS devices by default join as `localhost`.
 ```sh
 ssh $host-root 'headscale nodes rename -i <node-id> <name>'
 ```
+
+## Headplane
+
+Open `https://headplane.$domain` from a device on the headnet and log in with an API key (create one like mentioned below). It can do most things except change policy; that is owned by nix.
+
+```sh
+ssh $host-root 'headscale apikeys create --expiration 90d'
+```

@@ -16,6 +16,7 @@ let
     router
     ;
   inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
+  controlServerIp = targetCfgs.nixos.${controlServer}.tailnetIp;
   inherit (targetCfg.cloudflare) accountId;
 in
 {
@@ -85,6 +86,15 @@ in
           proxied = false;
           ttl = 1;
           lifecycle.ignore_changes = [ "content" ];
+        };
+
+        "headplane" = {
+          zone_id = zoneId;
+          name = "headplane.${domain}";
+          type = "A";
+          content = controlServerIp;
+          proxied = false;
+          ttl = 1;
         };
 
         "headscale" = {
