@@ -73,7 +73,7 @@
         )
       );
 
-      flakeCfg = {
+      flakeCfg = rec {
         router = "flint-2";
         controlServer = "raspi400";
         homeserver = "elitedesk";
@@ -81,8 +81,8 @@
         ddnsName = "apartment";
         domain = "example.com";
 
+        headnetDomain = "headnet.${domain}";
         lanDomain = "lan";
-        tailnetDomain = "tailnet.ts.net";
 
         timezone = "Europe/Amsterdam";
 

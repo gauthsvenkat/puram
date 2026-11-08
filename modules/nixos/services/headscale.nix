@@ -10,7 +10,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain homeserver;
+  inherit (flakeCfg) domain headnetDomain homeserver;
   inherit (targetCfg) username;
   inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
   cfg = config.services.headscale;
@@ -26,7 +26,7 @@ in
       server_url = "https://headscale.${domain}";
       node.expiry = "180d";
       dns = {
-        base_domain = "headnet.${domain}";
+        base_domain = headnetDomain;
         nameservers.global = [ tailnetIp ];
       };
       policy.path = pkgs.writeText "policy.json" (
