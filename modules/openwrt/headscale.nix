@@ -70,6 +70,7 @@ in
           limit_burst = 50;
           reflection_zone = [
             "headscale"
+            "homelab"
             "lan"
           ];
         }

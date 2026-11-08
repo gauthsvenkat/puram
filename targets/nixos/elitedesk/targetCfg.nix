@@ -8,7 +8,7 @@ rec {
 
   zpool = "dontdie";
   offsiteBucket = "elitedesk-backup";
-  tailnetIp = "100.103.236.120";
+  tailnetIp = "100.64.0.2";
   staticLease = {
     ip = "192.168.20.3";
     mac = "ac:e2:d3:14:d9:27";

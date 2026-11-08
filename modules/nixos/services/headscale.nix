@@ -2,17 +2,21 @@
   flakeCfg,
   targetCfg,
 
+  targetCfgs,
+
   config,
   lib,
   pkgs,
   ...
 }:
 let
-  inherit (flakeCfg) domain;
+  inherit (flakeCfg) domain homeserver;
   inherit (targetCfg) username;
+  inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
   cfg = config.services.headscale;
   owner = "${username}@";
   controlTag = "tag:control";
+  ownerTag = "tag:${username}";
   serverTag = "tag:server";
 in
 {
@@ -23,13 +27,16 @@ in
       node.expiry = "180d";
       dns = {
         base_domain = "headnet.${domain}";
-        override_local_dns = false;
+        nameservers.global = [ tailnetIp ];
       };
       policy.path = pkgs.writeText "policy.json" (
         lib.toJSON {
           grants = [
             {
-              src = [ owner ];
+              src = [
+                owner
+                ownerTag
+              ];
               dst = [ "*" ];
               ip = [ "*" ];
             }
@@ -42,6 +49,8 @@ in
               src = [ "autogroup:member" ];
               dst = [ serverTag ];
               ip = [
+                "tcp:53"
+                "udp:53"
                 "tcp:80"
                 "tcp:443"
               ];
@@ -49,6 +58,7 @@ in
           ];
           tagOwners = {
             ${controlTag} = [ owner ];
+            ${ownerTag} = [ owner ];
             ${serverTag} = [ owner ];
           };
         }
