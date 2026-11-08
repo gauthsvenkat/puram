@@ -8,7 +8,7 @@ rec {
 
   zpool = "dontdie";
   offsiteBucket = "backups";
-  tailnetIp = "100.96.0.1";
+  tailnetIp = "100.96.0.2";
   staticLease = {
     ip = "192.168.20.3";
     mac = "00:00:5e:00:53:01";

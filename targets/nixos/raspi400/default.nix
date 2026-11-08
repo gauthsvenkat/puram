@@ -24,5 +24,7 @@ in
     respond 404
   '';
 
+  services.tailscale.extraSetFlags = [ "--accept-dns=false" ];
+
   sops.defaultSopsFile = ../../../secrets/headscale.yaml;
 }
