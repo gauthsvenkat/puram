@@ -11,6 +11,7 @@ in
     settings = {
       dns = {
         anonymize_client_ip = true;
+        ratelimit = 0;
         refuse_any = true;
         use_private_ptr_resolvers = false;
         bootstrap_dns = [
