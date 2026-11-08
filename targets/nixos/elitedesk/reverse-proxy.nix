@@ -8,6 +8,7 @@
 let
   inherit (flakeCfg) domain;
   inherit (targetCfg.ports)
+    adguard
     homepage
     immich
     jellyfin
@@ -32,6 +33,7 @@ in
   users.users.${cfg_caddy.user}.extraGroups = [ cfg_st.group ];
 
   services.caddy.virtualHosts = {
+    "adguard.${domain}".extraConfig = proxy adguard.port;
     "homepage.${domain}".extraConfig = proxy homepage.port;
     "jellyfin.${domain}".extraConfig = proxy jellyfin.port;
     "immich.${domain}".extraConfig = proxy immich.port;

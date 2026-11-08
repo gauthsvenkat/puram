@@ -21,6 +21,7 @@ rec {
   };
 
   ports = {
+    adguard.port = 3000;
     # Caddy hardcodes its admin API port; this only mirrors it.
     caddy.admin_port = 2019;
     homepage.port = 7575;

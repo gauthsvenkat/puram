@@ -36,9 +36,4 @@
     ssid = "wunlock";
     psk = "wunlock-password";
   };
-
-  ports.adguard = {
-    dns_port = 5353;
-    web_port = 3000;
-  };
 }
