@@ -1,17 +1,13 @@
 { flakeCfg, lib, ... }:
 let
-  inherit (flakeCfg) homeserver router;
+  inherit (flakeCfg) homeserver;
 in
 {
-  data.tailscale_device = {
-    ${homeserver}.hostname = homeserver;
-    ${router}.hostname = router;
-  };
+  data.tailscale_device.${homeserver}.hostname = homeserver;
 
   resource =
     let
       infraTag = "tag:infra";
-      routerTag = "tag:router";
       serverTag = "tag:server";
     in
     {
@@ -41,10 +37,6 @@ in
         ];
         tagOwners = {
           ${infraTag} = [ "autogroup:owner" ];
-          ${routerTag} = [
-            "autogroup:owner"
-            infraTag
-          ];
           ${serverTag} = [
             "autogroup:owner"
             infraTag
@@ -52,15 +44,9 @@ in
         };
       };
 
-      tailscale_device_tags = {
-        ${homeserver} = {
-          device_id = lib.tf.ref "data.tailscale_device.${homeserver}.node_id";
-          tags = [ serverTag ];
-        };
-        ${router} = {
-          device_id = lib.tf.ref "data.tailscale_device.${router}.node_id";
-          tags = [ routerTag ];
-        };
+      tailscale_device_tags.${homeserver} = {
+        device_id = lib.tf.ref "data.tailscale_device.${homeserver}.node_id";
+        tags = [ serverTag ];
       };
 
       tailscale_dns_configuration."tailnet" = {
