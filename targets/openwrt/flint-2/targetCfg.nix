@@ -31,6 +31,8 @@
     ports = [ "lan2" ];
   };
 
+  iot.ip = "192.168.50.1";
+
   wunlock = {
     ip = "192.168.40.1";
     ssid = "wunlock";
