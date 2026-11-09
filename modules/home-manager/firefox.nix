@@ -38,7 +38,6 @@ in
           "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = amo "vimium-ff";
           "addon@darkreader.org" = amo "darkreader";
           "harper@writewithharper.com" = amo "private-grammar-checker-harper";
-          "idcac-pub@guus.ninja" = amo "istilldontcareaboutcookies";
           "sponsorBlocker@ajay.app" = amo "sponsorblock";
           "uBlock0@raymondhill.net" = amo "ublock-origin";
         };
