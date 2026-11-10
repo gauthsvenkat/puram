@@ -10,7 +10,14 @@ return {
     statuscolumn = { enabled = true },
     indent = { enabled = true, chunk = { enabled = true } },
     notifier = { enabled = true },
-    picker = { enabled = true },
+    picker = {
+      enabled = true,
+      sources = {
+        explorer = { hidden = true },
+        files = { hidden = true },
+        grep = { hidden = true },
+      },
+    },
     words = { enabled = true },
     toggle = { color = { disabled = "red" }, wk_desc = { enabled = "", disabled = "" } },
   },
