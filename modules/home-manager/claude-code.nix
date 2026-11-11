@@ -30,6 +30,12 @@ in
         cleanupPeriodDays = 7;
         includeCoAuthoredBy = false;
 
+        voice = {
+          enabled = true;
+          mode = "hold";
+          autoSubmit = false;
+        };
+
         permissions = {
           defaultMode = "auto";
 
