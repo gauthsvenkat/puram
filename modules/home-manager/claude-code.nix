@@ -27,7 +27,6 @@ in
         autoMemoryEnabled = false;
         theme = "dark";
         editorMode = "vim";
-        cleanupPeriodDays = 7;
         includeCoAuthoredBy = false;
 
         voice = {
