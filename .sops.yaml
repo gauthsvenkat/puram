@@ -20,6 +20,15 @@ creation_rules:
         - *thinkpad-x1-carbon
         - *thunderdome
 
+  - path_regex: secrets/dns\.yaml$
+    key_groups:
+      - age:
+        - *elitedesk
+        - *sentinel
+        - *thinkpad-t14s
+        - *thinkpad-x1-carbon
+        - *thunderdome
+
   - path_regex: secrets/headscale\.yaml$
     key_groups:
       - age:
