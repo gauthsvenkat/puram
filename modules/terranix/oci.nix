@@ -2,12 +2,15 @@
   flakeCfg,
   targetCfg,
 
+  targetCfgs,
+
   lib,
   ...
 }:
 let
-  inherit (flakeCfg) domain;
+  inherit (flakeCfg) domain workstationKeys;
   inherit (targetCfg.oci) tenancyOcid;
+  inherit (targetCfgs.nixos."sentinel") vcnIp;
 in
 {
   provider.oci = {
@@ -15,9 +18,28 @@ in
     tenancy_ocid = tenancyOcid;
   };
 
-  data.oci_identity_domains."default" = {
-    compartment_id = tenancyOcid;
-    display_name = "Default";
+  data = {
+    oci_core_images."ubuntu" = {
+      compartment_id = tenancyOcid;
+      operating_system = "Canonical Ubuntu";
+      operating_system_version = "24.04 Minimal aarch64";
+      shape = "VM.Standard.A1.Flex";
+      sort_by = "TIMECREATED";
+      sort_order = "DESC";
+    };
+    oci_identity_availability_domains."main".compartment_id = tenancyOcid;
+    oci_identity_domains."default" = {
+      compartment_id = tenancyOcid;
+      display_name = "Default";
+    };
+
+    oci_core_vnic_attachments."sentinel" = {
+      compartment_id = tenancyOcid;
+      instance_id = lib.tf.ref "oci_core_instance.sentinel.id";
+    };
+    oci_core_vnic."sentinel".vnic_id =
+      lib.tf.ref "data.oci_core_vnic_attachments.sentinel.vnic_attachments[0].vnic_id";
+    oci_core_private_ips."sentinel".vnic_id = lib.tf.ref "data.oci_core_vnic.sentinel.id";
   };
 
   resource =
@@ -164,7 +186,7 @@ in
           "base_fragmentation_needed_ipv4" = {
             network_security_group_id = baseNsgId;
             direction = "INGRESS";
-            protocol = "1";
+            protocol = "1"; # ICMP
             source = "0.0.0.0/0";
             source_type = "CIDR_BLOCK";
             icmp_options = {
@@ -175,18 +197,15 @@ in
           "base_packet_too_big_ipv6" = {
             network_security_group_id = baseNsgId;
             direction = "INGRESS";
-            protocol = "58";
+            protocol = "58"; # ICMPv6
             source = "::/0";
             source_type = "CIDR_BLOCK";
-            icmp_options = {
-              type = 2;
-              code = 0;
-            };
+            icmp_options.type = 2;
           };
           "base_ssh_ipv4" = {
             network_security_group_id = baseNsgId;
             direction = "INGRESS";
-            protocol = "6";
+            protocol = "6"; # TCP
             source = "0.0.0.0/0";
             source_type = "CIDR_BLOCK";
             tcp_options.destination_port_range = {
@@ -197,7 +216,7 @@ in
           "base_ssh_ipv6" = {
             network_security_group_id = baseNsgId;
             direction = "INGRESS";
-            protocol = "6";
+            protocol = "6"; # TCP
             source = "::/0";
             source_type = "CIDR_BLOCK";
             tcp_options.destination_port_range = {
@@ -205,7 +224,68 @@ in
               max = 22;
             };
           };
+
+          # services
+          "base_https_ipv4" = {
+            network_security_group_id = baseNsgId;
+            direction = "INGRESS";
+            protocol = "6"; # TCP
+            source = "0.0.0.0/0";
+            source_type = "CIDR_BLOCK";
+            tcp_options.destination_port_range = {
+              min = 443;
+              max = 443;
+            };
+          };
+          "base_https_ipv6" = {
+            network_security_group_id = baseNsgId;
+            direction = "INGRESS";
+            protocol = "6"; # TCP
+            source = "::/0";
+            source_type = "CIDR_BLOCK";
+            tcp_options.destination_port_range = {
+              min = 443;
+              max = 443;
+            };
+          };
         };
+
+      # Compute
+      # sentinel
+      oci_core_instance."sentinel" = {
+        availability_domain = lib.tf.ref "data.oci_identity_availability_domains.main.availability_domains[0].name";
+        compartment_id = tenancyOcid;
+        display_name = "sentinel";
+        shape = "VM.Standard.A1.Flex";
+        create_vnic_details = {
+          subnet_id = lib.tf.ref "oci_core_subnet.public.id";
+          hostname_label = "sentinel";
+          assign_ipv6ip = true;
+          assign_public_ip = false;
+          nsg_ids = [ (lib.tf.ref "oci_core_network_security_group.base.id") ];
+          private_ip = vcnIp;
+        };
+        metadata.ssh_authorized_keys = lib.concatLines workstationKeys;
+        shape_config = {
+          memory_in_gbs = 2;
+          ocpus = 1;
+        };
+        source_details = {
+          source_type = "image";
+          source_id = lib.tf.ref "data.oci_core_images.ubuntu.images[0].id";
+          boot_volume_size_in_gbs = 50;
+        };
+        lifecycle.ignore_changes = [
+          "metadata"
+          "source_details"
+        ];
+      };
+      oci_core_public_ip."sentinel" = {
+        compartment_id = tenancyOcid;
+        display_name = "sentinel";
+        lifetime = "RESERVED";
+        private_ip_id = lib.tf.ref "data.oci_core_private_ips.sentinel.private_ips[0].id";
+      };
     };
 
   output = {
