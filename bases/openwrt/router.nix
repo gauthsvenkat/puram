@@ -10,6 +10,7 @@
     ../../modules/openwrt/services/ddns.nix
     ../../modules/openwrt/services/dnsmasq.nix
     ../../modules/openwrt/services/firewall.nix
+    ../../modules/openwrt/services/https-dns-proxy.nix
     ../../modules/openwrt/services/odhcpd.nix
     ../../modules/openwrt/services/tang.nix
     ../../modules/openwrt/wan.nix
