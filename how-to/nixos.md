@@ -23,6 +23,12 @@ mount -o remount,size=8G /run/archiso/cowspace
 
 The live system needs `tar`, `cpio`, `setsid` (with `--wait`) and `curl` or `wget`. So make sure these are installed and available in `$PATH`.
 
+### On Oracle Cloud
+
+The VM starts on Oracle's Ubuntu image, so log in as `ubuntu`: `--target-host ubuntu@<host>.oci.<domain>`.
+
+Ubuntu's kernel fails the kexec with `kexec_file_load failed: Address not available`. Add `--kexec-extra-flags "-c"` to use the older `kexec_load` syscall ([nixos-anywhere#651](https://github.com/nix-community/nixos-anywhere/issues/651)).
+
 ### Installing
 
 ```sh
