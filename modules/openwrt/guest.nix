@@ -21,21 +21,9 @@ in
 
     dhcp.dhcp."guest" = {
       interface = "guest";
+      leasetime = "1h";
       start = 100;
       limit = 150;
-      leasetime = "1h";
-    };
-
-    wireless.wifi-iface."guest_radio1" = {
-      device = "radio1"; # The 5 GHz radio.
-      mode = "ap";
-      network = "guest";
-      ssid._secret = "guest_wifi_ssid";
-      encryption = "sae-mixed";
-      key._secret = "guest_wifi_psk";
-      # Guests cannot see each other.
-      isolate = true;
-      disabled = false;
     };
 
     firewall = {
@@ -73,6 +61,18 @@ in
           target = "ACCEPT";
         }
       ];
+    };
+
+    wireless.wifi-iface."guest_radio1" = {
+      disabled = false;
+      device = "radio1"; # The 5 GHz radio.
+      mode = "ap";
+      network = "guest";
+      ssid._secret = "guest_wifi_ssid";
+      encryption = "sae-mixed";
+      key._secret = "guest_wifi_psk";
+      # Guests cannot see each other.
+      isolate = true;
     };
   };
 }

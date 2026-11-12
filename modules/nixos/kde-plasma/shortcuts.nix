@@ -5,17 +5,17 @@ in
 {
   home-manager.users.${username}.programs.plasma.shortcuts = {
     # launchers
-    "services/org.kde.dolphin.desktop"."_launch" = "Meta+E";
     "plasmashell"."activate application launcher" = "Meta";
+    "services/org.kde.dolphin.desktop"."_launch" = "Meta+E";
 
     # session management
     "ksmserver"."Lock Session" = "Meta+L";
     "ksmserver"."Log Out" = "Meta+Shift+Esc";
 
     # window management
+    "kwin"."Toggle Window Raise/Lower" = "Alt+V";
     "kwin"."Window Close" = "Meta+W";
     "kwin"."Window Fullscreen" = "Alt+F";
-    "kwin"."Toggle Window Raise/Lower" = "Alt+V";
 
     # focus navigation
     "kwin"."Switch Window Left" = "Alt+H";
@@ -46,15 +46,15 @@ in
     "kwin"."Window to Desktop 6" = "Meta+^";
 
     # additional useful shortcuts
-    "kwin"."Show Desktop" = "Meta+D";
     "kwin"."Overview" = "Meta+W";
+    "kwin"."Show Desktop" = "Meta+D";
     "kwin"."Walk Through Windows" = "Alt+Tab";
     "kwin"."Walk Through Windows (Reverse)" = "Alt+Shift+Tab";
 
     # quick tiling
     "kwin"."Window Quick Tile Left" = "Meta+Left";
-    "kwin"."Window Quick Tile Right" = "Meta+Right";
-    "kwin"."Window Quick Tile Top" = "Meta+Up";
     "kwin"."Window Quick Tile Bottom" = "Meta+Down";
+    "kwin"."Window Quick Tile Top" = "Meta+Up";
+    "kwin"."Window Quick Tile Right" = "Meta+Right";
   };
 }

@@ -1,11 +1,15 @@
-{ ... }:
 {
   imports = [
     ../../../modules/nixos/hardware/intel-transcoding.nix
   ];
 
   services = {
+    immich.accelerationDevices = [ "/dev/dri/renderD128" ];
+
     jellyfin = {
+      # NixOS owns `encoding.xml`; existing file from the cloned dataset is
+      # backed up to `encoding.xml.backup-<timestamp>` on first boot.
+      forceEncodingConfig = true;
       hardwareAcceleration = {
         enable = true;
         # VAAPI, not QSV: Skylake (Gen 9, HD 530) is past the support window
@@ -17,9 +21,6 @@
         type = "vaapi";
         device = "/dev/dri/renderD128";
       };
-      # NixOS owns `encoding.xml`; existing file from the cloned dataset is
-      # backed up to `encoding.xml.backup-<timestamp>` on first boot.
-      forceEncodingConfig = true;
       transcoding = {
         enableHardwareEncoding = true;
         # Codec list verified via `vainfo` on elitedesk's Skylake-era iGPU.
@@ -35,8 +36,6 @@
         hardwareEncodingCodecs.hevc = true;
       };
     };
-
-    immich.accelerationDevices = [ "/dev/dri/renderD128" ];
   };
 
   # Neither the jellyfin nor immich modules add their service user to the
@@ -50,7 +49,7 @@
       ];
     in
     {
-      jellyfin = { inherit extraGroups; };
       immich = { inherit extraGroups; };
+      jellyfin = { inherit extraGroups; };
     };
 }

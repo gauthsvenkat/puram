@@ -11,9 +11,9 @@ in
         output = [
           {
             enable = true;
+            search = "n=eDP-1";
             position = "0,0";
             scale = 2.5;
-            search = "n=eDP-1";
           }
         ];
       }
@@ -22,17 +22,17 @@ in
         output = [
           {
             enable = true;
+            search = "s=H000000000";
             mode = "best";
             position = "0,0";
             scale = 1.0;
-            search = "s=H000000000";
           }
           {
             enable = true;
+            search = "s=UPB4DK9P";
             mode = "best";
             position = "2560,300";
             scale = 1.0;
-            search = "s=UPB4DK9P";
           }
           {
             enable = false;

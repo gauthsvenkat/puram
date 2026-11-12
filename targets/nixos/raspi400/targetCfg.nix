@@ -5,9 +5,9 @@ rec {
   homeDirectory = "/home/${username}";
   gitEmail = "gauthsvenkat@gmail.com";
   sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPYeixPiKnt11b9njX3kWUZGbFI9hdJwPoMo6Zadnvuc root@raspi400";
-  tailnetIp = "100.96.0.3";
   staticLease = {
     ip = "192.168.10.2";
     mac = "00:00:5e:00:53:01";
   };
+  tailnetIp = "100.96.0.3";
 }

@@ -2,9 +2,9 @@
   hostname = "flint-2";
 
   image = {
-    profile = "glinet_gl-mt6000";
     target = "mediatek";
     variant = "filogic";
+    profile = "glinet_gl-mt6000";
   };
 
   lan = {

@@ -7,40 +7,49 @@
   modulesPath,
   ...
 }:
+let
+  inherit (config.hardware) enableRedistributableFirmware;
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
   boot = {
-    initrd.availableKernelModules = [
-      "xhci_pci"
-      "ahci"
-      "nvme"
-      "usbhid"
-      "usb_storage"
-      "sd_mod"
-    ];
-    initrd.kernelModules = [ "dm-snapshot" ];
-    kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
+    initrd = {
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
+      kernelModules = [ "dm-snapshot" ];
+    };
+    kernelModules = [ "kvm-amd" ];
   };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/8ca464a6-2600-47a8-a45f-72e59d3c3118";
-    fsType = "ext4";
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/8ca464a6-2600-47a8-a45f-72e59d3c3118";
+      fsType = "ext4";
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-uuid/8663-E128";
+      fsType = "vfat";
+      options = [
+        "fmask=0077"
+        "dmask=0077"
+      ];
+    };
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/8663-E128";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
-  };
-
-  swapDevices = [ ];
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault enableRedistributableFirmware;
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -51,6 +60,5 @@
   # networking.interfaces.enp6s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlo2.useDHCP = lib.mkDefault true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  swapDevices = [ ];
 }

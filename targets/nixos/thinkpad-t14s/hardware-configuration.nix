@@ -7,13 +7,18 @@
   modulesPath,
   ...
 }:
-
+let
+  inherit (config.hardware) enableRedistributableFirmware;
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
   boot = {
+    extraModulePackages = [ ];
     initrd = {
       availableKernelModules = [
         "nvme"
@@ -25,9 +30,7 @@
       kernelModules = [ ];
     };
     kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
   };
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault enableRedistributableFirmware;
 }

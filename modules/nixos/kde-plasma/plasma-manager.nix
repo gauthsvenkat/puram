@@ -9,6 +9,8 @@ in
     programs.plasma = {
       enable = true;
 
+      configFile."plasmaparc".General.AudioFeedback = false;
+
       kwin.virtualDesktops = {
         number = 3;
         rows = 1;
@@ -24,8 +26,6 @@ in
         lookAndFeel = "org.kde.breezedark.desktop";
         inherit (targetCfg) wallpaper;
       };
-
-      configFile."plasmaparc".General.AudioFeedback = false;
     };
   };
 }

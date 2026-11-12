@@ -17,8 +17,8 @@ in
   #   where knownHost = { extraHostNames :: [ String ]; publicKey :: String }
   programs.ssh.knownHosts = lib.mapAttrs (hostName: targetCfg: {
     extraHostNames = [
-      "${hostName}.${lanDomain}"
       "${hostName}.${headnetDomain}"
+      "${hostName}.${lanDomain}"
     ];
     publicKey = targetCfg.sshHostKey;
   }) serverCfgs;

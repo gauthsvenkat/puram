@@ -7,9 +7,9 @@ in
   uci.settings = {
     network.interface.wan = {
       device = "${wan.device}.${toString pppoe.vid}";
-      inherit (pppoe) password username;
       proto = "pppoe";
       ipv6 = "auto";
+      inherit (pppoe) password username;
       peerdns = false;
     };
 

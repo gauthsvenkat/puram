@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  inherit (config.sops) placeholder;
+  inherit (config.sops) placeholder templates;
 in
 {
   sops = {
@@ -15,7 +15,7 @@ in
   };
 
   networking.networkmanager.ensureProfiles = {
-    environmentFiles = [ config.sops.templates."wifi".path ];
+    environmentFiles = [ templates."wifi".path ];
     profiles."home-wifi" = {
       connection = {
         id = "home";

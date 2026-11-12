@@ -12,30 +12,12 @@ in
 
   niri-flake.cache.enable = false;
 
-  # HACK: niri-flake enables gnome-keyring, whose `gcr-ssh-agent` conflicts with `programs.ssh.startAgent`
-  services.gnome.gcr-ssh-agent.enable = false;
-
   programs.niri = {
     enable = true;
     package = pkgs.niri;
   };
 
   environment.systemPackages = [ pkgs.xwayland-satellite ];
-
-  services.displayManager.ly.enable = true;
-
-  xdg.portal = {
-    config.niri = {
-      default = [
-        "gnome"
-        "gtk"
-      ];
-      "org.freedesktop.impl.portal.Access" = [ "gtk" ];
-      "org.freedesktop.impl.portal.Notification" = [ "gtk" ];
-      "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
-    };
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
 
   home-manager.users.${username} = {
     dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
@@ -65,17 +47,17 @@ in
 
       layout = {
         default-column-width.proportion = 0.5;
-        gaps = 8;
         focus-ring = {
-          width = 2;
           active.gradient = {
+            angle = 45;
             from = "#ff0000";
             to = "#ff0000";
-            angle = 45;
             in' = "oklch longer hue";
           };
           inactive.color = "#505050";
+          width = 2;
         };
+        gaps = 8;
         preset-column-widths = [
           { proportion = 1.0 / 3.0; }
           { proportion = 0.5; }
@@ -88,6 +70,26 @@ in
           { proportion = 1.0; }
         ];
       };
+    };
+  };
+
+  services = {
+    displayManager.ly.enable = true;
+
+    # HACK: niri-flake enables gnome-keyring, whose `gcr-ssh-agent` conflicts with `programs.ssh.startAgent`
+    gnome.gcr-ssh-agent.enable = false;
+  };
+
+  xdg.portal = {
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.niri = {
+      default = [
+        "gnome"
+        "gtk"
+      ];
+      "org.freedesktop.impl.portal.Access" = [ "gtk" ];
+      "org.freedesktop.impl.portal.Notification" = [ "gtk" ];
+      "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
     };
   };
 }

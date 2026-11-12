@@ -34,16 +34,16 @@ in
     ];
   };
 
+  home-manager.users.${username}.home.packages = [ pkgs.discord ];
+
   services = {
     displayManager = {
+      defaultSession = "niri";
       autoLogin = {
         enable = true;
         user = username;
       };
-      defaultSession = "niri";
     };
     ratbagd.enable = true;
   };
-
-  home-manager.users.${username}.home.packages = [ pkgs.discord ];
 }

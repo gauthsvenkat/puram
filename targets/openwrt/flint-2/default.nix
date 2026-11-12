@@ -5,8 +5,11 @@
 
   targetCfgs,
 }:
+let
+  inherit (targetCfg) hostname;
+in
 {
-  openwrt.${targetCfg.hostname} = {
+  openwrt.${hostname} = {
     _module.args = {
       inherit
         flakeCfg

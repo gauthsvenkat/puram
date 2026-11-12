@@ -13,18 +13,18 @@ let
 in
 {
   sops.secrets."speedtest_tracker_app_key" = {
-    restartUnits = [ "speedtest-tracker.service" ];
-    owner = cfg.user;
     inherit (cfg) group;
+    owner = cfg.user;
+    restartUnits = [ "speedtest-tracker.service" ];
   };
 
   services.speedtest-tracker = {
     enable = true;
-    virtualHost = "speedtest.${domain}";
     dataDir = "${paths.config}/speedtest-tracker";
     settings = {
       APP_KEY_FILE = secrets."speedtest_tracker_app_key".path;
       SPEEDTEST_SCHEDULE = "18 * * * *";
     };
+    virtualHost = "speedtest.${domain}";
   };
 }

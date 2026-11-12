@@ -5,16 +5,18 @@
 }:
 let
   cfg = config.services.caddy;
-  inherit (config.sops) placeholder;
+  inherit (config.sops) placeholder templates;
 in
 {
-  sops.secrets."cloudflare_dns_token" = { };
+  sops = {
+    secrets."cloudflare_dns_token" = { };
 
-  sops.templates."cloudflare_env" = {
-    restartUnits = [ "caddy.service" ];
-    content = "CLOUDFLARE_API_TOKEN=${placeholder."cloudflare_dns_token"}\n";
-    owner = cfg.user;
-    inherit (cfg) group;
+    templates."cloudflare_env" = {
+      content = "CLOUDFLARE_API_TOKEN=${placeholder."cloudflare_dns_token"}\n";
+      inherit (cfg) group;
+      owner = cfg.user;
+      restartUnits = [ "caddy.service" ];
+    };
   };
 
   services.caddy = {
@@ -29,7 +31,7 @@ in
     '';
   };
 
-  systemd.services.caddy.serviceConfig.EnvironmentFile = config.sops.templates."cloudflare_env".path;
+  systemd.services.caddy.serviceConfig.EnvironmentFile = templates."cloudflare_env".path;
 
   networking.firewall.allowedTCPPorts = [
     80

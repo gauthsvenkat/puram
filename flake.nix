@@ -14,12 +14,10 @@
     };
     impermanence = {
       url = "github:nix-community/impermanence";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
     };
     niri = {
       url = "github:sodiboo/niri-flake";
@@ -31,17 +29,23 @@
     };
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
     };
 
     # OpenWrt
-    openwrt-imagebuilder = {
-      url = "github:astro/nix-openwrt-imagebuilder";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     dewclaw = {
       url = "github:MakiseKurisu/dewclaw";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    openwrt-imagebuilder = {
+      url = "github:astro/nix-openwrt-imagebuilder";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -74,9 +78,9 @@
       );
 
       flakeCfg = rec {
-        router = "flint-2";
         controlServer = "raspi400";
         homeserver = "elitedesk";
+        router = "flint-2";
 
         ddnsName = "apartment";
         domain = "example.com";

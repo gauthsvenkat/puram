@@ -15,9 +15,9 @@ let
     homeserver
     router
     ;
+  inherit (targetCfg.cloudflare) accountId;
   inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
   controlServerIp = targetCfgs.nixos.${controlServer}.tailnetIp;
-  inherit (targetCfg.cloudflare) accountId;
 in
 {
   resource =
@@ -25,6 +25,12 @@ in
       zoneId = lib.tf.ref "cloudflare_zone.example_com.id";
     in
     {
+      cloudflare_zone."example_com" = {
+        account.id = accountId;
+        name = domain;
+        type = "full";
+      };
+
       # The resource `cloudflare_api_token` only manages user-owned ones.
       # So, we use resource `cloudflare_account_token`.
       cloudflare_account_token =
@@ -56,12 +62,6 @@ in
           };
         in
         {
-          "caddy_dns" = mkDnsToken "caddy-acme-${homeserver}";
-
-          "caddy_dns_headscale" = mkDnsToken "caddy-acme-${controlServer}";
-
-          "ddns" = mkDnsToken "ddns-${router}";
-
           "opentofu" = {
             account_id = accountId;
             name = "opentofu-infra";
@@ -74,6 +74,13 @@ in
               zoneDnsPolicy
             ];
           };
+
+          "caddy_dns" = mkDnsToken "caddy-acme-${homeserver}";
+
+          "caddy_dns_headscale" = mkDnsToken "caddy-acme-${controlServer}";
+
+          "ddns" = mkDnsToken "ddns-${router}";
+
         };
 
       cloudflare_dns_record = {
@@ -83,9 +90,9 @@ in
           type = "A";
           # Placeholder IP; the router's DDNS updates it, so tofu must ignore changes to it.
           content = "192.0.2.1";
+          lifecycle.ignore_changes = [ "content" ];
           proxied = false;
           ttl = 1;
-          lifecycle.ignore_changes = [ "content" ];
         };
 
         "headplane" = {
@@ -117,20 +124,15 @@ in
         };
       };
 
-      cloudflare_zone."example_com" = {
-        account.id = accountId;
-        name = domain;
-        type = "full";
-      };
     };
 
   output = {
-    cloudflare_dns_token_homeserver = {
-      value = lib.tf.ref "cloudflare_account_token.caddy_dns.value";
-      sensitive = true;
-    };
     cloudflare_dns_token_headscale = {
       value = lib.tf.ref "cloudflare_account_token.caddy_dns_headscale.value";
+      sensitive = true;
+    };
+    cloudflare_dns_token_homeserver = {
+      value = lib.tf.ref "cloudflare_account_token.caddy_dns.value";
       sensitive = true;
     };
     cloudflare_dns_token_router = {

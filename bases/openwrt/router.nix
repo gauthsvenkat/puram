@@ -12,8 +12,8 @@
     ../../modules/openwrt/services/firewall.nix
     ../../modules/openwrt/services/odhcpd.nix
     ../../modules/openwrt/services/tang.nix
-    ../../modules/openwrt/wunlock.nix
     ../../modules/openwrt/wan.nix
+    ../../modules/openwrt/wunlock.nix
 
     ./device.nix
   ];

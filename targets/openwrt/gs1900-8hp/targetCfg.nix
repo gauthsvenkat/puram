@@ -2,9 +2,9 @@
   hostname = "gs1900-8hp";
 
   image = {
-    profile = "zyxel_gs1900-8hp-b1";
     target = "realtek";
     variant = "rtl838x";
+    profile = "zyxel_gs1900-8hp-b1";
     # The image ships `firewall4`; a switch has nothing to filter.
     disabledServices = [ "firewall" ];
   };

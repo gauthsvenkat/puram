@@ -9,7 +9,20 @@ let
   inherit (targetCfg) username;
 in
 {
+  services = {
+    gvfs.enable = true;
+    udisks2.enable = true;
+  };
+
   home-manager.users.${username} = {
+    gtk = {
+      enable = true;
+      iconTheme = {
+        package = pkgs.adwaita-icon-theme;
+        name = "Adwaita";
+      };
+    };
+
     home.packages = with pkgs; [
       ffmpegthumbnailer
       file-roller
@@ -18,14 +31,6 @@ in
       papers
       wdisplays
     ];
-
-    gtk = {
-      enable = true;
-      iconTheme = {
-        package = pkgs.adwaita-icon-theme;
-        name = "Adwaita";
-      };
-    };
 
     programs.niri.settings = {
       binds."Mod+E".action.spawn = [
@@ -40,10 +45,5 @@ in
         size = 24;
       };
     };
-  };
-
-  services = {
-    gvfs.enable = true;
-    udisks2.enable = true;
   };
 }

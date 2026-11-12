@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    cargo-generate
     cargo
+    cargo-generate
     clippy
     rust-analyzer
     rustc

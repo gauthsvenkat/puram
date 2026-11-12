@@ -30,8 +30,8 @@ in
           };
         in
         {
-          "{446900e4-71c2-419f-a6a7-df9c091e268b}" = amo "bitwarden-password-manager";
           "admin@2fas.com" = amo "2fas-two-factor-authentication";
+          "{446900e4-71c2-419f-a6a7-df9c091e268b}" = amo "bitwarden-password-manager";
         };
     };
   };

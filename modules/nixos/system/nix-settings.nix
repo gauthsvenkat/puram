@@ -1,15 +1,15 @@
 {
-  nixpkgs.config.allowUnfree = true;
   nix = {
-    settings.experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
+    channel.enable = false;
     gc = {
       automatic = true;
       options = "--delete-older-than 30d";
     };
     optimise.automatic = true;
-    channel.enable = false;
+    settings.experimental-features = [
+      "flakes"
+      "nix-command"
+    ];
   };
+  nixpkgs.config.allowUnfree = true;
 }

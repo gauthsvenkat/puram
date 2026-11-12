@@ -4,7 +4,7 @@ let
 in
 {
   uci.settings.network.interface.lan = {
-    inherit gateway;
     dns = [ gateway ];
+    inherit gateway;
   };
 }

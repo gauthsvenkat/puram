@@ -21,21 +21,9 @@ in
 
     dhcp.dhcp."wunlock" = {
       interface = "wunlock";
+      leasetime = "5m";
       start = 100;
       limit = 150;
-      leasetime = "5m";
-    };
-
-    wireless.wifi-iface."wunlock_radio1" = {
-      device = "radio1"; # The 5 GHz radio.
-      mode = "ap";
-      network = "wunlock";
-      inherit (wunlock) ssid;
-      encryption = "psk2";
-      key = wunlock.psk;
-      hidden = true;
-      isolate = true;
-      disabled = false;
     };
 
     firewall = {
@@ -72,6 +60,18 @@ in
           target = "ACCEPT";
         }
       ];
+    };
+
+    wireless.wifi-iface."wunlock_radio1" = {
+      disabled = false;
+      device = "radio1"; # The 5 GHz radio.
+      mode = "ap";
+      network = "wunlock";
+      inherit (wunlock) ssid;
+      encryption = "psk2";
+      key = wunlock.psk;
+      hidden = true;
+      isolate = true;
     };
   };
 }

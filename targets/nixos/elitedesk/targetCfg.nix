@@ -8,17 +8,17 @@ rec {
 
   zpool = "dontdie";
   offsiteBucket = "backups";
-  tailnetIp = "100.96.0.2";
+  paths = rec {
+    backups = "/${zpool}/services/backups";
+    config = "/var/lib";
+    data = "/${zpool}/data";
+    postgres = "${config}/postgresql";
+  };
   staticLease = {
     ip = "192.168.20.3";
     mac = "00:00:5e:00:53:01";
   };
-  paths = rec {
-    config = "/var/lib";
-    postgres = "${config}/postgresql";
-    backups = "/${zpool}/services/backups";
-    data = "/${zpool}/data";
-  };
+  tailnetIp = "100.96.0.2";
 
   ports = {
     adguard.port = 3000;
@@ -29,9 +29,9 @@ rec {
     # `services.jellyfin` hardcodes this port; this only mirrors it.
     jellyfin.port = 8096;
     paperless = {
-      port = 8000;
       gotenberg_port = 3030;
       tika_port = 9998;
+      port = 8000;
     };
     vikunja.port = 3456;
   };

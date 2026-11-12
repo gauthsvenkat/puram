@@ -22,9 +22,9 @@ in
 
     dhcp.dhcp."homelab" = {
       interface = "homelab";
+      leasetime = "12h";
       start = 100;
       limit = 150;
-      leasetime = "12h";
     };
 
     firewall = {

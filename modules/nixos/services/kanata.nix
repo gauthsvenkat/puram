@@ -6,9 +6,6 @@
       devices = [
         "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
       ];
-      extraDefCfg = ''
-        process-unmapped-keys yes
-      '';
       # Config stolen from https://github.com/jtroo/kanata/discussions/1455
       config = ''
         (defsrc
@@ -45,6 +42,9 @@
           l (t! charmod l ralt)
           ; (t! charmod ; rmet)
         )
+      '';
+      extraDefCfg = ''
+        process-unmapped-keys yes
       '';
     };
   };

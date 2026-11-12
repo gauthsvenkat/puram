@@ -4,11 +4,11 @@
 
     dhcp.dhcp.lan = {
       interface = "lan";
-      start = 100;
-      limit = 150;
-      leasetime = "12h";
       dhcpv4 = "server";
       dhcpv6 = "server";
+      leasetime = "12h";
+      start = 100;
+      limit = 150;
       ra = "server";
       ra_slaac = true;
       ra_flags = [
