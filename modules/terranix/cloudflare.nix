@@ -18,6 +18,7 @@ let
   inherit (targetCfg.cloudflare) accountId;
   inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
   controlServerIp = targetCfgs.nixos.${controlServer}.tailnetIp;
+  ociDomain = "oci.${domain}";
 in
 {
   resource =
@@ -109,6 +110,23 @@ in
           name = "headscale.${domain}";
           type = "CNAME";
           content = "${ddnsName}.${domain}";
+          proxied = false;
+          ttl = 1;
+        };
+
+        "sentinel_ipv4" = {
+          zone_id = zoneId;
+          name = "sentinel.${ociDomain}";
+          type = "A";
+          content = lib.tf.ref "oci_core_public_ip.sentinel.ip_address";
+          proxied = false;
+          ttl = 1;
+        };
+        "sentinel_ipv6" = {
+          zone_id = zoneId;
+          name = "sentinel.${ociDomain}";
+          type = "AAAA";
+          content = lib.tf.ref "data.oci_core_vnic.sentinel.ipv6addresses[0]";
           proxied = false;
           ttl = 1;
         };
