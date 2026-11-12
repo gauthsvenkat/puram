@@ -3,6 +3,7 @@ keys:
   - &raspi400 age193wrn9e52h2egrwxdqhyg703yqtpnxpec70zkv2gguwqr5ujrg9q873rxg
   - &raspi5 age1an4wnqaly8fweqfqm5r9cxx23whwrh42pg5fp3rhcr205a0xgudsgme0k0
   - &sandisk-ultra age15np43e2rxrq98vk8yydvt7e9fguksch02a26jvvcaulwpvuvzseqwkwnaz
+  - &sentinel age1jsgvxt9ud3xntyw5u2duvhemafy9c8lta5kfakkqul6swqjlns7qr8e0hd
   - &thinkpad-t14s age17etuz3nhxz7d7nqxqrdwutr8aatf3de66yf9lptyg2lr47pfvdks2cmsp4
   - &thinkpad-x1-carbon age133h0ltupa6ffzf5jswzvw0e6m2nue74gld6ftn7s8fzhkvtvsgdqemukdk
   - &thunderdome age1nvka08nfv4jtwu4yld86n57rqlh8lyf8a47j7s37ruqw2afcts0qf3mvjx
@@ -14,6 +15,7 @@ creation_rules:
         - *raspi400
         - *raspi5
         - *sandisk-ultra
+        - *sentinel
         - *thinkpad-t14s
         - *thinkpad-x1-carbon
         - *thunderdome
