@@ -90,6 +90,7 @@
 
         headnetDomain = "headnet.${domain}";
         lanDomain = "lan";
+        ociDomain = "oci.${domain}";
 
         timezone = "Europe/Amsterdam";
 

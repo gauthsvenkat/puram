@@ -13,12 +13,12 @@ let
     ddnsName
     domain
     homeserver
+    ociDomain
     router
     ;
   inherit (targetCfg.cloudflare) accountId;
   inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
   controlServerIp = targetCfgs.nixos.${controlServer}.tailnetIp;
-  ociDomain = "oci.${domain}";
 in
 {
   resource =
