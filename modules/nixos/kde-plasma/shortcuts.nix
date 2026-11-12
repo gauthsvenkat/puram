@@ -46,7 +46,7 @@ in
     "kwin"."Window to Desktop 6" = "Meta+^";
 
     # additional useful shortcuts
-    "kwin"."Overview" = "Meta+W";
+    "kwin"."Overview" = "Meta+O";
     "kwin"."Show Desktop" = "Meta+D";
     "kwin"."Walk Through Windows" = "Alt+Tab";
     "kwin"."Walk Through Windows (Reverse)" = "Alt+Shift+Tab";
