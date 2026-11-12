@@ -1,4 +1,6 @@
 {
+  dnsServer = "sentinel";
+
   cloudflare.accountId = "00000000000000000000000000000000";
   oci = {
     alertEmail = "gauthsvenkat@gmail.com";

@@ -16,6 +16,7 @@ let
     ociDomain
     router
     ;
+  inherit (targetCfg) dnsServer;
   inherit (targetCfg.cloudflare) accountId;
   inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
   controlServerIp = targetCfgs.nixos.${controlServer}.tailnetIp;
@@ -80,6 +81,8 @@ in
 
           "caddy_dns_headscale" = mkDnsToken "caddy-acme-${controlServer}";
 
+          "caddy_dns_${dnsServer}" = mkDnsToken "caddy-acme-${dnsServer}";
+
           "ddns" = mkDnsToken "ddns-${router}";
 
         };
@@ -92,6 +95,15 @@ in
           # Placeholder IP; the router's DDNS updates it, so tofu must ignore changes to it.
           content = "192.0.2.1";
           lifecycle.ignore_changes = [ "content" ];
+          proxied = false;
+          ttl = 1;
+        };
+
+        "dns" = {
+          zone_id = zoneId;
+          name = "dns.${domain}";
+          type = "CNAME";
+          content = "${dnsServer}.${ociDomain}";
           proxied = false;
           ttl = 1;
         };
@@ -114,17 +126,17 @@ in
           ttl = 1;
         };
 
-        "sentinel_ipv4" = {
+        "${dnsServer}_ipv4" = {
           zone_id = zoneId;
-          name = "sentinel.${ociDomain}";
+          name = "${dnsServer}.${ociDomain}";
           type = "A";
           content = lib.tf.ref "oci_core_public_ip.sentinel.ip_address";
           proxied = false;
           ttl = 1;
         };
-        "sentinel_ipv6" = {
+        "${dnsServer}_ipv6" = {
           zone_id = zoneId;
-          name = "sentinel.${ociDomain}";
+          name = "${dnsServer}.${ociDomain}";
           type = "AAAA";
           content = lib.tf.ref "data.oci_core_vnic.sentinel.ipv6addresses[0]";
           proxied = false;
@@ -145,6 +157,10 @@ in
     };
 
   output = {
+    cloudflare_dns_token_dns = {
+      value = lib.tf.ref "cloudflare_account_token.caddy_dns_${dnsServer}.value";
+      sensitive = true;
+    };
     cloudflare_dns_token_headscale = {
       value = lib.tf.ref "cloudflare_account_token.caddy_dns_headscale.value";
       sensitive = true;
