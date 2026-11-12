@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) headnetDomain lanDomain;
+  inherit (flakeCfg) headnetDomain lanDomain ociDomain;
   inherit (targetCfg) username;
   networkDeviceCfgs = targetCfgs.openwrt;
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
@@ -28,21 +28,27 @@ in
 
       # concatMapAttrs :: (hostname::String -> targetCfg -> { alias::String -> sshHost }) -> { hostname::String -> targetCfg } -> { alias::String -> sshHost }
       #   where sshHost = { HostName :: String; User :: String }
-      # :: { alias::String -> sshHost }, `<hostname>`, `<hostname>-hs` and `<hostname>-root` per server
-      serverAliases = lib.concatMapAttrs (hostName: targetCfg: {
-        ${hostName} = {
-          HostName = "${hostName}.${lanDomain}";
-          User = targetCfg.username;
-        };
-        "${hostName}-hs" = {
-          HostName = "${hostName}.${headnetDomain}";
-          User = targetCfg.username;
-        };
-        "${hostName}-root" = {
-          HostName = "${hostName}.${lanDomain}";
-          User = "root";
-        };
-      }) serverCfgs;
+      # :: { alias::String -> sshHost }, `<hostname>`, `<hostname>-hs` and `<hostname>-root` per server, OCI hosts by their public name
+      serverAliases = lib.concatMapAttrs (
+        hostName: targetCfg:
+        let
+          hostDomain = if targetCfg ? vcnIp then ociDomain else lanDomain;
+        in
+        {
+          ${hostName} = {
+            HostName = "${hostName}.${hostDomain}";
+            User = targetCfg.username;
+          };
+          "${hostName}-hs" = {
+            HostName = "${hostName}.${headnetDomain}";
+            User = targetCfg.username;
+          };
+          "${hostName}-root" = {
+            HostName = "${hostName}.${hostDomain}";
+            User = "root";
+          };
+        }
+      ) serverCfgs;
     in
     serverAliases // networkDeviceAliases;
 }
