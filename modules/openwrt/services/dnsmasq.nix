@@ -30,8 +30,10 @@ in
         readethers = true;
         rebind_domain = [ domain ];
         rebind_localhost = true;
-        # The public resolvers only answer if AdGuard Home is down.
+        # `strictorder`: sentinel's AdGuard Home over DoH through `127.0.0.1#5053`, then the
+        # homeserver's; the public resolvers only answer if both are down.
         server = [
+          "127.0.0.1#5053"
           homeserverIp
           "9.9.9.9"
           "1.1.1.1"
