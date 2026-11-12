@@ -4,8 +4,8 @@ let
 in
 {
   programs = {
-    steam.enable = true;
     gamemode.enable = true;
+    steam.enable = true;
   };
 
   users.users.${username}.extraGroups = [ "gamemode" ];

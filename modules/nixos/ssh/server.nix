@@ -11,13 +11,13 @@ in
   services.openssh = {
     enable = true;
     settings = {
-      PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
+      PasswordAuthentication = false;
     };
   };
 
   users.users = {
-    root.openssh.authorizedKeys.keys = workstationKeys;
     ${username}.openssh.authorizedKeys.keys = workstationKeys;
+    root.openssh.authorizedKeys.keys = workstationKeys;
   };
 }

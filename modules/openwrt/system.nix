@@ -1,12 +1,10 @@
 { openwrtCfg, targetCfg, ... }:
 {
-  users.root.hashedPasswordSecret = "user_hashed_password";
-
   uci.settings.system = {
     system = [
       {
-        inherit (openwrtCfg) timezone zonename;
         inherit (targetCfg) hostname;
+        inherit (openwrtCfg) timezone zonename;
       }
     ];
 
@@ -20,4 +18,6 @@
       ];
     };
   };
+
+  users.root.hashedPasswordSecret = "user_hashed_password";
 }

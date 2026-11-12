@@ -9,9 +9,14 @@ Formatting, dead code and statix lints are enforced by the pre-commit hooks.
 - Binding names show the value's shape: plural for lists (`providerNames`), `…Cfgs` for sets of targetCfgs (`serverCfgs`), `mk…` for builders (`mkNixos`). Pipelines with surprising intermediate types are split into named bindings
 - Dot notation for single-definition attribute sets (e.g., `services.openssh.enable = true;`)
 - Multiple definitions with a common prefix grouped into a single attribute set
-- Lexicographic order for package lists, imports and attribute definitions within groups
 - `lib.getExe`/`lib.getExe'` instead of `"${pkg}/bin/name"` interpolation
 - Quoted user-chosen attribute names, both where defined and where referenced: `sops.secrets."wifi_psk"`, `placeholder."wifi_psk"`, `targetCfgs.nixos."elitedesk"`, terraform instance names, disko devices, own systemd units. Leave bare: `targetCfg` keys, platform names (`targetCfgs.nixos`), upstream or schema names (`systemd.services.postgresql`, uci `lan`/`wan`/`loopback`), and `${}` names.
+
+## Order
+
+- Attribute sets, at every nesting level: a definition goes above what needs it to exist or make sense: `enable`, `imports` and identity (`hostname`, `name`, `type`) before details; tofu's key, then the resource, then its API key. A group that mostly feeds later definitions goes above them as a whole. Peers in lexicographic order.
+- Lists in lexicographic order, unless the order matters.
+- Groups split by a blank line or a comment stay; sort within each. Natural sequences keep their order: vim directions (`h/j/k/l`), time, position, pairs (`from`/`to`), upstream's order.
 
 ## Type comments
 

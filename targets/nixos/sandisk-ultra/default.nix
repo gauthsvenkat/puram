@@ -23,24 +23,41 @@ in
     ./disko-config.nix
   ];
 
-  environment.systemPackages = with pkgs; [
-    e2fsprogs
-    fio
-    gsmartcontrol
-    lshw
-    memtester
-    smartmontools
-    stress-ng
-    tmux
-    usbutils
-  ];
-
-  hardware.enableAllHardware = true;
-
   boot.loader = {
     efi.canTouchEfiVariables = false;
     systemd-boot.configurationLimit = 2;
   };
+
+  environment = {
+    persistence.${persistDir} = {
+      directories = [
+        "/var/lib/nixos"
+        "/var/log"
+        {
+          directory = "/etc/nixos";
+          group = "users";
+          user = username;
+        }
+      ];
+      files = [ "/etc/machine-id" ];
+      hideMounts = true;
+      users.${username}.directories = [ ".ssh" ];
+    };
+
+    systemPackages = with pkgs; [
+      e2fsprogs
+      fio
+      gsmartcontrol
+      lshw
+      memtester
+      smartmontools
+      stress-ng
+      tmux
+      usbutils
+    ];
+  };
+
+  hardware.enableAllHardware = true;
 
   services = {
     kanata.keyboards."laptop".devices = lib.mkForce [ ];
@@ -56,20 +73,5 @@ in
       enable = true;
       desktopManager.xfce.enable = true;
     };
-  };
-
-  environment.persistence.${persistDir} = {
-    directories = [
-      "/var/lib/nixos"
-      "/var/log"
-      {
-        directory = "/etc/nixos";
-        user = username;
-        group = "users";
-      }
-    ];
-    files = [ "/etc/machine-id" ];
-    hideMounts = true;
-    users.${username}.directories = [ ".ssh" ];
   };
 }

@@ -4,8 +4,10 @@ let
   inherit (config.sops) secrets;
 in
 {
-  sops.secrets."radarr_api_key".restartUnits = [ "recyclarr.service" ];
-  sops.secrets."sonarr_api_key".restartUnits = [ "recyclarr.service" ];
+  sops.secrets = {
+    "radarr_api_key".restartUnits = [ "recyclarr.service" ];
+    "sonarr_api_key".restartUnits = [ "recyclarr.service" ];
+  };
 
   services.recyclarr = {
     enable = true;
@@ -15,10 +17,8 @@ in
     # neutralise the x265 penalty so x265 stays eligible for fresh grabs.
     configuration = {
       radarr.movies = {
-        base_url = "http://127.0.0.1:${toString radarr.port}";
         api_key._secret = secrets."radarr_api_key".path;
-        delete_old_custom_formats = true;
-        quality_definition.type = "movie";
+        base_url = "http://127.0.0.1:${toString radarr.port}";
         quality_profiles = [
           {
             trash_id = "d1d67249d3890e49bc12e275d989a7e9";
@@ -40,12 +40,12 @@ in
             ];
           }
         ];
+        delete_old_custom_formats = true;
+        quality_definition.type = "movie";
       };
       sonarr.tv = {
-        base_url = "http://127.0.0.1:${toString sonarr.port}";
         api_key._secret = secrets."sonarr_api_key".path;
-        delete_old_custom_formats = true;
-        quality_definition.type = "series";
+        base_url = "http://127.0.0.1:${toString sonarr.port}";
         quality_profiles = [
           {
             trash_id = "9d142234e45d6143785ac55f5a9e8dc9";
@@ -64,6 +64,8 @@ in
             ];
           }
         ];
+        delete_old_custom_formats = true;
+        quality_definition.type = "series";
       };
     };
   };

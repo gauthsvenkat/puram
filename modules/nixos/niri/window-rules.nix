@@ -27,12 +27,12 @@ in
           title = "^Picture-in-Picture$";
         }
       ];
+      open-floating = true;
       default-floating-position = {
         relative-to = "bottom-right";
         x = 32;
         y = 32;
       };
-      open-floating = true;
     }
     {
       matches = [

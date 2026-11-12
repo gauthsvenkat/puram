@@ -8,9 +8,10 @@
 let
   inherit (targetCfg) paths;
   inherit (targetCfg.ports.prowlarr) port;
+  cfg = config.services.prowlarr;
   dataDir = "${paths.config}/prowlarr";
-  user = "prowlarr";
   group = "prowlarr";
+  user = "prowlarr";
 in
 {
   services.prowlarr = {
@@ -20,26 +21,30 @@ in
     # rules stay off; `ExecStart` below points prowlarr at our path.
   };
 
-  # HACK: A static user instead of `DynamicUser`, as nixarr does. With
-  # `DynamicUser` and a custom `dataDir`, each activation resets `dataDir`
-  # to `root:root 0700` and prowlarr can no longer read it.
-  users.users.${user} = {
-    isSystemUser = true;
-    inherit group;
-  };
-  users.groups.${group} = { };
-
-  systemd.services.prowlarr.serviceConfig = {
-    DynamicUser = lib.mkForce false;
-    User = lib.mkForce user;
-    Group = lib.mkForce group;
-    # State lives in `dataDir`, not `/var/lib/prowlarr`.
-    StateDirectory = lib.mkForce "";
-    ExecStart = lib.mkForce "${lib.getExe config.services.prowlarr.package} -nobrowser -data=${dataDir}";
-    ReadWritePaths = [ dataDir ];
+  users = {
+    # HACK: A static user instead of `DynamicUser`, as nixarr does. With
+    # `DynamicUser` and a custom `dataDir`, each activation resets `dataDir`
+    # to `root:root 0700` and prowlarr can no longer read it.
+    groups.${group} = { };
+    users.${user} = {
+      inherit group;
+      isSystemUser = true;
+    };
   };
 
-  systemd.tmpfiles.rules = [
-    "d '${dataDir}' 0700 ${user} root - -"
-  ];
+  systemd = {
+    tmpfiles.rules = [
+      "d '${dataDir}' 0700 ${user} root - -"
+    ];
+
+    services.prowlarr.serviceConfig = {
+      DynamicUser = lib.mkForce false;
+      ExecStart = lib.mkForce "${lib.getExe cfg.package} -nobrowser -data=${dataDir}";
+      Group = lib.mkForce group;
+      ReadWritePaths = [ dataDir ];
+      # State lives in `dataDir`, not `/var/lib/prowlarr`.
+      StateDirectory = lib.mkForce "";
+      User = lib.mkForce user;
+    };
+  };
 }

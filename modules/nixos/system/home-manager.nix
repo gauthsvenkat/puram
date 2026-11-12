@@ -9,20 +9,20 @@ let
 in
 {
   home-manager = {
-    users.${username}.home = {
-      inherit (nixosCfg) stateVersion;
-      inherit username;
-      inherit (targetCfg) homeDirectory;
-      sessionPath = [ "$HOME/.local/bin" ];
+    backupFileExtension = "backup";
+
+    extraSpecialArgs = {
+      inherit flakeCfg targetCfg;
     };
 
     useGlobalPkgs = true;
     useUserPackages = true;
 
-    backupFileExtension = "backup";
-
-    extraSpecialArgs = {
-      inherit flakeCfg targetCfg;
+    users.${username}.home = {
+      inherit username;
+      inherit (targetCfg) homeDirectory;
+      sessionPath = [ "$HOME/.local/bin" ];
+      inherit (nixosCfg) stateVersion;
     };
   };
 }

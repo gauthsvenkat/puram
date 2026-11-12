@@ -21,21 +21,9 @@ in
 
     dhcp.dhcp."iot" = {
       interface = "iot";
+      leasetime = "12h";
       start = 100;
       limit = 150;
-      leasetime = "12h";
-    };
-
-    wireless.wifi-iface."iot_radio0" = {
-      device = "radio0"; # The 2.4 GHz radio.
-      mode = "ap";
-      network = "iot";
-      ssid._secret = "iot_wifi_ssid";
-      # Many IoT devices cannot join a WPA3 network.
-      encryption = "psk2";
-      key._secret = "iot_wifi_psk";
-      isolate = true;
-      disabled = false;
     };
 
     firewall = {
@@ -73,6 +61,18 @@ in
           target = "ACCEPT";
         }
       ];
+    };
+
+    wireless.wifi-iface."iot_radio0" = {
+      disabled = false;
+      device = "radio0"; # The 2.4 GHz radio.
+      mode = "ap";
+      network = "iot";
+      ssid._secret = "iot_wifi_ssid";
+      # Many IoT devices cannot join a WPA3 network.
+      encryption = "psk2";
+      key._secret = "iot_wifi_psk";
+      isolate = true;
     };
   };
 }

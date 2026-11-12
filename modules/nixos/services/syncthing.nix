@@ -7,7 +7,7 @@
   ...
 }:
 let
-  inherit (targetCfg) username homeDirectory;
+  inherit (targetCfg) homeDirectory username;
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
   # :: { hostname::String -> targetCfg }, hosts with a syncthingId
   syncthingCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? syncthingId) targetCfgs.nixos;
@@ -15,9 +15,9 @@ in
 {
   services.syncthing = {
     enable = true;
-    openDefaultPorts = true;
     user = username;
     dataDir = homeDirectory;
+    openDefaultPorts = true;
 
     settings = {
       # mapAttrs :: (hostname::String -> targetCfg -> device) -> { hostname::String -> targetCfg } -> { hostname::String -> device }
@@ -63,8 +63,8 @@ in
       # https://docs.syncthing.net/users/config.html#config-option-options.globalannounceenabled
       options = {
         globalAnnounceEnabled = false;
-        relaysEnabled = false;
         natEnabled = false;
+        relaysEnabled = false;
       };
     };
   };

@@ -7,21 +7,21 @@ in
     git = {
       enable = true;
 
+      ignores = [
+        "*.env"
+        "*.envrc"
+      ];
+
       lfs.enable = true;
 
       settings = {
         user = {
-          name = "Gautham Venkataraman";
           email = gitEmail;
+          name = "Gautham Venkataraman";
         };
         init.DefaultBranch = "main";
         pull.rebase = true;
       };
-
-      ignores = [
-        "*.envrc"
-        "*.env"
-      ];
     };
 
     difftastic = {

@@ -14,11 +14,19 @@ let
 in
 {
   provider.scaleway = {
-    inherit (targetCfg.scaleway) region;
     project_id = orgId;
+    inherit (targetCfg.scaleway) region;
   };
 
   resource = {
+    scaleway_iam_application = {
+      "opentofu".name = "opentofu-infra";
+      "restic" = {
+        name = "restic-elitedesk";
+        description = "restic backups from elitedesk";
+      };
+    };
+
     scaleway_iam_api_key = {
       "opentofu" = {
         application_id = lib.tf.ref "scaleway_iam_application.opentofu.id";
@@ -37,14 +45,6 @@ in
       };
     };
 
-    scaleway_iam_application = {
-      "opentofu".name = "opentofu-infra";
-      "restic" = {
-        name = "restic-elitedesk";
-        description = "restic backups from elitedesk";
-      };
-    };
-
     scaleway_iam_policy = {
       "opentofu" = {
         name = "opentofu";
@@ -59,8 +59,8 @@ in
             project_ids = [ orgId ];
           }
           {
-            permission_set_names = [ "IAMManager" ];
             organization_id = orgId;
+            permission_set_names = [ "IAMManager" ];
           }
         ];
       };

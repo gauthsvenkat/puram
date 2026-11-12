@@ -27,41 +27,6 @@ in
     };
   };
 
-  services = {
-    printing.enable = true;
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-    };
-
-    tlp.settings = {
-      START_CHARGE_THRESH_BAT0 = 75;
-      STOP_CHARGE_THRESH_BAT0 = 80;
-    };
-  };
-
-  # Resume after sleep degrades rx in wifi driver.
-  # HACK: Reload wifi driver after resume to clear degraded rx.
-  # remove when fixed upstream: https://bugzilla.kernel.org/show_bug.cgi?id=220438
-  systemd.services."ath11k-resume" =
-    let
-      modprobe = lib.getExe' pkgs.kmod "modprobe";
-    in
-    {
-      description = "Reload ath11k wifi after resume";
-      after = [ "suspend.target" ];
-      serviceConfig = {
-        ExecStart = [
-          "${modprobe} -r ath11k_pci"
-          "${modprobe} ath11k_pci"
-        ];
-        TimeoutSec = 30;
-        Type = "oneshot";
-      };
-      wantedBy = [ "suspend.target" ];
-    };
-
   home-manager.users.${username} = {
     home.packages = with pkgs; [
       glab
@@ -111,4 +76,39 @@ in
       starship.settings.gcloud.disabled = true;
     };
   };
+
+  services = {
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
+    printing.enable = true;
+
+    tlp.settings = {
+      START_CHARGE_THRESH_BAT0 = 75;
+      STOP_CHARGE_THRESH_BAT0 = 80;
+    };
+  };
+
+  # Resume after sleep degrades rx in wifi driver.
+  # HACK: Reload wifi driver after resume to clear degraded rx.
+  # remove when fixed upstream: https://bugzilla.kernel.org/show_bug.cgi?id=220438
+  systemd.services."ath11k-resume" =
+    let
+      modprobe = lib.getExe' pkgs.kmod "modprobe";
+    in
+    {
+      after = [ "suspend.target" ];
+      description = "Reload ath11k wifi after resume";
+      serviceConfig = {
+        ExecStart = [
+          "${modprobe} -r ath11k_pci"
+          "${modprobe} ath11k_pci"
+        ];
+        TimeoutSec = 30;
+        Type = "oneshot";
+      };
+      wantedBy = [ "suspend.target" ];
+    };
 }

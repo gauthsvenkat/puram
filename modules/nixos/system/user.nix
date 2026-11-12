@@ -11,7 +11,7 @@ in
 
   users.users.${username} = {
     isNormalUser = true;
-    hashedPasswordFile = secrets."user_hashed_password".path;
     extraGroups = [ "wheel" ];
+    hashedPasswordFile = secrets."user_hashed_password".path;
   };
 }

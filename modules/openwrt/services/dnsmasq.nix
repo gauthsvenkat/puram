@@ -9,6 +9,9 @@
 let
   inherit (flakeCfg) domain homeserver lanDomain;
   homeserverIp = targetCfgs.nixos.${homeserver}.staticLease.ip;
+  # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
+  # :: { hostname::String -> targetCfg }, hosts with a staticLease
+  staticLeaseCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? staticLease) targetCfgs.nixos;
 in
 {
   uci.settings.dhcp = {
@@ -37,14 +40,12 @@ in
       }
     ];
 
-    # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
     # mapAttrsToList :: (hostname::String -> targetCfg -> host) -> { hostname::String -> targetCfg } -> [ host ]
     #   where host = { name, ip, mac :: String; dns :: Bool }
-    # :: [ host ], one per target with a staticLease
     host = lib.mapAttrsToList (name: targetCfg: {
       inherit name;
       inherit (targetCfg.staticLease) ip mac;
       dns = true;
-    }) (lib.filterAttrs (_: targetCfg: targetCfg ? staticLease) targetCfgs.nixos);
+    }) staticLeaseCfgs;
   };
 }

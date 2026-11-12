@@ -27,12 +27,6 @@ in
       whenSleepingEnter = "standbyThenHibernate";
     };
 
-    batteryLevels = {
-      criticalAction = "sleep";
-      lowLevel = 40; # percent
-      criticalLevel = 15; # percent
-    };
-
     battery = {
       autoSuspend = {
         action = "sleep";
@@ -55,6 +49,12 @@ in
 
       whenLaptopLidClosed = "sleep";
       whenSleepingEnter = "standbyThenHibernate";
+    };
+
+    batteryLevels = {
+      criticalLevel = 15; # percent
+      criticalAction = "sleep";
+      lowLevel = 40; # percent
     };
 
     lowBattery = {

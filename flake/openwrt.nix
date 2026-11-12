@@ -8,15 +8,15 @@ let
   inherit (pkgs) lib;
 
   openwrtCfg = {
+    country = "NL";
+    # The router's address on the network the switch is on.
+    gateway = targetCfgs.openwrt.${flakeCfg.router}.homelab.ip;
     # KPN accepts any credentials; `internet` is their documented placeholder.
     pppoe = {
       username = "internet";
       password = "internet";
       vid = 6;
     };
-    country = "NL";
-    # The router's address on the network the switch is on.
-    gateway = targetCfgs.openwrt.${flakeCfg.router}.homelab.ip;
     release = "25.12.5";
     timezone = "CET-1CEST,M3.5.0,M10.5.0/3";
     zonename = flakeCfg.timezone;

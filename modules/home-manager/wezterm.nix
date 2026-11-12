@@ -3,6 +3,24 @@
   programs.wezterm = {
     enable = true;
 
+    # HACK: the default `hyperlink_rules` keep a trailing `)` on links in nested parentheses
+    # (https://github.com/wezterm/wezterm/issues/3803). The `open-uri` handler strips
+    # trailing punctuation and opens the cleaned link; when nothing is stripped, it
+    # returns nothing and WezTerm opens the link as usual.
+    #
+    # https://wezterm.org/config/lua/window-events/open-uri.html
+    # https://www.lua.org/manual/5.4/manual.html#6.4
+    extraConfig = ''
+      wezterm.on("open-uri", function(_, _, uri)
+        local trailing = uri:find("(", 1, true) and "[.,;:]+$" or "[).,;:]+$"
+        local cleaned = uri:gsub(trailing, "")
+        if cleaned ~= uri then
+          wezterm.open_with(cleaned)
+          return false
+        end
+      end)
+    '';
+
     settings =
       let
         inherit (lib.generators) mkLuaInline;
@@ -16,8 +34,6 @@
         hide_tab_bar_if_only_one_tab = true;
         tab_and_split_indices_are_zero_based = true;
         use_fancy_tab_bar = false;
-
-        window_background_opacity = 0.9;
 
         keys =
           let
@@ -52,39 +68,23 @@
         mouse_bindings = [
           {
             event.Up = {
-              streak = 1;
               button = "Right";
+              streak = 1;
             };
             mods = "NONE";
             action = mkLuaInline ''wezterm.action.PasteFrom("Clipboard")'';
           }
           {
             event.Up = {
-              streak = 1;
               button = "Left";
+              streak = 1;
             };
             mods = "CTRL|ALT";
             action = mkLuaInline "wezterm.action.OpenLinkAtMouseCursor";
           }
         ];
-      };
 
-    # HACK: the default `hyperlink_rules` keep a trailing `)` on links in nested parentheses
-    # (https://github.com/wezterm/wezterm/issues/3803). The `open-uri` handler strips
-    # trailing punctuation and opens the cleaned link; when nothing is stripped, it
-    # returns nothing and WezTerm opens the link as usual.
-    #
-    # https://wezterm.org/config/lua/window-events/open-uri.html
-    # https://www.lua.org/manual/5.4/manual.html#6.4
-    extraConfig = ''
-      wezterm.on("open-uri", function(_, _, uri)
-        local trailing = uri:find("(", 1, true) and "[.,;:]+$" or "[).,;:]+$"
-        local cleaned = uri:gsub(trailing, "")
-        if cleaned ~= uri then
-          wezterm.open_with(cleaned)
-          return false
-        end
-      end)
-    '';
+        window_background_opacity = 0.9;
+      };
   };
 }

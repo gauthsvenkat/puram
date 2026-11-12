@@ -5,15 +5,12 @@ in
 {
   services.adguardhome = {
     enable = true;
-    mutableSettings = false;
     host = "127.0.0.1";
+    mutableSettings = false;
     inherit (adguard) port;
     settings = {
       dns = {
         anonymize_client_ip = true;
-        ratelimit = 0;
-        refuse_any = true;
-        use_private_ptr_resolvers = false;
         bootstrap_dns = [
           # Quad9
           "9.9.9.9"
@@ -42,14 +39,17 @@ in
           "https://dns.nextdns.io/dns-query"
           "https://wikimedia-dns.org/dns-query"
         ];
+        ratelimit = 0;
+        refuse_any = true;
+        use_private_ptr_resolvers = false;
       };
 
       filters =
         let
           mkFilter = id: name: {
             inherit id name;
-            url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_${toString id}.txt";
             enabled = true;
+            url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_${toString id}.txt";
           };
         in
         [

@@ -40,8 +40,8 @@ in
 
   devShells."x86_64-linux".default = pkgs.mkShell {
     packages = [
-      tofu
       pkgs.sops
+      tofu
     ];
   };
 }

@@ -8,22 +8,22 @@ rec {
 
   zpool = "dontdie";
   offsiteBucket = "elitedesk-backup";
-  tailnetIp = "100.64.0.2";
-  staticLease = {
-    ip = "192.168.20.3";
-    mac = "ac:e2:d3:14:d9:27";
-  };
   paths = rec {
-    config = "/var/lib";
-    postgres = "${config}/postgresql";
     backups = "/${zpool}/services/backups";
+    config = "/var/lib";
     data = "/${zpool}/data";
+    postgres = "${config}/postgresql";
     # BEGIN-PRIVATE
     entertainment = "${data}/entertainment";
     torrents = "${entertainment}/torrents";
     usenet = "${entertainment}/usenet";
     # END-PRIVATE
   };
+  staticLease = {
+    ip = "192.168.20.3";
+    mac = "ac:e2:d3:14:d9:27";
+  };
+  tailnetIp = "100.64.0.2";
 
   ports = {
     adguard.port = 3000;
@@ -34,22 +34,22 @@ rec {
     # `services.jellyfin` hardcodes this port; this only mirrors it.
     jellyfin.port = 8096;
     paperless = {
-      port = 8000;
       gotenberg_port = 3030;
       tika_port = 9998;
+      port = 8000;
     };
     vikunja.port = 3456;
     # BEGIN-PRIVATE
     bazarr.port = 6767;
     bitmagnet = {
-      port = 3333;
       dht_port = 3334;
+      port = 3333;
     };
     flaresolverr.port = 8191;
     prowlarr.port = 9696;
     qbittorrent = {
-      port = 8082;
       bt_port = 6881;
+      port = 8082;
     };
     radarr.port = 7878;
     sabnzbd.port = 8083;

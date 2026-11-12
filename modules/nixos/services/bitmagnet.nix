@@ -3,14 +3,12 @@
   ...
 }:
 let
-  inherit (targetCfg.ports.bitmagnet) port dht_port;
+  inherit (targetCfg.ports.bitmagnet) dht_port port;
 in
 {
   services.bitmagnet = {
     enable = true;
     settings = {
-      http_server.port = ":${toString port}";
-      dht_server.port = dht_port;
       classifier.flags.delete_content_types = [
         "audiobook"
         "comic"
@@ -21,6 +19,8 @@ in
         "unknown"
         "xxx"
       ];
+      dht_server.port = dht_port;
+      http_server.port = ":${toString port}";
     };
   };
 

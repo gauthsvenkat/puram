@@ -23,29 +23,29 @@ in
       };
 
       settings = {
-        env.DISABLE_TELEMETRY = "1";
         autoMemoryEnabled = false;
-        theme = "dark";
         editorMode = "vim";
+        env.DISABLE_TELEMETRY = "1";
         includeCoAuthoredBy = false;
-
-        voice = {
-          enabled = true;
-          mode = "hold";
-          autoSubmit = false;
-        };
+        theme = "dark";
 
         permissions = {
           defaultMode = "auto";
 
           deny = [
-            "Read(**/.env*)"
             "Edit(**/.env*)"
+            "Read(${homeDirectory}/.ssh/**)"
+            "Read(**/.env*)"
+            "Read(**/credentials.json)"
             "Read(*.key)"
             "Read(*.pem)"
-            "Read(**/credentials.json)"
-            "Read(${homeDirectory}/.ssh/**)"
           ];
+        };
+
+        voice = {
+          enabled = true;
+          autoSubmit = false;
+          mode = "hold";
         };
       };
     };
@@ -61,8 +61,8 @@ in
       in
       {
         cl = pkg;
-        clr = "${pkg} --resume";
         clm = "${pkg} --model";
+        clr = "${pkg} --resume";
       };
   };
 }

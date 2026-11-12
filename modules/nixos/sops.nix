@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (targetCfg) username homeDirectory;
+  inherit (targetCfg) homeDirectory username;
   sshKey = "${homeDirectory}/.ssh/id_ed25519";
 in
 {

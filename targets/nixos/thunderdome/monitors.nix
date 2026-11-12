@@ -11,17 +11,17 @@ in
         output = [
           {
             enable = true;
+            search = "s=HNTT303506";
             mode = "best";
             position = "0,0";
             scale = 1.0;
-            search = "s=HNTT303506";
           }
           {
             enable = true;
+            search = "s=UPB4DK9P";
             mode = "best";
             position = "2560,300";
             scale = 1.0;
-            search = "s=UPB4DK9P";
           }
         ];
       }
