@@ -8,10 +8,11 @@ Create tofu's own credentials by hand and put them in [`secrets/tofu.yaml`](../s
 
 - Cloudflare: an **account-owned** token with `Zone Read` + `DNS Write` on the zone and `Account API Tokens Write`.
 - Scaleway: an API key for an [IAM application](https://www.scaleway.com/en/docs/iam/concepts/) with `ObjectStorageBucketsRead`, `ObjectStorageBucketsWrite` and `ObjectStorageObjectsRead` on the Project, and `IAMManager` on the Organization.
+- OCI: none. Log in with a session token instead: `nix-shell -p oci-cli --run 'oci session authenticate'`, and for the first apply set `auth = "SecurityToken"` and `config_file_profile = "DEFAULT"` on `provider.oci`. The token lasts an hour; `oci session refresh` extends it.
 
 tofu can't create a Cloudflare token that manages tokens, so import the hand-made one: `just tf import cloudflare_account_token.opentofu '<account_id>/<token_id>'`.
 
-Then `just tf apply`. tofu creates its own Scaleway credentials; copy those into [`secrets/tofu.yaml`](../secrets/tofu.yaml) (see the outputs under "Rotating keys").
+Then `just tf apply`. tofu creates its own Scaleway and OCI credentials; copy those into [`secrets/tofu.yaml`](../secrets/tofu.yaml) (see the outputs under "Rotating keys"). For OCI, remove the session token settings (`auth` and `config_file_profile`) afterwards.
 
 ## Rotating keys
 
