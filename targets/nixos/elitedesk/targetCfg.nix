@@ -15,8 +15,8 @@ rec {
     postgres = "${config}/postgresql";
   };
   addresses = {
+    headnet = "100.96.0.2";
     lan = "192.168.20.3";
-    tailnet = "100.96.0.2";
   };
   mac = "00:00:5e:00:53:01";
 

@@ -85,6 +85,7 @@
         domain = "example.com";
 
         fqdns = {
+          adguard = "adguard.${domain}";
           dns = "dns.${domain}";
           headplane = "headplane.${domain}";
           headscale = "headscale.${domain}";

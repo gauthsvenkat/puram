@@ -17,7 +17,9 @@ let
     ;
   inherit (targetCfg) dnsServer;
   inherit (targetCfg.cloudflare) accountId;
-  homeserverIp = targetCfgs.nixos.${homeserver}.addresses.tailnet;
+  controlServerIp = targetCfgs.nixos.${controlServer}.addresses.headnet;
+  dnsServerIp = targetCfgs.nixos.${dnsServer}.addresses.headnet;
+  homeserverIp = targetCfgs.nixos.${homeserver}.addresses.headnet;
 in
 {
   resource =
@@ -82,11 +84,29 @@ in
         };
 
       cloudflare_dns_record = {
+        "adguard" = {
+          zone_id = zoneId;
+          name = fqdns.adguard;
+          type = "A";
+          content = dnsServerIp;
+          proxied = false;
+          ttl = 1;
+        };
+
         "dns" = {
           zone_id = zoneId;
           name = fqdns.dns;
           type = "CNAME";
           content = "${dnsServer}.${ociDomain}";
+          proxied = false;
+          ttl = 1;
+        };
+
+        "headplane" = {
+          zone_id = zoneId;
+          name = fqdns.headplane;
+          type = "A";
+          content = controlServerIp;
           proxied = false;
           ttl = 1;
         };
@@ -122,7 +142,7 @@ in
           name = "*.${domain}";
           type = "A";
           content = homeserverIp;
-          # Never proxy (orange cloud); the tailnet IP is unreachable from the public internet.
+          # Never proxy (orange cloud); the headnet IP is unreachable from the public internet.
           proxied = false;
           ttl = 1;
         };
