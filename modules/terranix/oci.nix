@@ -11,6 +11,7 @@ let
   inherit (flakeCfg) domain workstationKeys;
   inherit (targetCfg.oci) alertEmail tenancyOcid;
   sentinelIp = targetCfgs.nixos."sentinel".addresses.vcn;
+  stunPort = targetCfgs.nixos."sentinel".ports.headscale-stun;
 in
 {
   provider.oci = {
@@ -212,9 +213,17 @@ in
         vcn_id = lib.tf.ref "oci_core_vcn.main.id";
         display_name = "base";
       };
+
+      # headscale NSG
+      oci_core_network_security_group."headscale" = {
+        compartment_id = tenancyOcid;
+        vcn_id = lib.tf.ref "oci_core_vcn.main.id";
+        display_name = "headscale";
+      };
       oci_core_network_security_group_security_rule =
         let
           baseNsgId = lib.tf.ref "oci_core_network_security_group.base.id";
+          headscaleNsgId = lib.tf.ref "oci_core_network_security_group.headscale.id";
         in
         {
           "base_egress_ipv4" = {
@@ -312,6 +321,30 @@ in
               max = 443;
             };
           };
+
+          # headscale
+          "headscale_stun_ipv4" = {
+            network_security_group_id = headscaleNsgId;
+            direction = "INGRESS";
+            protocol = "17"; # UDP
+            source = "0.0.0.0/0";
+            source_type = "CIDR_BLOCK";
+            udp_options.destination_port_range = {
+              min = stunPort;
+              max = stunPort;
+            };
+          };
+          "headscale_stun_ipv6" = {
+            network_security_group_id = headscaleNsgId;
+            direction = "INGRESS";
+            protocol = "17"; # UDP
+            source = "::/0";
+            source_type = "CIDR_BLOCK";
+            udp_options.destination_port_range = {
+              min = stunPort;
+              max = stunPort;
+            };
+          };
         };
 
       # Compute
@@ -327,7 +360,10 @@ in
           assign_ipv6ip = true;
           # No ephemeral IPv4; we assign a static one below.
           assign_public_ip = false;
-          nsg_ids = [ (lib.tf.ref "oci_core_network_security_group.base.id") ];
+          nsg_ids = [
+            (lib.tf.ref "oci_core_network_security_group.base.id")
+            (lib.tf.ref "oci_core_network_security_group.headscale.id")
+          ];
           private_ip = sentinelIp;
         };
         metadata.ssh_authorized_keys = lib.concatLines workstationKeys;

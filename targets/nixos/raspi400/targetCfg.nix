@@ -10,9 +10,4 @@ rec {
     tailnet = "100.96.0.3";
   };
   mac = "00:00:5e:00:53:01";
-
-  ports = {
-    headplane = 3000;
-    headscale = 8080;
-  };
 }
