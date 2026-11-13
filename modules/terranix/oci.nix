@@ -250,6 +250,22 @@ in
             source_type = "CIDR_BLOCK";
             icmp_options.type = 2;
           };
+          "base_ping_ipv4" = {
+            network_security_group_id = baseNsgId;
+            direction = "INGRESS";
+            protocol = "1"; # ICMP
+            source = "0.0.0.0/0";
+            source_type = "CIDR_BLOCK";
+            icmp_options.type = 8;
+          };
+          "base_ping_ipv6" = {
+            network_security_group_id = baseNsgId;
+            direction = "INGRESS";
+            protocol = "58"; # ICMPv6
+            source = "::/0";
+            source_type = "CIDR_BLOCK";
+            icmp_options.type = 128;
+          };
           "base_ssh_ipv4" = {
             network_security_group_id = baseNsgId;
             direction = "INGRESS";
