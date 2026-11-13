@@ -101,10 +101,14 @@ in
 
   networking = {
     firewall.allowedUDPPorts = [ ports.headscale-stun ];
+    # Ignore the resolver that DHCP hands out, so only `nameservers` end up in `resolv.conf`.
+    networkmanager.dns = "none";
     # Resolvers that do not depend on the headnet, for the same reason.
     nameservers = [
       "1.1.1.1"
+      "9.9.9.9"
       "2606:4700:4700::1111"
+      "2620:fe::fe"
     ];
   };
 
