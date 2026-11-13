@@ -45,10 +45,17 @@ in
         policy.path =
           let
             controlTag = "tag:control";
+            dnsTag = "tag:dns";
             serverTag = "tag:server";
           in
           pkgs.writeText "policy.json" (
             lib.toJSON {
+              tagOwners = {
+                ${controlTag} = [ owner ];
+                ${dnsTag} = [ owner ];
+                ${ownerTag} = [ owner ];
+                ${serverTag} = [ owner ];
+              };
               grants = [
                 {
                   src = [
@@ -64,8 +71,8 @@ in
                   ip = [ "*" ];
                 }
                 {
-                  src = [ "autogroup:member" ];
-                  dst = [ controlTag ];
+                  src = [ "*" ];
+                  dst = [ dnsTag ];
                   ip = [
                     "tcp:53"
                     "udp:53"
@@ -74,19 +81,9 @@ in
                 {
                   src = [ "autogroup:member" ];
                   dst = [ serverTag ];
-                  ip = [
-                    "tcp:53"
-                    "udp:53"
-                    "tcp:80"
-                    "tcp:443"
-                  ];
+                  ip = [ "tcp:443" ];
                 }
               ];
-              tagOwners = {
-                ${controlTag} = [ owner ];
-                ${ownerTag} = [ owner ];
-                ${serverTag} = [ owner ];
-              };
             }
           );
         prefixes = headnetPrefixes;
