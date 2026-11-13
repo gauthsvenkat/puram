@@ -10,6 +10,7 @@
   lan = {
     ip = "192.168.1.1";
     ports = [
+      "lan1"
       "lan3"
       "lan4"
       "lan5"
@@ -19,11 +20,6 @@
   wan.device = "eth1";
 
   guest.ip = "192.168.30.1";
-
-  headscale = {
-    ip = "192.168.10.1";
-    ports = [ "lan1" ];
-  };
 
   homelab = {
     ip = "192.168.20.1";

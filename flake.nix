@@ -81,15 +81,13 @@
       );
 
       flakeCfg = rec {
-        controlServer = "raspi400";
+        controlServer = "sentinel";
         homeserver = "elitedesk";
         router = "flint-2";
 
-        ddnsName = "apartment";
         domain = "gauthsvenkat.dev";
 
         fqdns = {
-          ddns = "${ddnsName}.${domain}";
           dns = "dns.${domain}";
           headplane = "headplane.${domain}";
           headscale = "headscale.${domain}";

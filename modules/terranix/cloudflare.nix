@@ -10,16 +10,13 @@
 let
   inherit (flakeCfg)
     controlServer
-    ddnsName
     domain
     fqdns
     homeserver
     ociDomain
-    router
     ;
   inherit (targetCfg) dnsServer;
   inherit (targetCfg.cloudflare) accountId;
-  controlServerIp = targetCfgs.nixos.${controlServer}.addresses.tailnet;
   homeserverIp = targetCfgs.nixos.${homeserver}.addresses.tailnet;
 in
 {
@@ -80,26 +77,11 @@ in
 
           "caddy_dns" = mkDnsToken "caddy-acme-${homeserver}";
 
-          "caddy_dns_headscale" = mkDnsToken "caddy-acme-${controlServer}";
-
           "caddy_dns_${dnsServer}" = mkDnsToken "caddy-acme-${dnsServer}";
-
-          "ddns" = mkDnsToken "ddns-${router}";
 
         };
 
       cloudflare_dns_record = {
-        "${ddnsName}" = {
-          zone_id = zoneId;
-          name = fqdns.ddns;
-          type = "A";
-          # Placeholder IP; the router's DDNS updates it, so tofu must ignore changes to it.
-          content = "192.0.2.1";
-          lifecycle.ignore_changes = [ "content" ];
-          proxied = false;
-          ttl = 1;
-        };
-
         "dns" = {
           zone_id = zoneId;
           name = fqdns.dns;
@@ -109,20 +91,11 @@ in
           ttl = 1;
         };
 
-        "headplane" = {
-          zone_id = zoneId;
-          name = fqdns.headplane;
-          type = "A";
-          content = controlServerIp;
-          proxied = false;
-          ttl = 1;
-        };
-
         "headscale" = {
           zone_id = zoneId;
           name = fqdns.headscale;
           type = "CNAME";
-          content = fqdns.ddns;
+          content = "${controlServer}.${ociDomain}";
           proxied = false;
           ttl = 1;
         };
@@ -162,16 +135,8 @@ in
       value = lib.tf.ref "cloudflare_account_token.caddy_dns_${dnsServer}.value";
       sensitive = true;
     };
-    cloudflare_dns_token_headscale = {
-      value = lib.tf.ref "cloudflare_account_token.caddy_dns_headscale.value";
-      sensitive = true;
-    };
     cloudflare_dns_token_homeserver = {
       value = lib.tf.ref "cloudflare_account_token.caddy_dns.value";
-      sensitive = true;
-    };
-    cloudflare_dns_token_router = {
-      value = lib.tf.ref "cloudflare_account_token.ddns.value";
       sensitive = true;
     };
   };
