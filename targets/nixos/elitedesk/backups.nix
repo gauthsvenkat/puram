@@ -2,17 +2,14 @@
   flakeCfg,
   targetCfg,
 
-  targetCfgs,
-
   config,
   lib,
   pkgs,
   ...
 }:
 let
-  inherit (flakeCfg) buckets;
+  inherit (flakeCfg.backups) buckets endpoint region;
   inherit (targetCfg) paths;
-  inherit (targetCfgs.terranix."infra".scaleway) region;
   inherit (config.sops) placeholder secrets templates;
 in
 {
@@ -67,7 +64,7 @@ in
     };
 
     restic.backups."offsite" = {
-      repository = "s3:https://s3.${region}.scw.cloud/${buckets.homeserver}";
+      repository = "s3:${endpoint}/${buckets.homeserver}";
       environmentFile = templates."restic_offsite_env".path;
       passwordFile = secrets."restic_password".path;
       checkOpts = [ "--read-data-subset=1%" ];

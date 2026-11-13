@@ -9,6 +9,5 @@
     # single-project org: the organization and its default project "Backup" share this id
     orgId = "00000000-0000-0000-0000-000000000000";
     ownerEmail = "gauthsvenkat@gmail.com";
-    region = "nl-ams";
   };
 }

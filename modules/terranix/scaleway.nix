@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) buckets;
+  inherit (flakeCfg.backups) buckets region;
   inherit (targetCfg) alertEmail;
   inherit (targetCfg.scaleway) orgId ownerEmail;
   # attrNames :: { app::String -> bucketName::String } -> [ app::String ]
@@ -16,7 +16,7 @@ in
   provider.scaleway = {
     organization_id = orgId;
     project_id = orgId;
-    inherit (targetCfg.scaleway) region;
+    inherit region;
   };
 
   data.scaleway_iam_user."owner".email = ownerEmail;
