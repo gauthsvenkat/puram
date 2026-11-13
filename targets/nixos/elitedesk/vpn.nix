@@ -8,8 +8,7 @@
   ...
 }:
 let
-  inherit (targetCfg) ports;
-  inherit (targetCfg.vpn) namespace;
+  inherit (targetCfg) ports vpn;
   inherit (config.sops) placeholder templates;
   confined = [
     "bitmagnet"
@@ -42,23 +41,23 @@ in
     '';
   };
 
-  vpnNamespaces.${namespace} = {
+  vpnNamespaces.${vpn.namespace} = {
     enable = true;
     wireguardConfigFile = templates."mullvad_wg_config".path;
-    inherit (targetCfg.vpn) bridgeAddress namespaceAddress;
+    inherit (vpn) bridgeAddress namespaceAddress;
     # `portMappings` is used to open ports in the namespace's INPUT firewall.
     # map :: (serviceName::String -> mapping) -> [ serviceName::String ] -> [ mapping ]
     #   where mapping = { from, to :: Int; protocol :: String }
     portMappings = map (name: {
-      from = ports.${name}.port;
-      to = ports.${name}.port;
+      from = ports.${name};
+      to = ports.${name};
       protocol = "tcp";
     }) confined;
   };
 
   # Bridge to the VPN namespace is an internal control plane -- confined
   # services reach back to host services (sonarr/radarr) via this interface.
-  networking.firewall.trustedInterfaces = [ "${namespace}-br" ];
+  networking.firewall.trustedInterfaces = [ "${vpn.namespace}-br" ];
 
   # listToAttrs :: [ { name :: String; value :: service } ] -> { serviceName::String -> service }
   #   where service = { vpnConfinement :: { enable :: Bool; vpnNamespace :: String } }
@@ -67,7 +66,7 @@ in
       name = s;
       value.vpnConfinement = {
         enable = true;
-        vpnNamespace = namespace;
+        vpnNamespace = vpn.namespace;
       };
     }) confined
   );

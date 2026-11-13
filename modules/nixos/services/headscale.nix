@@ -10,21 +10,22 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain headnetDomain homeserver;
-  inherit (targetCfg) username;
-  inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
+  inherit (flakeCfg) fqdns headnetDomain homeserver;
+  inherit (targetCfg) ports username;
   cfg = config.services.headscale;
+  homeserverIp = targetCfgs.nixos.${homeserver}.addresses.tailnet;
   owner = "${username}@";
   ownerTag = "tag:${username}";
 in
 {
   services.headscale = {
     enable = true;
+    port = ports.headscale;
     settings = {
-      server_url = "https://headscale.${domain}";
+      server_url = "https://${fqdns.headscale}";
       dns = {
         base_domain = headnetDomain;
-        nameservers.global = [ tailnetIp ];
+        nameservers.global = [ homeserverIp ];
       };
       node.expiry = "180d";
       policy.path =

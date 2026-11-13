@@ -1,12 +1,11 @@
 { targetCfg, ... }:
 let
-  inherit (targetCfg) paths;
-  inherit (targetCfg.ports.radarr) port;
+  inherit (targetCfg) paths ports;
 in
 {
   services.radarr = {
     enable = true;
     dataDir = "${paths.config}/radarr";
-    settings.server.port = port;
+    settings.server.port = ports.radarr;
   };
 }

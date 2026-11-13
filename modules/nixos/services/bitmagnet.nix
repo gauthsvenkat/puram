@@ -3,7 +3,7 @@
   ...
 }:
 let
-  inherit (targetCfg.ports.bitmagnet) dht_port port;
+  inherit (targetCfg) ports;
 in
 {
   services.bitmagnet = {
@@ -19,8 +19,8 @@ in
         "unknown"
         "xxx"
       ];
-      dht_server.port = dht_port;
-      http_server.port = ":${toString port}";
+      dht_server.port = ports.bitmagnet-dht;
+      http_server.port = ":${toString ports.bitmagnet}";
     };
   };
 

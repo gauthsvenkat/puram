@@ -19,42 +19,37 @@ rec {
     usenet = "${entertainment}/usenet";
     # END-PRIVATE
   };
-  staticLease = {
-    ip = "192.168.20.3";
-    mac = "ac:e2:d3:14:d9:27";
+  addresses = {
+    lan = "192.168.20.3";
+    tailnet = "100.64.0.2";
   };
-  tailnetIp = "100.64.0.2";
+  mac = "ac:e2:d3:14:d9:27";
 
   ports = {
-    adguard.port = 3000;
+    adguard = 3000;
     # Caddy hardcodes its admin API port; this only mirrors it.
-    caddy.admin_port = 2019;
-    homepage.port = 7575;
-    immich.port = 2283;
+    caddy-admin = 2019;
+    homepage = 7575;
+    immich = 2283;
     # `services.jellyfin` hardcodes this port; this only mirrors it.
-    jellyfin.port = 8096;
-    paperless = {
-      gotenberg_port = 3030;
-      tika_port = 9998;
-      port = 8000;
-    };
-    vikunja.port = 3456;
+    jellyfin = 8096;
+    paperless = 8000;
+    paperless-gotenberg = 3030;
+    paperless-tika = 9998;
+    vikunja = 3456;
     # BEGIN-PRIVATE
-    bazarr.port = 6767;
-    bitmagnet = {
-      dht_port = 3334;
-      port = 3333;
-    };
-    flaresolverr.port = 8191;
-    prowlarr.port = 9696;
-    qbittorrent = {
-      bt_port = 6881;
-      port = 8082;
-    };
-    radarr.port = 7878;
-    sabnzbd.port = 8083;
-    seerr.port = 5055;
-    sonarr.port = 8989;
+    bazarr = 6767;
+    bitmagnet = 3333;
+    bitmagnet-dht = 3334;
+    flaresolverr = 8191;
+    prowlarr = 9696;
+    qbittorrent = 8082;
+    # Set in the qBittorrent UI; listed only to show the port is taken.
+    qbittorrent-bt = 6881;
+    radarr = 7878;
+    sabnzbd = 8083;
+    seerr = 5055;
+    sonarr = 8989;
     # END-PRIVATE
   };
   # BEGIN-PRIVATE

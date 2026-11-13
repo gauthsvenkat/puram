@@ -7,25 +7,9 @@
 }:
 let
   inherit (flakeCfg) domain;
-  inherit (targetCfg) hostname zpool;
-  inherit (targetCfg.ports)
-    caddy
-    immich
-    jellyfin
-    paperless
-    vikunja
-    ;
+  inherit (targetCfg) hostname ports zpool;
   # BEGIN-PRIVATE
-  inherit (targetCfg.ports)
-    bazarr
-    prowlarr
-    qbittorrent
-    radarr
-    sabnzbd
-    seerr
-    sonarr
-    ;
-  inherit (targetCfg.vpn) namespaceAddress;
+  inherit (targetCfg) vpn;
   # END-PRIVATE
   inherit (config.sops) placeholder templates;
 in
@@ -77,7 +61,7 @@ in
         icon = name: "${name}.svg";
         loopback = p: "http://127.0.0.1:${toString p}";
         # BEGIN-PRIVATE
-        vpnLoopback = p: "http://${namespaceAddress}:${toString p}";
+        vpnLoopback = p: "http://${vpn.namespaceAddress}:${toString p}";
         # END-PRIVATE
       in
       [
@@ -92,7 +76,7 @@ in
                   enableBlocks = true;
                   enableMediaControl = false;
                   key = envVar "JELLYFIN_KEY";
-                  url = loopback jellyfin.port;
+                  url = loopback ports.jellyfin;
                   version = 2;
                 };
               };
@@ -105,7 +89,7 @@ in
                 widget = {
                   type = "seerr";
                   key = envVar "SEERR_KEY";
-                  url = loopback seerr.port;
+                  url = loopback ports.seerr;
                 };
               };
             }
@@ -117,7 +101,7 @@ in
                 widget = {
                   type = "immich";
                   key = envVar "IMMICH_KEY";
-                  url = loopback immich.port;
+                  url = loopback ports.immich;
                   version = 2;
                 };
               };
@@ -129,7 +113,7 @@ in
                 widget = {
                   type = "paperlessngx";
                   key = envVar "PAPERLESS_KEY";
-                  url = loopback paperless.port;
+                  url = loopback ports.paperless;
                 };
               };
             }
@@ -162,7 +146,7 @@ in
                 widget = {
                   type = "vikunja";
                   key = envVar "VIKUNJA_KEY";
-                  url = loopback vikunja.port;
+                  url = loopback ports.vikunja;
                   version = 2;
                 };
               };
@@ -179,7 +163,7 @@ in
                 widget = {
                   type = "sabnzbd";
                   key = envVar "SABNZBD_KEY";
-                  url = vpnLoopback sabnzbd.port;
+                  url = vpnLoopback ports.sabnzbd;
                 };
               };
             }
@@ -190,7 +174,7 @@ in
                 widget = {
                   type = "radarr";
                   key = envVar "RADARR_KEY";
-                  url = loopback radarr.port;
+                  url = loopback ports.radarr;
                 };
               };
             }
@@ -201,7 +185,7 @@ in
                 widget = {
                   type = "prowlarr";
                   key = envVar "PROWLARR_KEY";
-                  url = vpnLoopback prowlarr.port;
+                  url = vpnLoopback ports.prowlarr;
                 };
               };
             }
@@ -212,7 +196,7 @@ in
                 widget = {
                   type = "qbittorrent";
                   password = envVar "QBIT_PASS";
-                  url = vpnLoopback qbittorrent.port;
+                  url = vpnLoopback ports.qbittorrent;
                   username = envVar "QBIT_USER";
                 };
               };
@@ -224,7 +208,7 @@ in
                 widget = {
                   type = "sonarr";
                   key = envVar "SONARR_KEY";
-                  url = loopback sonarr.port;
+                  url = loopback ports.sonarr;
                 };
               };
             }
@@ -235,7 +219,7 @@ in
                 widget = {
                   type = "bazarr";
                   key = envVar "BAZARR_KEY";
-                  url = loopback bazarr.port;
+                  url = loopback ports.bazarr;
                 };
               };
             }
@@ -255,7 +239,7 @@ in
                 icon = icon "caddy";
                 widget = {
                   type = "caddy";
-                  url = loopback caddy.admin_port;
+                  url = loopback ports.caddy-admin;
                 };
               };
             }

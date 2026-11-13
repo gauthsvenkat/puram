@@ -1,7 +1,10 @@
 { targetCfg, ... }:
+let
+  inherit (targetCfg) ports;
+in
 {
   services.flaresolverr = {
     enable = true;
-    inherit (targetCfg.ports.flaresolverr) port;
+    port = ports.flaresolverr;
   };
 }

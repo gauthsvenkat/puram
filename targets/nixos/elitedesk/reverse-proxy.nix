@@ -7,26 +7,9 @@
 }:
 let
   inherit (flakeCfg) domain;
-  inherit (targetCfg.ports)
-    adguard
-    homepage
-    immich
-    jellyfin
-    paperless
-    vikunja
-    ;
+  inherit (targetCfg) ports;
   # BEGIN-PRIVATE
-  inherit (targetCfg.ports)
-    bazarr
-    bitmagnet
-    prowlarr
-    qbittorrent
-    radarr
-    sabnzbd
-    seerr
-    sonarr
-    ;
-  inherit (targetCfg.vpn) namespaceAddress;
+  inherit (targetCfg) vpn;
   # END-PRIVATE
   cfg_caddy = config.services.caddy;
   cfg_phpfpm = config.services.phpfpm;
@@ -36,7 +19,7 @@ let
   # VPN-confined services bind on the namespace's internal IP rather
   # than host loopback. Caddy reaches them via the bridge.
   proxyVpn = p: ''
-    reverse_proxy ${namespaceAddress}:${toString p}
+    reverse_proxy ${vpn.namespaceAddress}:${toString p}
   '';
   # END-PRIVATE
 in
@@ -56,11 +39,11 @@ in
       '';
     in
     {
-      "adguard.${domain}".extraConfig = proxy adguard.port;
-      "homepage.${domain}".extraConfig = proxy homepage.port;
-      "immich.${domain}".extraConfig = proxy immich.port;
-      "jellyfin.${domain}".extraConfig = proxy jellyfin.port;
-      "paperless.${domain}".extraConfig = proxy paperless.port;
+      "adguard.${domain}".extraConfig = proxy ports.adguard;
+      "homepage.${domain}".extraConfig = proxy ports.homepage;
+      "immich.${domain}".extraConfig = proxy ports.immich;
+      "jellyfin.${domain}".extraConfig = proxy ports.jellyfin;
+      "paperless.${domain}".extraConfig = proxy ports.paperless;
       # Speedtest-tracker is a Laravel app; Caddy serves static assets directly
       # and hands PHP off to a phpfpm pool. The doc-root and socket come from
       # the speedtest-tracker NixOS module's evaluated config.
@@ -72,16 +55,16 @@ in
         php_fastcgi unix/${cfg_phpfpm.pools.speedtest-tracker.socket}
         file_server
       '';
-      "vikunja.${domain}".extraConfig = proxy vikunja.port;
+      "vikunja.${domain}".extraConfig = proxy ports.vikunja;
       # BEGIN-PRIVATE
-      "bazarr.${domain}".extraConfig = proxy bazarr.port;
-      "bitmagnet.${domain}".extraConfig = proxyVpn bitmagnet.port;
-      "prowlarr.${domain}".extraConfig = proxyVpn prowlarr.port;
-      "qbittorrent.${domain}".extraConfig = proxyVpn qbittorrent.port;
-      "radarr.${domain}".extraConfig = proxy radarr.port;
-      "sabnzbd.${domain}".extraConfig = proxyVpn sabnzbd.port;
-      "seerr.${domain}".extraConfig = proxy seerr.port;
-      "sonarr.${domain}".extraConfig = proxy sonarr.port;
+      "bazarr.${domain}".extraConfig = proxy ports.bazarr;
+      "bitmagnet.${domain}".extraConfig = proxyVpn ports.bitmagnet;
+      "prowlarr.${domain}".extraConfig = proxyVpn ports.prowlarr;
+      "qbittorrent.${domain}".extraConfig = proxyVpn ports.qbittorrent;
+      "radarr.${domain}".extraConfig = proxy ports.radarr;
+      "sabnzbd.${domain}".extraConfig = proxyVpn ports.sabnzbd;
+      "seerr.${domain}".extraConfig = proxy ports.seerr;
+      "sonarr.${domain}".extraConfig = proxy ports.sonarr;
       # END-PRIVATE
     };
 }

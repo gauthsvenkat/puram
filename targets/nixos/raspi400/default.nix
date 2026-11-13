@@ -1,13 +1,7 @@
-{
-  flakeCfg,
-
-  config,
-  ...
-}:
+{ flakeCfg, targetCfg, ... }:
 let
-  inherit (flakeCfg) domain;
-  cfg_headplane = config.services.headplane;
-  cfg_headscale = config.services.headscale;
+  inherit (flakeCfg) fqdns;
+  inherit (targetCfg) ports;
 in
 {
   imports = [
@@ -20,18 +14,18 @@ in
 
   services = {
     caddy.virtualHosts = {
-      "headplane.${domain}".extraConfig = ''
+      ${fqdns.headplane}.extraConfig = ''
         @headnet remote_ip 100.64.0.0/10
         handle @headnet {
           redir / /admin/
-          reverse_proxy 127.0.0.1:${toString cfg_headplane.settings.server.port}
+          reverse_proxy 127.0.0.1:${toString ports.headplane}
         }
         respond 404
       '';
-      "headscale.${domain}".extraConfig = ''
+      ${fqdns.headscale}.extraConfig = ''
         @headscale path /key /ts2021 /machine/ping-response /register/*
         handle @headscale {
-          reverse_proxy 127.0.0.1:${toString cfg_headscale.port}
+          reverse_proxy 127.0.0.1:${toString ports.headscale}
         }
         respond 404
       '';

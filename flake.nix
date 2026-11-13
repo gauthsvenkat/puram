@@ -88,6 +88,12 @@
         ddnsName = "apartment";
         domain = "gauthsvenkat.dev";
 
+        fqdns = {
+          ddns = "${ddnsName}.${domain}";
+          dns = "dns.${domain}";
+          headplane = "headplane.${domain}";
+          headscale = "headscale.${domain}";
+        };
         headnetDomain = "headnet.${domain}";
         lanDomain = "lan";
         ociDomain = "oci.${domain}";

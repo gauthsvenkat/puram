@@ -1,12 +1,11 @@
 { targetCfg, ... }:
 let
-  inherit (targetCfg) paths;
-  inherit (targetCfg.ports.bazarr) port;
+  inherit (targetCfg) paths ports;
 in
 {
   services.bazarr = {
     enable = true;
     dataDir = "${paths.config}/bazarr";
-    settings.general.port = port;
+    settings.general.port = ports.bazarr;
   };
 }

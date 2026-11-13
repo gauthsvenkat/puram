@@ -32,7 +32,7 @@ in
       serverAliases = lib.concatMapAttrs (
         hostName: targetCfg:
         let
-          hostDomain = if targetCfg ? vcnIp then ociDomain else lanDomain;
+          hostDomain = if targetCfg ? addresses.vcn then ociDomain else lanDomain;
         in
         {
           ${hostName} = {

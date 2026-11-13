@@ -6,8 +6,7 @@
   ...
 }:
 let
-  inherit (targetCfg) paths;
-  inherit (targetCfg.ports.prowlarr) port;
+  inherit (targetCfg) paths ports;
   cfg = config.services.prowlarr;
   dataDir = "${paths.config}/prowlarr";
   group = "prowlarr";
@@ -16,7 +15,7 @@ in
 {
   services.prowlarr = {
     enable = true;
-    settings.server.port = port;
+    settings.server.port = ports.prowlarr;
     # Keep the default `dataDir` so the upstream tmpfiles and bind-mount
     # rules stay off; `ExecStart` below points prowlarr at our path.
   };

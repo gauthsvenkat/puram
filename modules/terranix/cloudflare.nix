@@ -12,14 +12,15 @@ let
     controlServer
     ddnsName
     domain
+    fqdns
     homeserver
     ociDomain
     router
     ;
   inherit (targetCfg) dnsServer;
   inherit (targetCfg.cloudflare) accountId;
-  inherit (targetCfgs.nixos.${homeserver}) tailnetIp;
-  controlServerIp = targetCfgs.nixos.${controlServer}.tailnetIp;
+  controlServerIp = targetCfgs.nixos.${controlServer}.addresses.tailnet;
+  homeserverIp = targetCfgs.nixos.${homeserver}.addresses.tailnet;
 in
 {
   resource =
@@ -90,7 +91,7 @@ in
       cloudflare_dns_record = {
         "${ddnsName}" = {
           zone_id = zoneId;
-          name = "${ddnsName}.${domain}";
+          name = fqdns.ddns;
           type = "A";
           # Placeholder IP; the router's DDNS updates it, so tofu must ignore changes to it.
           content = "192.0.2.1";
@@ -101,7 +102,7 @@ in
 
         "dns" = {
           zone_id = zoneId;
-          name = "dns.${domain}";
+          name = fqdns.dns;
           type = "CNAME";
           content = "${dnsServer}.${ociDomain}";
           proxied = false;
@@ -110,7 +111,7 @@ in
 
         "headplane" = {
           zone_id = zoneId;
-          name = "headplane.${domain}";
+          name = fqdns.headplane;
           type = "A";
           content = controlServerIp;
           proxied = false;
@@ -119,9 +120,9 @@ in
 
         "headscale" = {
           zone_id = zoneId;
-          name = "headscale.${domain}";
+          name = fqdns.headscale;
           type = "CNAME";
-          content = "${ddnsName}.${domain}";
+          content = fqdns.ddns;
           proxied = false;
           ttl = 1;
         };
@@ -147,7 +148,7 @@ in
           zone_id = zoneId;
           name = "*.${domain}";
           type = "A";
-          content = tailnetIp;
+          content = homeserverIp;
           # Never proxy (orange cloud); the tailnet IP is unreachable from the public internet.
           proxied = false;
           ttl = 1;

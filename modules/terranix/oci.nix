@@ -10,7 +10,7 @@
 let
   inherit (flakeCfg) domain workstationKeys;
   inherit (targetCfg.oci) alertEmail tenancyOcid;
-  inherit (targetCfgs.nixos."sentinel") vcnIp;
+  sentinelIp = targetCfgs.nixos."sentinel".addresses.vcn;
 in
 {
   provider.oci = {
@@ -328,7 +328,7 @@ in
           # No ephemeral IPv4; we assign a static one below.
           assign_public_ip = false;
           nsg_ids = [ (lib.tf.ref "oci_core_network_security_group.base.id") ];
-          private_ip = vcnIp;
+          private_ip = sentinelIp;
         };
         metadata.ssh_authorized_keys = lib.concatLines workstationKeys;
         shape_config = {

@@ -1,12 +1,12 @@
 { flakeCfg, targetCfg, ... }:
 let
   inherit (flakeCfg) domain;
-  inherit (targetCfg.ports) homepage;
+  inherit (targetCfg) ports;
 in
 {
   services.homepage-dashboard = {
     enable = true;
     allowedHosts = "homepage.${domain}";
-    listenPort = homepage.port;
+    listenPort = ports.homepage;
   };
 }

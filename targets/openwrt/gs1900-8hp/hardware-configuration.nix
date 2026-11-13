@@ -1,6 +1,6 @@
 { targetCfg, lib, ... }:
 let
-  inherit (targetCfg.lan) ports;
+  inherit (targetCfg) lan;
 in
 {
   uci.settings.poe = {
@@ -11,6 +11,6 @@ in
     port = lib.imap1 (id: name: {
       inherit id name;
       enable = true;
-    }) ports;
+    }) lan.ports;
   };
 }

@@ -1,6 +1,6 @@
 { targetCfg, config, ... }:
 let
-  inherit (targetCfg.ports) radarr sonarr;
+  inherit (targetCfg) ports;
   inherit (config.sops) secrets;
 in
 {
@@ -18,7 +18,7 @@ in
     configuration = {
       radarr.movies = {
         api_key._secret = secrets."radarr_api_key".path;
-        base_url = "http://127.0.0.1:${toString radarr.port}";
+        base_url = "http://127.0.0.1:${toString ports.radarr}";
         quality_profiles = [
           {
             trash_id = "d1d67249d3890e49bc12e275d989a7e9";
@@ -45,7 +45,7 @@ in
       };
       sonarr.tv = {
         api_key._secret = secrets."sonarr_api_key".path;
-        base_url = "http://127.0.0.1:${toString sonarr.port}";
+        base_url = "http://127.0.0.1:${toString ports.sonarr}";
         quality_profiles = [
           {
             trash_id = "9d142234e45d6143785ac55f5a9e8dc9";
