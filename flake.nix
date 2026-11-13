@@ -82,6 +82,7 @@
 
       flakeCfg = rec {
         controlServer = "sentinel";
+        dnsServer = "sentinel";
         homeserver = "elitedesk";
         router = "flint-2";
 

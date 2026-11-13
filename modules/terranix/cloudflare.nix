@@ -10,12 +10,12 @@
 let
   inherit (flakeCfg)
     controlServer
+    dnsServer
     domain
     fqdns
     homeserver
     ociDomain
     ;
-  inherit (targetCfg) dnsServer;
   inherit (targetCfg.cloudflare) accountId;
   controlServerIp = targetCfgs.nixos.${controlServer}.addresses.headnet;
   dnsServerIp = targetCfgs.nixos.${dnsServer}.addresses.headnet;

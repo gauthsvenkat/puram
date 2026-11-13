@@ -8,9 +8,8 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain homeserver lanDomain;
+  inherit (flakeCfg) domain lanDomain;
   inherit (targetCfg) ports;
-  homeserverIp = targetCfgs.nixos.${homeserver}.addresses.lan;
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
   # :: { hostname::String -> targetCfg }, hosts with a LAN address
   lanCfgs = lib.filterAttrs (_: hostCfg: hostCfg ? addresses.lan) targetCfgs.nixos;
@@ -32,11 +31,10 @@ in
         readethers = true;
         rebind_domain = [ domain ];
         rebind_localhost = true;
-        # `strictorder`: sentinel's AdGuard Home over DoH through https-dns-proxy, then the
-        # homeserver's; the public resolvers only answer if both are down.
+        # `strictorder`: AdGuard Home over DoH through https-dns-proxy; the public
+        # resolvers only answer if it is down.
         server = [
           "127.0.0.1#${toString ports.doh}"
-          homeserverIp
           "9.9.9.9"
           "1.1.1.1"
         ];
