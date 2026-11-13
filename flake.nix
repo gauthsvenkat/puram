@@ -86,6 +86,10 @@
         homeserver = "elitedesk";
         router = "flint-2";
 
+        buckets = {
+          homeserver = "elitedesk-backup";
+        };
+
         domain = "gauthsvenkat.dev";
 
         fqdns = {

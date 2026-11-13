@@ -7,7 +7,7 @@ External infra is managed in Nix: [terranix](https://terranix.org) renders the m
 Create tofu's own credentials by hand and put them in [`secrets/tofu.yaml`](../secrets/tofu.yaml):
 
 - Cloudflare: an **account-owned** token with `Zone Read` + `DNS Write` on the zone and `Account API Tokens Write`.
-- Scaleway: an API key for an [IAM application](https://www.scaleway.com/en/docs/iam/concepts/) with `ObjectStorageBucketsRead`, `ObjectStorageBucketsWrite` and `ObjectStorageObjectsRead` on the Project, and `IAMManager` on the Organization.
+- Scaleway: an API key for an [IAM application](https://www.scaleway.com/en/docs/iam/concepts/) with `ObjectStorageBucketPolicyFullAccess`, `ObjectStorageBucketsRead`, `ObjectStorageBucketsWrite` and `ObjectStorageObjectsRead` on the Project, and `BillingManager` and `IAMManager` on the Organization. Set the Organization's maximum API key duration to none (Security > Credential limitations), or tofu replaces its keys on every apply.
 - OCI: none. Log in with a session token instead: `nix-shell -p oci-cli --run 'oci session authenticate'`, and for the first apply set `auth = "SecurityToken"` and `config_file_profile = "DEFAULT"` on `provider.oci`. The token lasts an hour; `oci session refresh` extends it.
 
 tofu can't create a Cloudflare token that manages tokens, so import the hand-made one: `just tf import cloudflare_account_token.opentofu '<account_id>/<token_id>'`.

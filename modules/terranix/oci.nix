@@ -9,7 +9,8 @@
 }:
 let
   inherit (flakeCfg) domain workstationKeys;
-  inherit (targetCfg.oci) alertEmail tenancyOcid;
+  inherit (targetCfg) alertEmail;
+  inherit (targetCfg.oci) tenancyOcid;
   sentinelIp = targetCfgs.nixos."sentinel".addresses.vcn;
   stunPort = targetCfgs.nixos."sentinel".ports.headscale-stun;
 in
@@ -114,7 +115,7 @@ in
       oci_budget_budget."main" = {
         compartment_id = tenancyOcid;
         display_name = "main";
-        amount = 1;
+        amount = 1; # €
         reset_period = "MONTHLY";
         target_type = "COMPARTMENT"; # across the whole tenancy, the root compartment.
         targets = [ tenancyOcid ];
