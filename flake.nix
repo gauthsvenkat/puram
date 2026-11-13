@@ -86,8 +86,13 @@
         homeserver = "elitedesk";
         router = "flint-2";
 
-        buckets = {
-          homeserver = "elitedesk-backup";
+        backups = rec {
+          region = "nl-ams";
+          endpoint = "https://s3.${region}.scw.cloud";
+          buckets = {
+            headscale = "gauthsvenkat-headscale";
+            homeserver = "elitedesk-backup";
+          };
         };
 
         domain = "gauthsvenkat.dev";

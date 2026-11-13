@@ -86,3 +86,20 @@ Open `https://headplane.$domain` from a device on the headnet and log in with an
 ```sh
 ssh $host-root 'headscale apikeys create --expiration 90d'
 ```
+
+## Restore
+
+The systemd oneshot `headscale-restore` (in [`targets/nixos/sentinel/default.nix`](../targets/nixos/sentinel/default.nix)) restores a missing database before headscale starts, so a new host needs nothing. To roll back to an earlier point (up to 7 days), as root on the control server:
+
+```sh
+# 1. Stop both services and move the current state aside.
+systemctl stop headscale litestream
+mv /var/lib/headscale /var/lib/headscale.old
+# 2. Export Litestream's keys into the shell.
+set -a; . /run/secrets/rendered/litestream_env; set +a
+# 3. Restore to a point in time; e.g. 2026-11-14T00:00:00Z.
+litestream restore -timestamp <time> -o /var/lib/headscale/db.sqlite /var/lib/headscale/db.sqlite
+chown -R headscale:headscale /var/lib/headscale
+# 4. Start both again.
+systemctl start litestream headscale
+```
