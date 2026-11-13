@@ -1,6 +1,6 @@
 { flakeCfg, ... }:
 let
-  inherit (flakeCfg) ddnsName domain;
+  inherit (flakeCfg) ddnsName domain fqdns;
 in
 {
   packages = [
@@ -16,6 +16,6 @@ in
     password._secret = "cloudflare_dns_token";
 
     domain = "${ddnsName}@${domain}";
-    lookup_host = "${ddnsName}.${domain}";
+    lookup_host = fqdns.ddns;
   };
 }

@@ -7,14 +7,7 @@
 }:
 let
   inherit (flakeCfg) domain;
-  inherit (targetCfg.ports)
-    adguard
-    homepage
-    immich
-    jellyfin
-    paperless
-    vikunja
-    ;
+  inherit (targetCfg) ports;
   cfg_caddy = config.services.caddy;
   cfg_phpfpm = config.services.phpfpm;
   cfg_st = config.services.speedtest-tracker;
@@ -36,11 +29,11 @@ in
       '';
     in
     {
-      "adguard.${domain}".extraConfig = proxy adguard.port;
-      "homepage.${domain}".extraConfig = proxy homepage.port;
-      "immich.${domain}".extraConfig = proxy immich.port;
-      "jellyfin.${domain}".extraConfig = proxy jellyfin.port;
-      "paperless.${domain}".extraConfig = proxy paperless.port;
+      "adguard.${domain}".extraConfig = proxy ports.adguard;
+      "homepage.${domain}".extraConfig = proxy ports.homepage;
+      "immich.${domain}".extraConfig = proxy ports.immich;
+      "jellyfin.${domain}".extraConfig = proxy ports.jellyfin;
+      "paperless.${domain}".extraConfig = proxy ports.paperless;
       # Speedtest-tracker is a Laravel app; Caddy serves static assets directly
       # and hands PHP off to a phpfpm pool. The doc-root and socket come from
       # the speedtest-tracker NixOS module's evaluated config.
@@ -52,6 +45,6 @@ in
         php_fastcgi unix/${cfg_phpfpm.pools.speedtest-tracker.socket}
         file_server
       '';
-      "vikunja.${domain}".extraConfig = proxy vikunja.port;
+      "vikunja.${domain}".extraConfig = proxy ports.vikunja;
     };
 }

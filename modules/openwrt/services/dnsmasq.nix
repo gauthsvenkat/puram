@@ -1,5 +1,6 @@
 {
   flakeCfg,
+  targetCfg,
 
   targetCfgs,
 
@@ -8,10 +9,11 @@
 }:
 let
   inherit (flakeCfg) domain homeserver lanDomain;
-  homeserverIp = targetCfgs.nixos.${homeserver}.staticLease.ip;
+  inherit (targetCfg) ports;
+  homeserverIp = targetCfgs.nixos.${homeserver}.addresses.lan;
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
-  # :: { hostname::String -> targetCfg }, hosts with a staticLease
-  staticLeaseCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? staticLease) targetCfgs.nixos;
+  # :: { hostname::String -> targetCfg }, hosts with a LAN address
+  lanCfgs = lib.filterAttrs (_: hostCfg: hostCfg ? addresses.lan) targetCfgs.nixos;
 in
 {
   uci.settings.dhcp = {
@@ -30,10 +32,10 @@ in
         readethers = true;
         rebind_domain = [ domain ];
         rebind_localhost = true;
-        # `strictorder`: sentinel's AdGuard Home over DoH through `127.0.0.1#5053`, then the
+        # `strictorder`: sentinel's AdGuard Home over DoH through https-dns-proxy, then the
         # homeserver's; the public resolvers only answer if both are down.
         server = [
-          "127.0.0.1#5053"
+          "127.0.0.1#${toString ports.doh}"
           homeserverIp
           "9.9.9.9"
           "1.1.1.1"
@@ -44,10 +46,11 @@ in
 
     # mapAttrsToList :: (hostname::String -> targetCfg -> host) -> { hostname::String -> targetCfg } -> [ host ]
     #   where host = { name, ip, mac :: String; dns :: Bool }
-    host = lib.mapAttrsToList (name: targetCfg: {
+    host = lib.mapAttrsToList (name: hostCfg: {
       inherit name;
-      inherit (targetCfg.staticLease) ip mac;
+      inherit (hostCfg) mac;
+      ip = hostCfg.addresses.lan;
       dns = true;
-    }) staticLeaseCfgs;
+    }) lanCfgs;
   };
 }

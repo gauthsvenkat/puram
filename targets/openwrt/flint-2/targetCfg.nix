@@ -38,4 +38,9 @@
     ssid = "wunlock";
     psk = "wunlock-password";
   };
+
+  ports = {
+    doh = 5053;
+    tang = 9090;
+  };
 }

@@ -9,7 +9,7 @@
 let
   inherit (flakeCfg) controlServer;
   inherit (targetCfg) headscale;
-  controlServerIp = targetCfgs.nixos.${controlServer}.staticLease.ip;
+  controlServerIp = targetCfgs.nixos.${controlServer}.addresses.lan;
 in
 {
   uci.settings = {

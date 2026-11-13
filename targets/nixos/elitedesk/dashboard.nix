@@ -7,14 +7,7 @@
 }:
 let
   inherit (flakeCfg) domain;
-  inherit (targetCfg) hostname zpool;
-  inherit (targetCfg.ports)
-    caddy
-    immich
-    jellyfin
-    paperless
-    vikunja
-    ;
+  inherit (targetCfg) hostname ports zpool;
   inherit (config.sops) placeholder templates;
 in
 {
@@ -59,7 +52,7 @@ in
                   enableBlocks = true;
                   enableMediaControl = false;
                   key = envVar "JELLYFIN_KEY";
-                  url = loopback jellyfin.port;
+                  url = loopback ports.jellyfin;
                   version = 2;
                 };
               };
@@ -71,7 +64,7 @@ in
                 widget = {
                   type = "immich";
                   key = envVar "IMMICH_KEY";
-                  url = loopback immich.port;
+                  url = loopback ports.immich;
                   version = 2;
                 };
               };
@@ -83,7 +76,7 @@ in
                 widget = {
                   type = "paperlessngx";
                   key = envVar "PAPERLESS_KEY";
-                  url = loopback paperless.port;
+                  url = loopback ports.paperless;
                 };
               };
             }
@@ -116,7 +109,7 @@ in
                 widget = {
                   type = "vikunja";
                   key = envVar "VIKUNJA_KEY";
-                  url = loopback vikunja.port;
+                  url = loopback ports.vikunja;
                   version = 2;
                 };
               };
@@ -130,7 +123,7 @@ in
                 icon = icon "caddy";
                 widget = {
                   type = "caddy";
-                  url = loopback caddy.admin_port;
+                  url = loopback ports.caddy-admin;
                 };
               };
             }

@@ -1,6 +1,6 @@
 { targetCfg, ... }:
 let
-  inherit (targetCfg) homelab;
+  inherit (targetCfg) homelab ports;
 in
 {
   uci.settings = {
@@ -69,7 +69,7 @@ in
           name = "Allow-Homelab-Tang";
           src = "homelab";
           proto = "tcp";
-          dest_port = 9090;
+          dest_port = ports.tang;
           target = "ACCEPT";
         }
       ];

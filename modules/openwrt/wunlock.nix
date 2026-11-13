@@ -1,6 +1,6 @@
 { targetCfg, ... }:
 let
-  inherit (targetCfg) wunlock;
+  inherit (targetCfg) ports wunlock;
 in
 {
   uci.settings = {
@@ -56,7 +56,7 @@ in
           name = "Allow-Wunlock-Tang";
           src = "wunlock";
           proto = "tcp";
-          dest_port = 9090;
+          dest_port = ports.tang;
           target = "ACCEPT";
         }
       ];

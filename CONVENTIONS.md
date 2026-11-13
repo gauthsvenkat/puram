@@ -57,18 +57,18 @@ serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) targetCfgs.n
 ## let / inherit
 
 - Top-level `let` is reserved for bindings that depend on a Cfg (`flakeCfg`, `<platform>Cfg`, `targetCfg`) or `config`. Other helpers go in the lowest scope where they're used (often inside an attribute value).
-- No inline `<any>Cfg.<field>` or `config.<field>` in module bodies; they are pulled into the top-level `let` so the module's surface area is visible upfront. Exception: a field used once, by a bare `inherit`, is inherited at the call site instead (`inherit (targetCfg.ports.jellyfin) port;`).
+- No inline `<any>Cfg.<field>` or `config.<field>` in module bodies; they are pulled into the top-level `let` so the module's surface area is visible upfront. Exception: a field used once, by a bare `inherit`, is inherited at the call site instead (`inherit (targetCfg) wallpaper;`).
 - Top-level `let` order, top to bottom: `inherit` from the Cfgs, broadest first (`flakeCfg`, `<platform>Cfg`, `targetCfg`), `cfg = config.services.X;` (or `cfg_<name>` when more than one), `inherit (config.sops) secrets;`, then derived bindings (`vhost`, `dataRoot`, ...). Example:
   ```nix
   let
     inherit (flakeCfg) domain;
-    inherit (targetCfg) paths;
-    inherit (targetCfg.ports) paperless;
+    inherit (targetCfg) paths ports;
     cfg = config.services.paperless;
     inherit (config.sops) secrets;
     vhost = "paperless.${domain}";
   in
   ```
+- Inherit the parent and write `parent.child` when the child's name alone does not say what it is (`ports.immich`).
 - Bare `inherit foo bar;` is only for re-exporting names already bound in the enclosing scope.
 - `lib.getExe pkg` inline at the call site rather than `inherit (lib) getExe;`, unless `getExe` is used 2+ times in the file.
 - `with` is allowed only inside package list literals (`with pkgs; [ ... ]`). Never `with lib;` or `with config;`.

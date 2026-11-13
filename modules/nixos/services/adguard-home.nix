@@ -7,8 +7,7 @@
   ...
 }:
 let
-  inherit (targetCfg) username;
-  inherit (targetCfg.ports) adguard;
+  inherit (targetCfg) ports username;
   inherit (config.sops) secrets;
 in
 {
@@ -18,7 +17,7 @@ in
     enable = true;
     host = "127.0.0.1";
     mutableSettings = false;
-    inherit (adguard) port;
+    port = ports.adguard;
     settings = {
       dns = {
         anonymize_client_ip = true;

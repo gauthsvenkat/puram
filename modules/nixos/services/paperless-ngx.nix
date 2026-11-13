@@ -5,15 +5,14 @@
 }:
 let
   inherit (flakeCfg) domain;
-  inherit (targetCfg) paths;
-  inherit (targetCfg.ports) paperless;
+  inherit (targetCfg) paths ports;
   dataRoot = "${paths.data}/paperless-ngx";
   vhost = "paperless.${domain}";
 in
 {
   services = {
-    gotenberg.port = paperless.gotenberg_port;
-    tika.port = paperless.tika_port;
+    gotenberg.port = ports.paperless-gotenberg;
+    tika.port = ports.paperless-tika;
 
     paperless = {
       enable = true;
@@ -23,7 +22,7 @@ in
       dataDir = "${dataRoot}/data";
       database.createLocally = true;
       mediaDir = "${dataRoot}/media";
-      inherit (paperless) port;
+      port = ports.paperless;
       settings = {
         PAPERLESS_OCR_LANGUAGE = "eng";
         PAPERLESS_OCR_USER_ARGS.invalidate_digital_signatures = true;

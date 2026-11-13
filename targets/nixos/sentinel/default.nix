@@ -1,12 +1,7 @@
-{
-  flakeCfg,
-
-  config,
-  ...
-}:
+{ flakeCfg, targetCfg, ... }:
 let
-  inherit (flakeCfg) domain;
-  cfg = config.services.adguardhome;
+  inherit (flakeCfg) fqdns;
+  inherit (targetCfg) ports;
 in
 {
   imports = [
@@ -23,9 +18,9 @@ in
     # Caddy terminates TLS, so AdGuard answers DoH over plain HTTP behind it.
     adguardhome.settings.http.doh.insecure_enabled = true;
 
-    caddy.virtualHosts."dns.${domain}".extraConfig = ''
+    caddy.virtualHosts.${fqdns.dns}.extraConfig = ''
       handle /dns-query* {
-        reverse_proxy 127.0.0.1:${toString cfg.port}
+        reverse_proxy 127.0.0.1:${toString ports.adguard}
       }
       respond 404
     '';

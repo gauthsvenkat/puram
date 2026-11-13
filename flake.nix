@@ -85,6 +85,12 @@
         ddnsName = "apartment";
         domain = "example.com";
 
+        fqdns = {
+          ddns = "${ddnsName}.${domain}";
+          dns = "dns.${domain}";
+          headplane = "headplane.${domain}";
+          headscale = "headscale.${domain}";
+        };
         headnetDomain = "headnet.${domain}";
         lanDomain = "lan";
         ociDomain = "oci.${domain}";
