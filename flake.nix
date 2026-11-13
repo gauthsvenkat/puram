@@ -88,6 +88,7 @@
         domain = "gauthsvenkat.dev";
 
         fqdns = {
+          adguard = "adguard.${domain}";
           dns = "dns.${domain}";
           headplane = "headplane.${domain}";
           headscale = "headscale.${domain}";

@@ -5,7 +5,10 @@ let
   inherit (config.sops) secrets;
 in
 {
-  sops.secrets."headplane_cookie_secret".owner = user;
+  sops.secrets."headplane_cookie_secret" = {
+    owner = user;
+    sopsFile = ../../../secrets/headscale.yaml;
+  };
 
   services.headplane = {
     enable = true;

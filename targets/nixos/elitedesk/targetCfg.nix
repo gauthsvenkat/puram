@@ -20,8 +20,8 @@ rec {
     # END-PRIVATE
   };
   addresses = {
+    headnet = "100.64.0.2";
     lan = "192.168.20.3";
-    tailnet = "100.64.0.2";
   };
   mac = "ac:e2:d3:14:d9:27";
 

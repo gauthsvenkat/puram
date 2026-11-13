@@ -11,10 +11,10 @@
 }:
 let
   inherit (flakeCfg) fqdns headnetDomain homeserver;
-  inherit (targetCfg) ports username;
+  inherit (targetCfg) ports headnetPrefixes username;
   cfg = config.services.headscale;
   inherit (config.sops) secrets;
-  homeserverIp = targetCfgs.nixos.${homeserver}.addresses.tailnet;
+  homeserverIp = targetCfgs.nixos.${homeserver}.addresses.headnet;
   owner = "${username}@";
   ownerTag = "tag:${username}";
 in
@@ -80,6 +80,8 @@ in
             };
           }
         );
+      prefixes = { inherit (headnetPrefixes) v4 v6; };
+      trusted_proxies = [ "127.0.0.1/32" ];
     };
   };
 
