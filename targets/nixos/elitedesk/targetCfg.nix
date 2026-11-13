@@ -7,7 +7,6 @@ rec {
   sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHgbm/atBI4qLsSPhlb8pnA4BpMe2WetWXkomjNwoWIL root@elitedesk";
 
   zpool = "dontdie";
-  offsiteBucket = "backups";
   paths = rec {
     backups = "/${zpool}/services/backups";
     config = "/var/lib";

@@ -83,6 +83,10 @@
         homeserver = "elitedesk";
         router = "flint-2";
 
+        buckets = {
+          homeserver = "backups";
+        };
+
         domain = "example.com";
 
         fqdns = {
