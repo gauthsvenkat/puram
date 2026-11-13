@@ -13,21 +13,34 @@ let
   inherit (flakeCfg) fqdns headnetDomain homeserver;
   inherit (targetCfg) ports username;
   cfg = config.services.headscale;
+  inherit (config.sops) secrets;
   homeserverIp = targetCfgs.nixos.${homeserver}.addresses.tailnet;
   owner = "${username}@";
   ownerTag = "tag:${username}";
 in
 {
+  sops.secrets."headscale_noise_private_key" = {
+    owner = cfg.user;
+    restartUnits = [ "headscale.service" ];
+    sopsFile = ../../../secrets/headscale.yaml;
+  };
+
   services.headscale = {
     enable = true;
     port = ports.headscale;
     settings = {
       server_url = "https://${fqdns.headscale}";
+      derp.server = {
+        enabled = true;
+        stun_listen_addr = ":${toString ports.headscale-stun}";
+        verify_clients = true;
+      };
       dns = {
         base_domain = headnetDomain;
         nameservers.global = [ homeserverIp ];
       };
       node.expiry = "180d";
+      noise.private_key_path = secrets."headscale_noise_private_key".path;
       policy.path =
         let
           controlTag = "tag:control";
@@ -69,6 +82,8 @@ in
         );
     };
   };
+
+  networking.firewall.allowedUDPPorts = [ ports.headscale-stun ];
 
   systemd.services."headscale-user" = {
     after = [ "headscale.service" ];

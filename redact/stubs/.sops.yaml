@@ -32,7 +32,7 @@ creation_rules:
   - path_regex: secrets/headscale\.yaml$
     key_groups:
       - age:
-        - *raspi400
+        - *sentinel
         - *thinkpad-t14s
         - *thinkpad-x1-carbon
         - *thunderdome
