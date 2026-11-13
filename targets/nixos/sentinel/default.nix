@@ -64,8 +64,6 @@ in
         respond 404
       '';
     };
-
-    tailscale.extraSetFlags = [ "--accept-dns=false" ];
   };
 
   sops.defaultSopsFile = ../../../secrets/dns.yaml;

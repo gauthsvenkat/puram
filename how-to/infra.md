@@ -20,6 +20,6 @@ Every key tofu creates has a sensitive output. A new key needs one too.
 
 1. `just tf apply -replace=<address>`. The old key stops working here, unless the resource has `create_before_destroy`.
 2. `just tf output -raw <key>_<file>`, then put the new value under `<key>` with `just secrets edit <file>`.
-3. `just nixos deploy elitedesk` for keys that Caddy or restic use. For opentofu's own keys, update [`secrets/tofu.yaml`](../secrets/tofu.yaml) right away; a wrong value locks tofu out.
+3. Deploy the host that reads the key: `just nixos deploy <host>`, for example sentinel or elitedesk for Caddy, elitedesk for restic. For opentofu's own keys, update [`secrets/tofu.yaml`](../secrets/tofu.yaml) right away; a wrong value locks tofu out.
 
 tofu's own Cloudflare token is the exception: roll it in the dashboard (Manage Account > API Tokens > Roll), then update `CLOUDFLARE_API_TOKEN`. Rolling keeps the token id, so the state stays valid.
