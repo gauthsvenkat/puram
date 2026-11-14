@@ -95,7 +95,10 @@ in
   };
 
   systemd.services = {
-    headscale.after = [ "litestream.service" ];
+    headscale = {
+      after = [ "litestream.service" ];
+      wants = [ "litestream.service" ];
+    };
     "headscale-restore" = {
       after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
@@ -106,8 +109,6 @@ in
       requiredBy = [ "headscale.service" ];
       serviceConfig = {
         Type = "oneshot";
-        # Stay active after success, so a headscale restart doesn't run the restore again.
-        RemainAfterExit = true;
         User = cfg_headscale.user;
         Group = cfg_headscale.group;
         # Match headscale's unit, or systemd resets the folder's mode.

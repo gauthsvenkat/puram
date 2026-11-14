@@ -100,6 +100,6 @@ set -a; . /run/secrets/rendered/litestream_env; set +a
 # 3. Restore to a point in time; e.g. 2026-11-14T00:00:00Z.
 litestream restore -timestamp <time> -o /var/lib/headscale/db.sqlite /var/lib/headscale/db.sqlite
 chown -R headscale:headscale /var/lib/headscale
-# 4. Start both again.
-systemctl start litestream headscale
+# 4. Start headscale; it pulls in Litestream and headplane.
+systemctl start headscale
 ```
