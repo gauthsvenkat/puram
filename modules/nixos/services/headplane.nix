@@ -17,4 +17,6 @@ in
       port = ports.headplane;
     };
   };
+
+  systemd.services.headplane.wantedBy = [ "headscale.service" ];
 }
