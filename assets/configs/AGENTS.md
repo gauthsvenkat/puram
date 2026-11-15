@@ -32,7 +32,7 @@
 - Never bundle `rg` short flags - `-r/-e/-g/-t/-A/-B/-C` take values, so `-ril` parses as `-r il` and silently rewrites the output.
 - Don't pipe a fallible command through `head`/`tail` when the failure matters - it discards the exit code.
 - `prek` instead of `pre-commit`.
-- Use `nix-shell` to grab a tool or test quickly.
+- Use `comma` (or `,` for consiseness) to use a tool that isn't available locally.
 
 # Local context
 
