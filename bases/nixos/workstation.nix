@@ -22,6 +22,7 @@ in
     ../../modules/nixos/ssh/github.nix
     ../../modules/nixos/ssh/known-hosts.nix
 
+    ../../modules/nixos/comma.nix
     ../../modules/nixos/sops.nix
 
     ./system.nix
