@@ -7,6 +7,7 @@ in
 {
   sops.secrets."headplane_cookie_secret" = {
     owner = user;
+    restartUnits = [ "headplane.service" ];
     sopsFile = ../../../secrets/headscale.yaml;
   };
 

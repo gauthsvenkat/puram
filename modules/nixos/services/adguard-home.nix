@@ -11,7 +11,10 @@ let
   inherit (config.sops) secrets;
 in
 {
-  sops.secrets."adguard_password_hash".sopsFile = ../../../secrets/dns.yaml;
+  sops.secrets."adguard_password_hash" = {
+    restartUnits = [ "adguardhome.service" ];
+    sopsFile = ../../../secrets/dns.yaml;
+  };
 
   services.adguardhome = {
     enable = true;
