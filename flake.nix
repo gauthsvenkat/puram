@@ -104,6 +104,7 @@
 
         fqdns = {
           adguard = "adguard.${domain}";
+          auth = "auth.${domain}";
           dns = "dns.${domain}";
           headplane = "headplane.${domain}";
           headscale = "headscale.${domain}";
