@@ -19,5 +19,6 @@ rec {
     headscale = 8080;
     headscale-stun = 3478;
     headplane = 3001;
+    pocket-id = 1411;
   };
 }

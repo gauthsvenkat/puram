@@ -93,6 +93,7 @@
           buckets = {
             headscale = "example-headscale";
             homeserver = "backups";
+            pocket-id = "example-pocket-id";
           };
         };
 
@@ -103,6 +104,7 @@
           dns = "dns.${domain}";
           headplane = "headplane.${domain}";
           headscale = "headscale.${domain}";
+          pocket-id = "id.${domain}";
         };
         headnetDomain = "headnet.${domain}";
         lanDomain = "lan";

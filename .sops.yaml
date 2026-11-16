@@ -45,6 +45,14 @@ creation_rules:
         - *thinkpad-x1-carbon
         - *thunderdome
 
+  - path_regex: secrets/pocket-id\.yaml$
+    key_groups:
+      - age:
+        - *sentinel
+        - *thinkpad-t14s
+        - *thinkpad-x1-carbon
+        - *thunderdome
+
   - path_regex: secrets/tofu\.yaml$
     key_groups:
       - age:

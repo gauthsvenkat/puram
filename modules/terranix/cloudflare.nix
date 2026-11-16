@@ -109,6 +109,7 @@ in
 
           "adguard" = mkRecord fqdns.adguard "A" dnsServerIp;
           "headplane" = mkRecord fqdns.headplane "A" controlServerIp;
+          "pocket-id" = mkRecord fqdns.pocket-id "A" controlServerIp;
           "wildcard" = mkRecord "*.${domain}" "A" homeserverIp;
         };
     };

@@ -16,6 +16,10 @@
         source = "oracle/oci";
         version = "~> 9.0";
       };
+      pocketid = {
+        source = "trozz/pocketid";
+        version = "~> 2.4";
+      };
       scaleway = {
         source = "scaleway/scaleway";
         version = "~> 2.0";
