@@ -13,7 +13,6 @@ let
   inherit (config) sops;
   cfg_headscale = config.services.headscale;
   cfg_litestream = config.services.litestream;
-  headscaleUnit = config.systemd.services.headscale.serviceConfig;
 in
 {
   imports = [
@@ -125,38 +124,52 @@ in
   };
 
   systemd.services = {
+    # Restore as headscale, since `litestream restore` leaves the files owned by whoever runs it.
     headscale = {
-      after = [ "litestream.service" ];
-      wants = [ "litestream.service" ];
-    };
-    "headscale-restore" = {
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
-      before = [
-        "headscale.service"
-        "litestream.service"
-      ];
-      requiredBy = [ "headscale.service" ];
-      serviceConfig = {
-        Type = "oneshot";
-        User = cfg_headscale.user;
-        Group = cfg_headscale.group;
-        # Match headscale's unit, or systemd resets the folder's mode.
-        inherit (headscaleUnit) StateDirectory StateDirectoryMode UMask;
-        EnvironmentFile = sops.templates."litestream_env".path;
-        ExecStart = lib.escapeShellArgs [
+      serviceConfig.LoadCredential = [ "litestream_env:${sops.templates."litestream_env".path}" ];
+      preStart = ''
+        set -a; source "$CREDENTIALS_DIRECTORY/litestream_env"; set +a
+        ${lib.escapeShellArgs [
           (lib.getExe cfg_litestream.package)
           "restore"
           "-if-db-not-exists"
           "-if-replica-exists"
           cfg_headscale.settings.database.sqlite.path
+        ]}
+      '';
+    };
+    # Litestream runs as root, so one instance can reach every app's database.
+    # Upstream's own unit runs as root too: https://github.com/benbjohnson/litestream/blob/main/etc/litestream.service
+    litestream = {
+      after = [ "headscale.service" ];
+      serviceConfig = {
+        User = lib.mkForce "root";
+        Group = lib.mkForce "root";
+        # Of root's powers, only
+        # - `chown` (hand files back),
+        # - `dac_override` (read and write the apps' files),
+        # - `fowner` (set their modes).
+        # Without the rest, it can't undo the restrictions below.
+        # https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#CapabilityBoundingSet=
+        CapabilityBoundingSet = [
+          "CAP_CHOWN"
+          "CAP_DAC_OVERRIDE"
+          "CAP_FOWNER"
+        ];
+        # The whole filesystem is read-only to it, except the databases it replicates.
+        # https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#ProtectSystem=
+        ProtectSystem = "strict";
+        ReadWritePaths = [ (dirOf cfg_headscale.settings.database.sqlite.path) ];
+        # Makes the host key that sops decrypts with, and the other services' secrets and credentials,
+        # inaccessible. `services.litestream.environmentFile` still works: systemd reads it before hiding anything.
+        # https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#EnvironmentFile=
+        InaccessiblePaths = [
+          "-/etc/ssh"
+          "-/run/credentials"
+          "-/run/secrets-for-users.d"
+          "-/run/secrets.d"
         ];
       };
-    };
-    # Upstream runs Litestream as the `litestream` user, which can't write into headscale's state directory.
-    litestream.serviceConfig = {
-      User = lib.mkForce cfg_headscale.user;
-      Group = lib.mkForce cfg_headscale.group;
     };
   };
 }
