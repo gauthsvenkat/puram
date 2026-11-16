@@ -53,7 +53,6 @@ in
           "https://dns.nextdns.io/dns-query"
           "https://wikimedia-dns.org/dns-query"
         ];
-        ratelimit = 0;
         refuse_any = true;
         use_private_ptr_resolvers = false;
       };
