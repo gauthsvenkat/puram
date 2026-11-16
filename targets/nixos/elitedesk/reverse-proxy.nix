@@ -29,7 +29,6 @@ in
       '';
     in
     {
-      "adguard.${domain}".extraConfig = proxy ports.adguard;
       "homepage.${domain}".extraConfig = proxy ports.homepage;
       "immich.${domain}".extraConfig = proxy ports.immich;
       "jellyfin.${domain}".extraConfig = proxy ports.jellyfin;

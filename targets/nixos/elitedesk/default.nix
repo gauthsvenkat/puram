@@ -11,7 +11,6 @@ in
   imports = [
     ../../../bases/nixos/server.nix
 
-    ../../../modules/nixos/services/adguard-home.nix
     ../../../modules/nixos/services/homepage.nix
     ../../../modules/nixos/services/immich.nix
     ../../../modules/nixos/services/jellyfin.nix

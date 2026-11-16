@@ -20,7 +20,6 @@ rec {
   mac = "00:00:5e:00:53:01";
 
   ports = {
-    adguard = 3000;
     # Caddy hardcodes its admin API port; this only mirrors it.
     caddy-admin = 2019;
     homepage = 7575;
