@@ -10,6 +10,9 @@ alias a := nixos::apply
 alias c := check
 alias tf := terranix::tf
 
+alias se := secrets::edit
+alias sv := secrets::view
+
 nixos-toplevels := "configs: builtins.mapAttrs (_: c: c.config.system.build.toplevel) configs"
 
 # HACK: Filter to skip OpenWrt images. They stop evaluating whenever OpenWrt

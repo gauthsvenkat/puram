@@ -36,8 +36,7 @@ Then `just tf apply`. tofu creates its own Scaleway and OCI credentials; copy th
 
 Every key tofu creates has a sensitive output. A new key needs one too.
 
-1. `just tf apply -replace=<address>`. The old key stops working here, unless the resource has `create_before_destroy`.
-2. `just tf output -json <file>` shows the file's keys; put the new values under them with `just secrets edit <file>`.
-3. Deploy the host that reads the key: `just nixos deploy <host>`, for example sentinel or elitedesk for Caddy, elitedesk for restic. For opentofu's own keys, update [`secrets/tofu.yaml`](../secrets/tofu.yaml) right away; a wrong value locks tofu out.
+1. `just secrets rotate <address> <file>` replaces the key, then copies the output's keys into `secrets/<file>.yaml`. The old key stops working here; hosts that use it fail until the next step.
+2. Deploy the host that reads the key: `just nixos deploy <host>`.
 
 tofu's own Cloudflare token is the exception: roll it in the dashboard (Manage Account > API Tokens > Roll), then update `TF_VAR_cloudflare_api_token`. Rolling keeps the token id, so the state stays valid.
