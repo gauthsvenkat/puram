@@ -82,74 +82,35 @@ in
           };
 
           "caddy_dns_${dnsServer}" = mkDnsToken "caddy-acme-${dnsServer}";
-
         };
 
-      cloudflare_dns_record = {
-        "adguard" = {
-          zone_id = zoneId;
-          name = fqdns.adguard;
-          type = "A";
-          content = dnsServerIp;
-          proxied = false;
-          ttl = 1;
-        };
+      cloudflare_dns_record =
+        let
+          mkRecord = name: type: content: {
+            zone_id = zoneId;
+            inherit content name type;
+            # DNS only (grey cloud): clients connect to the host directly, and Cloudflare can't reach headnet IPs.
+            proxied = false;
+            # Automatic, Usually 300s for DNS-only records.
+            # https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/
+            ttl = 1;
+          };
+        in
+        {
+          "${dnsServer}_ipv4" = mkRecord "${dnsServer}.${ociDomain}" "A" (
+            lib.tf.ref "oci_core_public_ip.sentinel.ip_address"
+          );
+          "${dnsServer}_ipv6" = mkRecord "${dnsServer}.${ociDomain}" "AAAA" (
+            lib.tf.ref "data.oci_core_vnic.sentinel.ipv6addresses[0]"
+          );
 
-        "dns" = {
-          zone_id = zoneId;
-          name = fqdns.dns;
-          type = "CNAME";
-          content = "${dnsServer}.${ociDomain}";
-          proxied = false;
-          ttl = 1;
-        };
+          "dns" = mkRecord fqdns.dns "CNAME" "${dnsServer}.${ociDomain}";
+          "headscale" = mkRecord fqdns.headscale "CNAME" "${controlServer}.${ociDomain}";
 
-        "headplane" = {
-          zone_id = zoneId;
-          name = fqdns.headplane;
-          type = "A";
-          content = controlServerIp;
-          proxied = false;
-          ttl = 1;
+          "adguard" = mkRecord fqdns.adguard "A" dnsServerIp;
+          "headplane" = mkRecord fqdns.headplane "A" controlServerIp;
+          "wildcard" = mkRecord "*.${domain}" "A" homeserverIp;
         };
-
-        "headscale" = {
-          zone_id = zoneId;
-          name = fqdns.headscale;
-          type = "CNAME";
-          content = "${controlServer}.${ociDomain}";
-          proxied = false;
-          ttl = 1;
-        };
-
-        "${dnsServer}_ipv4" = {
-          zone_id = zoneId;
-          name = "${dnsServer}.${ociDomain}";
-          type = "A";
-          content = lib.tf.ref "oci_core_public_ip.sentinel.ip_address";
-          proxied = false;
-          ttl = 1;
-        };
-        "${dnsServer}_ipv6" = {
-          zone_id = zoneId;
-          name = "${dnsServer}.${ociDomain}";
-          type = "AAAA";
-          content = lib.tf.ref "data.oci_core_vnic.sentinel.ipv6addresses[0]";
-          proxied = false;
-          ttl = 1;
-        };
-
-        "wildcard" = {
-          zone_id = zoneId;
-          name = "*.${domain}";
-          type = "A";
-          content = homeserverIp;
-          # Never proxy (orange cloud); the headnet IP is unreachable from the public internet.
-          proxied = false;
-          ttl = 1;
-        };
-      };
-
     };
 
   output."dns" = {
