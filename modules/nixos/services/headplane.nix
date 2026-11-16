@@ -5,16 +5,17 @@ let
   inherit (config.sops) secrets;
 in
 {
-  sops.secrets."headplane_cookie_secret" = {
+  sops.secrets."headscale/headplane_cookie_secret" = {
+    sopsFile = ../../../secrets/headscale.yaml;
+    key = "headplane_cookie_secret";
     owner = user;
     restartUnits = [ "headplane.service" ];
-    sopsFile = ../../../secrets/headscale.yaml;
   };
 
   services.headplane = {
     enable = true;
     settings.server = {
-      cookie_secret_path = secrets."headplane_cookie_secret".path;
+      cookie_secret_path = secrets."headscale/headplane_cookie_secret".path;
       port = ports.headplane;
     };
   };

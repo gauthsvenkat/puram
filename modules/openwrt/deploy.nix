@@ -20,7 +20,9 @@ in
     };
   };
 
-  # `sopsSecrets` only takes one file; we need several, so we merge them ourselves.
+  # dewclaw requires the secrets as one JSON object of secret name -> secret value.
+  # `sopsSecrets` only takes one file, but we need several,
+  # so we use `secretsCommand` and merge them into one object ourselves.
   secretsCommand = lib.getExe (
     pkgs.writeShellApplication {
       name = "router-secrets";
@@ -29,10 +31,15 @@ in
         sops
       ];
       text = ''
-        jq -s add \
-          <(sops --output-type json -d ${../../secrets/home-wifi.yaml}) \
-          <(sops --output-type json -d ${../../secrets/router.yaml}) \
-          <(sops --output-type json -d ${../../secrets/user.yaml})
+        decrypt() {
+          local filename=$1 path=$2
+          # https://jqlang.org/manual/#to_entries-from_entries-with_entries
+          sops decrypt --output-type json "$path" \
+            | jq --arg filename "$filename" 'with_entries(.key = "\($filename)/\(.key)")'
+        }
+        jq --slurp add \
+          <(decrypt user ${../../secrets/user.yaml}) \
+          <(decrypt wifi ${../../secrets/wifi.yaml})
       '';
     }
   );

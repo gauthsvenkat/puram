@@ -13,7 +13,14 @@ let
   apps = lib.attrNames buckets;
 in
 {
+  variable = {
+    "scaleway_access_key".sensitive = true;
+    "scaleway_secret_key".sensitive = true;
+  };
+
   provider.scaleway = {
+    access_key = lib.tf.ref "var.scaleway_access_key";
+    secret_key = lib.tf.ref "var.scaleway_secret_key";
     organization_id = orgId;
     project_id = orgId;
     inherit region;
@@ -204,29 +211,22 @@ in
     }) buckets;
   };
 
-  # map :: (app::String -> { outputName::String -> output }) -> [ app::String ] -> [ { outputName::String -> output } ]
-  # mergeAttrsList :: [ { outputName::String -> output } ] -> { outputName::String -> output }
-  #   where output = { value :: String; sensitive :: Bool }
+  # genAttrs :: [ app::String ] -> (app::String -> output) -> { app::String -> output }
+  #   where output = { value :: { key::String -> String }; sensitive :: Bool }
   output =
-    lib.mergeAttrsList (
-      map (app: {
-        "scaleway_access_key_${app}" = {
-          value = lib.tf.ref "scaleway_iam_api_key.${app}.access_key";
-          sensitive = true;
-        };
-        "scaleway_secret_key_${app}" = {
-          value = lib.tf.ref "scaleway_iam_api_key.${app}.secret_key";
-          sensitive = true;
-        };
-      }) apps
-    )
-    // {
-      scw_access_key_tofu = {
-        value = lib.tf.ref "scaleway_iam_api_key.opentofu.access_key";
-        sensitive = true;
+    lib.genAttrs apps (app: {
+      value = {
+        "scaleway_access_key" = lib.tf.ref "scaleway_iam_api_key.${app}.access_key";
+        "scaleway_secret_key" = lib.tf.ref "scaleway_iam_api_key.${app}.secret_key";
       };
-      scw_secret_key_tofu = {
-        value = lib.tf.ref "scaleway_iam_api_key.opentofu.secret_key";
+      sensitive = true;
+    })
+    // {
+      "tofu" = {
+        value = {
+          "TF_VAR_scaleway_access_key" = lib.tf.ref "scaleway_iam_api_key.opentofu.access_key";
+          "TF_VAR_scaleway_secret_key" = lib.tf.ref "scaleway_iam_api_key.opentofu.secret_key";
+        };
         sensitive = true;
       };
     };

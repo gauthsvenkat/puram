@@ -15,9 +15,18 @@ let
   stunPort = targetCfgs.nixos."sentinel".ports.headscale-stun;
 in
 {
+  variable = {
+    "oci_fingerprint".sensitive = true;
+    "oci_private_key".sensitive = true;
+    "oci_user_ocid".sensitive = true;
+  };
+
   provider.oci = {
     inherit (targetCfg.oci) region;
     tenancy_ocid = tenancyOcid;
+    fingerprint = lib.tf.ref "var.oci_fingerprint";
+    private_key = lib.tf.ref "var.oci_private_key";
+    user_ocid = lib.tf.ref "var.oci_user_ocid";
   };
 
   data = {
@@ -394,12 +403,12 @@ in
       };
     };
 
-  output = {
-    oci_fingerprint_tofu.value = lib.tf.ref "oci_identity_domains_api_key.opentofu.fingerprint";
-    oci_private_key_tofu = {
-      value = lib.tf.ref "tls_private_key.oci_opentofu.private_key_pem";
-      sensitive = true;
+  output."tofu" = {
+    value = {
+      "TF_VAR_oci_fingerprint" = lib.tf.ref "oci_identity_domains_api_key.opentofu.fingerprint";
+      "TF_VAR_oci_private_key" = lib.tf.ref "tls_private_key.oci_opentofu.private_key_pem";
+      "TF_VAR_oci_user_ocid" = lib.tf.ref "oci_identity_domains_user.opentofu.ocid";
     };
-    oci_user_ocid_tofu.value = lib.tf.ref "oci_identity_domains_user.opentofu.ocid";
+    sensitive = true;
   };
 }

@@ -22,6 +22,10 @@ let
   homeserverIp = targetCfgs.nixos.${homeserver}.addresses.headnet;
 in
 {
+  variable."cloudflare_api_token".sensitive = true;
+
+  provider.cloudflare.api_token = lib.tf.ref "var.cloudflare_api_token";
+
   resource =
     let
       zoneId = lib.tf.ref "cloudflare_zone.gauthsvenkat_dev.id";
@@ -76,8 +80,6 @@ in
               zoneDnsPolicy
             ];
           };
-
-          "caddy_dns" = mkDnsToken "caddy-acme-${homeserver}";
 
           "caddy_dns_${dnsServer}" = mkDnsToken "caddy-acme-${dnsServer}";
 
@@ -150,14 +152,8 @@ in
 
     };
 
-  output = {
-    cloudflare_dns_token_dns = {
-      value = lib.tf.ref "cloudflare_account_token.caddy_dns_${dnsServer}.value";
-      sensitive = true;
-    };
-    cloudflare_dns_token_homeserver = {
-      value = lib.tf.ref "cloudflare_account_token.caddy_dns.value";
-      sensitive = true;
-    };
+  output."dns" = {
+    value."cloudflare_dns_token" = lib.tf.ref "cloudflare_account_token.caddy_dns_${dnsServer}.value";
+    sensitive = true;
   };
 }

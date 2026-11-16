@@ -4,9 +4,9 @@
       ap = {
         mode = "ap";
         network = "lan";
-        ssid._secret = "wifi_ssid";
+        ssid._secret = "wifi/home_wifi_ssid";
         encryption = "sae-mixed";
-        key._secret = "wifi_psk";
+        key._secret = "wifi/home_wifi_psk";
       };
     in
     {

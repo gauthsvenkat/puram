@@ -1,24 +1,34 @@
 { config, ... }:
 let
-  inherit (config.sops) placeholder templates;
+  inherit (config) sops;
 in
 {
   sops = {
-    secrets = {
-      "wifi_psk".sopsFile = ../../../secrets/home-wifi.yaml;
-      "wifi_ssid".sopsFile = ../../../secrets/home-wifi.yaml;
-    };
-    templates."wifi" = {
+    secrets =
+      let
+        sopsFile = ../../../secrets/wifi.yaml;
+      in
+      {
+        "wifi/home_wifi_psk" = {
+          inherit sopsFile;
+          key = "home_wifi_psk";
+        };
+        "wifi/home_wifi_ssid" = {
+          inherit sopsFile;
+          key = "home_wifi_ssid";
+        };
+      };
+    templates."wifi_env" = {
       content = ''
-        WIFI_SSID=${placeholder."wifi_ssid"}
-        WIFI_PASSWORD=${placeholder."wifi_psk"}
+        WIFI_SSID=${sops.placeholder."wifi/home_wifi_ssid"}
+        WIFI_PASSWORD=${sops.placeholder."wifi/home_wifi_psk"}
       '';
       restartUnits = [ "NetworkManager-ensure-profiles.service" ];
     };
   };
 
   networking.networkmanager.ensureProfiles = {
-    environmentFiles = [ templates."wifi".path ];
+    environmentFiles = [ sops.templates."wifi_env".path ];
     profiles."home-wifi" = {
       connection = {
         id = "home";

@@ -1,6 +1,9 @@
+{ lib, ... }:
 {
+  variable."opentofu_encryption_passphrase".sensitive = true;
+
   terraform = {
-    required_version = ">= 1.7";
+    required_version = ">= 1.8";
 
     backend.local.path = "../secrets/terraform.tfstate";
 
@@ -24,7 +27,7 @@
     };
 
     encryption = {
-      key_provider.pbkdf2."passphrase" = { };
+      key_provider.pbkdf2."passphrase".passphrase = lib.tf.ref "var.opentofu_encryption_passphrase";
       method.aes_gcm."main".keys = "key_provider.pbkdf2.passphrase";
       plan = {
         method = "method.aes_gcm.main";

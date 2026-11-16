@@ -19,10 +19,11 @@ let
   ownerTag = "tag:${username}";
 in
 {
-  sops.secrets."headscale_noise_private_key" = {
+  sops.secrets."headscale/headscale_noise_private_key" = {
+    sopsFile = ../../../secrets/headscale.yaml;
+    key = "headscale_noise_private_key";
     owner = cfg.user;
     restartUnits = [ "headscale.service" ];
-    sopsFile = ../../../secrets/headscale.yaml;
   };
 
   services = {
@@ -41,7 +42,7 @@ in
           nameservers.global = [ dnsServerIp ];
         };
         node.expiry = "180d";
-        noise.private_key_path = secrets."headscale_noise_private_key".path;
+        noise.private_key_path = secrets."headscale/headscale_noise_private_key".path;
         policy.path =
           let
             controlTag = "tag:control";

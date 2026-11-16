@@ -11,9 +11,10 @@ let
   inherit (config.sops) secrets;
 in
 {
-  sops.secrets."adguard_password_hash" = {
-    restartUnits = [ "adguardhome.service" ];
+  sops.secrets."dns/adguard_password_hash" = {
     sopsFile = ../../../secrets/dns.yaml;
+    key = "adguard_password_hash";
+    restartUnits = [ "adguardhome.service" ];
   };
 
   services.adguardhome = {
@@ -93,7 +94,7 @@ in
   systemd.services.adguardhome = {
     # AdGuard runs as a `DynamicUser`, which can't read `/run/secrets`; systemd hands it a copy.
     # https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#LoadCredential=ID:PATH
-    serviceConfig.LoadCredential = "password_hash:${secrets."adguard_password_hash".path}";
+    serviceConfig.LoadCredential = "password_hash:${secrets."dns/adguard_password_hash".path}";
     # replace-secret :: placeholder::String -> secretFile::Path -> file::Path
     preStart = lib.mkAfter ''
       ${lib.getExe pkgs.replace-secret} @adguard_password_hash@ \
