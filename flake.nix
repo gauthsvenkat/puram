@@ -96,6 +96,7 @@
           buckets = {
             headscale = "gauthsvenkat-headscale";
             homeserver = "elitedesk-backup";
+            pocket-id = "gauthsvenkat-pocket-id";
           };
         };
 
@@ -106,6 +107,7 @@
           dns = "dns.${domain}";
           headplane = "headplane.${domain}";
           headscale = "headscale.${domain}";
+          pocket-id = "id.${domain}";
         };
         headnetDomain = "headnet.${domain}";
         lanDomain = "lan";
