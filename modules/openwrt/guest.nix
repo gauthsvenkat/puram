@@ -68,9 +68,9 @@ in
       device = "radio1"; # The 5 GHz radio.
       mode = "ap";
       network = "guest";
-      ssid._secret = "guest_wifi_ssid";
+      ssid._secret = "wifi/guest_wifi_ssid";
       encryption = "sae-mixed";
-      key._secret = "guest_wifi_psk";
+      key._secret = "wifi/guest_wifi_psk";
       # Guests cannot see each other.
       isolate = true;
     };

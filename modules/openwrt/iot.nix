@@ -68,10 +68,10 @@ in
       device = "radio0"; # The 2.4 GHz radio.
       mode = "ap";
       network = "iot";
-      ssid._secret = "iot_wifi_ssid";
+      ssid._secret = "wifi/iot_wifi_ssid";
       # Many IoT devices cannot join a WPA3 network.
       encryption = "psk2";
-      key._secret = "iot_wifi_psk";
+      key._secret = "wifi/iot_wifi_psk";
       isolate = true;
     };
   };

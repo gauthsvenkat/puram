@@ -9,7 +9,7 @@ domain=<domain>
 
 ## Bootstrapping
 
-1. Caddy needs a DNS token for its TLS certificate, in the host's default sops file; see [infra](./infra.md). The Noise private key, the server's identity towards clients, goes in [`secrets/headscale.yaml`](../secrets/headscale.yaml):
+1. Caddy needs a DNS token for its TLS certificate, as `cloudflare_dns_token` in [`secrets/dns.yaml`](../secrets/dns.yaml); see [infra](./infra.md). The Noise private key, the server's identity towards clients, goes in [`secrets/headscale.yaml`](../secrets/headscale.yaml):
 
    ```sh
    key=$(nix shell nixpkgs#headscale -c headscale generate private-key)

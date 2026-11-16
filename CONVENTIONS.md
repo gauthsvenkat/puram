@@ -10,7 +10,7 @@ Formatting, dead code and statix lints are enforced by the pre-commit hooks.
 - Dot notation for single-definition attribute sets (e.g., `services.openssh.enable = true;`)
 - Multiple definitions with a common prefix grouped into a single attribute set
 - `lib.getExe`/`lib.getExe'` instead of `"${pkg}/bin/name"` interpolation
-- Quoted user-chosen attribute names, both where defined and where referenced: `sops.secrets."wifi_psk"`, `placeholder."wifi_psk"`, `targetCfgs.nixos."elitedesk"`, terraform instance names, disko devices, own systemd units. Leave bare: `targetCfg` keys, platform names (`targetCfgs.nixos`), upstream or schema names (`systemd.services.postgresql`, uci `lan`/`wan`/`loopback`), and `${}` names.
+- Quoted user-chosen attribute names, both where defined and where referenced: `sops.secrets."wifi/home_wifi_psk"`, `placeholder."wifi/home_wifi_psk"`, `targetCfgs.nixos."elitedesk"`, terraform instance names, disko devices, own systemd units. Leave bare: `targetCfg` keys, platform names (`targetCfgs.nixos`), upstream or schema names (`systemd.services.postgresql`, uci `lan`/`wan`/`loopback`), and `${}` names.
 
 ## Order
 
@@ -51,14 +51,26 @@ serverCfgs = lib.filterAttrs (_: targetCfg: targetCfg ? sshHostKey) targetCfgs.n
 
 ## Secrets
 
-- Sops files are named after their consumer's role (`router.yaml`), or their topic when shared (`home-wifi.yaml`).
-- Keys are `<service>_<field>`; tofu outputs for them are `<key>_<file>`.
+- Sops files are named after their consumer's role (`headscale.yaml`), or their topic when shared (`wifi.yaml`).
+- Keys are `<service>_<field>`: the service is the system that checks the secret (`scaleway`, `headplane`), the field is what the value is in that service's terms (`access_key`, `cookie_secret`). A scope word goes before the service (`guest_wifi_psk`).
+- Nix refers to a secret as `<file>/<key>`, in sops-nix and in dewclaw's `_secret`. No `sops.defaultSopsFile`; every secret sets `sopsFile` and `key` (without `key`, the `/` reads as a nested key):
+  ```nix
+  sops.secrets."headscale/scaleway_access_key" = {
+    sopsFile = ../../../secrets/headscale.yaml;
+    key = "scaleway_access_key";
+  };
+  ```
+- A module's `sops` block goes first, after `imports`, so its dependence on secrets is obvious.
+- Templates are `<consumer>_<format>` (`litestream_env`).
+- `tofu.yaml` keys are `TF_VAR_<service>_<field>`: `sops exec-env` exports them, and tofu reads each as the variable `<service>_<field>`.
+- Tofu writes the secrets it creates to one sensitive output per sops file, named after the file, with the file's keys: `output."headscale".value."scaleway_access_key"`.
+- A module declares every secret it uses. A template, with its content and `restartUnits`, lives in the module that consumes it.
 
 ## let / inherit
 
 - Top-level `let` is reserved for bindings that depend on a Cfg (`flakeCfg`, `<platform>Cfg`, `targetCfg`) or `config`. Other helpers go in the lowest scope where they're used (often inside an attribute value).
 - No inline `<any>Cfg.<field>` or `config.<field>` in module bodies; they are pulled into the top-level `let` so the module's surface area is visible upfront. Exception: a field used once, by a bare `inherit`, is inherited at the call site instead (`inherit (targetCfg) wallpaper;`).
-- Top-level `let` order, top to bottom: `inherit` from the Cfgs, broadest first (`flakeCfg`, `<platform>Cfg`, `targetCfg`), `cfg = config.services.X;` (or `cfg_<name>` when more than one), `inherit (config.sops) secrets;`, then derived bindings (`vhost`, `dataRoot`, ...). Example:
+- Top-level `let` order, top to bottom: `inherit` from the Cfgs, broadest first (`flakeCfg`, `<platform>Cfg`, `targetCfg`), `cfg = config.services.X;` (or `cfg_<name>` when more than one), `inherit (config.sops) secrets;` (or `inherit (config) sops;` for `sops.placeholder` and `sops.templates`), then derived bindings (`vhost`, `dataRoot`, ...). Example:
   ```nix
   let
     inherit (flakeCfg) domain;

@@ -30,6 +30,31 @@ in
     ./hardware-configuration.nix
   ];
 
+  sops = {
+    secrets =
+      let
+        sopsFile = ../../../secrets/headscale.yaml;
+      in
+      {
+        "headscale/scaleway_access_key" = {
+          inherit sopsFile;
+          key = "scaleway_access_key";
+        };
+        "headscale/scaleway_secret_key" = {
+          inherit sopsFile;
+          key = "scaleway_secret_key";
+        };
+      };
+
+    templates."litestream_env" = {
+      content = ''
+        HEADSCALE_ACCESS_KEY=${sops.placeholder."headscale/scaleway_access_key"}
+        HEADSCALE_SECRET_KEY=${sops.placeholder."headscale/scaleway_secret_key"}
+      '';
+      restartUnits = [ "litestream.service" ];
+    };
+  };
+
   services = {
     # Caddy terminates TLS, so AdGuard answers DoH over plain HTTP behind it.
     adguardhome.settings.http.doh.insecure_enabled = true;
@@ -78,20 +103,25 @@ in
       '';
     };
 
-    litestream.settings.dbs = [
-      {
-        inherit (cfg_headscale.settings.database.sqlite) path;
-        replica = {
-          type = "s3";
-          bucket = buckets.headscale;
-          inherit endpoint region;
-          storage-class = "ONEZONE_IA";
-          auto-recover = true;
-          access-key-id = "\${HEADSCALE_ACCESS_KEY}";
-          secret-access-key = "\${HEADSCALE_SECRET_KEY}";
-        };
-      }
-    ];
+    litestream = {
+      environmentFile = sops.templates."litestream_env".path;
+      settings.dbs = [
+        {
+          inherit (cfg_headscale.settings.database.sqlite) path;
+          replica = {
+            type = "s3";
+            bucket = buckets.headscale;
+            inherit endpoint region;
+            storage-class = "ONEZONE_IA";
+            # Enable automatic recovery from replication errors.
+            # See https://litestream.io/reference/config/#auto-recover.
+            auto-recover = true;
+            access-key-id = "\${HEADSCALE_ACCESS_KEY}";
+            secret-access-key = "\${HEADSCALE_SECRET_KEY}";
+          };
+        }
+      ];
+    };
   };
 
   systemd.services = {
@@ -128,23 +158,5 @@ in
       User = lib.mkForce cfg_headscale.user;
       Group = lib.mkForce cfg_headscale.group;
     };
-  };
-
-  sops = {
-    defaultSopsFile = ../../../secrets/dns.yaml;
-
-    secrets =
-      let
-        sopsFile = ../../../secrets/headscale.yaml;
-      in
-      {
-        "scaleway_access_key" = { inherit sopsFile; };
-        "scaleway_secret_key" = { inherit sopsFile; };
-      };
-
-    templates."litestream_env".content = ''
-      HEADSCALE_ACCESS_KEY=${sops.placeholder."scaleway_access_key"}
-      HEADSCALE_SECRET_KEY=${sops.placeholder."scaleway_secret_key"}
-    '';
   };
 }
