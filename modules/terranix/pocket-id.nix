@@ -35,11 +35,25 @@ in
       groups = [ (lib.tf.ref "pocketid_group.admins.id") ];
     };
 
+    pocketid_client."oauth2-proxy" = {
+      name = "oauth2-proxy";
+      client_id = "oauth2-proxy";
+      callback_urls = [ "https://${fqdns.auth}/oauth2/callback" ];
+      pkce_enabled = true;
+      allowed_user_groups = [ (lib.tf.ref "pocketid_group.admins.id") ];
+    };
+
     # The first sign-in, to add a passkey.
     pocketid_one_time_access_token.${username} = {
       user_id = lib.tf.ref "pocketid_user.${username}.id";
       ttl = "1h";
     };
+  };
+
+  output."pocket-id" = {
+    value."pocket_id_oauth2_proxy_client_secret" =
+      lib.tf.ref "pocketid_client.oauth2-proxy.client_secret";
+    sensitive = true;
   };
 
   output."pocket_id_login_url" = {

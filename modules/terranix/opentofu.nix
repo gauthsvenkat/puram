@@ -16,6 +16,7 @@
         source = "oracle/oci";
         version = "~> 9.0";
       };
+      # TODO: switch to `pocket-id/pocketid` once nixpkgs packages it.
       pocketid = {
         source = "trozz/pocketid";
         version = "~> 2.4";
