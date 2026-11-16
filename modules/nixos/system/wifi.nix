@@ -8,10 +8,13 @@ in
       "wifi_psk".sopsFile = ../../../secrets/home-wifi.yaml;
       "wifi_ssid".sopsFile = ../../../secrets/home-wifi.yaml;
     };
-    templates."wifi".content = ''
-      WIFI_SSID=${placeholder."wifi_ssid"}
-      WIFI_PASSWORD=${placeholder."wifi_psk"}
-    '';
+    templates."wifi" = {
+      content = ''
+        WIFI_SSID=${placeholder."wifi_ssid"}
+        WIFI_PASSWORD=${placeholder."wifi_psk"}
+      '';
+      restartUnits = [ "NetworkManager-ensure-profiles.service" ];
+    };
   };
 
   networking.networkmanager.ensureProfiles = {
