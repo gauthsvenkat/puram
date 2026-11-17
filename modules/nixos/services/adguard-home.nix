@@ -68,9 +68,4 @@ in
       statistics.enabled = true;
     };
   };
-
-  networking.firewall = {
-    allowedTCPPorts = [ 53 ];
-    allowedUDPPorts = [ 53 ];
-  };
 }
