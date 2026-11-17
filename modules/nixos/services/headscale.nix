@@ -126,21 +126,4 @@ in
       "2620:fe::fe"
     ];
   };
-
-  systemd.services."headscale-user" = {
-    after = [ "headscale.service" ];
-    requires = [ "headscale.service" ];
-    path = [ cfg.package ];
-    script = ''
-      until headscale users list --name ${username} -o json | grep -q '"name"' \
-        || headscale users create ${username}; do sleep 1; done
-    '';
-    serviceConfig = {
-      Group = cfg.group;
-      TimeoutStartSec = "1min";
-      Type = "oneshot";
-      User = cfg.user;
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
 }
