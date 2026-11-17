@@ -106,11 +106,11 @@ in
 
           "dns" = mkRecord fqdns.dns "CNAME" "${dnsServer}.${ociDomain}";
           "headscale" = mkRecord fqdns.headscale "CNAME" "${controlServer}.${ociDomain}";
+          "pocket-id" = mkRecord fqdns.pocket-id "CNAME" "${controlServer}.${ociDomain}";
 
           "adguard" = mkRecord fqdns.adguard "A" dnsServerIp;
           "auth" = mkRecord fqdns.auth "A" controlServerIp;
           "headplane" = mkRecord fqdns.headplane "A" controlServerIp;
-          "pocket-id" = mkRecord fqdns.pocket-id "A" controlServerIp;
           "wildcard" = mkRecord "*.${domain}" "A" homeserverIp;
         };
     };
