@@ -1,9 +1,21 @@
-{ flakeCfg, targetCfg, ... }:
+{
+  flakeCfg,
+  targetCfg,
+
+  config,
+  ...
+}:
 let
   inherit (flakeCfg) fqdns pocketId;
   inherit (targetCfg) headnetPrefixes ports;
 in
 {
+  # AdGuard module doesn't open any ports by default. DoH over 443 is unaffected.
+  networking.firewall.interfaces.${config.services.tailscale.interfaceName} = {
+    allowedTCPPorts = [ 53 ];
+    allowedUDPPorts = [ 53 ];
+  };
+
   services = {
     # Caddy terminates TLS, so AdGuard answers DoH over plain HTTP behind it.
     adguardhome.settings.http.doh.insecure_enabled = true;

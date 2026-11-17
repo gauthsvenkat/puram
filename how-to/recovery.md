@@ -12,7 +12,7 @@ domain=<domain>
 ```
 
 1. Move the host to the new provider:
-   - Add it to [`modules/terranix/`](../modules/terranix/) and point the control server's records in [`cloudflare.nix`](../modules/terranix/cloudflare.nix) at it. Its firewall should open only 22, 443 and the STUN port (like the `headscale` NSG in [`oci.nix`](../modules/terranix/oci.nix)). Without it, AdGuard Home answers DNS queries from anyone on port 53, which allows amplification attacks.
+   - Add it to [`modules/terranix/`](../modules/terranix/) and point the control server's records in [`cloudflare.nix`](../modules/terranix/cloudflare.nix) at it. Its firewall should open only 22, 443 and the STUN port (like the `headscale` NSG in [`oci.nix`](../modules/terranix/oci.nix)).
    - Replace the provider's base, `system` and disk in [`targets/nixos/sentinel/`](../targets/nixos/sentinel/) accordingly.
    - Update the domain in [`aliases.nix`](../modules/nixos/ssh/aliases.nix), then `switch` the current workstation.
 
