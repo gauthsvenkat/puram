@@ -43,7 +43,11 @@ in
         cookie_secret_path = secrets."headscale/headplane_cookie_secret".path;
         port = ports.headplane;
       };
-      headscale.api_key_path = secrets."headscale/headscale_headplane_api_key".path;
+      headscale = {
+        api_key_path = secrets."headscale/headscale_headplane_api_key".path;
+        # HACK: The upstream module's settings filter recurses into the default derivation and evaluates deprecated `stdenv` attributes.
+        config_path = "${config.services.headscale.configFile}";
+      };
       oidc = {
         issuer = "https://${fqdns.pocket-id}";
         client_id = pocketId.clientIds.headplane;
