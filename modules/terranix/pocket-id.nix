@@ -35,13 +35,22 @@ in
       groups = [ (lib.tf.ref "pocketid_group.admins.id") ];
     };
 
-    pocketid_client."oauth2-proxy" = {
-      name = "oauth2-proxy";
-      client_id = pocketId.clientIds.oauth2-proxy;
-      callback_urls = [ "https://${fqdns.auth}/oauth2/callback" ];
-      pkce_enabled = true;
-      allowed_user_groups = [ (lib.tf.ref "pocketid_group.admins.id") ];
-    };
+    pocketid_client =
+      let
+        admins = [ (lib.tf.ref "pocketid_group.admins.id") ];
+        mkClient = name: callbackUrl: allowedGroups: {
+          inherit name;
+          client_id = pocketId.clientIds.${name};
+          callback_urls = [ callbackUrl ];
+          pkce_enabled = true;
+          allowed_user_groups = allowedGroups;
+        };
+      in
+      {
+        "headscale" = mkClient "headscale" "https://${fqdns.headscale}/oidc/callback" null;
+        "headplane" = mkClient "headplane" "https://${fqdns.headplane}/admin/oidc/callback" admins;
+        "oauth2-proxy" = mkClient "oauth2-proxy" "https://${fqdns.auth}/oauth2/callback" admins;
+      };
 
     # The first sign-in, to add a passkey.
     pocketid_one_time_access_token.${username} = {
@@ -51,8 +60,11 @@ in
   };
 
   output."pocket-id" = {
-    value."pocket_id_oauth2_proxy_client_secret" =
-      lib.tf.ref "pocketid_client.oauth2-proxy.client_secret";
+    value = {
+      "pocket_id_headplane_client_secret" = lib.tf.ref "pocketid_client.headplane.client_secret";
+      "pocket_id_headscale_client_secret" = lib.tf.ref "pocketid_client.headscale.client_secret";
+      "pocket_id_oauth2_proxy_client_secret" = lib.tf.ref "pocketid_client.oauth2-proxy.client_secret";
+    };
     sensitive = true;
   };
 
