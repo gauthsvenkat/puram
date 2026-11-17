@@ -75,25 +75,30 @@ ssh $host-root 'headscale nodes rename -i <node-id> <name>'
 
 ## Headplane
 
-Open `https://headplane.$domain` from a device on the headnet and log in with an API key. It can do most things except change policy; that is owned by nix. The key lives in the password manager, not in sops; a new headscale database needs a new key.
+Open `https://headplane.$domain` from a device on the headnet and sign in through Pocket ID; only the `admins` group can, and the first to sign in becomes owner. It can do most things except change policy; that is owned by nix.
+
+Headplane talks to headscale with an API key, `headscale_headplane_api_key` in [`secrets/headscale.yaml`](../secrets/headscale.yaml). To rotate it:
 
 ```sh
-ssh $host-root 'headscale apikeys create --expiration 90d'
+key=$(ssh $host-root 'headscale apikeys create --expiration 10y')
+sops set secrets/headscale.yaml '["headscale_headplane_api_key"]' "\"$key\""
+just nixos deploy $host switch
+ssh $host-root 'headscale apikeys expire --prefix <old-prefix>'
 ```
 
 ## Restore
 
-The systemd oneshot `headscale-restore` (in [`targets/nixos/sentinel/default.nix`](../targets/nixos/sentinel/default.nix)) restores a missing database before headscale starts, so a new host needs nothing. To roll back to an earlier point (up to 7 days), as root on the control server:
+Headscale restores a missing database before it starts (`preStart` in [`backups.nix`](../targets/nixos/sentinel/backups.nix)); see [recovery](./recovery.md#control-server) for a new host. To roll back to an earlier point (within `snapshot.retention` in [`litestream.nix`](../modules/nixos/services/litestream.nix)), as root on the control server:
 
 ```sh
 # 1. Stop both services and move the current state aside.
 systemctl stop headscale litestream
 mv /var/lib/headscale /var/lib/headscale.old
 # 2. Export Litestream's keys into the shell.
-set -a; . /run/secrets/rendered/litestream_env; set +a
+set -a; . /run/secrets/rendered/litestream_headscale_env; set +a
 # 3. Restore to a point in time; e.g. 2026-11-14T00:00:00Z.
 litestream restore -timestamp <time> -o /var/lib/headscale/db.sqlite /var/lib/headscale/db.sqlite
 chown -R headscale:headscale /var/lib/headscale
-# 4. Start headscale; it pulls in Litestream and headplane.
-systemctl start headscale
+# 4. Start both; headscale pulls in headplane.
+systemctl start headscale litestream
 ```
