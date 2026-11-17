@@ -1,22 +1,8 @@
-{
-  targetCfg,
-
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ targetCfg, ... }:
 let
-  inherit (targetCfg) ports username;
-  inherit (config.sops) secrets;
+  inherit (targetCfg) ports;
 in
 {
-  sops.secrets."dns/adguard_password_hash" = {
-    sopsFile = ../../../secrets/dns.yaml;
-    key = "adguard_password_hash";
-    restartUnits = [ "adguardhome.service" ];
-  };
-
   services.adguardhome = {
     enable = true;
     host = "127.0.0.1";
@@ -80,25 +66,7 @@ in
       };
 
       statistics.enabled = true;
-
-      users = [
-        {
-          name = username;
-          password = "@adguard_password_hash@";
-        }
-      ];
     };
-  };
-
-  systemd.services.adguardhome = {
-    # AdGuard runs as a `DynamicUser`, which can't read `/run/secrets`; systemd hands it a copy.
-    # https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#LoadCredential=ID:PATH
-    serviceConfig.LoadCredential = "password_hash:${secrets."dns/adguard_password_hash".path}";
-    # replace-secret :: placeholder::String -> secretFile::Path -> file::Path
-    preStart = lib.mkAfter ''
-      ${lib.getExe pkgs.replace-secret} @adguard_password_hash@ \
-        "$CREDENTIALS_DIRECTORY/password_hash" "$STATE_DIRECTORY/AdGuardHome.yaml"
-    '';
   };
 
   networking.firewall = {
