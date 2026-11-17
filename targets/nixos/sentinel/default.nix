@@ -26,6 +26,7 @@ in
     ../../../modules/nixos/services/headplane.nix
     ../../../modules/nixos/services/headscale.nix
     ../../../modules/nixos/services/litestream.nix
+    ../../../modules/nixos/services/oauth2-proxy.nix
     ../../../modules/nixos/services/pocket-id.nix
     ../../../modules/nixos/services/tailscale.nix
 
@@ -81,9 +82,23 @@ in
     adguardhome.settings.http.doh.insecure_enabled = true;
 
     caddy.virtualHosts = {
+      ${fqdns.auth}.extraConfig = ''
+        @headnet remote_ip ${headnetPrefixes.v4} ${headnetPrefixes.v6}
+        handle @headnet {
+          reverse_proxy 127.0.0.1:${toString ports.oauth2-proxy}
+        }
+        respond 404
+      '';
       ${fqdns.adguard}.extraConfig = ''
         @headnet remote_ip ${headnetPrefixes.v4} ${headnetPrefixes.v6}
         handle @headnet {
+          forward_auth 127.0.0.1:${toString ports.oauth2-proxy} {
+            uri /oauth2/auth?allowed_groups=admins
+            @unauthorized status 401
+            handle_response @unauthorized {
+              redir * https://${fqdns.auth}/oauth2/start?rd={scheme}://{host}{uri}
+            }
+          }
           reverse_proxy 127.0.0.1:${toString ports.adguard}
         }
         respond 404
