@@ -16,22 +16,21 @@ domain=<domain>
    sops set secrets/headscale.yaml '["headscale_noise_private_key"]' "\"$key\""
    ```
 
-2. Apply the infra, then deploy the host. The host deploy also creates the user.
+2. Apply the infra, then deploy the host.
 
    ```sh
    just tf apply
    just nixos deploy $host switch
    ```
 
-3. Join the control server itself, then approve it with the auth id from the `/register/<auth-id>` URL it prints.
+3. Join the control server itself with a pre-auth key for its tag.
 
    > [!NOTE]
    > Without `--accept-dns=false`: headscale may fail to start if its host resolves through the headnet.
 
    ```sh
-   ssh $host-root "tailscale up --login-server https://headscale.$domain --advertise-tags=tag:control --accept-dns=false"
-   # In another terminal
-   ssh $host-root 'headscale auth register --auth-id <auth-id> --user <username>'
+   key=$(ssh $host-root 'headscale preauthkeys create --tags tag:control')
+   ssh $host-root "tailscale up --login-server https://headscale.$domain --auth-key $key --accept-dns=false"
    ```
 
 4. Put the host's headnet IP (`ssh $host-root 'tailscale ip -4'`) in its `addresses.headnet`, then `just tf apply` again; the Headplane and AdGuard Home records point at it.
