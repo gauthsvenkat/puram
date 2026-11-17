@@ -48,6 +48,7 @@ in
       };
       email.domains = [ "*" ];
       reverseProxy = true;
+      trustedProxyIP = [ "127.0.0.1/32" ];
       setXauthrequest = true;
       upstream = [ "static://202" ];
       extraConfig = {
