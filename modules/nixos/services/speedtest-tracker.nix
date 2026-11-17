@@ -8,8 +8,8 @@
 let
   inherit (flakeCfg) domain;
   inherit (targetCfg) paths;
-  cfg = config.services.speedtest-tracker;
   inherit (config.sops) secrets;
+  cfg = config.services.speedtest-tracker;
 in
 {
   sops.secrets."speedtest_tracker_app_key" = {

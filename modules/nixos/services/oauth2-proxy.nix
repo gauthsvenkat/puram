@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain fqdns;
+  inherit (flakeCfg) domain fqdns pocketId;
   inherit (targetCfg) ports;
   inherit (config.sops) secrets;
 in
@@ -37,7 +37,7 @@ in
       enable = true;
       provider = "oidc";
       oidcIssuerUrl = "https://${fqdns.pocket-id}";
-      clientID = "oauth2-proxy";
+      clientID = pocketId.clientIds.oauth2-proxy;
       clientSecretFile = secrets."pocket-id/pocket_id_oauth2_proxy_client_secret".path;
       scope = "openid email profile groups";
       httpAddress = "http://127.0.0.1:${toString ports.oauth2-proxy}";

@@ -12,8 +12,8 @@
 let
   inherit (flakeCfg) dnsServer fqdns headnetDomain;
   inherit (targetCfg) headnetPrefixes ports username;
-  cfg = config.services.headscale;
   inherit (config.sops) secrets;
+  cfg = config.services.headscale;
   dnsServerIp = targetCfgs.nixos.${dnsServer}.addresses.headnet;
   owner = "${username}@";
   ownerTag = "tag:${username}";

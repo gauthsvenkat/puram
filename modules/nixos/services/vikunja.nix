@@ -8,8 +8,8 @@
 let
   inherit (flakeCfg) domain;
   inherit (targetCfg) ports;
-  cfg = config.services.vikunja;
   inherit (config.sops) placeholder templates;
+  cfg = config.services.vikunja;
 in
 {
   sops = {

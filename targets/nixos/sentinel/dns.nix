@@ -1,6 +1,6 @@
 { flakeCfg, targetCfg, ... }:
 let
-  inherit (flakeCfg) fqdns;
+  inherit (flakeCfg) fqdns pocketId;
   inherit (targetCfg) headnetPrefixes ports;
 in
 {
@@ -13,7 +13,7 @@ in
         @headnet remote_ip ${headnetPrefixes.v4} ${headnetPrefixes.v6}
         handle @headnet {
           forward_auth 127.0.0.1:${toString ports.oauth2-proxy} {
-            uri /oauth2/auth?allowed_groups=admins
+            uri /oauth2/auth?allowed_groups=${pocketId.adminGroup}
             @unauthorized status 401
             handle_response @unauthorized {
               redir * https://${fqdns.auth}/oauth2/start?rd={scheme}://{host}{uri}
