@@ -8,21 +8,21 @@
   ...
 }:
 let
-  inherit (flakeCfg) controlServer fqdns;
+  inherit (flakeCfg) controlServer fqdns pocketId;
   inherit (targetCfg.pocketId) email firstName lastName;
   inherit (targetCfgs.nixos.${controlServer}) username;
 in
 {
-  variable."pocket_id_api_key".sensitive = true;
+  variable."pocket_id_static_api_key".sensitive = true;
 
   provider.pocketid = {
     base_url = "https://${fqdns.pocket-id}";
-    api_token = lib.tf.ref "var.pocket_id_api_key";
+    api_token = lib.tf.ref "var.pocket_id_static_api_key";
   };
 
   resource = {
     pocketid_group."admins" = {
-      name = "admins";
+      name = pocketId.adminGroup;
       friendly_name = "Admins";
     };
 
@@ -37,7 +37,7 @@ in
 
     pocketid_client."oauth2-proxy" = {
       name = "oauth2-proxy";
-      client_id = "oauth2-proxy";
+      client_id = pocketId.clientIds.oauth2-proxy;
       callback_urls = [ "https://${fqdns.auth}/oauth2/callback" ];
       pkce_enabled = true;
       allowed_user_groups = [ (lib.tf.ref "pocketid_group.admins.id") ];

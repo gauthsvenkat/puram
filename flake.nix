@@ -113,6 +113,10 @@
         headnetDomain = "headnet.${domain}";
         lanDomain = "lan";
         ociDomain = "oci.${domain}";
+        pocketId = {
+          adminGroup = "admins";
+          clientIds.oauth2-proxy = "oauth2-proxy";
+        };
 
         timezone = "Europe/Amsterdam";
 

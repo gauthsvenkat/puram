@@ -4,8 +4,8 @@
   ...
 }:
 let
-  cfg = config.services.caddy;
   inherit (config) sops;
+  cfg = config.services.caddy;
 in
 {
   sops = {
