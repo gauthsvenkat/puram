@@ -77,4 +77,6 @@ in
 
     xdg.autostart.enable = true;
   };
+
+  services.smartd.notifications.systembus-notify.enable = true;
 }
