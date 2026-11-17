@@ -38,34 +38,26 @@ domain=<domain>
 
 ## Add a user
 
-The deploy only creates the host's own user. Create any other user before registering a device to it; `auth register` does not create one.
-
-```sh
-ssh $host-root 'headscale users create <username>'
-```
+Headscale creates a user at their first login through Pocket ID, so give them a Pocket ID account.
 
 ## Add a device
 
-Own devices get `tag:<username>`, so they never expire; servers get `tag:server`; other devices belong to a user and expire after 180 days.
+Devices that log in through Pocket ID belong to that user and expire after 180 days; servers get `tag:server` and never expire.
 
 > [!NOTE]
 > Headscale hands out IPs in join order.
 
-### With approval
+### With Pocket ID
 
-On Linux, `tailscale up --login-server https://headscale.$domain`, optionally with `--advertise-tags=tag:<username>` for an own device or `--advertise-tags=tag:server` for a server. On [Android](https://headscale.net/stable/usage/connect/android/), [iOS and macOS](https://headscale.net/stable/usage/connect/apple/) or [Windows](https://headscale.net/stable/usage/connect/windows/), set `https://headscale.$domain` as the custom server in the app. Then approve it with the auth id it shows:
-
-```sh
-ssh $host-root 'headscale auth register --auth-id <auth-id> --user <username>'
-```
+On Linux, `tailscale up --login-server https://headscale.$domain`. On [Android](https://headscale.net/stable/usage/connect/android/), [iOS and macOS](https://headscale.net/stable/usage/connect/apple/) or [Windows](https://headscale.net/stable/usage/connect/windows/), set `https://headscale.$domain` as the custom server in the app. The login opens Pocket ID; after signing in, confirm the device, and it joins as your user.
 
 ### With a pre-auth key
 
-Another option is to create a pre-auth key, then use it on the device. Phones take it in the app. A key with `--tags` makes a tagged device; use `--user <user-id>` instead for someone else's.
+For a server, create a pre-auth key with its tag, then use it on the device.
 
 ```sh
 # on the control server
-ssh $host-root 'headscale preauthkeys create --tags tag:<username>'
+ssh $host-root 'headscale preauthkeys create --tags tag:server'
 
 # on the device
 tailscale up --login-server https://headscale.$domain --auth-key <key>

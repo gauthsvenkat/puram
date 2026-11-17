@@ -4,13 +4,22 @@ let
   inherit (targetCfg) headnetPrefixes ports;
 in
 {
+  # headscale won't start while it can't reach its OIDC provider.
+  systemd.services.headscale = {
+    after = [
+      "caddy.service"
+      "pocket-id.service"
+    ];
+    wants = [ "pocket-id.service" ];
+  };
+
   services.caddy.virtualHosts = {
     ${fqdns.headscale}.extraConfig = ''
       @headscale {
         # Control
         path /ts2021 /key /machine/ping-response
         # Login
-        path /register/* /auth/*
+        path /register/* /auth/* /oidc/callback
         # Relay
         path /derp /derp/probe /derp/latency-check /bootstrap-dns
         # Monitoring

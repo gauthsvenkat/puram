@@ -115,7 +115,11 @@
         ociDomain = "oci.${domain}";
         pocketId = {
           adminGroup = "admins";
-          clientIds.oauth2-proxy = "oauth2-proxy";
+          clientIds = {
+            headplane = "headplane";
+            headscale = "headscale";
+            oauth2-proxy = "oauth2-proxy";
+          };
         };
 
         timezone = "Europe/Amsterdam";

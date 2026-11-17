@@ -10,21 +10,36 @@
   ...
 }:
 let
-  inherit (flakeCfg) dnsServer fqdns headnetDomain;
+  inherit (flakeCfg)
+    dnsServer
+    fqdns
+    headnetDomain
+    pocketId
+    ;
   inherit (targetCfg) headnetPrefixes ports username;
   inherit (config.sops) secrets;
   cfg = config.services.headscale;
   dnsServerIp = targetCfgs.nixos.${dnsServer}.addresses.headnet;
   owner = "${username}@";
-  ownerTag = "tag:${username}";
 in
 {
-  sops.secrets."headscale/headscale_noise_private_key" = {
-    sopsFile = ../../../secrets/headscale.yaml;
-    key = "headscale_noise_private_key";
-    owner = cfg.user;
-    restartUnits = [ "headscale.service" ];
-  };
+  sops.secrets =
+    let
+      owner = cfg.user;
+      restartUnits = [ "headscale.service" ];
+    in
+    {
+      "headscale/headscale_noise_private_key" = {
+        sopsFile = ../../../secrets/headscale.yaml;
+        key = "headscale_noise_private_key";
+        inherit owner restartUnits;
+      };
+      "pocket-id/pocket_id_headscale_client_secret" = {
+        sopsFile = ../../../secrets/pocket-id.yaml;
+        key = "pocket_id_headscale_client_secret";
+        inherit owner restartUnits;
+      };
+    };
 
   services = {
     headscale = {
@@ -43,6 +58,12 @@ in
         };
         node.expiry = "180d";
         noise.private_key_path = secrets."headscale/headscale_noise_private_key".path;
+        oidc = {
+          issuer = "https://${fqdns.pocket-id}";
+          client_id = pocketId.clientIds.headscale;
+          client_secret_path = secrets."pocket-id/pocket_id_headscale_client_secret".path;
+          pkce.enabled = true;
+        };
         policy.path =
           let
             controlTag = "tag:control";
@@ -54,15 +75,11 @@ in
               tagOwners = {
                 ${controlTag} = [ owner ];
                 ${dnsTag} = [ owner ];
-                ${ownerTag} = [ owner ];
                 ${serverTag} = [ owner ];
               };
               grants = [
                 {
-                  src = [
-                    owner
-                    ownerTag
-                  ];
+                  src = [ owner ];
                   dst = [ "*" ];
                   ip = [ "*" ];
                 }
