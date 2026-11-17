@@ -67,6 +67,9 @@ tailscale up --login-server https://headscale.$domain --auth-key <key>
 
 iOS devices by default join as `localhost`. To rename a device:
 
+> [!NOTE]
+> This only changes the machine name, not the hostname. To change the hostname, do it in the Tailscale client.
+
 ```sh
 ssh $host-root 'headscale nodes rename -i <node-id> <name>'
 ```
