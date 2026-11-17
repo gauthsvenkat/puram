@@ -28,5 +28,6 @@ The organization was originally inspired by the [polylith](https://polylith.gitb
   - [infra](./how-to/infra.md)
   - [nixos](./how-to/nixos.md)
   - [openwrt](./how-to/openwrt.md)
+  - [recovery](./how-to/recovery.md)
   - [secrets](./how-to/secrets.md)
   - [zfs](./how-to/zfs.md)
