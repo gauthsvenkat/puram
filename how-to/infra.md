@@ -39,4 +39,7 @@ Every key tofu creates has a sensitive output. A new key needs one too.
 1. `just secrets rotate <address> <file>` replaces the key, then copies the output's keys into `secrets/<file>.yaml`. The old key stops working here; hosts that use it fail until the next step.
 2. Deploy the host that reads the key: `just nixos deploy <host>`.
 
+> [!NOTE]
+> A new OCI key seems to work only after about 5 minutes; until then, `just tf` fails with `401-NotAuthenticated`.
+
 tofu's own Cloudflare token is the exception: roll it in the dashboard (Manage Account > API Tokens > Roll), then update `TF_VAR_cloudflare_api_token`. Rolling keeps the token id, so the state stays valid.

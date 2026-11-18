@@ -108,14 +108,9 @@ in
 
       # api-key
       tls_private_key."oci_opentofu".algorithm = "RSA";
-      oci_identity_domains_api_key."opentofu" = {
-        idcs_endpoint = idcsEndpoint;
-        user = {
-          ocid = lib.tf.ref "oci_identity_domains_user.opentofu.ocid";
-          value = lib.tf.ref "oci_identity_domains_user.opentofu.id";
-        };
-        schemas = [ "urn:ietf:params:scim:schemas:oracle:idcs:apikey" ];
-        key = lib.tf.ref "chomp(tls_private_key.oci_opentofu.public_key_pem)";
+      oci_identity_api_key."opentofu" = {
+        user_id = lib.tf.ref "oci_identity_domains_user.opentofu.ocid";
+        key_value = lib.tf.ref "tls_private_key.oci_opentofu.public_key_pem";
         lifecycle.create_before_destroy = true;
       };
 
@@ -405,7 +400,7 @@ in
 
   output."tofu" = {
     value = {
-      "TF_VAR_oci_fingerprint" = lib.tf.ref "oci_identity_domains_api_key.opentofu.fingerprint";
+      "TF_VAR_oci_fingerprint" = lib.tf.ref "oci_identity_api_key.opentofu.fingerprint";
       "TF_VAR_oci_private_key" = lib.tf.ref "tls_private_key.oci_opentofu.private_key_pem";
       "TF_VAR_oci_user_ocid" = lib.tf.ref "oci_identity_domains_user.opentofu.ocid";
     };
