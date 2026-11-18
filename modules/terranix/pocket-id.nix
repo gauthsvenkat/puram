@@ -11,6 +11,19 @@ let
   inherit (flakeCfg) controlServer fqdns pocketId;
   inherit (targetCfg.pocketId) email firstName lastName;
   inherit (targetCfgs.nixos.${controlServer}) username;
+  users = {
+    ${username} = {
+      inherit email username;
+      first_name = firstName;
+      last_name = lastName;
+      email_verified = true;
+      is_admin = true;
+      groups = [ (lib.tf.ref "pocketid_group.admins.id") ];
+    };
+  };
+  # attrNames :: { username::String -> user } -> [ username::String ]
+  #   where user = { username, email, first_name, last_name :: String; ... }
+  usernames = lib.attrNames users;
 in
 {
   variable."pocket_id_static_api_key".sensitive = true;
@@ -26,14 +39,7 @@ in
       friendly_name = "Admins";
     };
 
-    pocketid_user.${username} = {
-      inherit email username;
-      first_name = firstName;
-      last_name = lastName;
-      email_verified = true;
-      is_admin = true;
-      groups = [ (lib.tf.ref "pocketid_group.admins.id") ];
-    };
+    pocketid_user = users;
 
     pocketid_client =
       let
@@ -53,10 +59,12 @@ in
       };
 
     # The first sign-in, to add a passkey.
-    pocketid_one_time_access_token.${username} = {
-      user_id = lib.tf.ref "pocketid_user.${username}.id";
+    # genAttrs :: [ username::String ] -> (username::String -> token) -> { username::String -> token }
+    #   where token = { user_id, ttl :: String }
+    pocketid_one_time_access_token = lib.genAttrs usernames (name: {
+      user_id = lib.tf.ref "pocketid_user.${name}.id";
       ttl = "1h";
-    };
+    });
   };
 
   output."pocket-id" = {
@@ -68,8 +76,11 @@ in
     sensitive = true;
   };
 
-  output."pocket_id_login_url" = {
-    value = "https://${fqdns.pocket-id}/lc/${lib.tf.ref "pocketid_one_time_access_token.${username}.token"}";
+  output."pocket_id_login_urls" = {
+    # genAttrs :: [ username::String ] -> (username::String -> url::String) -> { username::String -> url::String }
+    value = lib.genAttrs usernames (
+      name: "https://${fqdns.pocket-id}/lc/${lib.tf.ref "pocketid_one_time_access_token.${name}.token"}"
+    );
     sensitive = true;
   };
 }
