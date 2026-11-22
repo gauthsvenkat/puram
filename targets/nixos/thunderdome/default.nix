@@ -21,18 +21,14 @@ in
     ./monitors.nix
   ];
 
-  boot = {
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
-
-    # Load nvidia early in initrd to prevent race with `simpledrm` - without this,
-    # SDDM sometimes starts before `nvidia-drm` is ready, resulting in 720p fallback.
-    initrd.kernelModules = [
-      "nvidia"
-      "nvidia_drm"
-      "nvidia_modeset"
-      "nvidia_uvm"
-    ];
-  };
+  # Load nvidia early in initrd to prevent race with `simpledrm`. Without this,
+  # SDDM sometimes starts before `nvidia-drm` is ready, resulting in 720p fallback.
+  boot.initrd.kernelModules = [
+    "nvidia"
+    "nvidia_drm"
+    "nvidia_modeset"
+    "nvidia_uvm"
+  ];
 
   home-manager.users.${username}.home.packages = [ pkgs.discord ];
 

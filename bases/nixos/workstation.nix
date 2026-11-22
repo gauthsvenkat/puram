@@ -28,6 +28,8 @@ in
     ./system.nix
   ];
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   home-manager.users.${username} = {
     imports = [
       ../../modules/home-manager/atuin.nix
