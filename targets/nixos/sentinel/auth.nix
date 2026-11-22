@@ -16,4 +16,16 @@ in
       respond 404
     '';
   };
+
+  # oauth2-proxy won't start while it can't reach its OIDC provider. Pocket ID
+  # is considered started when systemd forks it, so setting the ordering alone
+  # doesn't fix the race; a longer `RestartSec` retries past the start limit.
+  systemd.services.oauth2-proxy = {
+    after = [
+      "caddy.service"
+      "pocket-id.service"
+    ];
+    wants = [ "pocket-id.service" ];
+    serviceConfig.RestartSec = 5;
+  };
 }
