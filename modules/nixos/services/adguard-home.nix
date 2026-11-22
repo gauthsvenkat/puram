@@ -5,9 +5,7 @@ in
 {
   services.adguardhome = {
     enable = true;
-    host = "127.0.0.1";
     mutableSettings = false;
-    port = ports.adguard;
     settings = {
       dns = {
         anonymize_client_ip = true;
@@ -58,6 +56,8 @@ in
           (mkFilter 44 "HaGeZi's Threat Intelligence Feeds")
           (mkFilter 48 "HaGeZi's Pro Blocklist")
         ];
+
+      http.address = "127.0.0.1:${toString ports.adguard}";
 
       querylog = {
         enabled = true;
