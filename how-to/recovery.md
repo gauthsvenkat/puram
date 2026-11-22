@@ -2,12 +2,12 @@
 
 ## Control server
 
-The control server (`controlServer` in [`flake.nix`](../flake.nix)) runs Pocket ID and headscale. Litestream replicates their databases to Scaleway, and each service restores its database before it starts if the database is missing ([`backups.nix`](../targets/nixos/sentinel/backups.nix)). The tofu state is in [`secrets/`](../secrets/), so it survives the host.
+The control server (`servers.control` in [`flake.nix`](../flake.nix)) runs Pocket ID and headscale. Litestream replicates their databases to Scaleway, and each service restores its database before it starts if the database is missing ([`backups.nix`](../targets/nixos/sentinel/backups.nix)). The tofu state is in [`secrets/`](../secrets/), so it survives the host.
 
 Recover from a device off the headnet (`tailscale down`); headnet DNS goes through the control server.
 
 ```sh
-host=<controlServer>
+host=<servers.control>
 domain=<domain>
 ```
 
@@ -33,7 +33,7 @@ domain=<domain>
    just nixos deploy $host switch
    ```
 
-4. The restored headscale database still has the old control server node at `addresses.headnet`. Delete it, then join the new host as in [headscale bootstrapping](./headscale.md#bootstrapping) step 3, with `tag:dns` too, as the control server is also `dnsServer`.
+4. The restored headscale database still has the old control server node at `addresses.headnet`. Delete it, then join the new host as in [headscale bootstrapping](./headscale.md#bootstrapping) step 3, with `tag:dns` too, as the control server is also `servers.dns`.
 
    ```sh
    ssh $host-root 'headscale nodes list'

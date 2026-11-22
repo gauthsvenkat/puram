@@ -85,10 +85,12 @@
       );
 
       flakeCfg = rec {
-        controlServer = "sentinel";
-        dnsServer = "sentinel";
-        homeserver = "elitedesk";
         router = "flint-2";
+        servers = {
+          control = "sentinel";
+          dns = "sentinel";
+          home = "elitedesk";
+        };
 
         backups = rec {
           region = "nl-ams";
@@ -100,19 +102,22 @@
           };
         };
 
-        domain = "gauthsvenkat.dev";
+        domains = rec {
+          apex = "gauthsvenkat.dev";
+          headnet = "headnet.${apex}";
+          lan = "lan";
+          oci = "oci.${apex}";
+        };
 
         fqdns = {
-          adguard = "adguard.${domain}";
-          auth = "auth.${domain}";
-          dns = "dns.${domain}";
-          headplane = "headplane.${domain}";
-          headscale = "headscale.${domain}";
-          pocket-id = "id.${domain}";
+          adguard = "adguard.${domains.apex}";
+          auth = "auth.${domains.apex}";
+          dns = "dns.${domains.apex}";
+          headplane = "headplane.${domains.apex}";
+          headscale = "headscale.${domains.apex}";
+          pocket-id = "id.${domains.apex}";
         };
-        headnetDomain = "headnet.${domain}";
-        lanDomain = "lan";
-        ociDomain = "oci.${domain}";
+
         pocketId = {
           adminGroup = "admins";
           clientIds = {

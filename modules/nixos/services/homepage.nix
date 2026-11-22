@@ -1,12 +1,12 @@
 { flakeCfg, targetCfg, ... }:
 let
-  inherit (flakeCfg) domain;
+  inherit (flakeCfg) domains;
   inherit (targetCfg) ports;
 in
 {
   services.homepage-dashboard = {
     enable = true;
-    allowedHosts = "homepage.${domain}";
+    allowedHosts = "homepage.${domains.apex}";
     listenPort = ports.homepage;
   };
 }

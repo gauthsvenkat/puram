@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain;
+  inherit (flakeCfg) domains;
   inherit (targetCfg) hostname ports zpool;
   # BEGIN-PRIVATE
   inherit (targetCfg) vpn;
@@ -57,7 +57,7 @@ in
     services =
       let
         envVar = name: "{{HOMEPAGE_VAR_${name}}}";
-        href = sub: "https://${sub}.${domain}";
+        href = sub: "https://${sub}.${domains.apex}";
         icon = name: "${name}.svg";
         loopback = p: "http://127.0.0.1:${toString p}";
         # BEGIN-PRIVATE

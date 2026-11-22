@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain;
+  inherit (flakeCfg) domains;
   inherit (targetCfg) ports;
   inherit (config.sops) placeholder templates;
   cfg = config.services.vikunja;
@@ -32,7 +32,7 @@ in
         host = "/run/postgresql";
       };
       environmentFiles = [ templates."vikunja_env".path ];
-      frontendHostname = "vikunja.${domain}";
+      frontendHostname = "vikunja.${domains.apex}";
       frontendScheme = "https";
       port = ports.vikunja;
     };

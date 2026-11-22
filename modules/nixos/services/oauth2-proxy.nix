@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain fqdns pocketId;
+  inherit (flakeCfg) domains fqdns pocketId;
   inherit (targetCfg) ports;
   inherit (config.sops) secrets;
 in
@@ -31,7 +31,7 @@ in
   # for more context on the following settings.
   services.oauth2-proxy =
     let
-      subdomains = ".${domain}";
+      subdomains = ".${domains.apex}";
     in
     {
       enable = true;

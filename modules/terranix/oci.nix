@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain workstationKeys;
+  inherit (flakeCfg) domains workstationKeys;
   inherit (targetCfg) alertEmail;
   inherit (targetCfg.oci) tenancyOcid;
   sentinelIp = targetCfgs.nixos."sentinel".addresses.vcn;
@@ -67,12 +67,12 @@ in
         emails = [
           {
             type = "work";
-            value = "opentofu@${domain}";
+            value = "opentofu@${domains.apex}";
             primary = true;
           }
           {
             type = "recovery";
-            value = "opentofu@${domain}";
+            value = "opentofu@${domains.apex}";
           }
         ];
         lifecycle.ignore_changes = [ "schemas" ];

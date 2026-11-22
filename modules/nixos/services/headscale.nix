@@ -11,15 +11,15 @@
 }:
 let
   inherit (flakeCfg)
-    dnsServer
+    domains
     fqdns
-    headnetDomain
     pocketId
+    servers
     ;
   inherit (targetCfg) headnetPrefixes ports username;
   inherit (config.sops) secrets;
   cfg = config.services.headscale;
-  dnsServerIp = targetCfgs.nixos.${dnsServer}.addresses.headnet;
+  dnsServerIp = targetCfgs.nixos.${servers.dns}.addresses.headnet;
   owner = "${username}@";
 in
 {
@@ -53,7 +53,7 @@ in
           verify_clients = true;
         };
         dns = {
-          base_domain = headnetDomain;
+          base_domain = domains.headnet;
           nameservers.global = [ dnsServerIp ];
         };
         node.expiry = "180d";

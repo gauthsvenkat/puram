@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain lanDomain;
+  inherit (flakeCfg) domains;
   inherit (targetCfg) ports;
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
   # :: { hostname::String -> targetCfg }, hosts with a LAN address
@@ -20,16 +20,16 @@ in
       {
         authoritative = true;
         cachesize = 1000;
-        # dnsmasq answers `lanDomain` itself and forwards the rest to AdGuard Home.
-        domain = lanDomain;
+        # dnsmasq answers `domains.lan` itself and forwards the rest to AdGuard Home.
+        domain = domains.lan;
         domainneeded = true;
         expandhosts = true;
-        local = "/${lanDomain}/";
+        local = "/${domains.lan}/";
         localise_queries = true;
         localservice = false;
         noresolv = true;
         readethers = true;
-        rebind_domain = [ domain ];
+        rebind_domain = [ domains.apex ];
         rebind_localhost = true;
         # `strictorder`: AdGuard Home over DoH through https-dns-proxy; the public
         # resolvers only answer if it is down.

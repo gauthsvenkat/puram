@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain;
+  inherit (flakeCfg) domains;
   inherit (targetCfg) ports;
   # BEGIN-PRIVATE
   inherit (targetCfg) vpn;
@@ -39,14 +39,14 @@ in
       '';
     in
     {
-      "homepage.${domain}".extraConfig = proxy ports.homepage;
-      "immich.${domain}".extraConfig = proxy ports.immich;
-      "jellyfin.${domain}".extraConfig = proxy ports.jellyfin;
-      "paperless.${domain}".extraConfig = proxy ports.paperless;
+      "homepage.${domains.apex}".extraConfig = proxy ports.homepage;
+      "immich.${domains.apex}".extraConfig = proxy ports.immich;
+      "jellyfin.${domains.apex}".extraConfig = proxy ports.jellyfin;
+      "paperless.${domains.apex}".extraConfig = proxy ports.paperless;
       # Speedtest-tracker is a Laravel app; Caddy serves static assets directly
       # and hands PHP off to a phpfpm pool. The doc-root and socket come from
       # the speedtest-tracker NixOS module's evaluated config.
-      "speedtest.${domain}".extraConfig = ''
+      "speedtest.${domains.apex}".extraConfig = ''
         root * ${cfg_st.package}/public
         encode zstd gzip
         @static path *.js *.css *.gif *.png *.ico *.jpg *.jpeg
@@ -54,16 +54,16 @@ in
         php_fastcgi unix/${cfg_phpfpm.pools.speedtest-tracker.socket}
         file_server
       '';
-      "vikunja.${domain}".extraConfig = proxy ports.vikunja;
+      "vikunja.${domains.apex}".extraConfig = proxy ports.vikunja;
       # BEGIN-PRIVATE
-      "bazarr.${domain}".extraConfig = proxy ports.bazarr;
-      "bitmagnet.${domain}".extraConfig = proxyVpn ports.bitmagnet;
-      "prowlarr.${domain}".extraConfig = proxyVpn ports.prowlarr;
-      "qbittorrent.${domain}".extraConfig = proxyVpn ports.qbittorrent;
-      "radarr.${domain}".extraConfig = proxy ports.radarr;
-      "sabnzbd.${domain}".extraConfig = proxyVpn ports.sabnzbd;
-      "seerr.${domain}".extraConfig = proxy ports.seerr;
-      "sonarr.${domain}".extraConfig = proxy ports.sonarr;
+      "bazarr.${domains.apex}".extraConfig = proxy ports.bazarr;
+      "bitmagnet.${domains.apex}".extraConfig = proxyVpn ports.bitmagnet;
+      "prowlarr.${domains.apex}".extraConfig = proxyVpn ports.prowlarr;
+      "qbittorrent.${domains.apex}".extraConfig = proxyVpn ports.qbittorrent;
+      "radarr.${domains.apex}".extraConfig = proxy ports.radarr;
+      "sabnzbd.${domains.apex}".extraConfig = proxyVpn ports.sabnzbd;
+      "seerr.${domains.apex}".extraConfig = proxy ports.seerr;
+      "sonarr.${domains.apex}".extraConfig = proxy ports.sonarr;
       # END-PRIVATE
     };
 }

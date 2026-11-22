@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain;
+  inherit (flakeCfg) domains;
   inherit (targetCfg) paths;
   inherit (config.sops) secrets;
   cfg = config.services.speedtest-tracker;
@@ -25,6 +25,6 @@ in
       APP_KEY_FILE = secrets."speedtest_tracker_app_key".path;
       SPEEDTEST_SCHEDULE = "18 * * * *";
     };
-    virtualHost = "speedtest.${domain}";
+    virtualHost = "speedtest.${domains.apex}";
   };
 }

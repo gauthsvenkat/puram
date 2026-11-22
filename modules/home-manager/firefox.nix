@@ -1,6 +1,6 @@
 { flakeCfg, ... }:
 let
-  inherit (flakeCfg) domain;
+  inherit (flakeCfg) domains;
 in
 {
   programs.firefox = {
@@ -18,7 +18,7 @@ in
           (mkToolbar "Calendar" "https://calendar.google.com/calendar/u/0/r")
           (mkToolbar "Claude" "https://claude.ai/new")
           (mkToolbar "Gmail" "https://mail.google.com/mail/u/0/#inbox")
-          (mkToolbar "Homepage" "https://homepage.${domain}/")
+          (mkToolbar "Homepage" "https://homepage.${domains.apex}/")
           (mkToolbar "NixOS Packages" "https://search.nixos.org/packages")
         ];
 

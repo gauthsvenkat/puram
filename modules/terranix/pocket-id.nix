@@ -8,9 +8,9 @@
   ...
 }:
 let
-  inherit (flakeCfg) controlServer fqdns pocketId;
+  inherit (flakeCfg) fqdns pocketId servers;
   inherit (targetCfg.pocketId) email firstName lastName;
-  inherit (targetCfgs.nixos.${controlServer}) username;
+  inherit (targetCfgs.nixos.${servers.control}) username;
   users = {
     ${username} = {
       inherit email username;

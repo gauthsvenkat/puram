@@ -1,9 +1,9 @@
 # How to [headscale](https://headscale.net)
 
-The control server runs on the host named by `controlServer` in [`flake.nix`](../flake.nix), behind Caddy. Caddy passes on only the paths clients need; the allowlist is in the host's `default.nix`. Headplane and the AdGuard Home UI answer only on the headnet. The embedded DERP relay serves only this headnet's devices; its STUN port is open in the `headscale` NSG in [`modules/terranix/oci.nix`](../modules/terranix/oci.nix).
+The control server runs on the host named by `servers.control` in [`flake.nix`](../flake.nix), behind Caddy. Caddy passes on only the paths clients need; the allowlist is in the host's `default.nix`. Headplane and the AdGuard Home UI answer only on the headnet. The embedded DERP relay serves only this headnet's devices; its STUN port is open in the `headscale` NSG in [`modules/terranix/oci.nix`](../modules/terranix/oci.nix).
 
 ```sh
-host=<controlServer>
+host=<servers.control>
 domain=<domain>
 ```
 

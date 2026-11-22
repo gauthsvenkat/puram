@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (flakeCfg) headnetDomain lanDomain ociDomain;
+  inherit (flakeCfg) domains;
   inherit (targetCfg) username;
   networkDeviceCfgs = targetCfgs.openwrt;
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
@@ -32,7 +32,7 @@ in
       serverAliases = lib.concatMapAttrs (
         hostName: targetCfg:
         let
-          hostDomain = if targetCfg ? addresses.vcn then ociDomain else lanDomain;
+          hostDomain = if targetCfg ? addresses.vcn then domains.oci else domains.lan;
         in
         {
           ${hostName} = {
@@ -40,7 +40,7 @@ in
             User = targetCfg.username;
           };
           "${hostName}-hs" = {
-            HostName = "${hostName}.${headnetDomain}";
+            HostName = "${hostName}.${domains.headnet}";
             User = targetCfg.username;
           };
           "${hostName}-root" = {

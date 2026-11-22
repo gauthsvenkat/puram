@@ -4,10 +4,10 @@
   ...
 }:
 let
-  inherit (flakeCfg) domain;
+  inherit (flakeCfg) domains;
   inherit (targetCfg) paths ports;
   dataRoot = "${paths.data}/paperless-ngx";
-  vhost = "paperless.${domain}";
+  vhost = "paperless.${domains.apex}";
 in
 {
   services = {

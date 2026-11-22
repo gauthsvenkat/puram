@@ -9,17 +9,14 @@
 }:
 let
   inherit (flakeCfg)
-    controlServer
-    dnsServer
-    domain
+    domains
     fqdns
-    homeserver
-    ociDomain
+    servers
     ;
   inherit (targetCfg.cloudflare) accountId;
-  controlServerIp = targetCfgs.nixos.${controlServer}.addresses.headnet;
-  dnsServerIp = targetCfgs.nixos.${dnsServer}.addresses.headnet;
-  homeserverIp = targetCfgs.nixos.${homeserver}.addresses.headnet;
+  controlServerIp = targetCfgs.nixos.${servers.control}.addresses.headnet;
+  dnsServerIp = targetCfgs.nixos.${servers.dns}.addresses.headnet;
+  homeserverIp = targetCfgs.nixos.${servers.home}.addresses.headnet;
 in
 {
   variable."cloudflare_api_token".sensitive = true;
@@ -33,7 +30,7 @@ in
     {
       cloudflare_zone."gauthsvenkat_dev" = {
         account.id = accountId;
-        name = domain;
+        name = domains.apex;
         type = "full";
       };
 
@@ -81,7 +78,7 @@ in
             ];
           };
 
-          "caddy_dns_${dnsServer}" = mkDnsToken "caddy-acme-${dnsServer}";
+          "caddy_dns_${servers.dns}" = mkDnsToken "caddy-acme-${servers.dns}";
         };
 
       cloudflare_dns_record =
@@ -97,26 +94,26 @@ in
           };
         in
         {
-          "${dnsServer}_ipv4" = mkRecord "${dnsServer}.${ociDomain}" "A" (
+          "${servers.dns}_ipv4" = mkRecord "${servers.dns}.${domains.oci}" "A" (
             lib.tf.ref "oci_core_public_ip.sentinel.ip_address"
           );
-          "${dnsServer}_ipv6" = mkRecord "${dnsServer}.${ociDomain}" "AAAA" (
+          "${servers.dns}_ipv6" = mkRecord "${servers.dns}.${domains.oci}" "AAAA" (
             lib.tf.ref "data.oci_core_vnic.sentinel.ipv6addresses[0]"
           );
 
-          "dns" = mkRecord fqdns.dns "CNAME" "${dnsServer}.${ociDomain}";
-          "headscale" = mkRecord fqdns.headscale "CNAME" "${controlServer}.${ociDomain}";
-          "pocket-id" = mkRecord fqdns.pocket-id "CNAME" "${controlServer}.${ociDomain}";
+          "dns" = mkRecord fqdns.dns "CNAME" "${servers.dns}.${domains.oci}";
+          "headscale" = mkRecord fqdns.headscale "CNAME" "${servers.control}.${domains.oci}";
+          "pocket-id" = mkRecord fqdns.pocket-id "CNAME" "${servers.control}.${domains.oci}";
 
           "adguard" = mkRecord fqdns.adguard "A" dnsServerIp;
           "auth" = mkRecord fqdns.auth "A" controlServerIp;
           "headplane" = mkRecord fqdns.headplane "A" controlServerIp;
-          "wildcard" = mkRecord "*.${domain}" "A" homeserverIp;
+          "wildcard" = mkRecord "*.${domains.apex}" "A" homeserverIp;
         };
     };
 
   output."dns" = {
-    value."cloudflare_dns_token" = lib.tf.ref "cloudflare_account_token.caddy_dns_${dnsServer}.value";
+    value."cloudflare_dns_token" = lib.tf.ref "cloudflare_account_token.caddy_dns_${servers.dns}.value";
     sensitive = true;
   };
 }
