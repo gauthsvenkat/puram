@@ -8,8 +8,18 @@
   ...
 }:
 let
-  inherit (flakeCfg) domains;
+  inherit (flakeCfg) domains fqdns servers;
   inherit (targetCfg) ports;
+  homeserverIp = targetCfgs.nixos.${servers.home}.addresses.lan;
+  # map :: (domain::String -> server::String) -> [ domain::String ] -> [ server::String ]
+  # :: [ server::String ], names under `domains.apex` that are not on the homeserver, sent upstream
+  upstreamServers = map (name: "/${name}/#") (
+    lib.attrValues fqdns
+    ++ [
+      domains.headnet
+      domains.oci
+    ]
+  );
   # filterAttrs :: (hostname::String -> targetCfg -> Bool) -> { hostname::String -> targetCfg } -> { hostname::String -> targetCfg }
   # :: { hostname::String -> targetCfg }, hosts with a LAN address
   lanCfgs = lib.filterAttrs (_: hostCfg: hostCfg ? addresses.lan) targetCfgs.nixos;
@@ -18,6 +28,7 @@ in
   uci.settings.dhcp = {
     dnsmasq = [
       {
+        address = [ "/${domains.apex}/${homeserverIp}" ];
         authoritative = true;
         cachesize = 1000;
         # dnsmasq answers `domains.lan` itself and forwards the rest to AdGuard Home.
@@ -37,7 +48,8 @@ in
           "127.0.0.1#${toString ports.doh}"
           "9.9.9.9"
           "1.1.1.1"
-        ];
+        ]
+        ++ upstreamServers;
         strictorder = true;
       }
     ];
