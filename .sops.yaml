@@ -1,7 +1,6 @@
 keys:
   - &elitedesk age1x5fkemnqjf5ta60q83s04pjllrpk35lfjxg2v4jeuhky385emc9svrc6au
   - &raspi400 age172kl6q88tfp87p838cj49ghhq2nhewlet0j8n92ys9gpkfg99cmqrkl0wd
-  - &raspi5 age1yp4wd48rxsal7qupvgcj88wf99d3nfe33v6jgglqqudgue6wt4uq2qgwp5
   - &sandisk-ultra age1ly69rtyrdq9d22krwyyqeunqsvavf0ke0vudxjuvhua6urhgdg9sru7myg
   - &sentinel age1sh3qm0jn8fp4ge5yah3vu0v9dzd88hryxt29msedx5jk2kcn2pmq0xxhgx
   - &thinkpad-t14s age1dp79srrk65336pja4f9h7ss3n33cma7l4u7spwkm0avtk63ttsfs6cql0z
@@ -13,7 +12,6 @@ creation_rules:
       - age:
         - *elitedesk
         - *raspi400
-        - *raspi5
         - *sandisk-ultra
         - *sentinel
         - *thinkpad-t14s
