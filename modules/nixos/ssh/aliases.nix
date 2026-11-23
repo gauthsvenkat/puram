@@ -50,5 +50,12 @@ in
         }
       ) serverCfgs;
     in
-    serverAliases // networkDeviceAliases;
+    serverAliases
+    // networkDeviceAliases
+    // {
+      "tv" = {
+        HostName = "raspi5.${domains.lan}";
+        User = "root";
+      };
+    };
 }
