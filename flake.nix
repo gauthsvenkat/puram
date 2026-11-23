@@ -110,11 +110,16 @@
         };
 
         fqdns = {
-          adguard = "adguard.${domains.apex}";
           auth = "auth.${domains.apex}";
+
+          adguard = "adguard.${domains.apex}";
           dns = "dns.${domains.apex}";
+
           headplane = "headplane.${domains.apex}";
           headscale = "headscale.${domains.apex}";
+
+          ntfy = "ntfy.${domains.apex}";
+
           pocket-id = "id.${domains.apex}";
         };
 

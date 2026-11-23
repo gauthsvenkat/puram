@@ -103,6 +103,7 @@ in
 
           "dns" = mkRecord fqdns.dns "CNAME" "${servers.dns}.${domains.oci}";
           "headscale" = mkRecord fqdns.headscale "CNAME" "${servers.control}.${domains.oci}";
+          "ntfy" = mkRecord fqdns.ntfy "CNAME" "${servers.control}.${domains.oci}";
           "pocket-id" = mkRecord fqdns.pocket-id "CNAME" "${servers.control}.${domains.oci}";
 
           "adguard" = mkRecord fqdns.adguard "A" dnsServerIp;

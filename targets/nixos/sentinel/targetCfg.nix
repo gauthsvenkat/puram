@@ -19,6 +19,7 @@ rec {
     headscale = 8080;
     headscale-stun = 3478;
     headplane = 3001;
+    ntfy = 2586;
     oauth2-proxy = 4180;
     pocket-id = 1411;
   };
